@@ -1,12 +1,14 @@
 <div id="<%= dom_id property %>">
-  <p>
-    <strong>Street number:</strong>
-    <%= property.street_number %>
-  </p>
 
   <p>
-    <strong>Street name:</strong>
-    <%= property.street_name %>
+    <strong>Street address:</strong>
+    <%= property.street_number %> <%= property.street_name %>
   </p>
+
+<p>
+    <strong>Lot(s):</strong>
+    <%= property.lots.pluck(:lot_number) %>
+  </p>
+
 
 </div>
