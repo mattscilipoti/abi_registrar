@@ -1,22 +1,34 @@
 
-<%= simple_form_for(@resident) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+<%= simple_form_for(@resident) do |form| %>
+  <%= form.error_notification %>
+  <%= form.error_notification message: form.object.errors[:base].to_sentence if form.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :last_name %>
-    <%= f.input :first_name, as: :string %>
-    <%= f.input :email_address, as: :string %>
+    <%= form.input :last_name %>
+    <%= form.input :first_name, as: :string %>
+    <%= form.input :email_address, as: :string %>
+    <%= form.input :is_minor %>
+    <%= form.input :age_of_minor, as: :integer, hint: 'Only needed for minor' %>
 
+    <h4>Properties</h4>
+    <div data-controller="nested-form">
+      <template data-target="nested-form.template">
+        <%= form.fields_for :residencies, Residency.new, child_index: 'NEW_RECORD' do |residency_form| %>
+          <%= render "residency_fields", form: residency_form %>
+        <% end %>
+      </template>
 
-    <%= f.association :properties, label_method: :street_address %>
-    <%= f.input :is_deed_holder %>
-    <%= f.input :is_renter %>
-    <%= f.input :is_minor %>
-    <%= f.input :age_of_minor, as: :integer, hint: 'Only needed for minor' %>
+      <%= form.fields_for :residencies do |residency| %>
+        <%= render "residency_fields", form: residency %>
+      <% end %>
+
+      <div class="mb-3" data-target="nested-form.links">
+        <%= link_to "Add property", "#", class: "btn btn-outline-primary", data: { action: "click->nested-form#add_association" } %>
+      </div>
+    </div>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= form.button :submit %>
   </div>
 <% end %>

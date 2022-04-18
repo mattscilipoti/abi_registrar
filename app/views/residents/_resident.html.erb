@@ -19,10 +19,13 @@
     <%= resident.verified_at %>
   </p>
 
+  <h4>Properties</h4>
+  <%- for property in resident.properties %>
   <p>
-    <strong>Is deed holder:</strong>
-    <%= resident.is_deed_holder %>
+    <strong>Street address:</strong>
+    <%= property.street_address %>
   </p>
+  <%- end %>
 
   <p>
     <strong>Is renter:</strong>
