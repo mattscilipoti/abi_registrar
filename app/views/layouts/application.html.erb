@@ -11,6 +11,13 @@
   </head>
 
   <body>
+    <nav>
+      <menu>
+        <li><%= link_to "Home", '/' %></li>
+        <li><%= link_to "Lots", lots_path %></li>
+      </menu>
+    </nav>
+    
     <%= yield %>
   </body>
 </html>
