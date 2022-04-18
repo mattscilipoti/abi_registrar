@@ -1,0 +1,20 @@
+
+<%= simple_form_for(@resident) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :last_name %>
+    <%= f.input :first_name %>
+    <%= f.input :email_address %>
+    <%= f.input :verified_at %>
+    <%= f.input :is_deed_holder %>
+    <%= f.input :is_renter %>
+    <%= f.input :is_minor %>
+    <%= f.input :age_of_minor %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
