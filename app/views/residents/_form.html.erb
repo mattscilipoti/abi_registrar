@@ -5,13 +5,13 @@
 
   <div class="form-inputs">
     <%= f.input :last_name %>
-    <%= f.input :first_name %>
-    <%= f.input :email_address %>
-    <%= f.input :verified_at %>
+    <%= f.input :first_name, as: :string %>
+    <%= f.input :email_address, as: :string %>
+    
     <%= f.input :is_deed_holder %>
     <%= f.input :is_renter %>
     <%= f.input :is_minor %>
-    <%= f.input :age_of_minor %>
+    <%= f.input :age_of_minor, as: :integer, hint: 'Only needed for minor' %>
   </div>
 
   <div class="form-actions">
