@@ -7,7 +7,9 @@
     <%= f.input :last_name %>
     <%= f.input :first_name, as: :string %>
     <%= f.input :email_address, as: :string %>
-    
+
+
+    <%= f.association :properties, label_method: :street_address %>
     <%= f.input :is_deed_holder %>
     <%= f.input :is_renter %>
     <%= f.input :is_minor %>
