@@ -72,4 +72,5 @@ group :test do
 end
 
 # App Custom gems
+gem 'enum_help'
 gem 'simple_form'

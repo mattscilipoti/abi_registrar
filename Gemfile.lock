@@ -88,6 +88,8 @@ GEM
       irb (>= 1.3.6)
       reline (>= 0.2.7)
     digest (3.1.0)
+    enum_help (0.0.18)
+      activesupport (>= 3.0.0)
     erubi (1.10.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -220,6 +222,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  enum_help
   importmap-rails
   jbuilder
   pg (~> 1.1)

@@ -19,19 +19,6 @@
     <%= resident.verified_at %>
   </p>
 
-  <h4>Properties</h4>
-  <%- for property in resident.properties %>
-  <p>
-    <strong>Street address:</strong>
-    <%= property.street_address %>
-  </p>
-  <%- end %>
-
-  <p>
-    <strong>Is renter:</strong>
-    <%= resident.is_renter %>
-  </p>
-
   <p>
     <strong>Is minor:</strong>
     <%= resident.is_minor %>
@@ -41,5 +28,21 @@
     <strong>Age of minor:</strong>
     <%= resident.age_of_minor %>
   </p>
+
+
+  <h4>Properties</h4>
+  <%- for residency in resident.residencies %>
+  <ol>
+    <li><%= residency.street_address %>
+      <ul>
+        <li>
+          <strong>Residency Status:</strong>
+          <%= residency.resident_status_i18n %>
+        </li>
+      </ul>
+    </li>
+  </ol>
+  <%- end %>
+
 
 </div>

@@ -31,3 +31,9 @@
 
 en:
   hello: "Hello world"
+  enums:
+    residency:
+      resident_status:
+        deed_holder: Deed Holder
+        dependent: Dependent
+        renter: Renter
