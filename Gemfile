@@ -72,7 +72,8 @@ group :test do
 end
 
 # App Custom gems
-gem 'enum_help'
+gem 'enum_help' # Help ActiveRecord::Enum feature to work fine with I18n and simple_form.
 gem 'html2slim', require: false, group: :development
-gem 'simple_form'
-gem 'slim-rails'
+gem 'railroady', group: :development # UML class diagram generator.
+gem 'simple_form' # Forms made easy for Rails
+gem 'slim-rails' # template language, reduces the syntax without becoming cryptic.

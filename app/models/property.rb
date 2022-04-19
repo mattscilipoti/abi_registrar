@@ -1,7 +1,7 @@
 class Property < ApplicationRecord
   has_many :lots
   has_many :residencies
-  has_many :resdents, through: :residencies
+  has_many :residents, through: :residencies
 
   def lot_count
     lots.size
