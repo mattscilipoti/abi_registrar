@@ -1,0 +1,10 @@
+p[style="color: green"]
+  = notice
+
+h1 Lots
+
+#lots
+  - columns = %i[lot_number tax_identifier section size]
+  =render 'layouts/models_table', models: @lots, columns: columns
+br
+= link_to "New lot", new_lot_path
