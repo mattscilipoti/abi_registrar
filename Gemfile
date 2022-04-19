@@ -74,3 +74,4 @@ end
 # App Custom gems
 gem 'enum_help'
 gem 'simple_form'
+gem 'slim-rails'
