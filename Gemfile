@@ -73,5 +73,6 @@ end
 
 # App Custom gems
 gem 'enum_help'
+gem 'html2slim', require: false, group: :development
 gem 'simple_form'
 gem 'slim-rails'
