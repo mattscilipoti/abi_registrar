@@ -1,0 +1,10 @@
+p[style="color: green"]
+  = notice
+
+h1 Properties
+
+#properties
+  - columns = %i[street_address lot_count]
+  =render 'layouts/models_table', models: @properties, columns: columns
+br
+= link_to "New property", new_property_path
