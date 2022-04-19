@@ -17,9 +17,7 @@ class ResidentsTest < ApplicationSystemTestCase
     fill_in "Age of minor", with: @resident.age_of_minor
     fill_in "Email address", with: @resident.email_address
     fill_in "First name", with: @resident.first_name
-    check "Is deed holder" if @resident.is_deed_holder
     check "Is minor" if @resident.is_minor
-    check "Is renter" if @resident.is_renter
     fill_in "Last name", with: @resident.last_name
     fill_in "Verified at", with: @resident.verified_at
     click_on "Create Resident"
@@ -35,9 +33,7 @@ class ResidentsTest < ApplicationSystemTestCase
     fill_in "Age of minor", with: @resident.age_of_minor
     fill_in "Email address", with: @resident.email_address
     fill_in "First name", with: @resident.first_name
-    check "Is deed holder" if @resident.is_deed_holder
     check "Is minor" if @resident.is_minor
-    check "Is renter" if @resident.is_renter
     fill_in "Last name", with: @resident.last_name
     fill_in "Verified at", with: @resident.verified_at
     click_on "Update Resident"
