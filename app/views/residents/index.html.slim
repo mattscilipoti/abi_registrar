@@ -5,19 +5,6 @@ h1 Residents
 
 #residents
   - columns = %i[full_name email_address property_count verified_at is_minor age_of_minor]
-  table
-    thead
-      - for column_name in columns do
-        th= column_name.to_s.titleize
-    tbody
-      - @residents.each do |resident|
-        tr
-          - columns.each_with_index do |column_name, column_index|
-            - column_value = resident.send(column_name)
-            td
-              -if column_index == 0
-                =link_to column_value, resident, title: 'Show this resident' 
-              -else
-                =column_value
+  =render 'layouts/models_table', models: @residents, columns: columns
 br
 = link_to "New resident", new_resident_path
