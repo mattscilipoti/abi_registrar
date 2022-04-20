@@ -33,7 +33,7 @@
   <h3>Properties</h4>
   <ol>
   <%- for residency in resident.residencies %>
-    <li><%= residency.street_address %>
+    <li><%= link_to residency.street_address, residency.property %>
       <ul>
         <li>
           <strong>Residency Status:</strong>
@@ -44,7 +44,7 @@
       <ol>
         <%- for lot in residency.property.lots %>
           <li>
-            <%= lot.lot_number %>, 
+            <%= link_to lot.lot_number, lot %>, 
             <strong>Paid On:</strong><%= lot.paid_on %>
           </li>
         <%- end %>
