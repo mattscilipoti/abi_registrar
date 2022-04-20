@@ -21,26 +21,30 @@ p
     | Age of minor:
   = resident.age_of_minor
 
-h3
-  | Properties
-ol
-  - for residency in resident.residencies
-    li
-      = link_to residency.street_address, residency.property
-      | ,
-      = residency.resident_status_i18n
-      | , 
-      strong
-        | Verified On:
-      = residency.verified_on
+fieldset
+  legend
+    h2 Properties
 
-      h4
-        | Lots
-      ol
-        - for lot in residency.property.lots
-          li
-            = link_to lot.lot_number, lot
-            | , 
-            strong
-              | Paid On:
-            = lot.paid_on
+  ol
+    - for residency in resident.residencies
+      li
+        = link_to residency.street_address, residency.property
+        | ,
+        = residency.resident_status_i18n
+        | , 
+        strong
+          | Verified On:
+        = residency.verified_on
+
+        fieldset
+          legend
+            h2 Lot(s)
+
+          ol
+            - for lot in residency.property.lots
+              li
+                = link_to lot.lot_number, lot
+                | , 
+                strong
+                  | Paid On:
+                = lot.paid_on
