@@ -1,0 +1,246 @@
+@import 'variables';
+
+// Add Font: FontAwesome v6 (only Solid)
+@font-face {
+  font-display: block;
+  font-family: 'Font Awesome 6 Solid';
+  font-style: normal;
+  font-weight: 900;
+  src: 
+    url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.woff2") format("woff2"), 
+    url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.ttf') format("truetype"); 
+}
+
+body {
+  background-color: $color-background-body;
+  font-family: Helvetica, Arial, sans-serif
+}
+
+a {
+  color: $color-text-dark-on-light;
+  text-decoration: none; 
+
+  &.no-link-icon:after {
+    content: '' !important // override (default) link icon
+  }
+  &:visited {
+    color: $color-text-dark-on-light; 
+  }
+  &:hover {
+    color: $color-primary; 
+    text-decoration: underline; 
+  }
+  // Highlight image when hover
+  .icon:hover {
+    background-color: $color-secondary;
+    border-radius: 4px;
+    color: darkslategray;
+  }
+}
+
+// Identify (internal) links with icon
+a:not(.external) {
+  &:after {
+    color: LightGray;
+    font-family: "Font Awesome 6 Solid";
+    font-size: 75%;
+    content: "\00a0\f0c1"; // &nbsp; + link icon -> https://fontawesome.com/v6.0/icons/link?s=solid
+  }
+  &:hover:after {
+    color: inherit;
+  }
+}
+
+// Identify external links with icon
+a.external {
+  &:after {
+    color: LightGray;
+    content: "\00a0\f35d"; // &nbsp; + external link icon -> https://fontawesome.com/v6.0/icons/up-right-from-square?s=solid
+    font-family: "Font Awesome 6 Solid";
+    font-size: 75%;
+  }
+  &:hover:after {
+    color: $color-primary;
+  }
+}
+
+fieldset {
+  border: 3px double $color-secondary;
+  legend {
+    margin-bottom: (-3 * $padding-default); // WORKAROUND: for gap below legend
+  }
+}
+
+form {
+  div.input {
+    margin-top: $padding-default;
+  }
+  
+  input {
+    margin: $padding-default;
+
+    &[type="submit"] {
+      margin-top: (3 * $padding-default);
+    }
+    &[type='text'] {
+      width: 100%;
+    }
+    &.url {
+      width: 100%;
+    }
+  }
+
+  label {
+    font-weight: bold;
+  }
+}
+
+h1, h2, h3, h4, h5 {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 500;
+  margin: 0.5em 0;
+  .subheader {
+    color: $color-success;
+    font-size: 66%;
+  }
+}
+h1 {
+  font-size: 2.5em;
+  margin-top: 0;
+}
+h2 {
+  font-size: 2em;
+}
+h3 {
+  font-size: 1.6em;
+}
+h4 {
+  font-size: 1.2em;
+}
+
+/* Busy Spinner: all CSS, no JS */
+i.busy {
+  // see: https://www.w3schools.com/howto/howto_css_loader.asp
+  border: 4px solid $color-secondary;
+  border-top: 4px solid $color-primary;
+  border-bottom: 4px solid $color-primary;
+  border-radius: 50%;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  animation: busy-spinner 2s linear infinite;
+
+  @keyframes busy-spinner { /* Used by .busy */
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}
+
+main {
+  clear: both;
+  padding: 10px;
+}
+
+// Section: Basic Nav
+nav {
+  &.top-bar {
+    background-color: $color-secondary;
+  }
+  ul {
+    display: flex;
+    list-style: none;
+    padding: $padding-default;
+
+    li {
+      padding: $padding-default (2 * $padding-default);
+      border-right: 1px solid $color-text-light-on-dark; // delimiter
+      &:last-child {
+        border-right: none; // remove delimiter for last menu item
+      }
+      &.is-active {
+        background-color: $color-primary;
+        color: $color-text-light-on-dark;
+        a {
+          color: inherit;
+        }
+      }
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// Section: Table 
+table {
+  border:1px solid $color-secondary;
+  border-spacing: 1px;
+  margin: .5em 0;
+
+  th, td {
+    padding: $padding-default;
+    overflow-wrap: break-word;
+
+    &.count {
+      max-width: 80px;
+      text-align: center;
+    }
+    &.datetime {
+      text-align: center;
+    }
+    &.icon {
+      text-align: center;
+    }    
+    &.url {
+      font-size: .7em;
+      font-stretch: condensed;
+    }
+  }
+
+  thead {
+    tr {
+      background-color: $color-secondary;
+    }
+  }
+
+  tbody {
+    tr:nth-child(even) td {
+      background-color: scale-color($color-secondary, $lightness: 60%);
+    }
+  }
+}
+
+ul {
+  list-style: none;
+  padding-left: $padding-default;
+}
+
+// Section: Rails "flash" messages
+.flash {
+  background-color: FloralWhite;
+  border: gray solid 1px;
+  font-size: 1.2em;
+  padding: $padding-default;
+  
+  &.alert {
+    background-color: lighten($color-warning, 55%);
+    color: $color-warning;
+  }
+  &.notice {
+    background-color: lighten($color-primary, 55%);
+    color: $color-primary;
+  }
+  &.success {
+    background-color: lighten($color-success, 70%);
+    color: $color-success;
+  }
+}
+
+// To call attention to an element, add the class 'highlight'
+.highlight {
+  background-color: yellow !important; // important overrides flash message background-color
+}
+
+.icon {
+  padding: $padding-default/2;
+}
