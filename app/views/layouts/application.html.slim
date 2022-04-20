@@ -3,6 +3,9 @@ html lang=I18n.locale
   head
     meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
     meta content="width=device-width,initial-scale=1" name="viewport"
+    / favicon from https://gauger.io/fonticon/
+    =favicon_link_tag asset_path('favicon.ico')
+
     - page_title = "registrar:#{controller.controller_name}"
     - page_title += "(#{Rails.env})" unless Rails.env.production?
     title= page_title
