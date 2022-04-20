@@ -8,7 +8,7 @@ FactoryBot.define do
 
     trait :minor do
       is_minor { true }
-      age_of_minor { rand(1..13) }
+      age_of_minor { rand(1..20) }
     end
 
     trait :with_properties do

@@ -8,7 +8,7 @@ class Resident < ApplicationRecord
   has_many :properties, through: :residencies
   has_many :lots, through: :properties
 
-  validates :age_of_minor, numericality: { integer: true, greater_than: 0, less_than: 14, allow_blank: true }
+  validates :age_of_minor, numericality: { integer: true, greater_than: 0, less_than: 21, allow_blank: true }
   validates :last_name, presence: true
 
   def full_name
