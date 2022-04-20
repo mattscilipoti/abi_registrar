@@ -1,4 +1,24 @@
 module ApplicationHelper
+  def flash_icon_name(flash_type)
+    case flash_type.to_sym
+    when :alert
+      'triangle-exclamation'
+    when :notice
+      'circle-info'
+    when :success
+      'square-check'
+    else
+      raise ArgumentError, "Unsupported flash_type (#{flash_type})"
+    end
+  end
+  
+  def flash_tag(flash_type, message, caption: nil)
+    content_tag(:div, :class => "flash highlight #{flash_type}") do
+      icon = flash_icon_name(flash_type)
+      font_awesome_icon(icon, caption: caption) + message
+    end
+  end
+
   def menu_list_item(caption, url_options, html_options={})
     default_css_classes = []
     default_css_classes << 'is-active' if current_page?(url_options)
