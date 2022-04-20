@@ -2,6 +2,9 @@
   <div class="form-group">
     <%= form.association :property, label_method: :street_address  %>
     <%= form.input :resident_status, as: :radio_buttons %>
+    <%= form.input :verified_on %>
+  </p>
+
     
     <small><%= link_to "Remove", "#", data: { action: "click->nested-form#remove_association" } %></small>
   </div>

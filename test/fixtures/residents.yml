@@ -4,7 +4,6 @@ one:
   last_name: MyString
   first_name: MyText
   email_address: MyText
-  verified_at: 2022-04-18 03:54:38
   is_minor: false
   age_of_minor: MyText
 
@@ -12,6 +11,5 @@ two:
   last_name: MyString
   first_name: MyText
   email_address: MyText
-  verified_at: 2022-04-18 03:54:38
   is_minor: false
   age_of_minor: MyText

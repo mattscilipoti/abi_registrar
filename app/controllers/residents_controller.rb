@@ -69,10 +69,16 @@ class ResidentsController < ApplicationController
         :last_name, 
         :first_name, 
         :email_address, 
-        :verified_at, 
         :is_minor, 
         :age_of_minor,
-        residencies_attributes: [:id, :resident_id, :property_id, :resident_status, :_destroy]
+        residencies_attributes: [
+          :id, 
+          :resident_id, 
+          :property_id, 
+          :resident_status, 
+          :verified_on,
+          :_destroy
+        ]
       )
     end
 end

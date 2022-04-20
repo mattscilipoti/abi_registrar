@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_20_002909) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_20_023124) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,6 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_002909) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "resident_status"
+    t.date "verified_on"
     t.index ["property_id"], name: "index_residencies_on_property_id"
     t.index ["resident_id"], name: "index_residencies_on_resident_id"
   end
@@ -49,7 +50,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_002909) do
     t.string "last_name"
     t.text "first_name"
     t.text "email_address"
-    t.datetime "verified_at"
     t.boolean "is_minor"
     t.text "age_of_minor"
     t.datetime "created_at", null: false

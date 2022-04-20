@@ -11,10 +11,6 @@ FactoryBot.define do
       age_of_minor { rand(1..13) }
     end
 
-    trait :verified do
-      verified_at { 1.minute.ago }
-    end
-
     trait :with_properties do
       transient do
         properties_count { 2 }

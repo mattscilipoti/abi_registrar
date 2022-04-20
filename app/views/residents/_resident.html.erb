@@ -15,11 +15,6 @@
   </p>
 
   <p>
-    <strong>Verified at:</strong>
-    <%= resident.verified_at %>
-  </p>
-
-  <p>
     <strong>Is minor:</strong>
     <%= resident.is_minor %>
   </p>
@@ -37,7 +32,9 @@
       <ul>
         <li>
           <strong>Residency Status:</strong>
-          <%= residency.resident_status_i18n %>
+          <%= residency.resident_status_i18n %>,
+          <strong>Verified On:</strong>
+          <%= residency.verified_on %>
         </li>
       </ul>
       <h4>Lots</h4>

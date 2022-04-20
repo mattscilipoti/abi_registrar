@@ -19,7 +19,7 @@ class ResidentsTest < ApplicationSystemTestCase
     fill_in "First name", with: @resident.first_name
     check "Is minor" if @resident.is_minor
     fill_in "Last name", with: @resident.last_name
-    fill_in "Verified at", with: @resident.verified_at
+    # fill_in "Verified at", with: @resident.verified_at
     click_on "Create Resident"
 
     assert_text "Resident was successfully created"
@@ -35,7 +35,7 @@ class ResidentsTest < ApplicationSystemTestCase
     fill_in "First name", with: @resident.first_name
     check "Is minor" if @resident.is_minor
     fill_in "Last name", with: @resident.last_name
-    fill_in "Verified at", with: @resident.verified_at
+    # fill_in "Verified at", with: @resident.verified_at
     click_on "Update Resident"
 
     assert_text "Resident was successfully updated"
