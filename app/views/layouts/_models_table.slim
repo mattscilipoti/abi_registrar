@@ -3,7 +3,7 @@
 table
   thead
     - for column_name in columns do
-      th= column_name.to_s.titleize
+      th= column_name.to_s.gsub('_i18n', '').titleize
     - if show_actions
       th Actions
   tbody
