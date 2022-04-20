@@ -1,5 +1,5 @@
 class Lot < ApplicationRecord
-  belongs_to :property
+  belongs_to :property, optional: true
 
   validates :district, numericality: { only_integer: true }
   validates :subdivision, numericality: { only_integer: true }

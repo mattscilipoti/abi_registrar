@@ -73,6 +73,8 @@ end
 
 # App Custom gems
 gem 'enum_help' # Help ActiveRecord::Enum feature to work fine with I18n and simple_form.
+gem 'factory_bot_rails', group: [:development, :test]
+gem 'faker', require: false, group: [:development, :test]
 gem 'html2slim', require: false, group: :development
 gem 'railroady', group: :development # UML class diagram generator.
 gem 'simple_form' # Forms made easy for Rails
