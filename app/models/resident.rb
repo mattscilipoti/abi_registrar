@@ -22,4 +22,8 @@ class Resident < ApplicationRecord
   def property_count
     properties.size
   end
+
+  def to_s
+    "#{full_name} (#{email_address})"
+  end
 end

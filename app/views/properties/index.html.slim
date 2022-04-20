@@ -4,7 +4,7 @@ p[style="color: green"]
 h1 Properties
 
 #properties
-  - columns = %i[street_address lot_count]
+  - columns = %i[street_address lot_count lot_fees_paid?]
   =render 'layouts/models_table', models: @properties, columns: columns
 br
 = link_to "New property", new_property_path

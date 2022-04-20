@@ -11,7 +11,7 @@ Resident.destroy_all
 Lot.destroy_all
 Property.destroy_all
 
-lot69 = FactoryBot.create(:lot, lot_number: 69)
+lot69 = FactoryBot.create(:lot, lot_number: 69, size: 1)
 property_975 = FactoryBot.create(:property, lots: [lot69], street_number: '975', street_name: 'Waterview Dr')
 
 mms = FactoryBot.create(:resident, last_name: 'Scilipoti', first_name: 'Matt', email_address: 'matt@scilipoti.name', properties: [property_975]).tap do |resident|
@@ -35,8 +35,8 @@ jhs = FactoryBot.create(:resident, :minor, last_name: 'Scilipoti', first_name: '
   )
 end
 
-lot70 = FactoryBot.create(:lot, lot_number: 70)
-lot71 = FactoryBot.create(:lot, lot_number: 71)
+lot70 = FactoryBot.create(:lot, lot_number: 70, size: 1)
+lot71 = FactoryBot.create(:lot, lot_number: 71, size: 1)
 property_971 = FactoryBot.create(:property, lots: [lot70, lot71], street_number: '971', street_name: 'Waterview Dr')
 
 jr = FactoryBot.create(:resident, last_name: 'Rainwater', first_name: 'Jim', email_address: 'jim@example.com', properties: [property_971]).tap do |resident|
@@ -45,7 +45,7 @@ jr = FactoryBot.create(:resident, last_name: 'Rainwater', first_name: 'Jim', ema
     verified_on: 1.day.ago)
 end
 
-lot42 = FactoryBot.create(:lot, lot_number: 42)
+lot42 = FactoryBot.create(:lot, lot_number: 42, size: 0.5)
 property_123 = FactoryBot.create(:property, lots: [lot42], street_number: '123', street_name: 'Main St')
 
 jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com', properties: [property_123]).tap do |resident|

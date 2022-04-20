@@ -1,8 +1,11 @@
+- show_actions = true if show_actions.nil?
+
 table
   thead
     - for column_name in columns do
       th= column_name.to_s.titleize
-    th Actions
+    - if show_actions
+      th Actions
   tbody
     - models.each do |model|
       tr
@@ -10,7 +13,11 @@ table
           - column_value = model.send(column_name)
           td
             -if column_index == 0
-              =link_to column_value, model, title: 'Show this resident' 
+              - if show_actions
+                =link_to column_value, model, title: 'Show this resident' 
+              - else 
+                =column_value
             -else
               =column_value
-        td= link_to "Edit", edit_polymorphic_path(model)
+        - if show_actions
+          td= link_to "Edit", edit_polymorphic_path(model)

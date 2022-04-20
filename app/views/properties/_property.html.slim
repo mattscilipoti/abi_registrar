@@ -1,0 +1,25 @@
+div id="#{dom_id(property)}"
+
+h1= "Property: #{property.street_address}"
+
+p
+  strong Lot Fees Paid?&nbsp;
+  =property.lot_fees_paid?
+
+
+fieldset
+  legend 
+    h2 
+      | Residents 
+      small= "(#{property.residents.size} ct.)"
+  - columns = %i[resident resident_status_i18n]
+  =render 'layouts/models_table', models: property.residencies, columns: columns, show_actions: false
+
+fieldset
+  legend 
+    h2 
+      | Lots 
+      small= "(#{property.lots.size} ct.)"
+  - columns = %i[lot_number paid_on]
+  =render 'layouts/models_table', models: property.lots, columns: columns
+    
