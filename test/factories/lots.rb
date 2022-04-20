@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :lot do
-    district { '02' }
-    subdivision { '428' }
+    district { '02' } # Arden
+    subdivision { '748' } # Arden
     account_number { Faker::Number.number(digits: 8) }
     lot_number { rand(1..975) }
     section { rand(1..4) }

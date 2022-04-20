@@ -37,9 +37,9 @@ end
 
 lot70 = FactoryBot.create(:lot, :paid, lot_number: 70, section: 1, size: 1)
 lot71 = FactoryBot.create(:lot, lot_number: 71, section: 1, size: 1)
-property_971 = FactoryBot.create(:property, lots: [lot70, lot71], street_number: '971', street_name: 'Waterview Dr')
+property_977 = FactoryBot.create(:property, lots: [lot70, lot71], street_number: '977', street_name: 'Waterview Dr')
 
-jr = FactoryBot.create(:resident, last_name: 'Rainwater', first_name: 'Jim', email_address: 'jim@example.com', properties: [property_971]).tap do |resident|
+jr = FactoryBot.create(:resident, last_name: 'Rainwater', first_name: 'Jim', email_address: 'jim@example.com', properties: [property_977]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :deed_holder,
     verified_on: 1.day.ago)
