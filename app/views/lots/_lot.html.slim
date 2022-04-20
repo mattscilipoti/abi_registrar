@@ -1,0 +1,45 @@
+div id="#{dom_id(lot)}"
+
+p
+  strong
+    | Paid On:
+  = lot.paid_on
+
+p
+  strong
+    | Property:
+  = lot.property
+
+p
+  strong
+    | District:
+  = lot.district
+p
+  strong
+    | Subdivision:
+  = lot.subdivision
+p
+  strong
+    | Account number:
+  = lot.account_number
+p
+  strong
+    | Lot number:
+  = lot.lot_number
+p
+  strong
+    | Section:
+  = lot.section
+p
+  strong
+    | Size:
+  = lot.size
+
+
+fieldset
+  legend 
+    h2 
+      | Residents 
+      small= "(#{lot.residents.size} ct.)"
+  - columns = %i[resident resident_status_i18n]
+  =render 'layouts/models_table', models: lot.residencies, columns: columns, show_actions: false

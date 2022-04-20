@@ -14,4 +14,8 @@ class Property < ApplicationRecord
   def street_address
     [street_number, street_name].join(' ')
   end
+
+  def to_s
+    street_address
+  end
 end
