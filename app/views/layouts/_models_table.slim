@@ -2,13 +2,15 @@ table
   thead
     - for column_name in columns do
       th= column_name.to_s.titleize
+    th Actions
   tbody
-    - models.each do |resident|
+    - models.each do |model|
       tr
         - columns.each_with_index do |column_name, column_index|
-          - column_value = resident.send(column_name)
+          - column_value = model.send(column_name)
           td
             -if column_index == 0
-              =link_to column_value, resident, title: 'Show this resident' 
+              =link_to column_value, model, title: 'Show this resident' 
             -else
               =column_value
+        td= link_to "Edit", edit_polymorphic_path(model)
