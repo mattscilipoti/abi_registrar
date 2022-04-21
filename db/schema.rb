@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_20_023124) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_21_025756) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,6 +35,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_023124) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "purchases", force: :cascade do |t|
+    t.string "type"
+    t.money "cost_per", scale: 2, default: "0.0"
+    t.integer "quantity", default: 0
+    t.money "cost_total", scale: 2, default: "0.0"
+    t.datetime "purchased_at"
+    t.bigint "resident_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resident_id"], name: "index_purchases_on_resident_id"
+  end
+
   create_table "residencies", force: :cascade do |t|
     t.bigint "property_id", null: false
     t.bigint "resident_id", null: false
@@ -57,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_023124) do
   end
 
   add_foreign_key "lots", "properties"
+  add_foreign_key "purchases", "residents"
   add_foreign_key "residencies", "properties"
   add_foreign_key "residencies", "residents"
 end

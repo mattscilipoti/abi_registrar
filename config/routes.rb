@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   
   resources :lots
   resources :properties
+  resources :purchases
   resources :residents
 
   # Defines the root path route ("/")

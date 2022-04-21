@@ -1,0 +1,10 @@
+p[style="color: green"] = notice
+
+h1 Purchases
+
+#purchases
+  - columns = %i[type cost_per quantity cost_total purchased_at resident ]
+  =render 'layouts/models_table', models: @purchases, columns: columns, show_actions: false
+br
+
+= link_to "New purchase", new_purchase_path
