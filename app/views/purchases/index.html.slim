@@ -2,6 +2,23 @@ p[style="color: green"] = notice
 
 h1 Purchases
 
+h2 Summary 
+
+table
+  thead
+    tr
+      th Item 
+      th Quantity
+      th Total
+  tbody
+    tr
+      td Shares
+      td =PurchaseShares.pluck(:quantity).sum
+      td =PurchaseShares.pluck(:cost_total).sum
+
+
+h2 Listing 
+
 #purchases
   - columns = %i[type cost_per quantity cost_total purchased_at resident ]
   =render 'layouts/models_table', models: @purchases, columns: columns, show_actions: false
