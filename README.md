@@ -41,4 +41,6 @@ Tools to support the registrar positoin for Arden Beaches Inc. (ABI)
     - In QuickBooks?
   - Manage Watercraft Slots
   - Manage Boat Ramp Stickers
+    - Reports for Beach Checkers (Pass Number, Make, Model)
   - Manage Vehicle Stickers
+    - Reports for Beach Checkers (Pass Number, Make, Model)
