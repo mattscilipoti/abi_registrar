@@ -1,0 +1,10 @@
+p style="color: green" = notice
+
+== render @purchase_share
+
+div
+  / => link_to "Edit this purchase", edit_purchase_share_path(@purchase_share)
+  / '|
+  =< link_to "Back to purchase shares", purchase_shares_path
+
+  / = button_to "Destroy this purchase share", @purchase_share, method: :delete

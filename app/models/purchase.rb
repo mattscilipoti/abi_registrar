@@ -1,6 +1,8 @@
 class Purchase < ApplicationRecord
-  belongs_to :resident
-
+  belongs_to :residency
+  has_one :resident, through: :residency
+  has_one :property, through: :residency
+  
   def cost_per=(value)
     super
     calculate_cost_total

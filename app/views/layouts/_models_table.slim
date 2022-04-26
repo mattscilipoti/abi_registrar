@@ -1,11 +1,12 @@
-- show_actions = true if show_actions.nil?
+- allow_show = true if allow_show.nil?
+- allow_edit = true if allow_edit.nil?
 
 table
   thead
     - for column_name in columns do
       th= column_name.to_s.gsub('_i18n', '').titleize
-    - if show_actions
-      th Actions
+    - if allow_edit
+      th Edit
   tbody
     - models.each do |model|
       tr
@@ -13,11 +14,11 @@ table
           - column_value = model.send(column_name)
           td
             -if column_index == 0
-              - if show_actions
+              - if allow_show
                 =link_to column_value, model, title: 'Show this resident' 
               - else 
                 =column_value
             -else
               =column_value
-        - if show_actions
+        - if allow_edit
           td= link_to "Edit", edit_polymorphic_path(model)

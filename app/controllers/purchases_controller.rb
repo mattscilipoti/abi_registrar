@@ -70,7 +70,7 @@ class PurchasesController < ApplicationController
         :cost_total, 
         :purchased_at,
         :quantity, 
-        :resident_id,
+        :residency_id,
         :type, 
       )
     end

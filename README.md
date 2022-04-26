@@ -6,6 +6,10 @@ Tools to support the registrar positoin for Arden Beaches Inc. (ABI)
 - Properties
 - Residents
 
+Not only do we need to gather and manage the approprite information, we need to make it available to people, where they need it. This includes printing reports for off-line use.
+- Possible Report Options: 
+  - export to Google Sheet & printing from there.
+
 ## Features
 
 ### Done
@@ -19,13 +23,17 @@ Tools to support the registrar positoin for Arden Beaches Inc. (ABI)
     - Associates with one or more Properties
     - Can be Deed Holders, Renters, or Dependents
     - Can mark as verified
+  - Record Purchased Shares
+      - Only Deed Holders
+      - Each transation: Date purchased, count
+      - Total count owned
+      - Assign shares to Property
 
 ### TODO
 
   - Record Purchased Shares
-    - Only Deed Holders
-    - Each transation: Date purchased, count
-    - Total count owned
+    - Transfer of Shares
+    - Void Purchase
   - Manage Beach Parties?
     - Reservations 
     - Sync to Invoices?
@@ -35,7 +43,7 @@ Tools to support the registrar positoin for Arden Beaches Inc. (ABI)
     - Once non-DeedHolder residents are verified, mail them Beach Passes
   - Import Lots
   - Import Properties
-  - Import Residence
+  - Import Residents
   - Sync Lot Fees with QuickBooks
   - Manage Donations
     - In QuickBooks?
