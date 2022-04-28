@@ -1,12 +1,13 @@
-= simple_form_for(@transacted_at) do |f|
+= simple_form_for(@item_transaction) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
   .form-inputs
-    = f.input :type, collection: ['ShareTransactions']
+    = f.input :type, collection: ['ShareTransactions'], as: :radio_buttons, label: 'Item Type'
+    = f.input :transaction_type, as: :radio_buttons
     = f.input :cost_per, as: :currency
     = f.input :quantity
-    = f.input :transacted_atd_at
+    = f.input :transacted_at
     / = f.input :cost_total, as: :currency
     = f.association :residency, collection: Residency.deed_holder
 

@@ -1,6 +1,7 @@
 class ItemTransaction < ApplicationRecord
   enum :transaction_type, { purchase: 0 }
   belongs_to :residency
+  belongs_to :from_residency
   has_one :resident, through: :residency
   has_one :property, through: :residency
   
