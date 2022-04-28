@@ -2,7 +2,7 @@ require "test_helper"
 
 class LotsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @lot = lots(:one)
+    @lot = FactoryBot.create(:lot)
   end
 
   test "should get index" do
@@ -17,7 +17,7 @@ class LotsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create lot" do
     assert_difference("Lot.count") do
-      post lots_url, params: { lot: { account_number: @lot.account_number, district: @lot.district, lot_number: @lot.lot_number, section: @lot.section, size: @lot.size, subdivision: @lot.subdivision } }
+      post lots_url, params: { lot: FactoryBot.attributes_for(:lot) }
     end
 
     assert_redirected_to lot_url(Lot.last)
@@ -34,7 +34,7 @@ class LotsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update lot" do
-    patch lot_url(@lot), params: { lot: { account_number: @lot.account_number, district: @lot.district, lot_number: @lot.lot_number, section: @lot.section, size: @lot.size, subdivision: @lot.subdivision } }
+    patch lot_url(@lot), params: { lot: FactoryBot.attributes_for(:lot, account_number: '12345678') }
     assert_redirected_to lot_url(@lot)
   end
 
