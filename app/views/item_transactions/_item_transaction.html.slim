@@ -1,0 +1,21 @@
+h1=< item_transaction.type.titleize 
+div id="#{dom_id item_transaction}"
+  
+  p
+    strong Transaction Type:
+    =< item_transaction.transaction_type.titleize
+  p
+    strong Cost per:
+    =< item_transaction.cost_per
+  p
+    strong Quantity:
+    =< item_transaction.quantity
+  p
+    strong Cost total:
+    =< item_transaction.cost_total
+  p
+    strong Residency:
+    =< item_transaction.residency
+  p
+    strong TransactedAt:
+    =< item_transaction.transacted_at

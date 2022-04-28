@@ -1,0 +1,27 @@
+p[style="color: green"] = notice
+
+h1 Item Transactions
+
+h2 Summary 
+
+table
+  thead
+    tr
+      th Item 
+      th Quantity
+      th Total
+  tbody
+    tr
+      td Shares
+      td =ShareTransaction.pluck(:quantity).sum
+      td =ShareTransaction.pluck(:cost_total).sum
+
+
+h2 Listing 
+
+#item_transactions
+  - columns = %i[type transaction_type cost_per quantity cost_total transacted_at residency ]
+  =render 'layouts/models_table', models: @item_transactions, columns: columns, allow_edit: false
+br
+
+= link_to "New item_transaction", new_item_transaction_path

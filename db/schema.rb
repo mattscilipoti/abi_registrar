@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_22_023142) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_28_025333) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "item_transactions", force: :cascade do |t|
+    t.string "type"
+    t.money "cost_per", scale: 2, default: "0.0"
+    t.integer "quantity", default: 0
+    t.money "cost_total", scale: 2, default: "0.0"
+    t.datetime "transacted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "residency_id"
+    t.integer "transaction_type"
+    t.bigint "from_residency_id"
+    t.index ["from_residency_id"], name: "index_item_transactions_on_from_residency_id"
+    t.index ["residency_id"], name: "index_item_transactions_on_residency_id"
+  end
 
   create_table "lots", force: :cascade do |t|
     t.integer "district"
@@ -36,18 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_22_023142) do
     t.integer "share_count", default: 0
   end
 
-  create_table "purchases", force: :cascade do |t|
-    t.string "type"
-    t.money "cost_per", scale: 2, default: "0.0"
-    t.integer "quantity", default: 0
-    t.money "cost_total", scale: 2, default: "0.0"
-    t.datetime "purchased_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "residency_id"
-    t.index ["residency_id"], name: "index_purchases_on_residency_id"
-  end
-
   create_table "residencies", force: :cascade do |t|
     t.bigint "property_id", null: false
     t.bigint "resident_id", null: false
@@ -69,8 +72,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_22_023142) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "item_transactions", "residencies"
+  add_foreign_key "item_transactions", "residencies", column: "from_residency_id"
   add_foreign_key "lots", "properties"
-  add_foreign_key "purchases", "residencies"
   add_foreign_key "residencies", "properties"
   add_foreign_key "residencies", "residents"
 end

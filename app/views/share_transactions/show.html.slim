@@ -1,0 +1,8 @@
+== render @share_transaction
+
+div
+  / => link_to "Edit this purchase", edit_share_transaction_path(@share_transaction)
+  / '|
+  =< link_to "Back to purchase shares", share_transactions_path
+
+  / = button_to "Destroy this purchase share", @share_transaction, method: :delete

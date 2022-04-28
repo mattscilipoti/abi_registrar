@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   
   resources :lots
   resources :properties
-  resources :purchase_shares, only: [:create, :index, :new, :show]
-  resources :purchases
+  resources :share_transactions, only: [:create, :index, :new, :show]
+  resources :item_transactions
   resources :residents
 
   # Defines the root path route ("/")

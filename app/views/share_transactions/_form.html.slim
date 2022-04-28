@@ -1,0 +1,14 @@
+= simple_form_for(@share_transaction) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :type, as: :hidden
+    = "Cost Per: $#{@share_transaction.cost_per}"
+    = f.input :quantity
+    
+    = f.input :transacted_at
+    = f.association :residency, collection: Residency.deed_holder
+
+  .form-actions
+    = f.button :submit
