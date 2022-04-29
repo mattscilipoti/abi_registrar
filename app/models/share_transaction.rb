@@ -1,6 +1,8 @@
 class ShareTransaction < ItemTransaction
   after_initialize :set_defaults
   after_create :increment_property_shares
+  # TODO: what is maximum? Percentage of total share count?
+  validates :quantity, numericality: { only_integer: true, in: 1..100 }
   # TODO: how to calculate shares after update?, delete?
   validate :validate_purchaser_is_deed_holder
 
@@ -17,7 +19,7 @@ class ShareTransaction < ItemTransaction
   end
 
   def validate_purchaser_is_deed_holder
-    errors.add(:residency, 'must be a Deed Holder') unless residency.deed_holder?  
+    errors.add(:residency, 'must be a Deed Holder') unless residency && residency.deed_holder?  
   end
 
 end

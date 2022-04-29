@@ -1,0 +1,24 @@
+h1 Record a Share Purchase
+
+= simple_form_for(@share_transaction, url: purchase_share_transactions_path) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    / = f.input :type, as: :hidden
+    = f.input :transaction_type, as: :hidden
+    strong Cost Per: 
+    ="$#{@share_transaction.cost_per}"
+    = f.input :quantity
+    
+    = f.input :transacted_at
+    = f.association :residency, collection: Residency.deed_holder
+
+  .form-actions
+    = f.button :submit
+
+
+br
+
+div
+  = link_to "Back to share transactions", share_transactions_path

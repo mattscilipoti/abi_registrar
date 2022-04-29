@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   
   resources :lots
   resources :properties
-  resources :share_transactions, only: [:create, :index, :new, :show]
+  resources :share_transactions, only: [:create, :index, :new, :show] do
+    collection do
+      get :purchase_new, as: :purchase_new
+      post :purchase
+    end
+  end
   resources :item_transactions
   resources :residents
 

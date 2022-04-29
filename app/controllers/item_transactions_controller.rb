@@ -68,7 +68,7 @@ class ItemTransactionsController < ApplicationController
       params.require(:item_transaction).permit(
         :cost_per, 
         :cost_total, 
-        :item_transactiond_at,
+        :transacted_at,
         :quantity, 
         :residency_id,
         :type, 
