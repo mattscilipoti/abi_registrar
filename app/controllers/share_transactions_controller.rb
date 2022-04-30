@@ -35,7 +35,6 @@ class ShareTransactionsController < ApplicationController
         format.html { redirect_to share_transaction_path(@share_transaction), notice: "Shares were successfully purchased." }
         format.json { render :show, status: :created, location: @share_transaction }
       else
-        debugger
         format.html { render :purchase_new, status: :unprocessable_entity }
         format.json { render json: @share_transaction.errors, status: :unprocessable_entity }
       end

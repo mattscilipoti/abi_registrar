@@ -7,18 +7,49 @@ h1 Record a Share Purchase
   .form-inputs
     / = f.input :type, as: :hidden
     = f.input :transaction_type, as: :hidden
-    strong Cost Per: 
-    ="$#{@share_transaction.cost_per}"
-    = f.input :quantity
     
+    = f.input :quantity
+    strong Total: 
+    span#quantity 0 
+    | &nbsp;X $
+    span#costPer= number_to_currency(@share_transaction.cost_per, unit: '')
+    
+    small 
+      | (per share)
+    |&nbsp;=&nbsp;
+    span#costTotal= number_to_currency(@share_transaction.cost_total)
+    
+    br
+    br
     = f.input :transacted_at
     = f.association :residency, collection: Residency.deed_holder
 
   .form-actions
-    = f.button :submit
-
+    = f.submit 'Save'
 
 br
 
 div
   = link_to "Back to share transactions", share_transactions_path
+
+javascript: 
+  var purchaseQuantityEl = document.querySelector('#share_transaction_quantity');
+  purchaseQuantityEl.addEventListener('change', calculateCostTotal);
+
+  function calculateCostTotal(event) {
+    let quantity = Number(event.target.value);
+
+    let dollarUSLocale = Intl.NumberFormat('en-US', {
+      style: "currency",
+      currency: "USD",
+    });
+    let quantityEl = document.querySelector('#quantity'); 
+    quantityEl.textContent = quantity;
+    
+    let costPerEl = document.querySelector('#costPer');
+    let costPer = Number(costPerEl.textContent);
+    
+    let costTotal = quantity * costPer;
+    let costTotalEl = document.querySelector('#costTotal');
+    costTotalEl.textContent = dollarUSLocale.format(costTotal);
+  }
