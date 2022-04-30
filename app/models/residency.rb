@@ -1,7 +1,7 @@
 class Residency < ApplicationRecord
   belongs_to :property
   belongs_to :resident
-  has_many :share_transactions, dependent: :destroy
+  has_many :share_transactions
   has_many :share_purchases, class_name: 'ShareTransaction', foreign_key: 'residency_id'
   has_many :share_transfers_from, class_name: 'ShareTransaction', foreign_key: 'from_residency_id'
   delegate :street_address, to: :property
