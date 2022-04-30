@@ -1,7 +1,7 @@
 class ShareTransaction < ItemTransaction
   after_initialize :set_defaults
   # TODO: what is maximum? Percentage of total share count?
-  validates :quantity, numericality: { only_integer: true } #, in: 1..100 }
+  validates :quantity, numericality: { only_integer: true, in: 1..100 }
   # TODO: how to calculate shares after update?, delete?
   validate :validate_purchaser_is_deed_holder
 
@@ -24,6 +24,14 @@ class ShareTransaction < ItemTransaction
 
   def validate_purchaser_is_deed_holder
     errors.add(:residency, 'must be a Deed Holder') unless residency && residency.deed_holder?  
+  end
+
+  private
+
+  def requested_transfer_quantity_is_available
+    if transfer? && quantity > from_residency.share_count
+      errors.add(:quantity, "must be less than or equal to owned shares: #{from_residency.share_count}")
+    end
   end
 
 end

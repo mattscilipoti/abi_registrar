@@ -6,6 +6,7 @@ class ItemTransaction < ApplicationRecord
   has_one :property, through: :residency
 
   validates :residency, presence: true
+  validate :requested_transfer_quantity_is_available
   
   def cost_per=(value)
     super
@@ -19,5 +20,11 @@ class ItemTransaction < ApplicationRecord
 
   def calculate_cost_total
     self.cost_total = cost_per.to_f * quantity.to_i
+  end
+
+  private
+
+  def requested_transfer_quantity_is_available
+    raise NotImplementedError, "must be implementd in STI child class"
   end
 end
