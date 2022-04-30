@@ -18,7 +18,7 @@ table
 h2 Listing 
 
 #item_transactions
-  - columns = %i[transaction_type cost_per quantity cost_total transacted_at residency ]
+  - columns = %i[transaction_type cost_per quantity cost_total transacted_at residency from_residency]
   =render 'layouts/models_table', models: @share_transactions, columns: columns, allow_edit: false
 br
 

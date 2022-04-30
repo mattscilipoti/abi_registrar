@@ -3,7 +3,7 @@ class Property < ApplicationRecord
   has_many :residencies
   has_many :residents, through: :residencies
   has_many :share_transactions, through: :residencies
-
+  
   def lot_count
     lots.size
   end
@@ -13,7 +13,7 @@ class Property < ApplicationRecord
   end
 
   def share_count
-    share_transactions.sum(:quantity)
+    residencies.all.sum(&:share_count)
   end
 
   def street_address
