@@ -1,0 +1,27 @@
+h1 Record a Share Transfer
+
+= simple_form_for(@share_transaction, url: transfer_share_transactions_path) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    / = f.input :type, as: :hidden
+    = f.input :transaction_type, as: :hidden
+    = f.association :from_residency, collection: ShareTransaction.all.collect {|s| s.residency}.uniq
+    = f.association :residency, label: 'To residency', collection: Residency.deed_holder
+
+    = f.input :quantity, data: { \
+                           id: @share_transaction.id, \
+                           action: "share_purchase#calculate_total" \
+                         }
+    
+    = f.input :transacted_at
+
+  .form-actions
+    = f.button :submit
+
+
+br
+
+div
+  = link_to "Back to share transactions", share_transactions_path

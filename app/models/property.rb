@@ -12,8 +12,8 @@ class Property < ApplicationRecord
     lots.all? {|lot| lot.paid_on? }
   end
 
-  def recalculate_share_count
-    update share_count: share_transactions.sum(:quantity)
+  def share_count
+    share_transactions.sum(:quantity)
   end
 
   def street_address

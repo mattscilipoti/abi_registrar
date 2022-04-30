@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     collection do
       get :purchase_new, as: :purchase_new
       post :purchase
+      get :transfer_new, as: :transfer_new
+      post :transfer
     end
   end
   resources :item_transactions

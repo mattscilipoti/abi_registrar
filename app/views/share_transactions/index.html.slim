@@ -22,4 +22,6 @@ h2 Listing
   =render 'layouts/models_table', models: @share_transactions, columns: columns, allow_edit: false
 br
 
-= link_to "Record a Share Purchase", purchase_new_share_transactions_path
+ul
+  li= link_to "Record a Share Purchase", purchase_new_share_transactions_path
+  li= link_to "Record a Share Transfer", transfer_new_share_transactions_path

@@ -1,5 +1,5 @@
 class ItemTransaction < ApplicationRecord
-  enum :transaction_type, { purchase: 0 }
+  enum :transaction_type, { purchase: 0, transfer: 1 }
   belongs_to :residency
   belongs_to :from_residency, class_name: 'Residency', optional: true
   has_one :resident, through: :residency
@@ -18,6 +18,6 @@ class ItemTransaction < ApplicationRecord
   end
 
   def calculate_cost_total
-    self.cost_total = cost_per * quantity
+    self.cost_total = cost_per.to_f * quantity.to_i
   end
 end

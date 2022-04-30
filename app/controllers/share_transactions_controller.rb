@@ -48,7 +48,36 @@ class ShareTransactionsController < ApplicationController
   # GET /share_transactions/1 or /share_transactions/1.json
   def show
   end
+
+  # POST //share_transactions/transfer or //share_transactions/transfer.json
+  def transfer
+    @share_transaction = ShareTransaction.new(transfer_shares_params)
+    from_residency = Residency.find(@share_transaction.from_residency_id)
+    share_reduction = ShareTransaction.new(
+      transaction_type: :transfer, 
+      quantity: -1 * @share_transaction.quantity, 
+      residency: from_residency,
+      transacted_at: @share_transaction.transacted_at,
+    )
+
+    respond_to do |format|
+      ActiveRecord::Base.transaction do
+        @share_transaction.save!
+        share_reduction.save!
+      end
+      
+      format.html { redirect_to share_transaction_path(@share_transaction), notice: "Shares were successfully transferred." }
+      format.json { render :show, status: :created, location: @share_transaction }
+
+    rescue ActiveRecord::RecordInvalid
+      format.html { render :transfer_new, status: :unprocessable_entity }
+      format.json { render json: @share_transaction.errors, status: :unprocessable_entity }
+    end
+  end
   
+  def transfer_new
+    @share_transaction = ShareTransaction.new(transaction_type: :transfer)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -59,6 +88,16 @@ class ShareTransactionsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def purchase_shares_params
       params.require(:share_transaction).permit(
+        :residency_id,
+        :quantity, 
+        :transacted_at, 
+        :transaction_type,
+      )
+    end
+
+    def transfer_shares_params
+      params.require(:share_transaction).permit(
+        :from_residency_id,
         :residency_id,
         :quantity, 
         :transacted_at, 

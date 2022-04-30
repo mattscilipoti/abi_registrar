@@ -23,16 +23,17 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Associates with one or more Properties
     - Can be Deed Holders, Renters, or Dependents
     - Can mark as verified
-  - Record Purchased Shares
+  - Manage Shares
+    - Record Purchased Shares
       - Only Deed Holders
       - Each transation: Date purchased, count
       - Total count owned
       - Assign shares to Property
+    - Transfer Shares
 
 ### TODO
 
-  - Record Purchased Shares
-    - Transfer of Shares
+  - Manage Shares
     - Void Purchase
   - Manage Beach Parties?
     - Reservations 
