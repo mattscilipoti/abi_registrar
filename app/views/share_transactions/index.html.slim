@@ -10,9 +10,9 @@ table
       th Total
   tbody
     tr
-      td Shares
-      td =ShareTransaction.pluck(:quantity).sum
-      td =ShareTransaction.pluck(:cost_total).sum
+      td Shares Purchased
+      td =ShareTransaction.purchase.sum(:quantity)
+      td =number_to_currency(ShareTransaction.purchase.sum(:cost_total))
 
 
 h2 Listing 
