@@ -11,15 +11,15 @@ table
   tbody
     tr
       td Shares
-      td =ShareTransaction.pluck(:quantity).sum
-      td =ShareTransaction.pluck(:cost_total).sum
+      td.number =ShareTransaction.pluck(:quantity).sum
+      td.number =number_to_currency(ShareTransaction.pluck(:cost_total).sum)
 
 
 h2 Listing 
 
 #item_transactions
   - columns = %i[type transaction_type cost_per quantity cost_total transacted_at residency ]
-  =render 'layouts/models_table', models: @item_transactions, columns: columns, allow_edit: false
+  =render 'layouts/models_table', models: @item_transactions.collect{|t| t.becomes(ItemTransaction)}, columns: columns
 br
 
 = link_to "New item_transaction", new_item_transaction_path

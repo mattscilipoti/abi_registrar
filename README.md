@@ -30,11 +30,10 @@ Not only do we need to gather and manage the approprite information, we need to 
       - Total count owned
       - Assign shares to Property
     - Transfer Shares
+    - Can Edit/Delete via Item Tranaactions
 
 ### TODO
 
-  - Manage Shares
-    - Void Purchase
   - Manage Beach Parties?
     - Reservations 
     - Sync to Invoices?

@@ -54,7 +54,7 @@ class ShareTransactionsController < ApplicationController
     @share_transaction = ShareTransaction.new(transfer_shares_params)
 
     respond_to do |format|
-      if  @share_transaction.save
+      if @share_transaction.save
         format.html { redirect_to share_transaction_path(@share_transaction), notice: "Shares were successfully transferred." }
         format.json { render :show, status: :created, location: @share_transaction }
       else

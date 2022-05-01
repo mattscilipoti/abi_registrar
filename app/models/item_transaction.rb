@@ -5,7 +5,7 @@ class ItemTransaction < ApplicationRecord
   has_one :resident, through: :residency
   has_one :property, through: :residency
 
-  validates :residency, presence: true
+  validates_presence_of :quantity, :residency, :transacted_at, :transaction_type
   validate :requested_transfer_quantity_is_available
   
   def cost_per=(value)
@@ -25,6 +25,8 @@ class ItemTransaction < ApplicationRecord
   private
 
   def requested_transfer_quantity_is_available
+    return unless transfer?
+    
     raise NotImplementedError, "must be implementd in STI child class"
   end
 end

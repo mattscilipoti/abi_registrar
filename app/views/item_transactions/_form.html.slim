@@ -1,15 +1,5 @@
-= simple_form_for(@item_transaction) do |f|
-  = f.error_notification
-  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+- if @item_transaction.transaction_type == 'purchase'
+  = render 'item_transactions/purchase_transaction', item_transaction: @item_transaction
 
-  .form-inputs
-    = f.input :type, collection: ['ShareTransactions'], as: :radio_buttons, label: 'Item Type'
-    = f.input :transaction_type, as: :radio_buttons
-    = f.input :cost_per, as: :currency
-    = f.input :quantity
-    = f.input :transacted_at
-    / = f.input :cost_total, as: :currency
-    = f.association :residency, collection: Residency.deed_holder
-
-  .form-actions
-    = f.button :submit
+- if @item_transaction.transaction_type == 'transfer'
+  = render 'item_transactions/transfer_transaction', item_transaction: @item_transaction

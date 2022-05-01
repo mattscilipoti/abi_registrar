@@ -31,6 +31,7 @@ html lang=I18n.locale
           = menu_list_item "Properties", properties_path, class: 'no-link-icon'
           = menu_list_item "Residents", residents_path, class: 'no-link-icon'
           = menu_list_item "Shares", share_transactions_path, class: 'no-link-icon'
+          = menu_list_item "Item Transactions", item_transactions_path, class: 'no-link-icon'
           - unless Rails.env.production?
             li.menu-text.environment= "(#{Rails.env})"
       

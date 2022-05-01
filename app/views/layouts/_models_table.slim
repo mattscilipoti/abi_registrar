@@ -7,6 +7,7 @@ table
       th= column_name.to_s.gsub('_i18n', '').titleize
     - if allow_edit
       th Edit
+      th Delete
   tbody
     - models.each do |model|
       tr
@@ -22,3 +23,4 @@ table
               =column_value
         - if allow_edit
           td= link_to "Edit", edit_polymorphic_path(model)
+          td= button_to "Destroy", model, method: :delete
