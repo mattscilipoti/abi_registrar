@@ -1,12 +1,12 @@
 class ItemTransaction < ApplicationRecord
   has_paper_trail
-  enum :transaction_type, { purchase: 0, transfer: 1 }
+  enum :activity, { purchase: 0, transfer: 1 }
   belongs_to :residency
   belongs_to :from_residency, class_name: 'Residency', optional: true
   has_one :resident, through: :residency
   has_one :property, through: :residency
 
-  validates_presence_of :quantity, :residency, :transacted_at, :transaction_type
+  validates_presence_of :quantity, :residency, :transacted_at, :activity
   validate :requested_transfer_quantity_is_available
   
   def cost_per=(value)

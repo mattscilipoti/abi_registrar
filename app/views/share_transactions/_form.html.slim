@@ -4,7 +4,7 @@
 
   .form-inputs
     = f.input :type, as: :hidden
-    = f.input :transaction_type, as: :radio_buttons
+    = f.input :activity, as: :radio_buttons
     = "Cost Per: $#{@share_transaction.cost_per}"
     = f.input :quantity
     

@@ -1,14 +1,17 @@
-- original_type = versions.first.reify.class 
-- columns = original_type.columns
-table 
-  thead
-    tr
-      - columns.each do |column|
-        th= column.name  
-  tbody
-    - versions.each do |version|
+- if versions.blank? || versions.first.reify.nil?
+  | No Versions
+- else
+  - original_type = versions.first.reify.class 
+  - columns = original_type.columns
+  table 
+    thead
       tr
-        - columns.each_with_index do |column, column_index|
-          td
-            =version.reify.send(column.name)
-        
+        - columns.each do |column|
+          th= column.name  
+    tbody
+      - versions.each do |version|
+        tr
+          - columns.each_with_index do |column, column_index|
+            td
+              =version.reify.send(column.name)
+          

@@ -42,7 +42,7 @@ class ShareTransactionsController < ApplicationController
   end
 
   def purchase_new
-    @share_transaction = ShareTransaction.new(transaction_type: :purchase)
+    @share_transaction = ShareTransaction.new(activity: :purchase)
   end
   
   # GET /share_transactions/1 or /share_transactions/1.json
@@ -65,7 +65,7 @@ class ShareTransactionsController < ApplicationController
   end
   
   def transfer_new
-    @share_transaction = ShareTransaction.new(transaction_type: :transfer)
+    @share_transaction = ShareTransaction.new(activity: :transfer)
   end
 
   private
@@ -80,7 +80,7 @@ class ShareTransactionsController < ApplicationController
         :residency_id,
         :quantity, 
         :transacted_at, 
-        :transaction_type,
+        :activity,
       )
     end
 
@@ -90,7 +90,7 @@ class ShareTransactionsController < ApplicationController
         :residency_id,
         :quantity, 
         :transacted_at, 
-        :transaction_type,
+        :activity,
       )
     end
 end

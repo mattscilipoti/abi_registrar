@@ -7,7 +7,7 @@ fieldset
 
     .form-inputs
       = f.input :type, collection: ['ShareTransaction'], as: :radio_buttons, label: 'Item Type'
-      = f.input :transaction_type, value: 'transfer', as: :hidden
+      = f.input :activity, value: 'transfer', as: :hidden
       = f.input :quantity
       = f.input :transacted_at
       = f.association :from_residency, required: true, collection:Residency.deed_holder

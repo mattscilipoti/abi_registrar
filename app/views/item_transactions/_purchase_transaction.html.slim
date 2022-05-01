@@ -7,7 +7,7 @@ fieldset
 
     .form-inputs
       = f.input :type, collection: ['ShareTransaction'], as: :radio_buttons, label: 'Item Type'
-      = f.input :transaction_type, value: 'purchase', as: :hidden
+      = f.input :activity, value: 'purchase', as: :hidden
       = f.input :cost_per, as: :currency, required: true
       = f.input :quantity
       = f.input :transacted_at

@@ -7,8 +7,8 @@ class ShareTransaction < ItemTransaction
 
   protected
   def default_cost_per_share
-    case transaction_type
-    when :purchase
+    case activity
+    when :purchase, 'purchase'
       50.00
     else
       0

@@ -6,7 +6,7 @@ h1 Record a Share Transfer
 
   .form-inputs
     / = f.input :type, as: :hidden
-    = f.input :transaction_type, as: :hidden
+    = f.input :activity, as: :hidden
     = f.association :from_residency, collection: ShareTransaction.all.collect {|s| s.residency}.uniq
     = f.association :residency, label: 'To residency', collection: Residency.deed_holder
 

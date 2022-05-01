@@ -39,6 +39,8 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Undo lastest change
     - Revert to previous version
     - List deleted transactions
+  - Find Transactions
+    - Filter by Type, Activity
   - Manage Beach Parties?
     - Reservations 
     - Sync to Invoices?
