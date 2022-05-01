@@ -1,5 +1,9 @@
 h1 Share Transactions
 
+ul
+  li= link_to "Record a Share Purchase", purchase_new_share_transactions_path
+  li= link_to "Record a Share Transfer", transfer_new_share_transactions_path
+
 h2 Summary 
 
 table
@@ -11,8 +15,8 @@ table
   tbody
     tr
       td Shares Purchased
-      td =ShareTransaction.purchase.sum(:quantity)
-      td =number_to_currency(ShareTransaction.purchase.sum(:cost_total))
+      td.number =ShareTransaction.purchase.sum(:quantity)
+      td.number =number_to_currency(ShareTransaction.purchase.sum(:cost_total))
 
 
 h2 Listing 

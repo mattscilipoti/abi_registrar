@@ -31,9 +31,14 @@ Not only do we need to gather and manage the approprite information, we need to 
       - Assign shares to Property
     - Transfer Shares
     - Can Edit/Delete via Item Tranaactions
+  - Audit Transactions
+    - ItemTransactions#show lists pervious versions
 
 ### TODO
-
+  - Audit Transactions
+    - Undo lastest change
+    - Revert to previous version
+    - List deleted transactions
   - Manage Beach Parties?
     - Reservations 
     - Sync to Invoices?

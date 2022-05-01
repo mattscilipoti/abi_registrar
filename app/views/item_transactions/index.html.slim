@@ -10,7 +10,7 @@ table
       th Total
   tbody
     tr
-      td Shares
+      td Shares Purchased
       td.number =ShareTransaction.pluck(:quantity).sum
       td.number =number_to_currency(ShareTransaction.pluck(:cost_total).sum)
 

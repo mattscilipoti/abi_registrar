@@ -1,4 +1,5 @@
 class ItemTransaction < ApplicationRecord
+  has_paper_trail
   enum :transaction_type, { purchase: 0, transfer: 1 }
   belongs_to :residency
   belongs_to :from_residency, class_name: 'Residency', optional: true
