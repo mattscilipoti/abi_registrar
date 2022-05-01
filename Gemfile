@@ -76,6 +76,7 @@ gem 'enum_help' # Help ActiveRecord::Enum feature to work fine with I18n and sim
 gem 'factory_bot_rails', group: [:development, :test]
 gem 'faker', require: false, group: [:development, :test]
 gem 'html2slim', require: false, group: :development
+gem 'paper_trail'
 gem 'railroady', group: :development # UML class diagram generator.
 gem 'sassc-rails'
 gem 'simple_form' # Forms made easy for Rails
