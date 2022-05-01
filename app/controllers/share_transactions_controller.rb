@@ -23,7 +23,7 @@ class ShareTransactionsController < ApplicationController
 
   # GET /share_transactions or /share_transactions.json
   def index
-    @share_transactions = ShareTransaction.all.order(transacted_at: :desc)
+    @share_transactions = ShareTransaction.includes(residency: [:resident, :property]).includes(:from_residency).all.order(transacted_at: :desc)
   end
 
   # POST //share_transactions/purchase or //share_transactions/purchase.json

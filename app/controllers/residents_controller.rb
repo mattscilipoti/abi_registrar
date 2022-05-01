@@ -3,7 +3,7 @@ class ResidentsController < ApplicationController
 
   # GET /residents or /residents.json
   def index
-    @residents = Resident.all
+    @residents = Resident.includes(:properties, :lots).all
   end
 
   # GET /residents/1 or /residents/1.json

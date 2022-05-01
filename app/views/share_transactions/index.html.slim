@@ -15,8 +15,8 @@ table
   tbody
     tr
       td Shares Purchased
-      td.number =ShareTransaction.purchase.sum(:quantity)
-      td.number =number_to_currency(ShareTransaction.purchase.sum(:cost_total))
+      td.number =ShareTransaction.includes(:residency).purchase.sum(:quantity)
+      td.number =number_to_currency(ShareTransaction.includes([:residency]).purchase.sum(:cost_total))
 
 
 h2 Listing 
