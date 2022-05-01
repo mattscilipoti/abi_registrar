@@ -69,6 +69,10 @@ fieldset {
   legend {
     margin-bottom: (-3 * $padding-default); // WORKAROUND: for gap below legend
   }
+  &.warning {
+    border: 3px double $color-warning;
+    color: $color-warning;
+  }
 }
 
 form {
