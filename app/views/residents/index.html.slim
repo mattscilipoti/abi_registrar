@@ -1,4 +1,6 @@
-h1 Residents
+h1 
+  | Residents
+  .subheader= "(sort by #{params[:sort]})"
 
 #residents
   - columns = %i[full_name email_address property_count lot_fees_paid? share_count is_minor age_of_minor]

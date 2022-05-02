@@ -72,6 +72,7 @@ group :test do
 end
 
 # App Custom gems
+gem 'addressable'
 gem 'bullet', group: [:development] # help to kill N+1 queries and unused eager loading
 gem 'enum_help' # Help ActiveRecord::Enum feature to work fine with I18n and simple_form.
 gem 'factory_bot_rails', group: [:development, :test]
