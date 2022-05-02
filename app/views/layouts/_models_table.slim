@@ -6,13 +6,19 @@ table
     - for column_name in columns do
       - column_caption = column_name.to_s.gsub('_i18n', '').titleize
       - index_path = models.first.class.table_name
-      - sort_direction = 'asc'
-      - if params[:sort] && column_name.to_s == params[:sort][:column]
-        - sort_direction = case params[:sort][:direction]; when 'asc'; 'desc'; else 'asc'; end
-      - sort_params = { sort: {column: column_name, direction: sort_direction }}
+      - default_sort_direction = 'asc'
+      - default_sort_column = 'full_name'
+      - sort_column = params[:sort] ? params[:sort][:column] : default_sort_column
+      - sort_direction = params[:sort] ? params[:sort][:direction] : default_sort_direction
+      -# sort link
+      - if column_name.to_s == sort_column
+        - sort_direction_indicator = sort_direction == 'asc' ? '▲' : '▼'
+        - toggled_sort_direction = sort_direction == 'asc' ? 'desc' : 'asc'
+        - column_caption += " #{sort_direction_indicator}"
+      - sort_params = { sort: {column: column_name, direction: toggled_sort_direction }}
       - index_uri = Addressable::URI.new(path: index_path, query: sort_params.to_param)
 
-      th= link_to(column_caption, index_uri.to_s)
+      th= link_to(column_caption, index_uri.to_s, class: 'no-link-icon')
 
     - if allow_edit
       th Edit
