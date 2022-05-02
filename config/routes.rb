@@ -3,8 +3,15 @@ Rails.application.routes.draw do
   
   resources :lots
   resources :properties
-  resources :purchase_shares, only: [:create, :index, :new, :show]
-  resources :purchases
+  resources :share_transactions, only: [:create, :index, :new, :show] do
+    collection do
+      get :purchase_new, as: :purchase_new
+      post :purchase
+      get :transfer_new, as: :transfer_new
+      post :transfer
+    end
+  end
+  resources :item_transactions
   resources :residents
 
   # Defines the root path route ("/")

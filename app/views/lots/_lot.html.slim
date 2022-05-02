@@ -42,4 +42,4 @@ fieldset
       | Residents 
       small= "(#{lot.residents.size} ct.)"
   - columns = %i[resident resident_status_i18n]
-  =render 'layouts/models_table', models: lot.residencies, columns: columns, allow_edit: false, allow_show: false
+  =render 'layouts/models_table', models: lot.residencies.includes(:resident), columns: columns, allow_edit: false, allow_show: false

@@ -1,0 +1,17 @@
+fieldset
+  legend 
+    h2 For Transfer 
+  = simple_form_for(@item_transaction.becomes(ItemTransaction)) do |f|
+    = f.error_notification
+    = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+    .form-inputs
+      = f.input :type, collection: ['ShareTransaction'], as: :radio_buttons, label: 'Item Type'
+      = f.input :activity, value: 'transfer', as: :hidden
+      = f.input :quantity
+      = f.input :transacted_at
+      = f.association :from_residency, required: true, collection:Residency.deed_holder
+      = f.association :residency, label: 'To Residency', collection: Residency.deed_holder
+
+    .form-actions
+      = f.button :submit

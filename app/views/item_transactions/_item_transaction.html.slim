@@ -1,0 +1,35 @@
+h1=< item_transaction.type.titleize 
+div id="#{dom_id item_transaction}"
+  
+  p
+    strong Activity:
+    =< item_transaction.activity.titleize
+  p
+    strong Cost per:
+    =< item_transaction.cost_per
+  p
+    strong Quantity:
+    =< item_transaction.quantity
+  p
+    strong Cost total:
+    =< item_transaction.cost_total
+  p
+    strong From Residency:
+    =< item_transaction.from_residency
+  p
+    strong Residency:
+    =< item_transaction.residency
+  p
+    strong Transacted At:
+    =< item_transaction.transacted_at
+  p
+    strong Created At:
+    =< item_transaction.created_at
+  p
+    strong Updated At:
+    =< item_transaction.updated_at
+
+fieldset 
+  legend 
+    h2 Versions (#{item_transaction.versions.count})
+  = render partial: 'layouts/versions', object: item_transaction.versions

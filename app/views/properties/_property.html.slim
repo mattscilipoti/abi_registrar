@@ -13,7 +13,7 @@ fieldset
       | Residents 
       small= "(#{property.residents.size} ct.)"
   - columns = %i[resident resident_status_i18n email_address]
-  =render 'layouts/models_table', models: property.residencies, columns: columns, allow_edit: false, allow_show: false
+  =render 'layouts/models_table', models: property.residencies.includes(:resident), columns: columns, allow_edit: false, allow_show: false
 
 fieldset
   legend 

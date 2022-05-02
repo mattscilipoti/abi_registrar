@@ -1,0 +1,5 @@
+- if @item_transaction.activity == 'purchase'
+  = render 'item_transactions/purchase_transaction', item_transaction: @item_transaction
+
+- if @item_transaction.activity == 'transfer'
+  = render 'item_transactions/transfer_transaction', item_transaction: @item_transaction

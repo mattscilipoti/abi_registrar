@@ -3,7 +3,7 @@ class PropertiesController < ApplicationController
 
   # GET /properties or /properties.json
   def index
-    @properties = Property.all
+    @properties = Property.includes(:lots).all
   end
 
   # GET /properties/1 or /properties/1.json

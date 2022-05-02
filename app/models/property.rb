@@ -2,8 +2,8 @@ class Property < ApplicationRecord
   has_many :lots
   has_many :residencies
   has_many :residents, through: :residencies
-  has_many :purchase_shares, through: :residencies
-
+  has_many :share_transactions, through: :residencies
+  
   def lot_count
     lots.size
   end
@@ -12,8 +12,8 @@ class Property < ApplicationRecord
     lots.all? {|lot| lot.paid_on? }
   end
 
-  def recalculate_share_count
-    update share_count: purchase_shares.sum(:quantity)
+  def share_count
+    residencies.all.sum(&:share_count)
   end
 
   def street_address

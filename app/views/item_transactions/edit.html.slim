@@ -1,0 +1,12 @@
+h1 Editing Item Transaction
+
+h2 Warning: You are now editing a transaction directly, with without helpful validations and business rules. All edits are audited.
+
+== render "form", item_transaction: @item_transaction
+
+br
+
+div
+  => link_to "Show this item_transaction", @item_transaction
+  '|
+  =< link_to "Back to item_transactions", item_transactions_path

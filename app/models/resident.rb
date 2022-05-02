@@ -23,6 +23,10 @@ class Resident < ApplicationRecord
     properties.size
   end
 
+  def share_count
+    residencies.all.sum(&:share_count)
+  end
+
   def to_s
     "#{full_name} (#{email_address})"
   end
