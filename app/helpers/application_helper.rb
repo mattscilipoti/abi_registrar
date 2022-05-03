@@ -11,7 +11,7 @@ module ApplicationHelper
       raise ArgumentError, "Unsupported flash_type (#{flash_type})"
     end
   end
-  
+
   def flash_tag(flash_type, message, caption: nil)
     content_tag(:div, :class => "flash highlight #{flash_type}") do
       icon = flash_icon_name(flash_type)
@@ -25,6 +25,19 @@ module ApplicationHelper
     default_html_options = { class: default_css_classes}
     content_tag(:li, default_html_options) do
       link_to caption, url_options, html_options
+    end
+  end
+
+  def search_form_tag(url_options, html_options={})
+    default_html_options = {
+      class: 'search-form',
+      method: :get
+    }
+    default_html_options.merge!(html_options)
+    form_tag(url_options, default_html_options) do
+      concat label_tag(:q, 'Search')
+      concat text_field_tag(:q, params[:q], class: 'search')
+      concat submit_tag("Search")
     end
   end
 end

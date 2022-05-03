@@ -8,7 +8,7 @@ table
     - for column_name in columns do
       - column_caption = column_name.to_s.gsub('_i18n', '').titleize
       - index_path = models.first.class.table_name
-      
+
       -# sort link
       - sort_direction = default_sort_direction
       - if column_name.to_s == current_sort_column
@@ -33,8 +33,8 @@ table
           td
             -if column_index == 0
               - if allow_show
-                =link_to column_value, model, title: 'Show this resident' 
-              - else 
+                =link_to column_value, model, title: 'Show this resident'
+              - else
                 =column_value
             -else
               =column_value

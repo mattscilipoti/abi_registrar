@@ -1,9 +1,14 @@
 class Property < ApplicationRecord
+  def self.searchable_columns
+    [:street_number, :street_name]
+  end
+  include PgSearch::Model
+
   has_many :lots
   has_many :residencies
   has_many :residents, through: :residencies
   has_many :share_transactions, through: :residencies
-  
+
   def lot_count
     lots.size
   end

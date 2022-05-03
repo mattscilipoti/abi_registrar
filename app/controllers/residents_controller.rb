@@ -8,7 +8,12 @@ class ResidentsController < ApplicationController
       params[:sort] = { column: default_sort_column, direction: 'asc' }
     end
 
-    residents = Resident.includes(:properties, :lots)    
+    if params[:q]
+      residents = Resident.search_by_all(params[:q])
+    else
+      residents = Resident.includes(:properties, :lots)
+    end
+
     @residents = sort_models(residents, :last_name, params[:sort])
   end
 
@@ -72,16 +77,16 @@ class ResidentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def resident_params
       params.require(:resident).permit(
-        :last_name, 
-        :first_name, 
-        :email_address, 
-        :is_minor, 
+        :last_name,
+        :first_name,
+        :email_address,
+        :is_minor,
         :age_of_minor,
         residencies_attributes: [
-          :id, 
-          :resident_id, 
-          :property_id, 
-          :resident_status, 
+          :id,
+          :resident_id,
+          :property_id,
+          :resident_status,
           :verified_on,
           :_destroy
         ]

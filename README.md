@@ -7,7 +7,7 @@ Tools to support the registrar positoin for Arden Beaches Inc. (ABI)
 - Residents
 
 Not only do we need to gather and manage the approprite information, we need to make it available to people, where they need it. This includes printing reports for off-line use.
-- Possible Report Options: 
+- Possible Report Options:
   - export to Google Sheet & printing from there.
 
 ## Features
@@ -23,6 +23,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Associates with one or more Properties
     - Can be Deed Holders, Renters, or Dependents
     - Can mark as verified
+    - Search by Last Name, Property Address, or Lot info
   - Manage Shares
     - Record Purchased Shares
       - Only Deed Holders
@@ -34,6 +35,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Audit Transactions
     - ItemTransactions#show lists previous versions
 
+
 ### TODO
   - Audit Transactions
     - Undo lastest change
@@ -42,7 +44,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Find Transactions
     - Filter by Type, Activity
   - Manage Beach Parties?
-    - Reservations 
+    - Reservations
     - Sync to Invoices?
     - Vehicle Passes
   - Manage Beach Passes

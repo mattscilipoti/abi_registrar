@@ -1,4 +1,20 @@
 class Resident < ApplicationRecord
+  def self.searchable_columns
+    [:last_name]
+  end
+
+  include PgSearch::Model
+  pg_search_scope :search_by_all,
+    # Reminder: first_name, email_address are encrypted
+    against: searchable_columns,
+    associated_against: {
+      properties: Property.searchable_columns,
+      lots: Lot.searchable_columns
+    },
+    using: {
+      tsearch: { prefix: true }
+    }
+
   encrypts :age_of_minor
   encrypts :email_address, deterministic: true
   encrypts :first_name, deterministic: true
@@ -18,7 +34,7 @@ class Resident < ApplicationRecord
   def lot_fees_paid?
     lots.all? {|lot| lot.paid_on? }
   end
-    
+
   def property_count
     properties.size
   end

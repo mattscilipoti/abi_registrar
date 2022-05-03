@@ -6,9 +6,9 @@
   font-family: 'Font Awesome 6 Solid';
   font-style: normal;
   font-weight: 900;
-  src: 
-    url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.woff2") format("woff2"), 
-    url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.ttf') format("truetype"); 
+  src:
+    url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.woff2") format("woff2"),
+    url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.ttf') format("truetype");
 }
 
 body {
@@ -18,17 +18,17 @@ body {
 
 a {
   color: $color-text-dark-on-light;
-  text-decoration: none; 
+  text-decoration: none;
 
   &.no-link-icon:after {
     content: '' !important // override (default) link icon
   }
   &:visited {
-    color: $color-text-dark-on-light; 
+    color: $color-text-dark-on-light;
   }
   &:hover {
-    color: $color-primary; 
-    text-decoration: underline; 
+    color: $color-primary;
+    text-decoration: underline;
   }
   // Highlight image when hover
   .icon:hover {
@@ -79,7 +79,7 @@ form {
   div.input {
     margin-top: $padding-default;
   }
-  
+
   input {
     margin: $padding-default;
 
@@ -88,6 +88,9 @@ form {
     }
     &[type='text'] {
       width: 100%;
+    }
+    &.search {
+      max-width: 400px;
     }
     &.url {
       width: 100%;
@@ -186,7 +189,7 @@ nav {
   }
 }
 
-// Section: Table 
+// Section: Table
 table {
   border:1px solid $color-secondary;
   border-spacing: 1px;
@@ -205,10 +208,10 @@ table {
     }
     &.icon {
       text-align: center;
-    }    
+    }
     &.number {
       text-align: right;
-    }    
+    }
     &.url {
       font-size: .7em;
       font-stretch: condensed;
@@ -239,7 +242,7 @@ ul {
   border: gray solid 1px;
   font-size: 1.2em;
   padding: $padding-default;
-  
+
   &.alert {
     background-color: lighten($color-warning, 55%);
     color: $color-warning;
