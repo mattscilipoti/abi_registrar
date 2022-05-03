@@ -3,20 +3,13 @@ class ResidentsController < ApplicationController
 
   # GET /residents or /residents.json
   def index
-    @residents = Resident.includes(:properties, :lots)
-    if params[:sort]
-      sort_column = params[:sort][:column] 
-      sort_direction = params[:sort][:direction] || 'asc'
-      # WORKAROUND: support sorting my non-AR columns
-      # Yes, this is inefficient but our lists are small
-      @residents = @residents.all.sort_by{|r| r.send(sort_column)}
-      if sort_direction != 'asc'  
-        @residents = @residents.reverse
-      end
-    else
-      @residents = @residents.order(:last_name)
+    default_sort_column = 'full_name'
+    if params[:sort].blank?
+      params[:sort] = { column: default_sort_column, direction: 'asc' }
     end
 
+    residents = Resident.includes(:properties, :lots)    
+    @residents = sort_models(residents, :last_name, params[:sort])
   end
 
   # GET /residents/1 or /residents/1.json

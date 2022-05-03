@@ -23,7 +23,12 @@ class ShareTransactionsController < ApplicationController
 
   # GET /share_transactions or /share_transactions.json
   def index
-    @share_transactions = ShareTransaction.includes(residency: [:resident, :property]).includes(:from_residency).all.order(transacted_at: :desc)
+    default_sort_column = 'transacted_at'
+    if params[:sort].blank?
+      params[:sort] = { column: default_sort_column, direction: 'desc' }
+    end
+    share_transactions = ShareTransaction.includes(residency: [:resident, :property]).includes(:from_residency).order(transacted_at: :desc)
+    @share_transactions = sort_models(share_transactions, default_sort_column, params[:sort])
   end
 
   # POST //share_transactions/purchase or //share_transactions/purchase.json

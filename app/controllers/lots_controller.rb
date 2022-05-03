@@ -3,7 +3,12 @@ class LotsController < ApplicationController
 
   # GET /lots or /lots.json
   def index
-    @lots = Lot.all
+    default_sort_column = 'lot_number'
+    if params[:sort].blank?
+      params[:sort] = { column: default_sort_column, direction: 'asc' }
+    end
+    lots = Lot.all
+    @lots = sort_models(lots, default_sort_column, params[:sort])
   end
 
   # GET /lots/1 or /lots/1.json
