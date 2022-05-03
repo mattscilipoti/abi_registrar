@@ -32,7 +32,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Transfer Shares
     - Can Edit/Delete via Item Tranaactions
   - Audit Transactions
-    - ItemTransactions#show lists pervious versions
+    - ItemTransactions#show lists previous versions
 
 ### TODO
   - Audit Transactions

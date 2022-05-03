@@ -3,7 +3,13 @@ class ResidentsController < ApplicationController
 
   # GET /residents or /residents.json
   def index
-    @residents = Resident.includes(:properties, :lots).all
+    default_sort_column = 'full_name'
+    if params[:sort].blank?
+      params[:sort] = { column: default_sort_column, direction: 'asc' }
+    end
+
+    residents = Resident.includes(:properties, :lots)    
+    @residents = sort_models(residents, :last_name, params[:sort])
   end
 
   # GET /residents/1 or /residents/1.json

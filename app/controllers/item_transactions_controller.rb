@@ -3,7 +3,12 @@ class ItemTransactionsController < ApplicationController
 
   # GET /item_transactions or /item_transactions.json
   def index
-    @item_transactions = ItemTransaction.all
+    default_sort_column = 'transacted_at'
+    if params[:sort].blank?
+      params[:sort] = { column: default_sort_column, direction: 'desc' }
+    end
+    item_transactions = ItemTransaction.all
+    @item_transactions = sort_models(item_transactions, default_sort_column, params[:sort])
   end
 
   # GET /item_transactions/1 or /item_transactions/1.json
