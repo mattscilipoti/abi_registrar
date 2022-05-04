@@ -136,6 +136,13 @@ h4 {
   font-size: 1.2em;
 }
 
+hr.double {
+  background-color: transparent;
+  border-bottom: 1px solid $color-secondary;
+  border-top: 1px solid $color-secondary;
+  height: 1px;
+}
+
 /* Busy Spinner: all CSS, no JS */
 i.busy {
   // see: https://www.w3schools.com/howto/howto_css_loader.asp

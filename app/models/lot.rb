@@ -3,7 +3,6 @@ class Lot < ApplicationRecord
     [:district, :subdivision, :account_number, :lot_number, :section]
   end
   include PgSearch::Model
-  multisearchable against: searchable_columns
 
   belongs_to :property, optional: true
   has_many :residencies, through: :property

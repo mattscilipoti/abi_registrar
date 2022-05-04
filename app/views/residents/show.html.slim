@@ -4,6 +4,4 @@ div
   = link_to "Back to residents", residents_path
   = button_to "Destroy this resident", @resident, method: :delete
 
-
-= render partial: "comments/comments_table", locals: {comments: @resident.comments}
-= render partial: "comments/form", locals: {comment: @resident.comments.build}
+= render partial: "comments/comments_table", locals: {commentable: @resident}

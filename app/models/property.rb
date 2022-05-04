@@ -1,13 +1,16 @@
 class Property < ApplicationRecord
-  def self.searchable_columns
-    [:street_number, :street_name]
-  end
-  include PgSearch::Model
+  include Commentable
 
   has_many :lots
   has_many :residencies
   has_many :residents, through: :residencies
   has_many :share_transactions, through: :residencies
+
+  # List of searchable columns for this Model
+  # ! this must be declared before pg_search_scope
+  def self.searchable_columns
+    [:street_number, :street_name]
+  end
 
   def lot_count
     lots.size

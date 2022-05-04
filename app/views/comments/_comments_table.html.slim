@@ -1,3 +1,4 @@
+- comments = commentable.comments
 fieldset
   legend
     h2 Comments
@@ -8,3 +9,6 @@ fieldset
     - else
       - columns = %i[content created_at]
       =render 'layouts/models_table', models: comments, columns: columns, allow_edit: false, allow_show: false, allow_sort: false
+
+  fieldset
+    = render partial: "comments/form", locals: {commentable: commentable}
