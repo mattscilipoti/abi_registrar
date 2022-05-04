@@ -1,26 +1,32 @@
-- allow_show = true if allow_show.nil?
 - allow_edit = true if allow_edit.nil?
+- allow_show = true if allow_show.nil?
+- allow_sort = false if allow_sort.nil?
 
 table
   thead
-    - current_sort_column = params[:sort][:column].to_s
+    - current_sort_column = params[:sort] ? params[:sort][:column].to_s : columns.first.to_s
     - default_sort_direction = 'asc'
     - for column_name in columns do
       - column_caption = column_name.to_s.gsub('_i18n', '').titleize
       - index_path = models.first.class.table_name
 
+
       -# sort link
-      - sort_direction = default_sort_direction
       - if column_name.to_s == current_sort_column
-        - current_sort_direction = params[:sort][:direction]
+        - current_sort_direction = params[:sort] ? params[:sort][:direction] : default_sort_direction
         - sort_direction_indicator = current_sort_direction == 'asc' ? '▲' : '▼'
         - column_caption += " #{sort_direction_indicator}"
-        -# toggle sort_direction
-        - sort_direction = current_sort_direction == 'asc' ? 'desc' : 'asc'
-      - sort_params = { sort: {column: column_name, direction: sort_direction }}
-      - index_uri = Addressable::URI.new(path: index_path, query: sort_params.to_param)
 
-      th= link_to(column_caption, index_uri.to_s, class: 'no-link-icon')
+      - if allow_sort
+        - sort_direction = default_sort_direction
+        - if column_name.to_s == current_sort_column
+          -# toggle sort_direction
+          - sort_direction = current_sort_direction == 'asc' ? 'desc' : 'asc'
+        - sort_params = { sort: {column: column_name, direction: sort_direction }}
+        - index_uri = Addressable::URI.new(path: index_path, query: sort_params.to_param)
+        th= link_to(column_caption, index_uri.to_s, class: 'no-link-icon')
+      - else
+        th= column_caption
 
     - if allow_edit
       th Edit

@@ -4,12 +4,12 @@ ul
   li= link_to "Record a Share Purchase", purchase_new_share_transactions_path
   li= link_to "Record a Share Transfer", transfer_new_share_transactions_path
 
-h2 Summary 
+h2 Summary
 
 table
   thead
     tr
-      th Item 
+      th Item
       th Quantity
       th Total
   tbody
@@ -19,11 +19,15 @@ table
       td.number =number_to_currency(ShareTransaction.includes([:residency]).purchase.sum(:cost_total))
 
 
-h2 Listing 
+h2 Listing
 
-#item_transactions
-  - columns = %i[activity cost_per quantity cost_total transacted_at residency from_residency]
-  =render 'layouts/models_table', models: @share_transactions, columns: columns, allow_edit: false
+#share_transactions
+  - if @share_transactions.blank?
+    fieldset
+      | None found
+  - else
+    - columns = %i[activity cost_per quantity cost_total transacted_at residency from_residency]
+    =render 'layouts/models_table', models: @share_transactions, columns: columns, allow_edit: false, allow_sort: true
 br
 
 ul
