@@ -1,0 +1,10 @@
+fieldset
+  legend
+    h2 Comments
+  .comments
+    - if comments.blank?
+      fieldset
+        | None found
+    - else
+      - columns = %i[content created_at]
+      =render 'layouts/models_table', models: comments, columns: columns, allow_edit: false, allow_show: false, allow_sort: false

@@ -1,9 +1,13 @@
 class Resident < ApplicationRecord
+  include Commentable
+
+  # Configure search
+  include PgSearch::Model
+  # List of searchable columns for this Model
+  # ! this must be declared before pg_search_scope
   def self.searchable_columns
     [:last_name]
   end
-
-  include PgSearch::Model
   pg_search_scope :search_by_all,
     # Reminder: first_name, email_address are encrypted
     against: searchable_columns,
@@ -19,6 +23,7 @@ class Resident < ApplicationRecord
   encrypts :email_address, deterministic: true
   encrypts :first_name, deterministic: true
 
+  has_many :comments, as: :commentable, inverse_of: :commentable
   has_many :residencies
   accepts_nested_attributes_for :residencies, reject_if: :all_blank, allow_destroy: true
   has_many :properties, through: :residencies
@@ -26,6 +31,7 @@ class Resident < ApplicationRecord
 
   validates :age_of_minor, numericality: { integer: true, greater_than: 0, less_than: 21, allow_blank: true }
   validates :last_name, presence: true
+
 
   def full_name
     [last_name, first_name].join(', ')

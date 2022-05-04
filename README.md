@@ -24,6 +24,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Can be Deed Holders, Renters, or Dependents
     - Can mark as verified
     - Search by Last Name, Property Address, or Lot info
+    - Can add date-stamped Comments
   - Manage Shares
     - Record Purchased Shares
       - Only Deed Holders
@@ -37,6 +38,8 @@ Not only do we need to gather and manage the approprite information, we need to 
 
 
 ### TODO
+  - Security
+    - Authentication
   - Audit Transactions
     - Undo lastest change
     - Revert to previous version
