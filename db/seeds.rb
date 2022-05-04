@@ -12,7 +12,7 @@ Resident.destroy_all
 Lot.destroy_all
 Property.destroy_all
 
-lot69 = FactoryBot.create(:lot, :paid, lot_number: 69, section: 1, size: 1)
+lot69 = FactoryBot.create(:lot, :paid, lot_number: 69, section: 1, size: 1, account_number: 11942300)
 property_975 = FactoryBot.create(:property, lots: [lot69], street_number: '975', street_name: 'Waterview Dr')
 
 mms = FactoryBot.create(:resident, last_name: 'Scilipoti', first_name: 'Matt', email_address: 'matt@scilipoti.name', properties: [property_975]).tap do |resident|
