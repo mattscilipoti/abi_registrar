@@ -85,3 +85,6 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Reports of work performed
     - Recording beach activity
     - Record incidents
+  - Optimizations
+    - Avoid double-sort (controller and table)
+    - Why some Versions.reify.nil?
