@@ -14,7 +14,7 @@ class ResidentsController < ApplicationController
       residents = Resident.includes(:properties, :lots)
     end
 
-    @residents = sort_models(residents, :last_name, params[:sort])
+    @residents = sort_models(residents, params[:sort])
   end
 
   # GET /residents/1 or /residents/1.json

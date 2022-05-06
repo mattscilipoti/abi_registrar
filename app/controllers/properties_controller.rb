@@ -8,7 +8,7 @@ class PropertiesController < ApplicationController
       params[:sort] = { column: default_sort_column, direction: 'asc' }
     end
     properties = Property.includes(:lots).all
-    @properties = sort_models(properties, default_sort_column, params[:sort])
+    @properties = sort_models(properties, params[:sort])
   end
 
   # GET /properties/1 or /properties/1.json

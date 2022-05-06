@@ -5,8 +5,7 @@
 - sort = params[:sort] || default_sort if sort.nil?
 - sort_column = sort.fetch(:column)
 - sort_direction = sort.fetch(:direction)
-- sorted_models = models.sort_by { |model| model.send(sort_column) }
-- sorted_models = sorted_models.reverse if sort_direction.to_s == 'desc'
+- sorted_models = sort_models(models, sort)
 
 table
   thead

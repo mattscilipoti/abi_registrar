@@ -28,7 +28,7 @@ class ShareTransactionsController < ApplicationController
       params[:sort] = { column: default_sort_column, direction: 'desc' }
     end
     share_transactions = ShareTransaction.includes(residency: [:resident, :property]).includes(:from_residency).order(transacted_at: :desc)
-    @share_transactions = sort_models(share_transactions, default_sort_column, params[:sort])
+    @share_transactions = sort_models(share_transactions, params[:sort])
   end
 
   # POST //share_transactions/purchase or //share_transactions/purchase.json
@@ -49,7 +49,7 @@ class ShareTransactionsController < ApplicationController
   def purchase_new
     @share_transaction = ShareTransaction.new(activity: :purchase)
   end
-  
+
   # GET /share_transactions/1 or /share_transactions/1.json
   def show
   end
@@ -68,7 +68,7 @@ class ShareTransactionsController < ApplicationController
       end
     end
   end
-  
+
   def transfer_new
     @share_transaction = ShareTransaction.new(activity: :transfer)
   end
@@ -83,8 +83,8 @@ class ShareTransactionsController < ApplicationController
     def purchase_shares_params
       params.require(:share_transaction).permit(
         :residency_id,
-        :quantity, 
-        :transacted_at, 
+        :quantity,
+        :transacted_at,
         :activity,
       )
     end
@@ -93,8 +93,8 @@ class ShareTransactionsController < ApplicationController
       params.require(:share_transaction).permit(
         :from_residency_id,
         :residency_id,
-        :quantity, 
-        :transacted_at, 
+        :quantity,
+        :transacted_at,
         :activity,
       )
     end

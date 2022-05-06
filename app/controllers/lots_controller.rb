@@ -8,7 +8,7 @@ class LotsController < ApplicationController
       params[:sort] = { column: default_sort_column, direction: 'asc' }
     end
     lots = Lot.all
-    @lots = sort_models(lots, default_sort_column, params[:sort])
+    @lots = sort_models(lots, params[:sort])
   end
 
   # GET /lots/1 or /lots/1.json
@@ -71,12 +71,12 @@ class LotsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def lot_params
       params.require(:lot).permit(
-        :district, 
-        :subdivision, 
-        :account_number, 
-        :lot_number, 
+        :district,
+        :subdivision,
+        :account_number,
+        :lot_number,
         :paid_on,
-        :section, 
+        :section,
         :size)
     end
 end

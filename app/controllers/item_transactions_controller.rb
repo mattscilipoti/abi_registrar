@@ -8,7 +8,7 @@ class ItemTransactionsController < ApplicationController
       params[:sort] = { column: default_sort_column, direction: 'desc' }
     end
     item_transactions = ItemTransaction.all
-    @item_transactions = sort_models(item_transactions, default_sort_column, params[:sort])
+    @item_transactions = sort_models(item_transactions, params[:sort])
   end
 
   # GET /item_transactions/1 or /item_transactions/1.json
@@ -71,12 +71,12 @@ class ItemTransactionsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def item_transaction_params
       params.require(:item_transaction).permit(
-        :cost_per, 
-        :cost_total, 
+        :cost_per,
+        :cost_total,
         :transacted_at,
-        :quantity, 
+        :quantity,
         :residency_id,
-        :type, 
+        :type,
       )
     end
 
