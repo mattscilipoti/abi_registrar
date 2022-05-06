@@ -39,6 +39,8 @@ table
       tr
         - columns.each_with_index do |column_name, column_index|
           - column_value = model.send(column_name)
+          - if column_value.in? [true, false]
+            - column_value = column_value ? '✓' : '❌'
           td
             -if column_index == 0
               - if allow_show
