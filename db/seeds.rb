@@ -6,11 +6,15 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+puts "Cleaning database..."
+
 ItemTransaction.destroy_all
 Residency.destroy_all
 Resident.destroy_all
 Lot.destroy_all
 Property.destroy_all
+
+puts "Seeding database..."
 
 lot69 = FactoryBot.create(:lot, :paid, lot_number: 69, section: 1, size: 1, account_number: 11942300)
 property_975 = FactoryBot.create(:property, lots: [lot69], street_number: '975', street_name: 'Waterview Dr')
@@ -47,18 +51,21 @@ jr = FactoryBot.create(:resident, last_name: 'Rainwater', first_name: 'Jim', ema
 end
 
 lot42 = FactoryBot.create(:lot, lot_number: 42, size: 0.5)
-property_123 = FactoryBot.create(:property, lots: [lot42], street_number: '123', street_name: 'Main St')
+property_975Main = FactoryBot.create(:property, lots: [lot42], street_number: '975', street_name: 'Main St')
 
-jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com', properties: [property_123]).tap do |resident|
+jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com', properties: [property_975Main]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :deed_holder,
     verified_on: 1.day.ago
   )
 end
 
-jqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'John Q.', email_address: 'johnqrenter@example.com', properties: [property_123]).tap do |resident|
+jqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'John Q.', email_address: 'johnqrenter@example.com', properties: [property_975Main]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :renter,
     verified_on: 1.day.ago
   )
 end
+
+FactoryBot.create(:share_transaction, :purchase, residency: mms.residencies.first, quantity: 10, activity: :purchase)
+FactoryBot.create(:share_transaction, :purchase, residency: jr.residencies.first, quantity: 20, activity: :purchase)

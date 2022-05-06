@@ -5,9 +5,13 @@ FactoryBot.define do
     property
     resident
     resident_status { :deed_holder }
-  end
 
-  trait :verified do
-    verified_on { 1.minute.ago }
+    trait :renter do
+      resident_status { :renter }
+    end
+
+    trait :verified do
+      verified_on { 1.minute.ago }
+    end
   end
 end
