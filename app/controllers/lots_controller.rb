@@ -7,8 +7,12 @@ class LotsController < ApplicationController
     if params[:sort].blank?
       params[:sort] = { column: default_sort_column, direction: 'asc' }
     end
-    lots = Lot.all
-    @lots = sort_models(lots, params[:sort])
+
+    if params[:q]
+      @lots = Lot.search_by_all(params[:q])
+    else
+      @lots = Lot.all
+    end
   end
 
   # GET /lots/1 or /lots/1.json
