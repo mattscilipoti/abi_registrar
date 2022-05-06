@@ -1,3 +1,4 @@
+- allow_destroy = false if allow_destroy.nil?
 - allow_edit = true if allow_edit.nil?
 - allow_show = true if allow_show.nil?
 - allow_sort = false if allow_sort.nil?
@@ -31,6 +32,7 @@ table
 
     - if allow_edit
       th Edit
+    - if allow_destroy
       th Delete
   tbody
 
@@ -48,4 +50,5 @@ table
               =column_value
         - if allow_edit
           td= link_to "Edit", edit_polymorphic_path(model)
+        - if allow_destroy
           td= button_to "Destroy", model, method: :delete
