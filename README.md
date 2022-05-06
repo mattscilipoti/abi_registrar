@@ -5,6 +5,8 @@ Tools to support the registrar positoin for Arden Beaches Inc. (ABI)
   - Lot Fees
 - Properties
 - Residents
+- Amenities
+- Shares
 
 Not only do we need to gather and manage the approprite information, we need to make it available to people, where they need it. This includes printing reports for off-line use.
 - Possible Report Options:
@@ -45,8 +47,9 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Undo lastest change
     - Revert to previous version
     - List deleted transactions
+      - Restore  deleted transaction
   - Find Transactions
-    - Filter by Type, Activity
+    - Filter by Type, Activity,
   - Manage Property
     - Link to SDAT
   - Manage Property Transfer
@@ -66,7 +69,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Verify
       - Verified Resident
       - Lot fees to be paid
-    - Email Beach Passes to Deed Holders, with QR Code
+    - (possible) Email Beach Passes to Deed Holders, with QR Code
   - Import Lots
   - Import Properties
   - Import Residents
@@ -88,3 +91,22 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Optimizations
     - Avoid double-sort (controller and table)
     - Why some Versions.reify.nil?
+  - Lots
+    - Subdivide a lot
+  - Resident
+    - Mailing Address
+      - Can select associated Property
+    - Do we need age?
+      - Only for vetting! Just store minor.
+      - Possibly store: What year do they turn 21?
+  - Email Blasts
+     - Requirements
+       - To all residents
+       - To all holders of a specific pass type
+       - To all share holders
+     - Needs: email provider (e.g. SendGrid, MailChimp?) to manage email blacklists, etc.
+       - Need ability to unsubscribe
+       - Sending bulk emails can be problemtic for our domain: ardenbeachesinc.com
+         - Your IP address(es) or domain(s) may be blacklisted by internet service providers for many reasons: if they see a sudden spike in email volume, complaints from receivers, or sending to bad emails.
+       - https://www.mailgun.com/blog/deliverability/email-blasts-dos-donts-mass-email-sending/
+       - https://pearllemonleads.com/bulk-emails-top-pitfalls-to-avoid/
