@@ -50,15 +50,15 @@ jr = FactoryBot.create(:resident, last_name: 'Rainwater', first_name: 'Jim', ema
     verified_on: 1.day.ago)
 end
 
+lot24 = FactoryBot.create(:lot, lot_number: 24, size: 1)
 lot42 = FactoryBot.create(:lot, lot_number: 42, size: 0.5)
+property_123Main = FactoryBot.create(:property, lots: [lot24], street_number: '123', street_name: 'Main St')
 property_975Main = FactoryBot.create(:property, lots: [lot42], street_number: '975', street_name: 'Main St')
 
-jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com', properties: [property_975Main]).tap do |resident|
-  resident.residencies.first.update(
-    resident_status: :deed_holder,
-    verified_on: 1.day.ago
-  )
-end
+jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com')
+
+FactoryBot.create(:residency, property: property_123Main, resident: jqo, resident_status: :deed_holder, verified_on: 1.day.ago)
+FactoryBot.create(:residency, property: property_975Main, resident: jqo, resident_status: :deed_holder, verified_on: 1.day.ago)
 
 jqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'John Q.', email_address: 'johnqrenter@example.com', properties: [property_975Main]).tap do |resident|
   resident.residencies.first.update(

@@ -8,6 +8,7 @@ class ResidentsController < ApplicationController
     else
       @residents = Resident.includes(:properties, :lots)
     end
+    @residents = @residents.decorate
   end
 
   # GET /residents/1 or /residents/1.json

@@ -241,6 +241,13 @@ table {
 ul {
   list-style: none;
   padding-left: $padding-default;
+
+  &.horizontal-list {
+    display: flex;
+    li {
+      padding: $padding-default/2;
+    }
+  }
 }
 
 // Section: Rails "flash" messages
