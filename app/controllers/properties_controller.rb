@@ -3,11 +3,6 @@ class PropertiesController < ApplicationController
 
   # GET /properties or /properties.json
   def index
-    default_sort_column = 'street_address'
-    if params[:sort].blank?
-      params[:sort] = { column: default_sort_column, direction: 'asc' }
-    end
-
     if params[:q]
       @properties = Property.search_by_all(params[:q])
     else

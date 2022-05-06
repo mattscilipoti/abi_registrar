@@ -14,15 +14,14 @@ table
       - column_caption = column_name.to_s.gsub('_i18n', '').titleize
       - index_path = models.first.class.table_name
 
-
       -# sort link
       - if column_name.to_s == sort_column.to_s
-        - sort_direction_indicator = sort_direction == 'asc' ? '▲' : '▼'
+        - sort_direction_indicator = sort_direction.to_s == 'asc' ? '▲' : '▼'
         - column_caption += " #{sort_direction_indicator}"
 
       - if allow_sort
         - sort_link_params = { sort: {column: column_name, direction: sort_direction }}
-        - if column_name.to_s == sort_column
+        - if column_name.to_s == sort_column.to_s
           -# toggle sort_direction
           - sort_link_params[:sort][:direction] = (sort_direction == 'asc') ? 'desc' : 'asc'
         - index_uri = Addressable::URI.new(path: index_path, query: sort_link_params.to_param)

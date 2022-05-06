@@ -7,8 +7,7 @@ class ItemTransactionsController < ApplicationController
     if params[:sort].blank?
       params[:sort] = { column: default_sort_column, direction: 'desc' }
     end
-    item_transactions = ItemTransaction.all
-    @item_transactions = sort_models(item_transactions, params[:sort])
+    @item_transactions = ItemTransaction.all
   end
 
   # GET /item_transactions/1 or /item_transactions/1.json

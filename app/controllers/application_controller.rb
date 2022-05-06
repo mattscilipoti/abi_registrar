@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     # Yes, this is inefficient but our lists are small
     # Using format(), with leading zeros, to support sorting string, number, or TrueClass
     models = models.sort_by{|r| format('%010s' % r.send(sort_column).to_s)}
-    if sort_direction != 'asc'
+    if sort_direction.to_s != 'asc'
       models = models.reverse
     end
     models

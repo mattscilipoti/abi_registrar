@@ -18,17 +18,18 @@ Not only do we need to gather and manage the approprite information, we need to 
 
   - Manage Lots
     - Record Lot fee payments (not connected to Quickbooks)
+    - Search by Lot, Property, or Resident info
   - Manage Properties
     - Have one or more Lots
     - Owned by one or more Residents
-    - Can add date-stamped Comments
-    - Can search by Property, Lot, or Resident info
+    - Add date-stamped Comments
+    - Search by Property, Lot, or Resident info
   - Manage Residents
     - Associated with one or more Properties
     - Can be Deed Holders, Renters, or Dependents
-    - Can mark as verified
+    - Mark as verified
     - Search by Last Name, Property Address, or Lot info
-    - Can add date-stamped Comments
+    - Add date-stamped Comments
   - Manage Shares
     - Record Purchased Shares
       - Only Deed Holders
@@ -90,7 +91,6 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Recording beach activity
     - Record incidents
   - Optimizations
-    - Avoid double-sort (controller and table)
     - Why some Versions.reify.nil?
     - Show all Date/Times in Eastern
   - Lots
