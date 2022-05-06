@@ -22,6 +22,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Have one or more Lots
     - Owned by one or more Residents
     - Can add date-stamped Comments
+    - Can search by Property, Lot, or Resident info
   - Manage Residents
     - Associated with one or more Properties
     - Can be Deed Holders, Renters, or Dependents
@@ -91,6 +92,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Optimizations
     - Avoid double-sort (controller and table)
     - Why some Versions.reify.nil?
+    - Show all Date/Times in Eastern
   - Lots
     - Subdivide a lot
   - Resident

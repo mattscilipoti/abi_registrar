@@ -11,6 +11,18 @@ class Property < ApplicationRecord
   def self.searchable_columns
     [:street_number, :street_name]
   end
+  # Configure search
+  include PgSearch::Model
+  pg_search_scope :search_by_all,
+    # Reminder: first_name, email_address are encrypted
+    against: searchable_columns,
+    associated_against: {
+      lots: Lot.searchable_columns,
+      residents: Resident.searchable_columns
+    },
+    using: {
+      tsearch: { prefix: true }
+    }
 
   def lot_count
     lots.size

@@ -7,8 +7,13 @@ class PropertiesController < ApplicationController
     if params[:sort].blank?
       params[:sort] = { column: default_sort_column, direction: 'asc' }
     end
-    properties = Property.includes(:lots).all
-    @properties = sort_models(properties, params[:sort])
+
+    if params[:q]
+      @properties = Property.search_by_all(params[:q])
+    else
+      @properties = Property.all
+    end
+    @properties.includes(:properties, :lots)
   end
 
   # GET /properties/1 or /properties/1.json
