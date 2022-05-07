@@ -11,17 +11,17 @@ html lang=I18n.locale
     title= page_title
     = csrf_meta_tags
     = csp_meta_tag
-    
+
     / Copied from: https://fontawesome.com/account/cdn
     / <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     / Upgrade to 6, see https://cdnjs.com/libraries/font-awesome
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.css" integrity="sha512-1hsteeq9xTM5CX6NsXiJu3Y/g+tj+IIwtZMtTisemEv3hx+S9ngaW4nryrNcPM4xGzINcKbwUJtojslX2KG+DQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     / = stylesheet_link_tag "inter-font", "data-turbo-track": "reload"
     / = stylesheet_link_tag "tailwind", "data-turbo-track": "reload"
     = stylesheet_link_tag 'application', 'data-turbol-track': 'reload'
     = javascript_importmap_tags
-    
+
   body
     header
       nav.top-bar
@@ -34,7 +34,7 @@ html lang=I18n.locale
           = menu_list_item "Item Transactions", item_transactions_path, class: 'no-link-icon'
           - unless Rails.env.production?
             li.menu-text.environment= "(#{Rails.env})"
-      
+
       div#flash_messages(data={turbolinks: false})
         - flash.each do |key, value|
           = flash_tag(key, value)
