@@ -8,7 +8,7 @@ class PropertiesController < ApplicationController
     else
       @properties = Property.all
     end
-    @properties.includes(:properties, :lots)
+    @properties.includes(:properties, :lots).decorate
   end
 
   # GET /properties/1 or /properties/1.json
