@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_04_020855) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_07_212819) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,6 +89,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_04_020855) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "vehicles", force: :cascade do |t|
+    t.string "tag_number"
+    t.integer "sticker_number"
+    t.bigint "resident_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resident_id"], name: "index_vehicles_on_resident_id"
+  end
+
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.bigint "item_id", null: false
@@ -105,4 +114,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_04_020855) do
   add_foreign_key "lots", "properties"
   add_foreign_key "residencies", "properties"
   add_foreign_key "residencies", "residents"
+  add_foreign_key "vehicles", "residents"
 end
