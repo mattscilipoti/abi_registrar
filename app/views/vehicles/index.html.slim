@@ -1,11 +1,13 @@
-p style="color: green" = notice
-
 h1 Vehicles
 
-#vehicles
-  - @vehicles.each do |vehicle|
-    == render vehicle
-    p
-      = link_to "Show this vehicle", vehicle
+= search_form_tag(vehicles_path)
 
+#vehicles
+  - if @vehicles.blank?
+    fieldset
+      | None found
+  - else
+    - columns = %i[sticker_number tag_number resident]
+    =render 'layouts/models_table', models: @vehicles, columns: columns, allow_sort: true
+br
 = link_to "New vehicle", new_vehicle_path
