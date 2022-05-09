@@ -7,7 +7,7 @@ h1 Vehicles
     fieldset
       | None found
   - else
-    - columns = %i[sticker_number tag_number resident]
+    - columns = %i[sticker_number tag_number resident property_summary]
     =render 'layouts/models_table', models: @vehicles, columns: columns, allow_sort: true
 br
 = link_to "New vehicle", new_vehicle_path

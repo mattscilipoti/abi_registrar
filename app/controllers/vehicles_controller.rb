@@ -8,6 +8,7 @@ class VehiclesController < ApplicationController
     else
       @vehicles = Vehicle.includes(:resident)
     end
+    @vehicles = @vehicles.decorate
   end
 
   # GET /vehicles/1 or /vehicles/1.json
