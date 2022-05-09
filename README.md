@@ -38,6 +38,9 @@ Not only do we need to gather and manage the approprite information, we need to 
       - Assign shares to Property
     - Transfer Shares
     - Can Edit/Delete via Item Tranaactions
+  - Manage Vehicle Stickers
+    - Assign Sticker and Vehicle to Resident
+    - Search via Sticker Number, Tag Number, or Resident info
   - Audit Transactions
     - ItemTransactions#show lists previous versions
 

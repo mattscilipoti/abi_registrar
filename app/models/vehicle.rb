@@ -1,5 +1,6 @@
 class Vehicle < ApplicationRecord
   belongs_to :resident
+  has_many :properties, :through => :resident
 
   validate :resident_paid_lot_fees
 
@@ -15,6 +16,7 @@ class Vehicle < ApplicationRecord
     against: searchable_columns,
     associated_against: {
       resident: Resident.searchable_columns,
+      properties: Property.searchable_columns
     },
     using: {
       tsearch: { prefix: true }
