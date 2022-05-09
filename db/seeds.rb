@@ -9,6 +9,7 @@
 puts "Cleaning database..."
 
 ItemTransaction.destroy_all
+Vehicle.destroy_all
 Residency.destroy_all
 Resident.destroy_all
 Lot.destroy_all
@@ -50,7 +51,7 @@ jr = FactoryBot.create(:resident, last_name: 'Rainwater', first_name: 'Jim', ema
     verified_on: 1.day.ago)
 end
 
-lot24 = FactoryBot.create(:lot, lot_number: 24, size: 1)
+lot24 = FactoryBot.create(:lot, lot_number: 24, size: 1, paid_on: 1.day.ago)
 lot42 = FactoryBot.create(:lot, lot_number: 42, size: 0.5)
 property_123Main = FactoryBot.create(:property, lots: [lot24], street_number: '123', street_name: 'Main St')
 property_975Main = FactoryBot.create(:property, lots: [lot42], street_number: '975', street_name: 'Main St')
@@ -69,4 +70,6 @@ end
 
 FactoryBot.create(:share_transaction, :purchase, quantity: 10, residency: mms.residencies.first)
 FactoryBot.create(:share_transaction, :purchase, quantity: 20, residency: jr.residencies.first)
-FactoryBot.create(:share_transaction, :transfer, quantity: 10, residency_from: jr.residencies.first, residency: jhs.residencies.first)
+FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: jr.residencies.first, residency: cbs.residencies.first)
+
+Resident.lot_fees_paid.each {|r| FactoryBot.create(:vehicle, resident: r) }
