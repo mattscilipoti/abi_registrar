@@ -5,7 +5,7 @@
   .form-inputs
     = f.input :tag_number
     = f.input :sticker_number
-    = f.association :resident
+    = f.association :resident, collection: Resident.lot_fees_paid
 
   .form-actions
     = f.button :submit

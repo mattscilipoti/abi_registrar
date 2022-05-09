@@ -29,6 +29,15 @@ class Resident < ApplicationRecord
   has_many :properties, through: :residencies
   has_many :lots, through: :properties
 
+  scope :lot_fees_not_paid, -> {
+    distinct.joins(:properties).merge(Property.lot_fees_not_paid)
+  }
+  scope :lot_fees_paid, -> {
+    # basic "joins" to property returns resident where ANY lots fees are paid,
+    #   this returns ab=ny where ALL lot fees are paid
+    where.not(id: lot_fees_not_paid)
+  }
+
   validates :age_of_minor, numericality: { integer: true, greater_than: 0, less_than: 21, allow_blank: true }
   validates :last_name, presence: true
 

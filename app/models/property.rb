@@ -23,6 +23,9 @@ class Property < ApplicationRecord
       tsearch: { prefix: true }
     }
 
+  scope :lot_fees_paid, -> { distinct.joins(:lots).merge(Lot.fee_paid) }
+  scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
+
   def lot_count
     lots.size
   end

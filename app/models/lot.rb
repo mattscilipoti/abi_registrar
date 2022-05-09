@@ -18,6 +18,9 @@ class Lot < ApplicationRecord
   has_many :residencies, through: :property
   has_many :residents, through: :residencies
 
+  scope :fee_not_paid, -> { where(paid_on: nil) }
+  scope :fee_paid, -> { where.not(paid_on: nil) }
+
   validates :district, numericality: { only_integer: true }
   validates :subdivision, numericality: { only_integer: true }
   validates :account_number, numericality: { only_integer: true }
