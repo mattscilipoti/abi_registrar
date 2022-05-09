@@ -1,4 +1,19 @@
 class ItemTransaction < ApplicationRecord
+  def self.searchable_columns
+    [:type, :activity, :cost_per]
+  end
+  # Configure search
+  include PgSearch::Model
+  pg_search_scope :search_by_all,
+    against: searchable_columns,
+    associated_against: {
+      property: Property.searchable_columns,
+      resident: Resident.searchable_columns
+    },
+    using: {
+      tsearch: { prefix: true }
+    }
+
   has_paper_trail
   enum :activity, { purchase: 0, transfer: 1 }
   belongs_to :residency
@@ -8,7 +23,7 @@ class ItemTransaction < ApplicationRecord
 
   validates_presence_of :quantity, :residency, :transacted_at, :activity
   validate :requested_transfer_quantity_is_available
-  
+
   def cost_per=(value)
     super
     calculate_cost_total
@@ -27,7 +42,7 @@ class ItemTransaction < ApplicationRecord
 
   def requested_transfer_quantity_is_available
     return unless transfer?
-    
+
     raise NotImplementedError, "must be implementd in STI child class"
   end
 end

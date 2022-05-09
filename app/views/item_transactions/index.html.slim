@@ -5,6 +5,9 @@ fieldset.warning
   | You are viewing ALL item transactions. You have more power and less hand-holding (validations and limitations).
   br
   | If you want to record Share purchases or transfers, we recomend you view #{link_to "Share Transactions", share_transactions_path} instead.
+
+= search_form_tag(item_transactions_path)
+
 h2 Summary
 
 table

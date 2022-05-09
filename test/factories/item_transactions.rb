@@ -18,7 +18,7 @@ FactoryBot.define do
       residency
     end
 
-    factory :share_transaction do
+    factory :share_transaction, class: 'ShareTransaction' do
       type { "ShareTransaction" }
       cost_per { 50.00 }
     end

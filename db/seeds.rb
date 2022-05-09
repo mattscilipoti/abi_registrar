@@ -67,5 +67,6 @@ jqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'John Q.', e
   )
 end
 
-FactoryBot.create(:share_transaction, :purchase, residency: mms.residencies.first, quantity: 10, activity: :purchase)
-FactoryBot.create(:share_transaction, :purchase, residency: jr.residencies.first, quantity: 20, activity: :purchase)
+FactoryBot.create(:share_transaction, :purchase, quantity: 10, residency: mms.residencies.first)
+FactoryBot.create(:share_transaction, :purchase, quantity: 20, residency: jr.residencies.first)
+FactoryBot.create(:share_transaction, :transfer, quantity: 10, residency_from: jr.residencies.first, residency: jhs.residencies.first)
