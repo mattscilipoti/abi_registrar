@@ -16,6 +16,7 @@ Lot.destroy_all
 Property.destroy_all
 
 puts "Seeding database..."
+Faker::Config.random = nil # seeds the PRNG using default entropy sources
 
 lot69 = FactoryBot.create(:lot, :paid, lot_number: 69, section: 1, size: 1, account_number: 11942300)
 property_975 = FactoryBot.create(:property, lots: [lot69], street_number: '975', street_name: 'Waterview Dr')

@@ -178,7 +178,7 @@ nav {
 
     li {
       padding: $padding-default (2 * $padding-default);
-      border-right: 1px solid $color-text-light-on-dark; // delimiter
+      border-right: 2px solid $color-text-light-on-dark; // delimiter
       &:last-child {
         border-right: none; // remove delimiter for last menu item
       }

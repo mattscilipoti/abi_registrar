@@ -48,6 +48,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Add Summary page (as Home page)
   - Configuration
     - Display DateTime in Eastern Time Zone
+    - DateTimes shown in time_ago_in_words, tooltip is actual time
 
 
 ### TODO

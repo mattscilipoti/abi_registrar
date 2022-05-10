@@ -8,19 +8,19 @@ table
       th Last Updated
   tbody
     tr
-      td Lots
+      td =link_to 'Lots', lots_path
       td.number =Lot.count
       td.datetime =datetime_tag(Lot.pluck(:updated_at).max)
     tr
-      td Properties
+      td =link_to 'Properties', properties_path
       td.number =Property.count
       td.datetime =datetime_tag(Property.pluck(:updated_at).max)
     tr
-      td Residents
+      td =link_to 'Residents', residents_path
       td.number =Resident.count
       td.datetime =datetime_tag(Resident.pluck(:updated_at).max)
     tr
-      td Vehicles
+      td =link_to 'Vehicles', vehicles_path
       td.number =Vehicle.count
       td.datetime =datetime_tag(Vehicle.pluck(:updated_at).max)
 
@@ -37,12 +37,12 @@ table
       th Last Updated
   tbody
     tr
-      td Shares Purchased
+      td =link_to 'Shares Purchased', share_transactions_path
       td.number =ShareTransaction.purchase.sum(:quantity)
       td.number =number_to_currency(ShareTransaction.purchase.sum(:cost_total))
       td.datetime =datetime_tag(ShareTransaction.purchase.maximum(:updated_at))
     tr
-      td Shares Transferred
+      td =link_to 'Shares Transferred', share_transactions_path
       td.number =ShareTransaction.transfer.sum(:quantity)
       td.number
       td.datetime =datetime_tag(ShareTransaction.transfer.maximum(:updated_at))
