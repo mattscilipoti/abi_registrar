@@ -20,3 +20,5 @@ In place of release version numbers, we organize via deploys to Production (by D
     - Demo: One is 975 Main ("sister" to 975 Waterview)
 - Fixed/simplified table sorting defaults
 - FontAwesome from 6.0.0 (beta) to 6.1.1
+- Configuration
+  - TimeZone to Eastern

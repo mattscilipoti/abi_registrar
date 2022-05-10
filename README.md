@@ -46,6 +46,8 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Audit Transactions
     - ItemTransactions#show lists previous versions
   - Add Summary page (as Home page)
+  - Configuration
+    - Display DateTime in Eastern Time Zone
 
 
 ### TODO

@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def datetime_tag(datetime)
-    content_tag(:span, "#{time_ago_in_words(datetime)} ago", class: "datetime", data: { tooltip: datetime.iso8601})
+    content_tag(:span, "#{time_ago_in_words(datetime)} ago", class: "datetime", data: { tooltip: datetime.rfc2822})
   end
 
   def flash_icon_name(flash_type)
