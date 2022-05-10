@@ -119,3 +119,7 @@ Not only do we need to gather and manage the approprite information, we need to 
          - Your IP address(es) or domain(s) may be blacklisted by internet service providers for many reasons: if they see a sudden spike in email volume, complaints from receivers, or sending to bad emails.
        - https://www.mailgun.com/blog/deliverability/email-blasts-dos-donts-mass-email-sending/
        - https://pearllemonleads.com/bulk-emails-top-pitfalls-to-avoid/
+    - Accounting
+      - Yearly Closeout/Prep
+        - Reset Lot Fees Paid?
+        - Reset Resident Verification?

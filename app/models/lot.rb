@@ -20,6 +20,11 @@ class Lot < ApplicationRecord
 
   scope :fee_not_paid, -> { where(paid_on: nil) }
   scope :fee_paid, -> { where.not(paid_on: nil) }
+  class << self
+    # support "interface" of other classes
+    alias lot_fees_not_paid fee_not_paid
+    alias lot_fees_paid fee_paid
+  end
 
   validates :district, numericality: { only_integer: true }
   validates :subdivision, numericality: { only_integer: true }

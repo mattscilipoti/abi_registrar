@@ -33,6 +33,15 @@ module ApplicationHelper
     end
   end
 
+  def number_with_percentage(number, total)
+    percentage = (number.to_f / total.to_f) * 100
+    content_tag(:span) do
+      concat number
+      concat content_tag(:small, " (#{percentage.round(1)}%)", class: 'percentage')
+    end
+  end
+
+
   def search_form_tag(url_options, html_options={})
     default_html_options = {
       class: 'search-form',
