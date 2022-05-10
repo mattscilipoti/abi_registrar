@@ -1,0 +1,48 @@
+h1 Summary
+
+table
+  thead
+    tr
+      th Item
+      th Quantity
+      th Last Updated
+  tbody
+    tr
+      td Lots
+      td.number =Lot.count
+      td.datetime =datetime_tag(Lot.pluck(:updated_at).max)
+    tr
+      td Properties
+      td.number =Property.count
+      td.datetime =datetime_tag(Property.pluck(:updated_at).max)
+    tr
+      td Residents
+      td.number =Resident.count
+      td.datetime =datetime_tag(Resident.pluck(:updated_at).max)
+    tr
+      td Vehicles
+      td.number =Vehicle.count
+      td.datetime =datetime_tag(Vehicle.pluck(:updated_at).max)
+
+hr
+
+h1 Transaction Summary
+
+table
+  thead
+    tr
+      th Item
+      th Quantity
+      th Total
+      th Last Updated
+  tbody
+    tr
+      td Shares Purchased
+      td.number =ShareTransaction.purchase.sum(:quantity)
+      td.number =number_to_currency(ShareTransaction.purchase.sum(:cost_total))
+      td.datetime =datetime_tag(ShareTransaction.purchase.maximum(:updated_at))
+    tr
+      td Shares Transferred
+      td.number =ShareTransaction.transfer.sum(:quantity)
+      td.number
+      td.datetime =datetime_tag(ShareTransaction.transfer.maximum(:updated_at))

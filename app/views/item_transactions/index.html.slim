@@ -8,21 +8,6 @@ fieldset.warning
 
 = search_form_tag(item_transactions_path)
 
-h2 Summary
-
-table
-  thead
-    tr
-      th Item
-      th Quantity
-      th Total
-  tbody
-    tr
-      td Shares Purchased
-      td.number =ShareTransaction.pluck(:quantity).sum
-      td.number =number_to_currency(ShareTransaction.pluck(:cost_total).sum)
-
-
 h2 Listing
 
 #item_transactions

@@ -9,11 +9,12 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 ## 2022/05/06 Searching, property icons
 
-- Residents
-  - Property house icons, with fancy tooltips
-- Can search Lots and Properties
-- Tables: use ✓/❌ for boolean fields
 - Properties: Lists lot numbers
+- Can search Lots, Properties, Residents, adn Transactions
+- New Page: Summary
+- Styling
+  - Tables: use ✓/❌ for boolean fields
+  - Property house icons, with fancy tooltips
 - Seeds
   - Jane Owner has 2 properties
     - Demo: One is 975 Main ("sister" to 975 Waterview)

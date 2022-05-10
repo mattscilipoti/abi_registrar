@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-  resources :vehicles
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get 'summary', to: 'pages#summary'
 
   resources :comments, only: [:create]
   resources :lots
+  resources :item_transactions
   resources :properties
+  resources :residents
   resources :share_transactions, only: [:create, :index, :new, :show] do
     collection do
       get :purchase_new, as: :purchase_new
@@ -13,10 +15,9 @@ Rails.application.routes.draw do
       post :transfer
     end
   end
-  resources :item_transactions
-  resources :residents
+  resources :vehicles
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root to: redirect('/residents')
+  root to: redirect('/summary')
 end

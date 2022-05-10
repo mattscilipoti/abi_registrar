@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def datetime_tag(datetime)
+    content_tag(:span, "#{time_ago_in_words(datetime)} ago", class: "datetime", data: { tooltip: datetime.iso8601})
+  end
+
   def flash_icon_name(flash_type)
     case flash_type.to_sym
     when :alert
