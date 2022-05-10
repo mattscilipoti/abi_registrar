@@ -3,7 +3,7 @@ class PropertiesController < ApplicationController
 
   # GET /properties or /properties.json
   def index
-    if params[:q]
+    if params[:q].present?
       @properties = Property.search_by_all(params[:q])
     else
       @properties = Property.all

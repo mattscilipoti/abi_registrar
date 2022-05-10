@@ -7,7 +7,7 @@ class ItemTransactionsController < ApplicationController
     if params[:sort].blank?
       params[:sort] = { column: default_sort_column, direction: 'desc' }
     end
-    if params[:q]
+    if params[:q].present?
       @item_transactions = ItemTransaction.search_by_all(params[:q])
     else
       @item_transactions = ItemTransaction.all

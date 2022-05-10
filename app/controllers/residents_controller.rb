@@ -3,7 +3,7 @@ class ResidentsController < ApplicationController
 
   # GET /residents or /residents.json
   def index
-    if params[:q]
+    if params[:q].present?
       @residents = Resident.search_by_all(params[:q])
     else
       @residents = Resident.includes(:properties, :lots)

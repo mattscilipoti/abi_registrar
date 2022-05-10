@@ -3,7 +3,7 @@ class LotsController < ApplicationController
 
   # GET /lots or /lots.json
   def index
-    if params[:q]
+    if params[:q].present?
       @lots = Lot.search_by_all(params[:q])
     else
       @lots = Lot.all
