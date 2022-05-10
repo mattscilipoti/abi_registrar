@@ -6,6 +6,10 @@ FactoryBot.define do
     resident
     resident_status { :deed_holder }
 
+    trait :deed_holder do
+      resident_status { :deed_holder }
+    end
+
     trait :renter do
       resident_status { :renter }
     end

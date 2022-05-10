@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :item_transaction do
-    type { "" }
+    type { "ItemTransaction" }
     activity { :purchase }
     cost_per { rand(100) }
     quantity { rand(100) }

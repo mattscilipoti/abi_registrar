@@ -8,7 +8,9 @@ class ItemTransaction < ApplicationRecord
     against: searchable_columns,
     associated_against: {
       property: Property.searchable_columns,
-      resident: Resident.searchable_columns
+      resident: Resident.searchable_columns,
+      from_resident: Resident.searchable_columns,
+      from_property: Property.searchable_columns
     },
     using: {
       tsearch: { prefix: true }
@@ -18,6 +20,8 @@ class ItemTransaction < ApplicationRecord
   enum :activity, { purchase: 'Purchase', transfer: 'Transfer' }
   belongs_to :residency
   belongs_to :from_residency, class_name: 'Residency', optional: true
+  has_one :from_resident, through: :from_residency, source: :resident, required: false
+  has_one :from_property, through: :from_residency, source: :property, required: false
   has_one :resident, through: :residency
   has_one :property, through: :residency
 

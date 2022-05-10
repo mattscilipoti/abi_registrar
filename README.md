@@ -41,6 +41,8 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Vehicle Stickers
     - Assign Sticker and Vehicle to Resident
     - Search via Sticker Number, Tag Number, or Resident info
+  - Manage Transactions
+    - Search via by Type, Activity, Resident, Property
   - Audit Transactions
     - ItemTransactions#show lists previous versions
 
@@ -53,8 +55,6 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Revert to previous version
     - List deleted transactions
       - Restore  deleted transaction
-  - Find Transactions
-    - Filter by Type, Activity,
   - Manage Property
     - Link to SDAT
   - Manage Property Transfer

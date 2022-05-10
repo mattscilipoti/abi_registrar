@@ -15,7 +15,7 @@ FactoryBot.define do
       transient do
         properties_count { 2 }
       end
-  
+
       properties do
         Array.new(properties_count) { association(:property) }
       end

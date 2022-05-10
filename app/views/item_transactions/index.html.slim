@@ -30,7 +30,7 @@ h2 Listing
     fieldset
       | None found
   - else
-    - columns = %i[type activity cost_per quantity cost_total transacted_at residency ]
+    - columns = %i[type activity cost_per quantity cost_total transacted_at residency from_residency ]
     =render 'layouts/models_table', models: @item_transactions.collect{|t| t.becomes(ItemTransaction)}, columns: columns, allow_sort: true
 br
 
