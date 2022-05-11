@@ -7,6 +7,9 @@ FactoryBot.define do
     section { rand(1..4) }
     size { [0.5, 1].sample }
 
+    created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.now) }
+
     trait :paid do
       paid_on { 1.day.ago }
     end

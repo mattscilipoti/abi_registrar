@@ -1,30 +1,22 @@
 h1 Item Transactions
-fieldset.warning  
+fieldset.warning
   legend
     h2 Warning!
   | You are viewing ALL item transactions. You have more power and less hand-holding (validations and limitations).
   br
   | If you want to record Share purchases or transfers, we recomend you view #{link_to "Share Transactions", share_transactions_path} instead.
-h2 Summary 
 
-table
-  thead
-    tr
-      th Item 
-      th Quantity
-      th Total
-  tbody
-    tr
-      td Shares Purchased
-      td.number =ShareTransaction.pluck(:quantity).sum
-      td.number =number_to_currency(ShareTransaction.pluck(:cost_total).sum)
+= search_form_tag(item_transactions_path)
 
-
-h2 Listing 
+h2 Listing
 
 #item_transactions
-  - columns = %i[type activity cost_per quantity cost_total transacted_at residency ]
-  =render 'layouts/models_table', models: @item_transactions.collect{|t| t.becomes(ItemTransaction)}, columns: columns
+  - if @item_transactions.blank?
+    fieldset
+      | None found
+  - else
+    - columns = %i[type activity cost_per quantity cost_total transacted_at residency from_residency ]
+    =render 'layouts/models_table', models: @item_transactions.collect{|t| t.becomes(ItemTransaction)}, columns: columns, allow_sort: true
 br
 
 = link_to "New item_transaction", new_item_transaction_path

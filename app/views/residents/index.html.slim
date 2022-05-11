@@ -1,7 +1,17 @@
-h1 Residents
+h1
+  | Residents
+  - if params[:q]
+    | &nbsp;
+    span.subheader= "Filtered by #{params[:q].inspect}"
+
+= search_form_tag(residents_path)
 
 #residents
-  - columns = %i[full_name email_address property_count lot_fees_paid? share_count is_minor age_of_minor]
-  =render 'layouts/models_table', models: @residents, columns: columns
+  - if @residents.blank?
+    fieldset
+      | None found
+  - else
+    - columns = %i[full_name email_address property_summary lot_fees_paid? share_count is_minor age_of_minor]
+    =render 'layouts/models_table', models: @residents, columns: columns, allow_sort: true
 br
 = link_to "New resident", new_resident_path

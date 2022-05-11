@@ -74,12 +74,15 @@ end
 # App Custom gems
 gem 'addressable'
 gem 'bullet', group: [:development] # help to kill N+1 queries and unused eager loading
+gem 'draper' # Decorators/View-Models for Rails Applications
 gem 'enum_help' # Help ActiveRecord::Enum feature to work fine with I18n and simple_form.
 gem 'factory_bot_rails', group: [:development, :test]
 gem 'faker', require: false, group: [:development, :test]
 gem 'html2slim', require: false, group: :development
 gem 'paper_trail'
+gem 'pg_search'
 gem 'railroady', group: :development # UML class diagram generator.
+gem 'rspec-rails', group: [:development, :test]
 gem 'sassc-rails'
 gem 'simple_form' # Forms made easy for Rails
 gem 'slim-rails' # template language, reduces the syntax without becoming cryptic.

@@ -3,12 +3,12 @@ class PropertiesController < ApplicationController
 
   # GET /properties or /properties.json
   def index
-    default_sort_column = 'street_address'
-    if params[:sort].blank?
-      params[:sort] = { column: default_sort_column, direction: 'asc' }
+    if params[:q].present?
+      @properties = Property.search_by_all(params[:q])
+    else
+      @properties = Property.all
     end
-    properties = Property.includes(:lots).all
-    @properties = sort_models(properties, default_sort_column, params[:sort])
+    @properties.includes(:properties, :lots).decorate
   end
 
   # GET /properties/1 or /properties/1.json

@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_01_220254) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_10_000351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.string "commentable_type", null: false
+    t.bigint "commentable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+  end
 
   create_table "item_transactions", force: :cascade do |t|
     t.string "type"
@@ -23,7 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_220254) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "residency_id"
-    t.integer "activity"
+    t.string "activity"
     t.bigint "from_residency_id"
     t.index ["from_residency_id"], name: "index_item_transactions_on_from_residency_id"
     t.index ["residency_id"], name: "index_item_transactions_on_residency_id"
@@ -41,6 +50,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_220254) do
     t.bigint "property_id"
     t.date "paid_on"
     t.index ["property_id"], name: "index_lots_on_property_id"
+  end
+
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text "content"
+    t.string "searchable_type"
+    t.bigint "searchable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable"
   end
 
   create_table "properties", force: :cascade do |t|
@@ -71,6 +89,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_220254) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "vehicles", force: :cascade do |t|
+    t.string "tag_number"
+    t.integer "sticker_number"
+    t.bigint "resident_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resident_id"], name: "index_vehicles_on_resident_id"
+  end
+
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.bigint "item_id", null: false
@@ -87,4 +114,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_220254) do
   add_foreign_key "lots", "properties"
   add_foreign_key "residencies", "properties"
   add_foreign_key "residencies", "residents"
+  add_foreign_key "vehicles", "residents"
 end

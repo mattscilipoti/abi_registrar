@@ -1,7 +1,13 @@
 h1 Properties
 
+= search_form_tag(properties_path)
+
 #properties
-  - columns = %i[street_address lot_count lot_fees_paid? share_count]
-  =render 'layouts/models_table', models: @properties, columns: columns
+  - if @properties.blank?
+    fieldset
+      | None found
+  - else
+    - columns = %i[street_address lot_numbers lot_fees_paid? share_count]
+    =render 'layouts/models_table', models: @properties, columns: columns, allow_sort: true
 br
 = link_to "New property", new_property_path

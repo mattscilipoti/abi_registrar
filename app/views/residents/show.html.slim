@@ -1,0 +1,7 @@
+= render @resident
+div
+  = link_to "Edit this resident", edit_resident_path(@resident)
+  = link_to "Back to residents", residents_path
+  = button_to "Destroy this resident", @resident, method: :delete
+
+= render partial: "comments/comments_table", locals: {commentable: @resident}

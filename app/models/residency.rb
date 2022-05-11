@@ -8,6 +8,15 @@ class Residency < ApplicationRecord
   delegate :full_name, :email_address, to: :resident
   enum :resident_status, { deed_holder: 0, dependent: 1, renter: 2 }, scopes: true
 
+  scope :lot_fees_not_paid, -> {
+    distinct.joins(:property).merge(Property.lot_fees_not_paid)
+  }
+  scope :lot_fees_paid, -> {
+    # basic "joins" to property returns resident where ANY lots fees are paid,
+    #   this returns ab=ny where ALL lot fees are paid
+    where.not(id: lot_fees_not_paid)
+  }
+
   def share_count
     share_purchases.sum(:quantity) - share_transfers_from.sum(:quantity)
   end

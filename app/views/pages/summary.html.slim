@@ -1,0 +1,43 @@
+fieldset
+  legend
+    h2 Summary
+
+  table
+    thead
+      tr
+        th Item
+        th Quantity
+        th Lot Fee(s) Paid?
+        th Last Updated
+    tbody
+      - [Lot, Property, Resident, Vehicle].each do |model|
+        tr
+          td =link_to model.name.pluralize, url_for(model.table_name)
+          td.number =model.count
+          td.number =number_with_percentage(model.lot_fees_paid.count, model.count) if model.respond_to?(:lot_fees_paid)
+          td.datetime =datetime_tag(model.pluck(:updated_at).max)
+
+hr.double
+
+fieldset
+  legend
+    h2 Transaction Summary
+
+  table
+    thead
+      tr
+        th Item
+        th Quantity
+        th Total
+        th Last Updated
+    tbody
+      tr
+        td =link_to 'Shares Purchased', share_transactions_path
+        td.number =ShareTransaction.purchase.sum(:quantity)
+        td.number =number_to_currency(ShareTransaction.purchase.sum(:cost_total))
+        td.datetime =datetime_tag(ShareTransaction.purchase.maximum(:updated_at))
+      tr
+        td =link_to 'Shares Transferred', share_transactions_path
+        td.number =ShareTransaction.transfer.sum(:quantity)
+        td.number
+        td.datetime =datetime_tag(ShareTransaction.transfer.maximum(:updated_at))

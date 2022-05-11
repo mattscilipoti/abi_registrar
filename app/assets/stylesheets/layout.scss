@@ -6,9 +6,9 @@
   font-family: 'Font Awesome 6 Solid';
   font-style: normal;
   font-weight: 900;
-  src: 
-    url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.woff2") format("woff2"), 
-    url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.ttf') format("truetype"); 
+  src:
+    url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/webfonts/fa-solid-900.woff2') format("woff2"),
+    url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/webfonts/fa-solid-900.ttf') format("truetype");
 }
 
 body {
@@ -18,17 +18,17 @@ body {
 
 a {
   color: $color-text-dark-on-light;
-  text-decoration: none; 
+  text-decoration: none;
 
   &.no-link-icon:after {
     content: '' !important // override (default) link icon
   }
   &:visited {
-    color: $color-text-dark-on-light; 
+    color: $color-text-dark-on-light;
   }
   &:hover {
-    color: $color-primary; 
-    text-decoration: underline; 
+    color: $color-primary;
+    text-decoration: underline;
   }
   // Highlight image when hover
   .icon:hover {
@@ -79,7 +79,7 @@ form {
   div.input {
     margin-top: $padding-default;
   }
-  
+
   input {
     margin: $padding-default;
 
@@ -88,6 +88,9 @@ form {
     }
     &[type='text'] {
       width: 100%;
+    }
+    &.search {
+      max-width: 400px;
     }
     &.url {
       width: 100%;
@@ -133,6 +136,13 @@ h4 {
   font-size: 1.2em;
 }
 
+hr.double {
+  background-color: transparent;
+  border-bottom: 1px solid $color-secondary;
+  border-top: 1px solid $color-secondary;
+  height: 1px;
+}
+
 /* Busy Spinner: all CSS, no JS */
 i.busy {
   // see: https://www.w3schools.com/howto/howto_css_loader.asp
@@ -168,7 +178,7 @@ nav {
 
     li {
       padding: $padding-default (2 * $padding-default);
-      border-right: 1px solid $color-text-light-on-dark; // delimiter
+      border-right: 2px solid $color-text-light-on-dark; // delimiter
       &:last-child {
         border-right: none; // remove delimiter for last menu item
       }
@@ -186,7 +196,11 @@ nav {
   }
 }
 
-// Section: Table 
+small.percentage {
+  color: grey;
+}
+
+// Section: Table
 table {
   border:1px solid $color-secondary;
   border-spacing: 1px;
@@ -205,10 +219,10 @@ table {
     }
     &.icon {
       text-align: center;
-    }    
+    }
     &.number {
       text-align: right;
-    }    
+    }
     &.url {
       font-size: .7em;
       font-stretch: condensed;
@@ -231,6 +245,13 @@ table {
 ul {
   list-style: none;
   padding-left: $padding-default;
+
+  &.horizontal-list {
+    display: flex;
+    li {
+      padding: $padding-default/2;
+    }
+  }
 }
 
 // Section: Rails "flash" messages
@@ -239,7 +260,7 @@ ul {
   border: gray solid 1px;
   font-size: 1.2em;
   padding: $padding-default;
-  
+
   &.alert {
     background-color: lighten($color-warning, 55%);
     color: $color-warning;
@@ -261,4 +282,73 @@ ul {
 
 .icon {
   padding: $padding-default/2;
+}
+
+/**
+ * Tooltip Styles
+ * see: https://codepen.io/cbracco/pen/nXEQLw
+ * Assign "data-tooltip" attribute to any element you want to have a tooltip
+ */
+
+/* Add this attribute to the element that needs a tooltip */
+[data-tooltip] {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Hide the tooltip content by default */
+[data-tooltip]:before,
+[data-tooltip]:after {
+  visibility: hidden;
+  // -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  // filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Position tooltip above the element */
+[data-tooltip]:before {
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  margin-bottom: 5px;
+  margin-left: -80px;
+  padding: 7px;
+  width: 160px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #000;
+  background-color: hsla(0, 0%, 20%, 0.9);
+  color: #fff;
+  content: attr(data-tooltip);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Triangle hack to make tooltip look like a speech bubble */
+[data-tooltip]:after {
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -5px;
+  width: 0;
+  border-top: 5px solid #000;
+  border-top: 5px solid hsla(0, 0%, 20%, 0.9);
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  content: " ";
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Show tooltip content on hover */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  // -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  // filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
 }

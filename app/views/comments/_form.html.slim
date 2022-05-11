@@ -1,0 +1,7 @@
+- comment = commentable.comments.build
+= simple_form_for comment do |f|
+  = f.input :commentable_id, as: :hidden, value: commentable.id
+  = f.input :commentable_type, as: :hidden, value: commentable.class.name
+  = f.input :content, label: false, placeholder: "Add a comment"
+
+  = f.submit "Add Comment"

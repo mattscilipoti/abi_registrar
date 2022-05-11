@@ -1,6 +1,6 @@
-h1=< item_transaction.type.titleize 
+h1=< item_transaction.type.titleize
 div id="#{dom_id item_transaction}"
-  
+
   p
     strong Activity:
     =< item_transaction.activity.titleize
@@ -29,7 +29,8 @@ div id="#{dom_id item_transaction}"
     strong Updated At:
     =< item_transaction.updated_at
 
-fieldset 
-  legend 
-    h2 Versions (#{item_transaction.versions.count})
-  = render partial: 'layouts/versions', object: item_transaction.versions
+- reifyable_versions = item_transaction.versions.select{|version| version.reify}
+fieldset
+  legend
+    h2 Versions (#{reifyable_versions.count})
+  = render partial: 'layouts/versions', object: reifyable_versions
