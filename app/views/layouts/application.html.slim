@@ -35,7 +35,7 @@ html lang=I18n.locale
             = menu_list_item "Shares", share_transactions_path, class: 'no-link-icon'
             = menu_list_item "Item Transactions", item_transactions_path, class: 'no-link-icon'
             = menu_list_item "Users", users_path, class: 'no-link-icon'
-            = menu_list_item "Sign out", rodauth.logout_path, method: :post
+            = menu_list_item "Sign out", rodauth.logout_path, data: {turbo_method: :post}, class: 'no-link-icon'
           - else
             = menu_list_item "Sign in", rodauth.login_path, class: 'no-link-icon'
             /# link_to "Sign up", rodauth.create_account_path
