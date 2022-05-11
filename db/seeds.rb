@@ -14,6 +14,7 @@ Residency.destroy_all
 Resident.destroy_all
 Lot.destroy_all
 Property.destroy_all
+User.destroy_all
 
 puts "Seeding database..."
 Faker::Config.random = nil # seeds the PRNG using default entropy sources
@@ -74,3 +75,6 @@ FactoryBot.create(:share_transaction, :purchase, quantity: 20, residency: jr.res
 FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: jr.residencies.first, residency: cbs.residencies.first)
 
 Resident.lot_fees_paid.each {|r| FactoryBot.create(:vehicle, resident: r) }
+
+FactoryBot.create(:user, :admin, email: 'test_admin@example.com', last_name: 'Admin', first_name: 'Test')
+FactoryBot.create(:user, email: 'test_user@example.com', last_name: 'User', first_name: 'Test')

@@ -17,8 +17,6 @@ fieldset
           td.number =number_with_percentage(model.lot_fees_paid.count, model.count) if model.respond_to?(:lot_fees_paid)
           td.datetime =datetime_tag(model.pluck(:updated_at).max)
 
-hr.double
-
 fieldset
   legend
     h2 Transaction Summary
