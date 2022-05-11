@@ -4,11 +4,11 @@ class PropertiesController < ApplicationController
   # GET /properties or /properties.json
   def index
     if params[:q].present?
-      @properties = Property.search_by_all(params[:q])
+      properties = Property.search_by_all(params[:q])
     else
-      @properties = Property.all
+      properties = Property.all
     end
-    @properties.includes(:properties, :lots).decorate
+    @properties = properties.includes(:residents, :lots).decorate
   end
 
   # GET /properties/1 or /properties/1.json
