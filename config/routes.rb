@@ -1,23 +1,25 @@
 Rails.application.routes.draw do
-  resources :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  get 'summary', to: 'pages#summary'
+  constraints Rodauth::Rails.authenticated do
 
-  resources :comments, only: [:create]
-  resources :lots
-  resources :item_transactions
-  resources :properties
-  resources :residents
-  resources :share_transactions, only: [:create, :index, :new, :show] do
-    collection do
-      get :purchase_new, as: :purchase_new
-      post :purchase
-      get :transfer_new, as: :transfer_new
-      post :transfer
+    # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+    get 'summary', to: 'pages#summary'
+
+    resources :comments, only: [:create]
+    resources :lots
+    resources :item_transactions
+    resources :properties
+    resources :residents
+    resources :share_transactions, only: [:create, :index, :new, :show] do
+      collection do
+        get :purchase_new, as: :purchase_new
+        post :purchase
+        get :transfer_new, as: :transfer_new
+        post :transfer
+      end
     end
+    resources :users
+    resources :vehicles
   end
-  resources :vehicles
-
   # Defines the root path route ("/")
   # root "articles#index"
   root to: redirect('/summary')
