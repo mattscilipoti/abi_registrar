@@ -15,6 +15,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Can manage Vehicles/Stickers
 - Can add Comments to Resident, Property
 - Styling
+  - Use Draper Decorators for view specific model helpers
   - Tables: use ✓/❌ for boolean fields
   - Property house icons, with fancy tooltips
   - Fixed/simplified table sorting defaults

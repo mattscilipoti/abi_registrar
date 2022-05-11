@@ -6,7 +6,6 @@ class Property < ApplicationRecord
   has_many :residents, through: :residencies
   has_many :share_transactions, through: :residencies
 
-  # Configure search
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
   def self.searchable_columns
@@ -33,11 +32,6 @@ class Property < ApplicationRecord
 
   def lot_fees_paid?
     lots.all? {|lot| lot.paid_on? }
-  end
-
-  def lot_numbers
-    # Use leading zeros to create a "natural" sort
-    lots.pluck(:lot_number).sort_by{|l| format('%010s' % l)}.join(', ')
   end
 
   def share_count
