@@ -4,13 +4,13 @@ class Vehicle < ApplicationRecord
 
   validate :resident_paid_lot_fees
 
-  # Configure search
-  include PgSearch::Model
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
   def self.searchable_columns
     [:tag_number, :sticker_number]
   end
+  # Configure search
+  include PgSearch::Model
   pg_search_scope :search_by_all,
     # Reminder: first_name, email_address are encrypted
     against: searchable_columns,

@@ -1,4 +1,6 @@
 class ItemTransaction < ApplicationRecord
+  # List of searchable columns for this Model
+  # ! this must be declared before pg_search_scope
   def self.searchable_columns
     [:type, :activity, :cost_per]
   end

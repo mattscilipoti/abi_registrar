@@ -1,4 +1,6 @@
 class Lot < ApplicationRecord
+  # List of searchable columns for this Model
+  # ! this must be declared before pg_search_scope
   def self.searchable_columns
     [:district, :subdivision, :account_number, :lot_number, :section]
   end
