@@ -23,7 +23,6 @@ class Resident < ApplicationRecord
   encrypts :email_address, deterministic: true
   encrypts :first_name, deterministic: true
 
-  has_many :comments, as: :commentable, inverse_of: :commentable
   has_many :residencies
   accepts_nested_attributes_for :residencies, reject_if: :all_blank, allow_destroy: true
   has_many :properties, through: :residencies

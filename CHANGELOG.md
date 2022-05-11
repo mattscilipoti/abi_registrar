@@ -13,12 +13,14 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Properties: Lists lot numbers
 - Can search Lots, Properties, Residents, and Transactions
 - Can manage Vehicles/Stickers
+- Can add Comments to Resident, Property
 - Styling
   - Tables: use ✓/❌ for boolean fields
   - Property house icons, with fancy tooltips
   - Fixed/simplified table sorting defaults
   - DateTimes shown in time_ago_in_words, tooltip is actual time
   - New Helpers: datetime_tag, number_with_percentage, search_form_tag
+  - Pretty tooltips via data-tooltip
 - Seeds
   - Jane Owner has 2 properties
     - Demo: One is 975 Main ("sister" to 975 Waterview)
