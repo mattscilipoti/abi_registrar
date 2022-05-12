@@ -1,0 +1,9 @@
+h1 Application Administrators
+
+#accounts
+  - if @accounts.blank?
+    fieldset
+      | None found
+  - else
+    - columns = %i[email status]
+    =render 'layouts/models_table', models: @accounts, columns: columns, allow_edit: false, allow_show: false, allow_sort: true

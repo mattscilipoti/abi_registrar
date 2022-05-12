@@ -34,6 +34,7 @@ html lang=I18n.locale
             = menu_list_item "Vehicles", vehicles_path, class: 'no-link-icon'
             = menu_list_item "Shares", share_transactions_path, class: 'no-link-icon'
             = menu_list_item "Item Transactions", item_transactions_path, class: 'no-link-icon'
+            = menu_list_item "Admins", accounts_path, class: 'no-link-icon'
             li.account_actions
               = current_account.email.split('@').first.capitalize
               span

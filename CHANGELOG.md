@@ -14,6 +14,7 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Add rodauth-rails
   - All routes require authentication
   - Enable email auth
+  - List account administrators
 - Style
   - Tooltips default to BELOW item
 

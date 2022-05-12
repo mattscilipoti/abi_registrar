@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
     get 'summary', to: 'pages#summary'
 
+    resources :accounts, only: [:index]
     resources :comments, only: [:create]
     resources :lots
     resources :item_transactions
