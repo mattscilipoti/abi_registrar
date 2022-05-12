@@ -6,14 +6,14 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-puts "Cleaning database..."
+unless ENV['FORCE_SEED'] == Rails.env || %w[development test].include?(Rails.env)
+  raise "Safety net: If you really want to seed the '#{Rails.env}' database, use FORCE_SEED=#{Rails.env}"
+end
 
-ItemTransaction.destroy_all
-Vehicle.destroy_all
-Residency.destroy_all
-Resident.destroy_all
-Lot.destroy_all
-Property.destroy_all
+puts 'Cleaning db, via truncation...'
+require 'database_cleaner-active_record'
+do_not_truncate = %w[]
+DatabaseCleaner.clean_with :truncation, except: do_not_truncate
 
 puts "Seeding database..."
 Faker::Config.random = nil # seeds the PRNG using default entropy sources
@@ -74,3 +74,9 @@ FactoryBot.create(:share_transaction, :purchase, quantity: 20, residency: jr.res
 FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: jr.residencies.first, residency: cbs.residencies.first)
 
 Resident.lot_fees_paid.each {|r| FactoryBot.create(:vehicle, resident: r) }
+
+Account.create!(
+  email: 'registrar@ardenbeachesinc.com',
+  password_hash: BCrypt::Password.create("change_me").to_s,
+  status:     2, # verified
+)

@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :item_transaction do
     type { "ItemTransaction" }
     activity { :purchase }
-    cost_per { rand(100) }
-    quantity { rand(100) }
+    cost_per { rand(1..100) }
+    quantity { rand(1..100) }
     transacted_at { Faker::Time.between(from: 1.year.ago, to: Time.now) }
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.now) }

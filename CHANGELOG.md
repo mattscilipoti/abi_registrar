@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## 2022/05/10 Searching, Summary, TimeZone, Property Icons
+## Upcoming: Authentication
+
+- ~~Manage Users~~ (removed in favor of rodauth)
+- Authentication
+  - Add rodauth-rails
+  - All routes require authentication
+  - Enable email auth
+  - List account administrators
+- Seed: use gem database_cleaner
+- Style
+  - Tooltips default to BELOW item
+
+## 2022/05/10: Searching, Summary, TimeZone, Property Icons
 
 - New Home Page: Summary
 - Properties: Lists lot numbers

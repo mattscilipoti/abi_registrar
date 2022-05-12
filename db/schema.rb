@@ -10,9 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_10_000351) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_12_021032) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
+
+  create_table "account_email_auth_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "deadline", null: false
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "account_login_change_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "login", null: false
+    t.datetime "deadline", null: false
+  end
+
+  create_table "account_password_reset_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "deadline", null: false
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "account_remember_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "deadline", null: false
+  end
+
+  create_table "account_verification_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "requested_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer "status", default: 1, null: false
+    t.citext "email", null: false
+    t.string "password_hash"
+    t.index ["email"], name: "index_accounts_on_email", unique: true, where: "(status = ANY (ARRAY[1, 2]))"
+  end
 
   create_table "comments", force: :cascade do |t|
     t.string "content"
@@ -109,6 +146,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_10_000351) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "account_email_auth_keys", "accounts", column: "id"
+  add_foreign_key "account_login_change_keys", "accounts", column: "id"
+  add_foreign_key "account_password_reset_keys", "accounts", column: "id"
+  add_foreign_key "account_remember_keys", "accounts", column: "id"
+  add_foreign_key "account_verification_keys", "accounts", column: "id"
   add_foreign_key "item_transactions", "residencies"
   add_foreign_key "item_transactions", "residencies", column: "from_residency_id"
   add_foreign_key "lots", "properties"

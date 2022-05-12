@@ -1,11 +1,13 @@
 # ABI Registrar
 
-Tools to support the registrar positoin for Arden Beaches Inc. (ABI)
+Tools to support the Registrar position for Arden Beaches Inc. (ABI)
 - Lots
   - Lot Fees
 - Properties
 - Residents
 - Amenities
+  - Vehicle/Trailer Passes
+  - Watercraft Slot
 - Shares
 
 Not only do we need to gather and manage the approprite information, we need to make it available to people, where they need it. This includes printing reports for off-line use.
@@ -49,11 +51,13 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Configuration
     - Display DateTime in Eastern Time Zone
     - DateTimes shown in time_ago_in_words, tooltip is actual time
+  - Security
+    - Authentication, via password or email
+    - List Application Administators
 
 
 ### TODO
-  - Security
-    - Authentication
+
   - Audit Transactions
     - Undo lastest change
     - Revert to previous version
