@@ -80,3 +80,9 @@ Account.create!(
   password_hash: BCrypt::Password.create("change_me").to_s,
   status:     2, # verified
 )
+
+Account.create!(
+  email: 'webmaster@ardenbeachesinc.com',
+  password_hash: BCrypt::Password.create("change_me").to_s,
+  status:     2, # verified
+)
