@@ -35,7 +35,16 @@ html lang=I18n.locale
             = menu_list_item "Shares", share_transactions_path, class: 'no-link-icon'
             = menu_list_item "Item Transactions", item_transactions_path, class: 'no-link-icon'
             = menu_list_item "Users", users_path, class: 'no-link-icon'
-            = menu_list_item "Sign out", rodauth.logout_path, data: {turbo_method: :post}, class: 'no-link-icon'
+            li
+              = current_account.email.split('@').first.capitalize
+              span
+                =" "
+                = link_to rodauth.change_password_path, class: 'no-link-icon', data: { tooltip: 'Change Password' } do font_awesome_icon('key') end
+                | &nbsp;
+                = link_to rodauth.change_login_path, class: 'no-link-icon', data: { tooltip: 'Change Email' } do font_awesome_icon('at') end
+                | &nbsp;
+                = link_to rodauth.logout_path, class: 'no-link-icon', data: { tooltip: 'Logout', turbo_method: :post } do font_awesome_icon('right-from-bracket') end
+
           - else
             = menu_list_item "Sign in", rodauth.login_path, class: 'no-link-icon'
             /# link_to "Sign up", rodauth.create_account_path
