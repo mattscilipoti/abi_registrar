@@ -6,15 +6,14 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-puts "Cleaning database..."
+unless ENV['FORCE_SEED'] == Rails.env || %w[development test].include?(Rails.env)
+  raise "Safety net: If you really want to seed the '#{Rails.env}' database, use FORCE_SEED=#{Rails.env}"
+end
 
-ItemTransaction.destroy_all
-Vehicle.destroy_all
-Residency.destroy_all
-Resident.destroy_all
-Lot.destroy_all
-Property.destroy_all
-User.destroy_all
+puts 'Cleaning db, via truncation...'
+require 'database_cleaner-active_record'
+do_not_truncate = %w[]
+DatabaseCleaner.clean_with :truncation, except: do_not_truncate
 
 puts "Seeding database..."
 Faker::Config.random = nil # seeds the PRNG using default entropy sources

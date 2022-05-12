@@ -15,6 +15,7 @@ In place of release version numbers, we organize via deploys to Production (by D
   - All routes require authentication
   - Enable email auth
   - List account administrators
+- Seed: use gem database_cleaner
 - Style
   - Tooltips default to BELOW item
 
