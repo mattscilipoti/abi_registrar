@@ -14,6 +14,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Authentication
   - Add rodauth-rails
   - All routes require authentication
+  - Enable email auth
 
 ## 2022/05/10: Searching, Summary, TimeZone, Property Icons
 

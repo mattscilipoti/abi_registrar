@@ -51,11 +51,12 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Configuration
     - Display DateTime in Eastern Time Zone
     - DateTimes shown in time_ago_in_words, tooltip is actual time
+  - Security
+    - Authentication, via password or email
 
 
 ### TODO
-  - Security
-    - Authentication
+
   - Audit Transactions
     - Undo lastest change
     - Revert to previous version
