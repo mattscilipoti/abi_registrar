@@ -91,7 +91,20 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.host = 'mysterious-stream-38479.herokuapp.com'
   # requires by rodauth
   # config.action_mailer.default_url_options = { host: 'registrar.ardenbeachesinc.com'}
-  config.action_mailer.default_url_options = { host: 'mysterious-stream-38479.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: config.host }
 end
+
+# Configure SMTP for Heroku, MailGun
+# from https://devcenter.heroku.com/articles/mailgun
+ActionMailer::Base.smtp_settings = {
+  :port           => ENV['MAILGUN_SMTP_PORT'],
+  :address        => ENV['MAILGUN_SMTP_SERVER'],
+  :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+  :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+  :domain         => Rails.configuration.host,
+  :authentication => :plain,
+}
+ActionMailer::Base.delivery_method = :smtp
