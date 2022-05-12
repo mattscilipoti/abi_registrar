@@ -78,3 +78,9 @@ Resident.lot_fees_paid.each {|r| FactoryBot.create(:vehicle, resident: r) }
 
 FactoryBot.create(:user, :admin, email: 'test_admin@example.com', last_name: 'Admin', first_name: 'Test')
 FactoryBot.create(:user, email: 'test_user@example.com', last_name: 'User', first_name: 'Test')
+
+Account.create!(
+  email: 'registrar@ardenbeachesinc.com',
+  password_hash: BCrypt::Password.create("change_me").to_s,
+  status:     2, # verified
+)

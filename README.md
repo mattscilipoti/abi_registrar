@@ -1,11 +1,13 @@
 # ABI Registrar
 
-Tools to support the registrar positoin for Arden Beaches Inc. (ABI)
+Tools to support the Registrar position for Arden Beaches Inc. (ABI)
 - Lots
   - Lot Fees
 - Properties
 - Residents
 - Amenities
+  - Vehicle/Trailer Passes
+  - Watercraft Slot
 - Shares
 
 Not only do we need to gather and manage the approprite information, we need to make it available to people, where they need it. This includes printing reports for off-line use.
