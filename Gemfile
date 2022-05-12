@@ -74,7 +74,7 @@ end
 # App Custom gems
 gem 'addressable'
 gem 'bullet', group: [:development] # help to kill N+1 queries and unused eager loading
-gem 'database_cleaner-active_record', require: false, group: [:development, :test]
+gem 'database_cleaner-active_record', require: false# , group: [:development, :test]
 gem 'draper' # Decorators/View-Models for Rails Applications
 gem 'enum_help' # Help ActiveRecord::Enum feature to work fine with I18n and simple_form.
 gem 'factory_bot_rails', group: [:development, :test]
