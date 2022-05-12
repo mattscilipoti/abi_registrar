@@ -17,7 +17,6 @@ Rails.application.routes.draw do
         post :transfer
       end
     end
-    resources :users
     resources :vehicles
   end
   # Defines the root path route ("/")

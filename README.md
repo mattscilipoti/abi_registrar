@@ -45,8 +45,6 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Search via Sticker Number, Tag Number, or Resident info
   - Manage Transactions
     - Search via by Type, Activity, Resident, Property
-  - Manage Users
-    - Search via by Email, Name
   - Audit Transactions
     - ItemTransactions#show lists previous versions
   - Add Summary page (as Home page)

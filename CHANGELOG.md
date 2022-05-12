@@ -7,10 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Authentication, Manage Users
+## Upcoming: Authentication
 
-- Manage Users
-  - Search by email, name
+- ~~Manage Users~~ (removed in favor of rodauth)
 - Authentication
   - Add rodauth-rails
   - All routes require authentication
