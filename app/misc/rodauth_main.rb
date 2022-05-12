@@ -27,14 +27,14 @@ class RodauthMain < Rodauth::Rails::Auth
     verify_account_set_password? false
 
     # Redirect back to originally requested location after authentication.
-    # login_return_to_requested_location? true
+    login_return_to_requested_location? true
     # two_factor_auth_return_to_requested_location? true # if using MFA
 
     # Autologin the user after they have reset their password.
     # reset_password_autologin? true
 
     # Delete the account record when the user has closed their account.
-    # delete_account_on_close? true
+    delete_account_on_close? true
 
     # Redirect to the app from login and registration pages if already logged in.
     # already_logged_in { redirect login_redirect }
@@ -129,5 +129,7 @@ class RodauthMain < Rodauth::Rails::Auth
     # reset_password_deadline_interval Hash[hours: 6]
     # verify_login_change_deadline_interval Hash[days: 2]
     # remember_deadline_interval Hash[days: 30]
+
+    login_label 'Email'
   end
 end
