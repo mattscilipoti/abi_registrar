@@ -307,11 +307,9 @@ ul {
   pointer-events: none;
 }
 
-/* Position tooltip above the element */
+/* Style tooltip */
 [data-tooltip]:before {
   position: absolute;
-  bottom: 150%;
-  left: 50%;
   margin-bottom: 5px;
   margin-left: -80px;
   padding: 7px;
@@ -328,21 +326,50 @@ ul {
   line-height: 1.2;
 }
 
-/* Triangle hack to make tooltip look like a speech bubble */
+/* Style the tooltip triangle (like speeech bubble). Manage borders to control arrow */
 [data-tooltip]:after {
   position: absolute;
-  bottom: 150%;
-  left: 50%;
   margin-left: -5px;
   width: 0;
-  border-top: 5px solid #000;
-  border-top: 5px solid hsla(0, 0%, 20%, 0.9);
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
   content: " ";
   font-size: 0;
   line-height: 0;
 }
+
+/* Position tooltip BELOW the element */
+[data-tooltip]:before {
+  bottom: -300%;
+  left: 50%;
+}
+
+/* Position tooltip triangle BELOW element */
+[data-tooltip]:after {
+  bottom: -105%;
+  left: 50%;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid hsla(0, 0%, 20%, 0.9);
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
+
+/* Position tooltip ABOVE the element */
+[data-tooltip-position="top"]:before {
+  bottom: 150%;
+  left: 50%;
+}
+
+/* Position tooltip arrow ABOVE the element */
+[data-tooltip-position="top"]:after {
+  bottom: 150%;
+  left: 50%;
+  border-top: 5px solid #000;
+  border-top: 5px solid hsla(0, 0%, 20%, 0.9);
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
+
+
+
 
 /* Show tooltip content on hover */
 [data-tooltip]:hover:before,
