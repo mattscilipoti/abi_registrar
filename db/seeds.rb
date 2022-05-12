@@ -87,12 +87,12 @@ Account.create!(
 
 Account.create!(
   email: 'registrar@ardenbeachesinc.com',
-  password_hash: BCrypt::Password.create("change_me").to_s,
+  password_hash: BCrypt::Password.create(Rails.application.credentials.fetch(:temporary_password)).to_s,
   status:     2, # verified
 )
 
 Account.create!(
   email: 'webmaster@ardenbeachesinc.com',
-  password_hash: BCrypt::Password.create("change_me").to_s,
+  password_hash: BCrypt::Password.create(Rails.application.credentials.fetch(:temporary_password)).to_s,
   status:     2, # verified
 )
