@@ -17,6 +17,10 @@ class Residency < ApplicationRecord
     where.not(id: lot_fees_not_paid)
   }
 
+  def resident_status_i18n
+    resident_status.gsub('_', ' ').titleize
+  end
+
   def share_count
     share_purchases.sum(:quantity) - share_transfers_from.sum(:quantity)
   end
