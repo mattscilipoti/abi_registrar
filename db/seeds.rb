@@ -12,6 +12,9 @@ end
 
 puts 'Cleaning db, via truncation...'
 require 'database_cleaner-active_record'
+require 'factory_bot_rails'
+require 'faker'
+
 do_not_truncate = %w[]
 DatabaseCleaner.clean_with :truncation, except: do_not_truncate
 

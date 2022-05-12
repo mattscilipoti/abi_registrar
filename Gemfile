@@ -77,8 +77,8 @@ gem 'bullet', group: [:development] # help to kill N+1 queries and unused eager 
 gem 'database_cleaner-active_record', require: false# , group: [:development, :test]
 gem 'draper' # Decorators/View-Models for Rails Applications
 gem 'enum_help' # Help ActiveRecord::Enum feature to work fine with I18n and simple_form.
-gem 'factory_bot_rails', group: [:development, :test]
-gem 'faker', require: false, group: [:development, :test]
+gem 'factory_bot_rails', require: false #, group: [:development, :test]
+gem 'faker', require: false #, group: [:development, :test]
 gem 'html2slim', require: false, group: :development
 gem 'paper_trail'
 gem 'pg_search'
