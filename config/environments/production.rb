@@ -93,5 +93,6 @@ Rails.application.configure do
 
   # requires by rodauth
   fail "Assign default_url_options for production"
-  config.action_mailer.default_url_options = { host: 'registrar.ardenbeachesinc.com'}
+  # config.action_mailer.default_url_options = { host: 'registrar.ardenbeachesinc.com'}
+  config.action_mailer.default_url_options = { host: 'mysterious-stream-38479.herokuapp.com' }
 end
