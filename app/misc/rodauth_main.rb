@@ -54,9 +54,9 @@ class RodauthMain < Rodauth::Rails::Auth
     create_password_changed_email do
       RodauthMailer.password_changed(account_id)
     end
-    # create_email_auth_email do
-    #   RodauthMailer.email_auth(account_id, email_auth_key_value)
-    # end
+    create_email_auth_email do
+      RodauthMailer.email_auth(account_id, email_auth_key_value)
+    end
     # create_unlock_account_email do
     #   RodauthMailer.unlock_account(account_id, unlock_account_key_value)
     # end

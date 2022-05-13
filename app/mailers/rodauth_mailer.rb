@@ -28,12 +28,12 @@ class RodauthMailer < ApplicationMailer
     mail to: @account.email, subject: rodauth.password_changed_email_subject
   end
 
-  # def email_auth(account_id, key)
-  #   @email_link = rodauth.email_auth_url(key: email_token(account_id, key))
-  #   @account = Account.find(account_id)
+  def email_auth(account_id, key)
+    @email_link = rodauth.email_auth_url(key: email_token(account_id, key))
+    @account = Account.find(account_id)
 
-  #   mail to: @account.email, subject: rodauth.email_auth_email_subject
-  # end
+    mail to: @account.email, subject: rodauth.email_auth_email_subject
+  end
 
   # def unlock_account(account_id, key)
   #   @email_link = rodauth.unlock_account_url(key: email_token(account_id, key))
