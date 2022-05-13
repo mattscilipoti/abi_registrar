@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Authentication
+## Upcoming: Deploy to Heroku
+
+- rodauth: enable enum_auth
+- Configure for Heroku: database, email (MailGun)
+- Seed
+  - Allow seed in Production
+  - Add webmaster
+  - Use credentials
+- Deps
+  - Remove enum_help (had errors on Heroku). Workaround: use string in Enum hash.
+  - Add forgotten vendor/cache
+
+## 2022/05/11: Authentication
 
 - ~~Manage Users~~ (removed in favor of rodauth)
 - Authentication
