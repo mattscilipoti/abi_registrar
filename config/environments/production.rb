@@ -95,16 +95,17 @@ Rails.application.configure do
   # requires by rodauth
   # config.action_mailer.default_url_options = { host: 'registrar.ardenbeachesinc.com'}
   config.action_mailer.default_url_options = { host: config.host }
-end
 
-# Configure SMTP for Heroku, MailGun
-# from https://devcenter.heroku.com/articles/mailgun
-ActionMailer::Base.smtp_settings = {
-  :port           => ENV['MAILGUN_SMTP_PORT'],
-  :address        => ENV['MAILGUN_SMTP_SERVER'],
-  :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-  :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-  :domain         => Rails.configuration.host,
-  :authentication => :plain,
-}
-ActionMailer::Base.delivery_method = :smtp
+
+  # Configure SMTP for Heroku, MailGun
+  # from https://devcenter.heroku.com/articles/mailgun
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :address        => ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         => Rails.configuration.host,
+    :authentication => :plain,
+  }
+end
