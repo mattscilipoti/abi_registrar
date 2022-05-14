@@ -142,7 +142,10 @@ class Importer
     }
 
     # Resident2 may not exist
-    return if resident_info[:last_name].blank?
+    if resident_info[:last_name].blank?
+      announce('Resident2 Skipped, no Last Name', row_index: import_info[:row_index], prefix: "⏩".gray)
+      return
+    end
 
     resident2 = import_model(
       Resident,
