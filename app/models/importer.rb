@@ -4,6 +4,7 @@ class Importer
   attr_accessor :import_info
   attr_reader :source_file
   def initialize(source_file)
+    @row_index = 0
     @source_file = Pathname.new(source_file)
     raise ArgumentError, "source_file does not exist: '#{@source_file.realpath}'" unless @source_file.exist?
   end
@@ -12,7 +13,7 @@ class Importer
     puts "Loading Membership info from..."
     converted_range = range.nil? ? nil : Range.new(*range.split("..").map(&:to_i))
     results = import_via_csv(range: converted_range)
-    announce "\nDone", data: results
+    announce "\nImport Completed:", data: results
   end
 
   def import_via_csv(range: nil)
@@ -26,10 +27,13 @@ class Importer
       strip: true,
     )
     table.by_row!
+
+
+
     @import_info = {
       count: table.count,
       range: range,
-      row_index: range ? range.begin : 1,
+      rows_processed: 0,
       lots_created: 0,
       lots_updated: 0,
       lots_unchanged: 0,
@@ -40,9 +44,11 @@ class Importer
       residents_updated: 0,
       residents_unchanged: 0,
     }
-    announce "Summary:", data: import_info
-    announce "Importing..."
+    announce "\nSummary:", data: import_info
 
+    announce "\nImporting #{range if range.inspect}:"
+
+    @row_index = range ? range.begin : 1
     table_rows =  if range
                     table[range]
                   else
@@ -54,7 +60,8 @@ class Importer
       property = import_property(row_info, lot)
       resident1 = import_resident1(row_info, property)
       resident2 = import_resident2(row_info, property)
-      import_info[:row_index] += 1
+      @row_index += 1
+      import_info[:rows_processed] += 1
     end
     import_info
   end
@@ -81,16 +88,16 @@ class Importer
       if model.changed?
         model.save!
         import_info["#{association_name}_updated".to_sym] += 1
-        announce("#{label} Updated #{ {id: model.id} }...", row_index: import_info[:row_index], prefix: "💾", data: model.changes)
+        announce("#{label} Updated #{ {id: model.id} }...", row_index: @row_index, prefix: "💾", data: model.changes)
       else
         import_info["#{association_name}_unchanged".to_sym] += 1
-        announce("#{label} Unchanged #{ {id: model.id} }".gray, row_index: import_info[:row_index], prefix: "⏩")
+        announce("#{label} Unchanged #{ {id: model.id} }".gray, row_index: @row_index, prefix: "⏩")
       end
     else
       # Create a new model
       # e.g. lot.property = property
       model = model_class.create!(model_attributes)
-      announce "#{label} Created #{ {id: model.id} }", row_index: import_info[:row_index], data: model_attributes, prefix: "💙"
+      announce "#{label} Created #{ {id: model.id} }", row_index: @row_index, data: model_attributes, prefix: "💙"
 
       import_info["#{association_name}_created".to_sym] += 1
     end
@@ -112,7 +119,7 @@ class Importer
     if !property.lots.find{|l| l.lot_number.casecmp?(lot.lot_number) }
       property.lots << lot # saves association
       import_info[:properties_updated] += 1
-      announce("Property Lot Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
+      announce("Property Lot Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: @row_index, prefix: "💾".blue)
     end
     property
   end
@@ -134,7 +141,7 @@ class Importer
     if !resident1.properties.find{|p| p.street_number.casecmp?(property.street_number) && p.street_name.casecmp?(property.street_name) }
       resident1.properties << property # saves association
       import_info[:residents_updated] += 1
-      announce("Resident1 Property Assigned #{ {id: resident1.id, property_ids: resident1.property_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
+      announce("Resident1 Property Assigned #{ {id: resident1.id, property_ids: resident1.property_ids } }", row_index: @row_index, prefix: "💾".blue)
     end
     resident1
   end
@@ -149,7 +156,7 @@ class Importer
 
     # Resident2 may not exist
     if resident_info[:last_name].blank?
-      announce('Resident2 Skipped, no Last Name'.gray, row_index: import_info[:row_index], prefix: "⏩".gray)
+      announce('Resident2 Skipped, no Last Name'.gray, row_index: @row_index, prefix: "⏩".gray)
       return
     end
 
@@ -163,28 +170,9 @@ class Importer
     if !resident2.properties.find{|p| p.street_number.casecmp?(property.street_number) && p.street_name.casecmp?(property.street_name) }
       resident2.properties << property # saves association
       import_info[:residents_updated] += 1
-      announce("Resident2 Property Assigned #{ {id: resident2.id, property_ids: resident2.property_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
+      announce("Resident2 Property Assigned #{ {id: resident2.id, property_ids: resident2.property_ids } }", row_index: @row_index, prefix: "💾".blue)
     end
     resident2
-  end
-
-  def import_via_roo
-    require 'roo'
-    csv = Roo::Spreadsheet.open(source_file.to_s, csv_options: {headers: true})
-    puts csv.info
-    sheet = csv.sheet('default') # only one sheet
-    rows_to_import = sheet.last_row
-    row_index = 0
-  debugger
-    sheet.each(tax_id: 'TAXID', lot_number: 'LOT') do |lot_info|
-      row_index += 1
-      lot = Lot.find_by(lot_number: lot_info.fetch(:lot_number))
-      if lot
-        announce("already exists", row_index: row_index, prefix: "SKIP".blue, data: lot_info)
-        next
-      end
-
-    end
   end
 
   def announce(message, row_index: nil, prefix: nil, data: {})

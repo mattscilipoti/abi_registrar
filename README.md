@@ -75,6 +75,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - List past Owners
   - Manage Residents
     - List residents w/o Resident Status (Deed Holder, etc.)
+    - List residents w/o email
   - Manage Beach Parties?
     - A: probably not. Registrar manages this outside of this app. Uses this app to verify Resident
     - Reservations
