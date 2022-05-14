@@ -45,6 +45,7 @@ class Importer
 
     table_rows.each do |row_info|
       lot = import_lot(row_info)
+      property = import_property(row_info, lot)
       import_info[:row_index] += 1
     end
     import_info
@@ -71,6 +72,36 @@ class Importer
     announce "Lot Created", data: lot_info, prefix: "🆕", row_index: import_info[:row_index]
     import_info[:lots_created] += 1
     lot
+  end
+
+  def import_property(row_info, lot)
+    property_info = parse_property_info(row_info, lot)
+    property = Property.find_by(property_info)
+    if property
+      property.assign_attributes(property_info)
+
+      if property.changed?
+        property.save!
+        import_info[:properties_updated] += 1
+        announce("Property Updated (#{ {id: property.id} })...", row_index: import_info[:row_index], prefix: "💾".blue, data: property.changes)
+      else
+        import_info[:properties_unchanged] += 1
+        announce("Property Unchanged (#{ {id: property.id} })", row_index: import_info[:row_index], prefix: "⏩".gray)
+      end
+      if !property.lots.include?(lot)
+        property.lots << lot
+        import_info[:properties_updated] += 1
+        announce("Property Lot Assigned (#{ {id: property.id, lot_ids: property.lot_ids} })", row_index: import_info[:row_index], prefix: "💾".blue)
+      end
+
+      return property
+    end
+
+    # property = lot.create_property!(property_info) # WARN: Creates the property BUT does NOT save the association
+    property = Property.create!(property_info.merge(lots: [lot]))
+    announce "Property Created", row_index: import_info[:row_index], data: property_info, prefix: "🆕"
+    import_info[:properties_created] += 1
+    property
   end
 
   def import_via_roo
