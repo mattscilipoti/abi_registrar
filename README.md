@@ -54,6 +54,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Security
     - Authentication, via password or email
     - List Application Administators
+  - Import Lots, Properties, Residents
 
 
 ### TODO
@@ -72,6 +73,8 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Support Onboarding
       - What steps occur for new Residents?
     - List past Owners
+  - Manage Residents
+    - List residents w/o Resident Status (Deed Holder, etc.)
   - Manage Beach Parties?
     - A: probably not. Registrar manages this outside of this app. Uses this app to verify Resident
     - Reservations
@@ -84,8 +87,12 @@ Not only do we need to gather and manage the approprite information, we need to 
       - Lot fees to be paid
     - (possible) Email Beach Passes to Deed Holders, with QR Code
   - Import Lots
+    - Lot Fees Paid
   - Import Properties
+    - Shares
   - Import Residents
+    - Status (Deed Holder, etc.)
+    - Verified
   - Sync Lot Fees with QuickBooks
   - Manage Donations
     - In QuickBooks?

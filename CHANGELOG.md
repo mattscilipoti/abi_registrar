@@ -10,7 +10,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 ## Upcoming: Import
 
 - New task: "import:abi_members"
-  - Imports Lots, Properties
+  - Imports Lots, Properties, Resident1 & 2
 - Deps:
   - Add amazing_print (formatting and colors - "abc".red)
 

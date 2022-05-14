@@ -18,7 +18,7 @@ class Residency < ApplicationRecord
   }
 
   def resident_status_i18n
-    resident_status.gsub('_', ' ').titleize
+    resident_status && resident_status.gsub('_', ' ').titleize
   end
 
   def share_count

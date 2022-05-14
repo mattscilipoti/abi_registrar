@@ -33,6 +33,9 @@ class Importer
       properties_created: 0,
       properties_updated: 0,
       properties_unchanged: 0,
+      residents_created: 0,
+      residents_updated: 0,
+      residents_unchanged: 0,
     }
     announce "Summary:", data: import_info
     announce "Importing..."
@@ -46,16 +49,21 @@ class Importer
     table_rows.each do |row_info|
       lot = import_lot(row_info)
       property = import_property(row_info, lot)
+      resident1 = import_resident1(row_info, property)
+      resident2 = import_resident2(row_info, property)
       import_info[:row_index] += 1
     end
     import_info
   end
 
   def import_lot(row_info)
+    tax_id_parts = parse_tax_id(row_info.fetch(:taxid))
+    lot_info = { lot_number: row_info.fetch(:lot) }.merge(tax_id_parts)
+
     import_model(
       Lot,
       find_by: {lot_number: row_info.fetch(:lot)},
-      model_attributes: parse_lot_info(row_info)
+      model_attributes: lot_info
     )
   end
 
@@ -88,18 +96,66 @@ class Importer
   end
 
   def import_property(row_info, lot)
+    property_info = {
+      street_number: row_info.fetch(:phouse),
+      street_name: row_info.fetch(:pstreet),
+    }
     property = import_model(
       Property,
-      model_attributes: parse_property_info(row_info, lot),
+      model_attributes: property_info,
     )
 
     # Handle association
-    # e.g. lot.properties != property
-    if lot.property != property
+    if !property.lots.find{|l| l.lot_number.casecmp(lot.lot_number) }
       property.lots << lot # saves association
       import_info[:properties_updated] += 1
       announce("Property Lot Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
     end
+    property
+  end
+
+  def import_resident1(row_info, property)
+    resident_info = {
+      last_name: row_info.fetch(:ln1),
+      first_name: row_info.fetch(:fn1),
+      email_address: row_info.fetch(:email1),
+    }
+    resident1 = import_model(
+      Resident,
+      model_attributes: resident_info,
+    )
+
+    # Handle association
+    if !resident1.properties.find{|p| p.street_number.casecmp(property.street_number) && p.street_name.casecmp(property.street_name) }
+      resident1.properties << property # saves association
+      import_info[:residents_updated] += 1
+      announce("Resident Property Assigned #{ {id: resident1.id, property_ids: resident1.property_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
+    end
+    resident1
+  end
+
+  def import_resident2(row_info, property)
+    resident_info = {
+      last_name: row_info.fetch(:ln2),
+      first_name: row_info.fetch(:fn2),
+      email_address: row_info.fetch(:email2),
+    }
+
+    # Resident2 may not exist
+    return if resident_info[:last_name].blank?
+
+    resident2 = import_model(
+      Resident,
+      model_attributes: resident_info,
+    )
+
+    # Handle association
+    if !resident2.properties.find{|p| p.street_number.casecmp(property.street_number) && p.street_name.casecmp(property.street_name) }
+      resident2.properties << property # saves association
+      import_info[:residents_updated] += 1
+      announce("Resident Property Assigned #{ {id: resident2.id, property_ids: resident2.property_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
+    end
+    resident2
   end
 
   def import_via_roo
@@ -133,11 +189,10 @@ class Importer
 
   # Returns a hash of lot info, parsed from the row
   def parse_lot_info(row_info)
-    tax_id_parts = parse_tax_id(row_info.fetch(:taxid))
-    { lot_number:  row_info.fetch(:lot) }.merge(tax_id_parts)
+
   end
 
-  def parse_property_info(row_info, lot)
+  def parse_property_info(row_info)
     {
       street_number: row_info.fetch(:phouse),
       street_name: row_info.fetch(:pstreet),
