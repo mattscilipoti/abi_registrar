@@ -75,6 +75,7 @@ GEM
     after_commit_everywhere (1.2.0)
       activerecord (>= 4.2)
       activesupport
+    amazing_print (1.4.0)
     bcrypt (3.1.17)
     bindex (0.8.1)
     bootsnap (1.11.1)
@@ -322,6 +323,7 @@ PLATFORMS
 
 DEPENDENCIES
   addressable
+  amazing_print (~> 1.4)
   bootsnap
   bullet
   capybara
