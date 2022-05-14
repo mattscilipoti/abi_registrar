@@ -12,10 +12,31 @@ class Importer
     }
   end
 
+  def announce(message, row_index: nil, prefix: nil, data: {})
+    msg_info = []
+    msg_info << "#{"%04d" % row_index}" if row_index
+    msg_info << prefix if prefix
+    msg_info << message
+
+    puts msg_info.compact.join(' ') if msg_info.present?
+    ap data if data.present?
+  end
+
   def import(range: nil)
-    puts "Importing data from #{source_file}"
+    puts "Importing data from '#{source_file}'"
     converted_range = range.nil? ? nil : Range.new(*range.split("..").map(&:to_i))
+    import_info.merge!({
+      time_start: Time.now,
+    })
+
     results = import_via_csv(range: converted_range)
+
+    time_end = Time.now
+    duration = ActiveSupport::Duration.new(time_end - import_info.fetch(:time_start))
+    import_info.merge!({
+      time_end: time_end,
+      time_duration: duration,
+    })
     announce "\nImport Completed:", data: results
   end
 
@@ -85,15 +106,5 @@ class Importer
     end
 
     model
-  end
-
-  def announce(message, row_index: nil, prefix: nil, data: {})
-    msg_info = []
-    msg_info << "#{"%04d" % row_index}" if row_index
-    msg_info << prefix if prefix
-    msg_info << message
-
-    puts msg_info.compact.join(' ') if msg_info.present?
-    ap data if data.present?
   end
 end
