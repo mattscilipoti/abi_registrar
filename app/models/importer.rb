@@ -70,7 +70,7 @@ class Importer
     )
   end
 
-  def import_model(model_class, model_attributes:, find_by: model_attributes, association_name: model_class.table_name)
+  def import_model(model_class, model_attributes:, find_by: model_attributes, association_name: model_class.table_name, label: model_class.name)
     # find_by ||= model_attributes
     # association_name ||= model_class.table_name # e.g. properties
     model = model_class.find_by(find_by)
@@ -81,16 +81,16 @@ class Importer
       if model.changed?
         model.save!
         import_info["#{association_name}_updated".to_sym] += 1
-        announce("#{model_class} Updated #{ {id: model.id} }...", row_index: import_info[:row_index], prefix: "💾".blue, data: model.changes)
+        announce("#{label} Updated #{ {id: model.id} }...", row_index: import_info[:row_index], prefix: "💾", data: model.changes)
       else
         import_info["#{association_name}_unchanged".to_sym] += 1
-        announce("#{model_class} Unchanged #{ {id: model.id} }", row_index: import_info[:row_index], prefix: "⏩".gray)
+        announce("#{label} Unchanged #{ {id: model.id} }".gray, row_index: import_info[:row_index], prefix: "⏩")
       end
     else
       # Create a new model
       # e.g. lot.property = property
       model = model_class.create!(model_attributes)
-      announce "#{model_class} Created #{ {id: model.id} }", row_index: import_info[:row_index], data: model_attributes, prefix: "🆕"
+      announce "#{label} Created #{ {id: model.id} }", row_index: import_info[:row_index], data: model_attributes, prefix: "💙"
 
       import_info["#{association_name}_created".to_sym] += 1
     end
@@ -127,13 +127,14 @@ class Importer
     resident1 = import_model(
       Resident,
       model_attributes: resident_info,
+      label: 'Resident1',
     )
 
     # Handle association
     if !resident1.properties.find{|p| p.street_number.casecmp?(property.street_number) && p.street_name.casecmp?(property.street_name) }
       resident1.properties << property # saves association
       import_info[:residents_updated] += 1
-      announce("Resident Property Assigned #{ {id: resident1.id, property_ids: resident1.property_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
+      announce("Resident1 Property Assigned #{ {id: resident1.id, property_ids: resident1.property_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
     end
     resident1
   end
@@ -148,20 +149,21 @@ class Importer
 
     # Resident2 may not exist
     if resident_info[:last_name].blank?
-      announce('Resident2 Skipped, no Last Name', row_index: import_info[:row_index], prefix: "⏩".gray)
+      announce('Resident2 Skipped, no Last Name'.gray, row_index: import_info[:row_index], prefix: "⏩".gray)
       return
     end
 
     resident2 = import_model(
       Resident,
       model_attributes: resident_info,
+      label: 'Resident2',
     )
 
     # Handle association
     if !resident2.properties.find{|p| p.street_number.casecmp?(property.street_number) && p.street_name.casecmp?(property.street_name) }
       resident2.properties << property # saves association
       import_info[:residents_updated] += 1
-      announce("Resident Property Assigned #{ {id: resident2.id, property_ids: resident2.property_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
+      announce("Resident2 Property Assigned #{ {id: resident2.id, property_ids: resident2.property_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
     end
     resident2
   end
