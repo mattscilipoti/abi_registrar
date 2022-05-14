@@ -109,7 +109,7 @@ class Importer
     )
 
     # Handle association
-    if !property.lots.find{|l| l.lot_number.casecmp(lot.lot_number) }
+    if !property.lots.find{|l| l.lot_number.casecmp?(lot.lot_number) }
       property.lots << lot # saves association
       import_info[:properties_updated] += 1
       announce("Property Lot Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
@@ -130,7 +130,7 @@ class Importer
     )
 
     # Handle association
-    if !resident1.properties.find{|p| p.street_number.casecmp(property.street_number) && p.street_name.casecmp(property.street_name) }
+    if !resident1.properties.find{|p| p.street_number.casecmp?(property.street_number) && p.street_name.casecmp?(property.street_name) }
       resident1.properties << property # saves association
       import_info[:residents_updated] += 1
       announce("Resident Property Assigned #{ {id: resident1.id, property_ids: resident1.property_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
@@ -158,7 +158,7 @@ class Importer
     )
 
     # Handle association
-    if !resident2.properties.find{|p| p.street_number.casecmp(property.street_number) && p.street_name.casecmp(property.street_name) }
+    if !resident2.properties.find{|p| p.street_number.casecmp?(property.street_number) && p.street_name.casecmp?(property.street_name) }
       resident2.properties << property # saves association
       import_info[:residents_updated] += 1
       announce("Resident Property Assigned #{ {id: resident2.id, property_ids: resident2.property_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
