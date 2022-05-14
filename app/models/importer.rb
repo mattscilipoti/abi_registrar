@@ -32,7 +32,7 @@ class Importer
     results = import_via_csv(range: converted_range)
 
     time_end = Time.now
-    duration = ActiveSupport::Duration.new(time_end - import_info.fetch(:time_start))
+    duration = ActiveSupport::Duration.build(time_end - import_info.fetch(:time_start))
     import_info.merge!({
       time_end: time_end,
       time_duration: duration,
