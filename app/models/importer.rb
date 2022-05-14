@@ -10,11 +10,14 @@ class Importer
 
   def import(range: nil)
     puts "Loading Membership info from..."
-    results = import_via_csv(range: range)
+    converted_range = range.nil? ? nil : Range.new(*range.split("..").map(&:to_i))
+    results = import_via_csv(range: converted_range)
     announce "\nDone", data: results
   end
 
   def import_via_csv(range: nil)
+    raise ArgumentError, "range must be a Range" if range && !range.is_a?(Range)
+
     table = CSV.table(source_file,
       converters: [:integer],
       header_converters: [:downcase, :symbol],
@@ -26,7 +29,7 @@ class Importer
     @import_info = {
       count: table.count,
       range: range,
-      row_index: 1,
+      row_index: range ? range.begin : 1,
       lots_created: 0,
       lots_updated: 0,
       lots_unchanged: 0,
@@ -39,9 +42,9 @@ class Importer
     }
     announce "Summary:", data: import_info
     announce "Importing..."
+
     table_rows =  if range
-                    converted_range = Range.new(*range.split("..").map(&:to_i))
-                    table[converted_range]
+                    table[range]
                   else
                     table
                   end
