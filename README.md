@@ -93,6 +93,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Import Residents
     - Status (Deed Holder, etc.)
     - Verified
+  - Import Phone, Mailing Address (to Property or Resident?)
   - Sync Lot Fees with QuickBooks
   - Manage Donations
     - In QuickBooks?

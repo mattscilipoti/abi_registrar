@@ -118,6 +118,7 @@ class Importer
     resident_info = {
       last_name: row_info.fetch(:ln1),
       first_name: row_info.fetch(:fn1),
+      middle_name: row_info.fetch(:mn1),
       email_address: row_info.fetch(:email1),
     }
     resident1 = import_model(
@@ -138,6 +139,7 @@ class Importer
     resident_info = {
       last_name: row_info.fetch(:ln2),
       first_name: row_info.fetch(:fn2),
+      middle_name: row_info.fetch(:mn2),
       email_address: row_info.fetch(:email2),
     }
 
