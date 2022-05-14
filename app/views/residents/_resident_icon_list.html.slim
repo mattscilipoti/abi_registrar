@@ -1,0 +1,4 @@
+ul.horizontal-list
+  - residents.each do |resident|
+    li.resident-icon
+      = render 'residents/resident_icon', resident: resident

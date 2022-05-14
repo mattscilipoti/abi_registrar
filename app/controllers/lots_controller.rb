@@ -8,7 +8,7 @@ class LotsController < ApplicationController
     else
       lots = Lot.all
     end
-    @lots = lots.includes(:property)
+    @lots = lots.includes(:property).decorate
   end
 
   # GET /lots/1 or /lots/1.json

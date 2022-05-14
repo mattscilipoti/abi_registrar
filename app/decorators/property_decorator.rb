@@ -9,4 +9,8 @@ class PropertyDecorator < Draper::Decorator
     # Use leading zeros to create a "natural" sort
     lots.pluck(:lot_number).sort_by{|l| format('%010s' % l)}.join(', ')
   end
+
+  def residents_summary(type: :icons)
+    h.render 'residents/resident_icon_list', residents: object.residents.decorate
+  end
 end

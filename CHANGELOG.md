@@ -12,6 +12,8 @@ In place of release version numbers, we organize via deploys to Production (by D
 - New task: "import:abi_members"
   - Imports Lots, Properties, Resident1 & 2
   - Add/Import Middle Name to Resident
+- Style:
+  - Lot & Property#index lists residents and section
 - Deps:
   - Add amazing_print (formatting and colors - "abc".red)
 

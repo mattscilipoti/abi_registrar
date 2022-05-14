@@ -7,7 +7,7 @@ h1 Lots
     fieldset
       | None found
   - else
-    - columns = %i[lot_number street_address section paid_on size tax_identifier]
+    - columns = %i[lot_number section street_address residents_summary paid_on size tax_identifier]
     =render 'layouts/models_table', models: @lots, columns: columns, allow_sort: true
 br
 = link_to "New lot", new_lot_path
