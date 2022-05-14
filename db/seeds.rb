@@ -12,6 +12,9 @@ end
 
 puts 'Cleaning db, via truncation...'
 require 'database_cleaner-active_record'
+require 'factory_bot_rails'
+require 'faker'
+
 do_not_truncate = %w[]
 DatabaseCleaner.clean_with :truncation, except: do_not_truncate
 
@@ -75,8 +78,21 @@ FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: j
 
 Resident.lot_fees_paid.each {|r| FactoryBot.create(:vehicle, resident: r) }
 
+test_admin_info = Rails.application.credentials.fetch(:test_admin)
+Account.create!(
+  email: test_admin_info.fetch(:email),
+  password_hash: BCrypt::Password.create(test_admin_info.fetch(:password)).to_s,
+  status:     2, # verified
+)
+
 Account.create!(
   email: 'registrar@ardenbeachesinc.com',
-  password_hash: BCrypt::Password.create("change_me").to_s,
+  password_hash: BCrypt::Password.create(Rails.application.credentials.fetch(:temporary_password)).to_s,
+  status:     2, # verified
+)
+
+Account.create!(
+  email: 'webmaster@ardenbeachesinc.com',
+  password_hash: BCrypt::Password.create(Rails.application.credentials.fetch(:temporary_password)).to_s,
   status:     2, # verified
 )
