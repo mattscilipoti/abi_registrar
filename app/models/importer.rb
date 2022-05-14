@@ -9,6 +9,7 @@ class Importer
     raise ArgumentError, "source_file does not exist: '#{@source_file.realpath}'" unless @source_file.exist?
     @import_info = {
       rows_processed: 0,
+      rows_skipped: 0,
     }
   end
 
@@ -81,8 +82,6 @@ class Importer
   end
 
   def import_model(model_class, model_attributes:, find_by: model_attributes, association_name: model_class.table_name, label: model_class.name)
-    # find_by ||= model_attributes
-    # association_name ||= model_class.table_name # e.g. properties
     model = model_class.find_by(find_by)
 
     if model
@@ -106,5 +105,20 @@ class Importer
     end
 
     model
+  end
+
+  def property_find_by(row_info)
+    { 
+      street_number: row_info.fetch(:phouse), 
+      street_name: row_info.fetch(:pstreet)
+    }
+  end
+
+  def resident_find_by(row_info)
+    {
+      last_name: row_info.fetch(:ln1),
+      first_name: row_info.fetch(:fn1),
+      middle_name: row_info.fetch(:mn1),
+    }
   end
 end

@@ -10,8 +10,13 @@ In place of release version numbers, we organize via deploys to Production (by D
 ## Upcoming: Import
 
 - New task: "import:abi_members"
-  - Imports Lots, Properties, Resident1 & 2
+  - Imports Lots, Properties, Resident1 & 2, via ImporterMembers
   - Add/Import Middle Name to Resident
+- New task: "import:shares"
+  - Imports Shares, via ImporterShares 
+  - Add :import to ItemTransaction#activity
+  - WARN: Newly imported Residents are not Deed Holders. We bypassed this verification and selected the "first" Resident.
+  - WARN: transacted_at DateTime will update for ALL Imported Share Transactions on EACH Import (I think this is appropriate, if we are using the same spreadsheet).
 - Style:
   - Lot & Property#index lists residents and section
 - Deps:
