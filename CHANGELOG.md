@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Deploy to Heroku
+## 2022/05/13: Deploy to Heroku
 
 - rodauth: enable enum_auth
 - Configure for Heroku: database, email (MailGun)
