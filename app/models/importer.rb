@@ -11,7 +11,7 @@ class Importer
   def import(range: nil)
     puts "Loading Membership info from..."
     results = import_via_csv(range: range)
-    announce "Done", data: results
+    announce "\nDone", data: results
   end
 
   def import_via_csv(range: nil)
@@ -52,56 +52,54 @@ class Importer
   end
 
   def import_lot(row_info)
-    lot_number = row_info.fetch(:lot)
-    lot_info = parse_lot_info(row_info)
-    lot = Lot.find_by(lot_number: lot_number)
-    if lot
-      lot.assign_attributes(lot_info)
-      if lot.changed?
-        import_info[:lots_updated] += 1
-        announce("Lot Updated (#{ {id: lot.id, lot_number: lot.lot_number} })...", row_index: import_info[:row_index], prefix: "💾".blue, data: lot.changes)
-        lot.save!
+    import_model(
+      Lot,
+      find_by: {lot_number: row_info.fetch(:lot)},
+      model_attributes: parse_lot_info(row_info)
+    )
+  end
+
+  def import_model(model_class, model_attributes:, find_by: model_attributes, association_name: model_class.table_name)
+    # find_by ||= model_attributes
+    # association_name ||= model_class.table_name # e.g. properties
+    model = model_class.find_by(find_by)
+
+    if model
+      model.assign_attributes(model_attributes)
+
+      if model.changed?
+        model.save!
+        import_info["#{association_name}_updated".to_sym] += 1
+        announce("#{model_class} Updated #{ {id: model.id} }...", row_index: import_info[:row_index], prefix: "💾".blue, data: model.changes)
       else
-        import_info[:lots_unchanged] += 1
-        announce("Lot Unchanged (#{ {id: lot.id, lot_number: lot.lot_number} })", row_index: import_info[:row_index], prefix: "⏩".gray)
+        import_info["#{association_name}_unchanged".to_sym] += 1
+        announce("#{model_class} Unchanged #{ {id: model.id} }", row_index: import_info[:row_index], prefix: "⏩".gray)
       end
-      return lot
+    else
+      # Create a new model
+      # e.g. lot.property = property
+      model = model_class.create!(model_attributes)
+      announce "#{model_class} Created #{ {id: model.id} }", row_index: import_info[:row_index], data: model_attributes, prefix: "🆕"
+
+      import_info["#{association_name}_created".to_sym] += 1
     end
 
-    lot = Lot.create!(lot_info)
-    announce "Lot Created", data: lot_info, prefix: "🆕", row_index: import_info[:row_index]
-    import_info[:lots_created] += 1
-    lot
+    model
   end
 
   def import_property(row_info, lot)
-    property_info = parse_property_info(row_info, lot)
-    property = Property.find_by(property_info)
-    if property
-      property.assign_attributes(property_info)
+    property = import_model(
+      Property,
+      model_attributes: parse_property_info(row_info, lot),
+    )
 
-      if property.changed?
-        property.save!
-        import_info[:properties_updated] += 1
-        announce("Property Updated (#{ {id: property.id} })...", row_index: import_info[:row_index], prefix: "💾".blue, data: property.changes)
-      else
-        import_info[:properties_unchanged] += 1
-        announce("Property Unchanged (#{ {id: property.id} })", row_index: import_info[:row_index], prefix: "⏩".gray)
-      end
-      if !property.lots.include?(lot)
-        property.lots << lot
-        import_info[:properties_updated] += 1
-        announce("Property Lot Assigned (#{ {id: property.id, lot_ids: property.lot_ids} })", row_index: import_info[:row_index], prefix: "💾".blue)
-      end
-
-      return property
+    # Handle association
+    # e.g. lot.properties != property
+    if lot.property != property
+      property.lots << lot # saves association
+      import_info[:properties_updated] += 1
+      announce("Property Lot Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: import_info[:row_index], prefix: "💾".blue)
     end
-
-    # property = lot.create_property!(property_info) # WARN: Creates the property BUT does NOT save the association
-    property = Property.create!(property_info.merge(lots: [lot]))
-    announce "Property Created", row_index: import_info[:row_index], data: property_info, prefix: "🆕"
-    import_info[:properties_created] += 1
-    property
   end
 
   def import_via_roo
