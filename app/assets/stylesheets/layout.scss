@@ -76,13 +76,11 @@ fieldset {
 }
 
 form {
-  font-size: 1.6em;
   div.input {
     margin-top: $padding-default;
   }
 
   input {
-    font-size: 1em;
     margin: $padding-default;
 
     &[type="submit"] {
@@ -284,6 +282,10 @@ ul {
 
 .icon {
   padding: $padding-default/2;
+}
+
+.search-form {
+  font-size: 1.6em;
 }
 
 /**
