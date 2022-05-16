@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Import
+## 2022/05/16: Import Members and Shares
 
 - New task: "import:abi_members"
   - Imports Lots, Properties, Resident1 & 2, via ImporterMembers
