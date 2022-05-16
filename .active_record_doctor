@@ -1,0 +1,31 @@
+# See https://github.com/gregnavis/active_record_doctor#configuration
+ActiveRecordDoctor.configure do
+  # Global settings affect all detectors.
+  global :ignore_tables, [
+    # Ignore internal Rails-related tables.
+    "ar_internal_metadata",
+    "schema_migrations",
+    "active_storage_blobs",
+    "active_storage_attachments",
+    "action_text_rich_texts",
+
+    # Add project-specific tables here.
+    # "legacy_users"
+  ]
+
+  # Detector-specific settings affect only one specific detector.
+  # detector :extraneous_indexes,
+  #   ignore_tables: ["users"],
+  # end
+
+  detector :missing_presence_validation,
+    ignore_models: [
+      "Account", # managed by rodauth
+      "Account::EmailAuthKey", # managed by rodauth
+      "Account::LoginChangeKey", # managed by rodauth
+      "Account::PasswordResetKey", # managed by rodauth
+      "Account::RememberKey", # managed by rodauth
+      "Account::VerificationKey", # managed by rodauth
+      "PaperTrail::Version" # managed by PaperTrail
+    ]
+end

@@ -6,6 +6,8 @@ class Property < ApplicationRecord
   has_many :residents, through: :residencies
   has_many :share_transactions, through: :residencies
 
+  delegate :section, to: :default_lot
+
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
   def self.searchable_columns
@@ -25,6 +27,10 @@ class Property < ApplicationRecord
 
   scope :lot_fees_paid, -> { distinct.joins(:lots).merge(Lot.fee_paid) }
   scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
+
+  def default_lot
+    lots.first
+  end
 
   def lot_count
     lots.size

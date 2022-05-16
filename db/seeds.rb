@@ -65,7 +65,7 @@ jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email
 FactoryBot.create(:residency, property: property_123Main, resident: jqo, resident_status: :deed_holder, verified_on: 1.day.ago)
 FactoryBot.create(:residency, property: property_975Main, resident: jqo, resident_status: :deed_holder, verified_on: 1.day.ago)
 
-jqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'John Q.', email_address: 'johnqrenter@example.com', properties: [property_975Main]).tap do |resident|
+jqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'John', middle_name: 'Q.', email_address: 'johnqrenter@example.com', properties: [property_975Main]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :renter,
     verified_on: 1.day.ago

@@ -42,7 +42,10 @@ class Resident < ApplicationRecord
 
 
   def full_name
-    [last_name, first_name].join(', ')
+    name = last_name
+    name += ", #{first_name}" if first_name.present?
+    name += " #{middle_name}" if middle_name.present?
+    name
   end
 
   def lot_fees_paid?

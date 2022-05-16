@@ -3,6 +3,10 @@ div id="#{dom_id(property)}"
 h1= "Property: #{property.street_address}"
 
 p
+  strong Section:&nbsp;
+  =property.section
+
+p
   strong Lot Fees Paid?&nbsp;
   =property.lot_fees_paid?
 

@@ -19,7 +19,7 @@ class ItemTransaction < ApplicationRecord
     }
 
   has_paper_trail
-  enum :activity, { purchase: 'Purchase', transfer: 'Transfer' }
+  enum :activity, { purchase: 'Purchase', transfer: 'Transfer', import: 'Import' }
   belongs_to :residency
   belongs_to :from_residency, class_name: 'Residency', optional: true
   has_one :from_resident, through: :from_residency, source: :resident, required: false

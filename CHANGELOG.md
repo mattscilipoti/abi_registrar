@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: Import
+
+- New task: "import:abi_members"
+  - Imports Lots, Properties, Resident1 & 2, via ImporterMembers
+  - Add/Import Middle Name to Resident
+- New task: "import:shares"
+  - Imports Shares, via ImporterShares 
+  - Add :import to ItemTransaction#activity
+  - WARN: Newly imported Residents are not Deed Holders. We bypassed this verification and selected the "first" Resident.
+  - WARN: transacted_at DateTime will update for ALL Imported Share Transactions on EACH Import (I think this is appropriate, if we are using the same spreadsheet).
+- Style:
+  - Lot & Property#index lists residents and section
+  - Increase search-form text size
+- Deps:
+  - Add amazing_print (formatting and colors - "abc".red)
+  - Add active_admin_doctor
+    - Added indices
+    - Fixed Not Null/Presence validators
+
 ## 2022/05/13: Deploy to Heroku
 
 - rodauth: enable enum_auth

@@ -23,6 +23,8 @@ class ShareTransaction < ItemTransaction
   end
 
   def validate_purchaser_is_deed_holder
+    return true if import? # Skip deed_holder validation when importing shares
+
     errors.add(:residency, 'must be a Deed Holder') unless residency && residency.deed_holder?  
   end
 

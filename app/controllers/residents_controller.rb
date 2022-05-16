@@ -72,6 +72,7 @@ class ResidentsController < ApplicationController
     def resident_params
       params.require(:resident).permit(
         :last_name,
+        :middle_name,
         :first_name,
         :email_address,
         :is_minor,

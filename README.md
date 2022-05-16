@@ -54,6 +54,9 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Security
     - Authentication, via password or email
     - List Application Administators
+  - Import Lots, Properties, Residents
+  - Import Shares
+    - Note: transacted_at DateTime will update for ALL Imported Share Transactions on EACH Import (I think this is appropriate, if we are using the same spreadsheet).
 
 
 ### TODO
@@ -72,6 +75,9 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Support Onboarding
       - What steps occur for new Residents?
     - List past Owners
+  - Manage Residents
+    - List residents w/o Resident Status (Deed Holder, etc.)
+    - List residents w/o email
   - Manage Beach Parties?
     - A: probably not. Registrar manages this outside of this app. Uses this app to verify Resident
     - Reservations
@@ -84,8 +90,15 @@ Not only do we need to gather and manage the approprite information, we need to 
       - Lot fees to be paid
     - (possible) Email Beach Passes to Deed Holders, with QR Code
   - Import Lots
+    - Lot Fees Paid
+    - Without a Lot Number (e.g. 1035 Miller)
   - Import Properties
+    - Without a Street Number (Hampton Dr)
   - Import Residents
+    - How to Handle 2 Properties on 1 Lot (e.g. 1007/1007A Dockser)?
+    - Status (Deed Holder, etc.)
+    - Verified
+  - Import Phone, Mailing Address (to Property or Resident?)
   - Sync Lot Fees with QuickBooks
   - Manage Donations
     - In QuickBooks?
@@ -103,7 +116,6 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Record incidents
   - Optimizations
     - Why some Versions.reify.nil?
-    - Show all Date/Times in Eastern
   - Lots
     - Subdivide a lot
   - Resident
@@ -123,7 +135,7 @@ Not only do we need to gather and manage the approprite information, we need to 
          - Your IP address(es) or domain(s) may be blacklisted by internet service providers for many reasons: if they see a sudden spike in email volume, complaints from receivers, or sending to bad emails.
        - https://www.mailgun.com/blog/deliverability/email-blasts-dos-donts-mass-email-sending/
        - https://pearllemonleads.com/bulk-emails-top-pitfalls-to-avoid/
-    - Accounting
-      - Yearly Closeout/Prep
-        - Reset Lot Fees Paid?
-        - Reset Resident Verification?
+  - Accounting
+    - Yearly Closeout/Prep
+      - Reset Lot Fees Paid?
+      - Reset Resident Verification?
