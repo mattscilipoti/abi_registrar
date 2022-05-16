@@ -4,8 +4,9 @@
   <%= form.error_notification message: form.object.errors[:base].to_sentence if form.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= form.input :last_name %>
     <%= form.input :first_name, as: :string %>
+    <%= form.input :middle_name %>
+    <%= form.input :last_name %>
     <%= form.input :email_address, as: :string %>
     <%= form.input :is_minor %>
     <%= form.input :age_of_minor, as: :integer %>
