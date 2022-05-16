@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_14_145133) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_16_005350) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -63,13 +63,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_14_145133) do
   create_table "item_transactions", force: :cascade do |t|
     t.string "type"
     t.money "cost_per", scale: 2
-    t.integer "quantity", default: 0
+    t.integer "quantity", default: 0, null: false
     t.money "cost_total", scale: 2, default: "0.0"
-    t.datetime "transacted_at"
+    t.datetime "transacted_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "residency_id"
-    t.string "activity"
+    t.bigint "residency_id", null: false
+    t.string "activity", null: false
     t.bigint "from_residency_id"
     t.index ["from_residency_id"], name: "index_item_transactions_on_from_residency_id"
     t.index ["residency_id"], name: "index_item_transactions_on_residency_id"
@@ -86,6 +86,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_14_145133) do
     t.datetime "updated_at", null: false
     t.bigint "property_id"
     t.date "paid_on"
+    t.index ["lot_number"], name: "index_lots_on_lot_number"
+    t.index ["paid_on"], name: "index_lots_on_paid_on"
     t.index ["property_id"], name: "index_lots_on_property_id"
   end
 
@@ -103,6 +105,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_14_145133) do
     t.string "street_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["street_name"], name: "index_properties_on_street_name"
+    t.index ["street_number"], name: "index_properties_on_street_number"
   end
 
   create_table "residencies", force: :cascade do |t|
@@ -114,10 +118,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_14_145133) do
     t.date "verified_on"
     t.index ["property_id"], name: "index_residencies_on_property_id"
     t.index ["resident_id"], name: "index_residencies_on_resident_id"
+    t.index ["resident_status"], name: "index_residencies_on_resident_status"
+    t.index ["verified_on"], name: "index_residencies_on_verified_on"
   end
 
   create_table "residents", force: :cascade do |t|
-    t.string "last_name"
+    t.string "last_name", null: false
     t.text "first_name"
     t.text "email_address"
     t.boolean "is_minor"
@@ -125,11 +131,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_14_145133) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "middle_name"
+    t.index ["last_name"], name: "index_residents_on_last_name"
   end
 
   create_table "vehicles", force: :cascade do |t|
-    t.string "tag_number"
-    t.integer "sticker_number"
+    t.string "tag_number", null: false
+    t.integer "sticker_number", null: false
     t.bigint "resident_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
