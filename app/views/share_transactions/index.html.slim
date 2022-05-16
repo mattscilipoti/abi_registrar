@@ -1,27 +1,34 @@
-h1 Share Transactions
+.row
+  fieldset 
+    legend
+      h2 Summary
 
-ul
-  li= link_to "Record a Share Purchase", purchase_new_share_transactions_path
-  li= link_to "Record a Share Transfer", transfer_new_share_transactions_path
+    table
+      thead
+        tr
+          th Item
+          th Quantity
+          th Total
+      tbody
+        tr
+          td Shares Purchased
+          td.number =ShareTransaction.purchase.sum(:quantity)
+          td.number =number_to_currency(ShareTransaction.purchase.sum(:cost_total))
+        tr
+          td Shares Transferred
+          td.number =ShareTransaction.transfer.sum(:quantity)
+          td.number
+  fieldset
+    legend
+      h2 Actions
+    ul
+      li= link_to "Record a Share Purchase", purchase_new_share_transactions_path
+      li= link_to "Record a Share Transfer", transfer_new_share_transactions_path
 
-h2 Summary
+hr.double 
 
-table
-  thead
-    tr
-      th Item
-      th Quantity
-      th Total
-  tbody
-    tr
-      td Shares Purchased
-      td.number =ShareTransaction.purchase.sum(:quantity)
-      td.number =number_to_currency(ShareTransaction.purchase.sum(:cost_total))
-    tr
-      td Shares Transferred
-      td.number =ShareTransaction.transfer.sum(:quantity)
-      td.number
 
+= search_form_tag(share_transactions_path)
 
 fieldset
   legend

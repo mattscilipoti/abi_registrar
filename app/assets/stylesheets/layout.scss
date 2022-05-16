@@ -284,6 +284,11 @@ ul {
   padding: $padding-default/2;
 }
 
+.row {
+  display: flex;
+  margin: 0 -$padding-default;
+}
+
 .search-form {
   // make a little bit bigger
   font-size: 1.6em;
