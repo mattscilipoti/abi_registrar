@@ -72,8 +72,9 @@ group :test do
 end
 
 # App Custom gems
+gem 'active_record_doctor', group: :development
 gem 'addressable'
-gem "amazing_print", "~> 1.4" # Pretty print your Ruby objects with style -- in full color and with proper indentation
+gem 'amazing_print', "~> 1.4" # Pretty print your Ruby objects with style -- in full color and with proper indentation
 gem 'bullet', group: [:development] # help to kill N+1 queries and unused eager loading
 gem 'database_cleaner-active_record', require: false# , group: [:development, :test]
 gem 'draper' # Decorators/View-Models for Rails Applications

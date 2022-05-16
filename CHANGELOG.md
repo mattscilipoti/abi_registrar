@@ -19,8 +19,12 @@ In place of release version numbers, we organize via deploys to Production (by D
   - WARN: transacted_at DateTime will update for ALL Imported Share Transactions on EACH Import (I think this is appropriate, if we are using the same spreadsheet).
 - Style:
   - Lot & Property#index lists residents and section
+  - Increase form text size
 - Deps:
   - Add amazing_print (formatting and colors - "abc".red)
+  - Add active_admin_doctor
+    - Added indices
+    - Fixed Not Null/Presence validators
 
 ## 2022/05/13: Deploy to Heroku
 
