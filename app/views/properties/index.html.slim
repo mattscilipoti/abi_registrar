@@ -1,12 +1,10 @@
-h1 Properties
-
 = search_form_tag(properties_path)
 
-#properties
-  - if @properties.blank?
-    fieldset
-      | None found
-  - else
+fieldset
+  legend
+    = render 'layouts/h1', title: "Properties", model_count: @properties.size
+
+  #properties
     - columns = %i[street_address section lot_numbers lot_fees_paid? residents_summary]
     =render 'layouts/models_table', models: @properties, columns: columns, allow_sort: true
 br

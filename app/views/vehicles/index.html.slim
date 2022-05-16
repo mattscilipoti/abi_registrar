@@ -1,12 +1,10 @@
-h1 Vehicles
-
 = search_form_tag(vehicles_path)
 
-#vehicles
-  - if @vehicles.blank?
-    fieldset
-      | None found
-  - else
+fieldset
+  legend
+    = render 'layouts/h1', title: "Vehicles", model_count: @vehicles.size
+
+  #vehicles
     - columns = %i[sticker_number tag_number resident property_summary]
     =render 'layouts/models_table', models: @vehicles, columns: columns, allow_sort: true
 br

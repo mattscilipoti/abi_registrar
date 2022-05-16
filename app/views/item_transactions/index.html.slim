@@ -1,4 +1,3 @@
-h1 Item Transactions
 fieldset.warning
   legend
     h2 Warning!
@@ -8,13 +7,11 @@ fieldset.warning
 
 = search_form_tag(item_transactions_path)
 
-h2 Listing
+fieldset
+  legend
+    = render 'layouts/h1', title: "Item Transactions", model_count: @item_transactions.size
 
-#item_transactions
-  - if @item_transactions.blank?
-    fieldset
-      | None found
-  - else
+  #item_transactions
     - columns = %i[type activity cost_per quantity cost_total transacted_at residency from_residency ]
     =render 'layouts/models_table', models: @item_transactions.collect{|t| t.becomes(ItemTransaction)}, columns: columns, allow_sort: true
 br

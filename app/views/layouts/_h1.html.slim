@@ -1,0 +1,4 @@
+h1
+  = title
+  span.subheader = " (#{model_count})"
+  span.subheader = " Filtered by '#{params[:q]}'" if params[:q].present?

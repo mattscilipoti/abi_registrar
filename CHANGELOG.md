@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: Performance improvements, via filtering records
+
+- Style:
+  - Indexes: h1/table wrapped in fieldset
 ## 2022/05/16: Import Members and Shares
 
 - New task: "import:abi_members"

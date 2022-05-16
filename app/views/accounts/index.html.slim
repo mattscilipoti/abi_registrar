@@ -1,9 +1,7 @@
-h1 Application Administrators
+fieldset
+  legend
+    = render 'layouts/h1', title: "Application Administrators", model_count: @accounts.size
 
-#accounts
-  - if @accounts.blank?
-    fieldset
-      | None found
-  - else
+  #accounts
     - columns = %i[email status]
     =render 'layouts/models_table', models: @accounts, columns: columns, allow_edit: false, allow_show: false, allow_sort: true

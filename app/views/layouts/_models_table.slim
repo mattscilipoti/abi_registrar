@@ -1,55 +1,59 @@
-- allow_destroy = false if allow_destroy.nil?
-- allow_edit = true if allow_edit.nil?
-- allow_show = true if allow_show.nil?
-- allow_sort = false if allow_sort.nil?
-- default_sort = { column: columns.first, direction: :asc }
-- sort = params[:sort] || default_sort if sort.nil?
-- sort_column = sort.fetch(:column)
-- sort_direction = sort.fetch(:direction)
-- sorted_models = sort_models(models, sort)
+- if models.blank?
+    | None found
+- else
+  - allow_destroy = false if allow_destroy.nil?
+  - allow_edit = true if allow_edit.nil?
+  - allow_show = true if allow_show.nil?
+  - allow_sort = false if allow_sort.nil?
+  - default_sort = { column: columns.first, direction: :asc }
+  - sort = params[:sort] || default_sort if sort.nil?
+  - sort_column = sort.fetch(:column)
+  - sort_direction = sort.fetch(:direction)
+  - sorted_models = sort_models(models, sort)
 
-table
-  thead
-    - for column_name in columns do
-      - column_caption = column_name.to_s.gsub('_i18n', '').titleize
-      - index_path = models.first.class.table_name
+  table
+    thead
+      - for column_name in columns do
+        - column_caption = column_name.to_s.gsub('_i18n', '').titleize
+        - index_path = models.first.class.table_name
 
-      -# sort link
-      - if column_name.to_s == sort_column.to_s
-        - sort_direction_indicator = sort_direction.to_s == 'asc' ? '▲' : '▼'
-        - column_caption += " #{sort_direction_indicator}"
-
-      - if allow_sort
-        - sort_link_params = { sort: {column: column_name, direction: sort_direction }}
+        -# sort link
         - if column_name.to_s == sort_column.to_s
-          -# toggle sort_direction
-          - sort_link_params[:sort][:direction] = (sort_direction == 'asc') ? 'desc' : 'asc'
-        - index_uri = Addressable::URI.new(path: index_path, query: sort_link_params.to_param)
-        th= link_to(column_caption, index_uri.to_s, class: 'no-link-icon')
-      - else
-        th= column_caption
+          - sort_direction_indicator = sort_direction.to_s == 'asc' ? '▲' : '▼'
+          - column_caption += " #{sort_direction_indicator}"
 
-    - if allow_edit
-      th Edit
-    - if allow_destroy
-      th Delete
-  tbody
+        - if allow_sort
+          - sort_link_params = { sort: {column: column_name, direction: sort_direction }}
+          - if column_name.to_s == sort_column.to_s
+            -# toggle sort_direction
+            - sort_link_params[:sort][:direction] = (sort_direction == 'asc') ? 'desc' : 'asc'
+          - index_uri = Addressable::URI.new(path: index_path, query: sort_link_params.to_param)
+          th= link_to(column_caption, index_uri.to_s, class: 'no-link-icon')
+        - else
+          th= column_caption
 
-    - sorted_models.each do |model|
-      tr
-        - columns.each_with_index do |column_name, column_index|
-          - column_value = model.send(column_name)
-          - if column_value.in? [true, false]
-            - column_value = column_value ? '✓' : '❌'
-          td
-            -if column_index == 0
-              - if allow_show
-                =link_to column_value, model, title: "Show this #{model.class.name}"
-              - else
+      - if allow_edit
+        th Edit
+      - if allow_destroy
+        th Delete
+    tbody
+
+      - sorted_models.each do |model|
+        tr
+          - columns.each_with_index do |column_name, column_index|
+            - column_value = model.send(column_name)
+            - if column_value.in? [true, false]
+              - column_value = column_value ? '✓' : '❌'
+            td
+              -if column_index == 0
+                - if allow_show
+                  - model_class = model.decorated? ? model.object.class : model.class
+                  =link_to_if model, column_value || "⁇", model, title: "Show this #{model_class.name}"
+                - else
+                  =column_value
+              -else
                 =column_value
-            -else
-              =column_value
-        - if allow_edit
-          td= link_to "Edit", edit_polymorphic_path(model)
-        - if allow_destroy
-          td= button_to "Destroy", model, method: :delete
+          - if allow_edit
+            td= link_to "Edit", edit_polymorphic_path(model)
+          - if allow_destroy
+            td= button_to "Destroy", model, method: :delete

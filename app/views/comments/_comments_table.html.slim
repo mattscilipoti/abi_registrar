@@ -3,12 +3,8 @@ fieldset
   legend
     h2 Comments
   .comments
-    - if comments.blank?
-      fieldset
-        | None found
-    - else
-      - columns = %i[content updated_at]
-      =render 'layouts/models_table', models: comments, columns: columns, allow_edit: false, allow_show: false, allow_sort: false, sort: { column: :updated_at, direction: :desc }
+    - columns = %i[content updated_at]
+    =render 'layouts/models_table', models: comments, columns: columns, allow_edit: false, allow_show: false, allow_sort: false, sort: { column: :updated_at, direction: :desc }
 
   fieldset
     = render partial: "comments/form", locals: {commentable: commentable}

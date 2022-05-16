@@ -1,13 +1,11 @@
-h1 Lots
-
 = search_form_tag(lots_path)
 
-#lots
-  - if @lots.blank?
-    fieldset
-      | None found
-  - else
-    - columns = %i[lot_number section street_address residents_summary paid_on size tax_identifier]
+fieldset
+  legend
+    = render 'layouts/h1', title: "Lots", model_count: @lots.size
+
+  #lots
+    - columns = %i[lot_number section street_address paid_on size tax_identifier]
     =render 'layouts/models_table', models: @lots, columns: columns, allow_sort: true
 br
 = link_to "New lot", new_lot_path
