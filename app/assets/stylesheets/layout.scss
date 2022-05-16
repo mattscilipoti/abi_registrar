@@ -302,7 +302,6 @@ ul {
 /* Add this attribute to the element that needs a tooltip */
 [data-tooltip] {
   position: relative;
-  z-index: 2;
   cursor: pointer;
 }
 
@@ -318,42 +317,39 @@ ul {
 
 /* Style tooltip */
 [data-tooltip]:before {
-  position: absolute;
-  margin-bottom: 5px;
-  margin-left: -80px;
-  padding: 7px;
-  width: 160px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
   background-color: #000;
   background-color: hsla(0, 0%, 20%, 0.9);
+  border-radius: 3px;
   color: #fff;
   content: attr(data-tooltip);
-  text-align: center;
   font-size: 14px;
-  line-height: 1.2;
+  // margin-left: -80px;
+  padding: 7px;
+  position: absolute;
+  text-align: center;
+  width: 160px;
+  z-index: 10;
 }
 
 /* Style the tooltip triangle (like speeech bubble). Manage borders to control arrow */
 [data-tooltip]:after {
-  position: absolute;
-  margin-left: -5px;
-  width: 0;
   content: " ";
   font-size: 0;
   line-height: 0;
+  position: absolute;
+  width: 0;
+  z-index: 10;
 }
 
 /* Position tooltip BELOW the element */
 [data-tooltip]:before {
-  bottom: -300%;
-  left: 50%;
+  top: 35px;
+  // left: -80px;
 }
 
 /* Position tooltip triangle BELOW element */
 [data-tooltip]:after {
-  bottom: -105%;
+  top: 25px;
   left: 50%;
   border-top: 5px solid transparent;
   border-bottom: 5px solid hsla(0, 0%, 20%, 0.9);
