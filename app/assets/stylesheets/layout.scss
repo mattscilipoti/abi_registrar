@@ -285,7 +285,12 @@ ul {
 }
 
 .search-form {
+  // make a little bit bigger
   font-size: 1.6em;
+  input {
+    font-size: 1em; // matches text size?!?
+  }
+  margin: 0 2*$padding-default 2*$padding-default 2*$padding-default;
 }
 
 /**
