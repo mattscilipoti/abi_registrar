@@ -53,7 +53,7 @@ class Resident < ApplicationRecord
   end
 
   def lot_fees_paid?
-    lots.all? {|lot| lot.paid_on? }
+    lots.lot_fees_paid.size == lots.size
   end
 
   def property_count
