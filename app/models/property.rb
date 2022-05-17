@@ -50,7 +50,7 @@ class Property < ApplicationRecord
   end
 
   def street_address
-    [street_number, street_name].join(' ')
+    [street_number || '⁇', street_name || '⁇'].join(' ')
   end
 
   def to_s

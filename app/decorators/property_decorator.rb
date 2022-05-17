@@ -14,4 +14,8 @@ class PropertyDecorator < Draper::Decorator
   def residents_summary(type: :icons)
     h.render 'residents/resident_icon_list', residents: object.residents.decorate
   end
+
+  def street_number
+    object.street_number || "⁇"
+  end
 end
