@@ -32,3 +32,4 @@
 
 # ensure packaged gems are included
 !/vendor/cache/
+.env
