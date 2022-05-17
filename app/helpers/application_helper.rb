@@ -43,7 +43,7 @@ module ApplicationHelper
 
   def search_form_tag(url_options, html_options={})
     default_html_options = {
-      class: 'search-form',
+      class: 'search-form row',
       method: :get
     }
     default_html_options.merge!(html_options)
