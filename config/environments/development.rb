@@ -74,7 +74,9 @@ Rails.application.configure do
   # for bullet
   # https://github.com/flyerhzm/bullet#configuration
   config.after_initialize do
-    Bullet.enable = true
+    next unless Object.const_defined?(:Bullet)
+    
+    Bullet.enable = 
     # Bullet.sentry = true
     Bullet.alert = false
     Bullet.bullet_logger = true
