@@ -6,7 +6,7 @@ class Property < ApplicationRecord
   has_many :residents, through: :residencies
   has_many :share_transactions, through: :residencies
 
-  delegate :section, to: :default_lot
+  delegate :section, to: :default_lot, allow_nil: true
 
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
