@@ -20,7 +20,7 @@ module ApplicationHelper
   def flash_tag(flash_type, message, caption: nil)
     content_tag(:div, :class => "flash highlight #{flash_type}") do
       icon = flash_icon_name(flash_type)
-      font_awesome_icon(icon, caption: caption) + message
+      font_awesome_icon(icon, caption: caption) + "&nbsp;".html_safe + message
     end
   end
 

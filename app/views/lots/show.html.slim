@@ -1,0 +1,11 @@
+h1= "Lot ##{@lot.summary}"
+
+= render @lot
+
+.model_actions
+  = link_to "Edit this lot", edit_lot_path(@lot) 
+  | |
+  = link_to "Back to lots", lots_path
+
+  = button_to "Destroy this lot", @lot, method: :delete
+

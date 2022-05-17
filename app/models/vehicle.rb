@@ -33,4 +33,12 @@ class Vehicle < ApplicationRecord
       errors.add(:resident, "must pay lot fees")
     end
   end
+
+  def tag
+    ["MD", tag_number].join('-')
+  end
+
+  def to_s
+    [sticker_number, tag].join(', ')
+  end
 end

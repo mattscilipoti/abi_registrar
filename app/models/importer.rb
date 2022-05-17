@@ -78,7 +78,7 @@ class Importer
   end
 
   def import_row
-    raise NotImplementedError, "template method, must be populated in childe class"
+    raise NotImplementedError, "Template method, must be populated in child class"
   end
 
   def import_model(model_class, model_attributes:, find_by: model_attributes, association_name: model_class.table_name, label: model_class.name)

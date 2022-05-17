@@ -40,8 +40,6 @@ fieldset
     h2
       | Residents
       small= "(#{lot.residents.size} ct.)"
-  - if lot.residencies.blank?
-    | None found
-  -else
-    - columns = %i[resident resident_status_i18n]
-    =render 'layouts/models_table', models: lot.residencies.includes(:resident), columns: columns, allow_edit: false, allow_show: false
+
+  - columns = %i[resident resident_status_i18n]
+  =render 'layouts/models_table', models: lot.residencies.includes(:resident), columns: columns, allow_edit: false, allow_show: false
