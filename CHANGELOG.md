@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Performance improvements, via filtering records
+## 2022/05/17: Performance improvements, via filtering records
 
 - Filter by "Problematic", "Not Paid"
   - Defaults to "Problematic"
@@ -23,6 +23,9 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Use .row for aligning row of items (flex)
   - Indexes: h1/table wrapped in fieldset
   - Search: add busy indicator to link clink and submit click
+- Dep:
+  - bundle cache --all-platforms
+    - Fixes issues on Heroku (missing gems)
 
 ## 2022/05/16: Import Members and Shares
 
