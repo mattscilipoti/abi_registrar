@@ -42,7 +42,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Can Edit/Delete via Item Tranaactions
   - Manage Vehicle Stickers
     - Assign Sticker and Vehicle to Resident
-    - Search via Sticker Number, Tag Number, or Resident info
+    - Search via Sticker Number, Tag Number, State, or Resident info
   - Manage Transactions
     - Search via by Type, Activity, Resident, Property
   - Search

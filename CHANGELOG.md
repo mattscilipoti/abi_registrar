@@ -14,10 +14,12 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Each Model has its own definition of "problematic" (e.g. No lot_number)
     - Add scopes to all models
   - Extract filter_models to ApplicationController
-  - Style
-    - Use "⁇" for unknown values
-
+- DB: 
+  - Comment#content is required
+  - Add Vehicle#state_code (searchable)
+    - Vehicle.states for forms
 - Style:
+  - Use "⁇" for unknown values
   - Indexes: h1/table wrapped in fieldset
 
 ## 2022/05/16: Import Members and Shares
