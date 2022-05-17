@@ -27,7 +27,8 @@ class ShareTransactionsController < ApplicationController
     if params[:sort].blank?
       params[:sort] = { column: default_sort_column, direction: 'desc' }
     end
-    @share_transactions = ShareTransaction.includes(residency: [:resident, :property]).includes(:from_residency).order(transacted_at: :desc)
+    share_transactions = filter_models(ShareTransaction, params[:q])
+    @share_transactions = share_transactions.includes(residency: [:resident, :property]).includes(:from_residency).order(transacted_at: :desc)
   end
 
   # POST //share_transactions/purchase or //share_transactions/purchase.json

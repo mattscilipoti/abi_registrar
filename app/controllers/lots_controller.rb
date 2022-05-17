@@ -3,11 +3,7 @@ class LotsController < ApplicationController
 
   # GET /lots or /lots.json
   def index
-    if params[:q].present?
-      lots = Lot.search_by_all(params[:q])
-    else
-      lots = Lot.all
-    end
+    lots = filter_models(Lot, params[:q])
     @lots = lots.includes(:property).decorate
   end
 

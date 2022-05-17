@@ -12,7 +12,6 @@ class Vehicle < ApplicationRecord
   # Configure search
   include PgSearch::Model
   pg_search_scope :search_by_all,
-    # Reminder: first_name, email_address are encrypted
     against: searchable_columns,
     associated_against: {
       resident: Resident.searchable_columns,
@@ -21,6 +20,11 @@ class Vehicle < ApplicationRecord
     using: {
       tsearch: { prefix: true }
     }
+
+  scope :not_paid, -> { all } # TODO: sticker fee not paid?
+  scope :problematic, -> { without_tag_number.or(without_sticker_number) }
+  scope :without_tag_number, -> { where(tag_number: nil) }
+  scope :without_sticker_number, -> { where(sticker_number: nil) }
 
   validates_presence_of :tag_number, :sticker_number
 

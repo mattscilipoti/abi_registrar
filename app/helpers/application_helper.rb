@@ -47,10 +47,27 @@ module ApplicationHelper
       method: :get
     }
     default_html_options.merge!(html_options)
+    
     form_tag(url_options, default_html_options) do
       concat label_tag(:q, 'Search')
       concat text_field_tag(:q, params[:q], class: 'search')
       concat submit_tag("Search")
+      concat "Filters:&nbsp;".html_safe
+      concat link_to(
+        " 😈", 
+        Addressable::URI.new(path: url_options, query_values: {q: 'Problematic'}).to_s,
+        class: 'no-link-icon', data: { tooltip: "Show only 'problematic'" } 
+      )
+      concat link_to(
+        " 💸", 
+        Addressable::URI.new(path: url_options, query_values: {q: 'Not Paid'}).to_s,
+        class: 'no-link-icon', data: { tooltip: "Show items 'Expecting a Payment'" } 
+      )
+      concat link_to(
+        " 🚫", 
+        url_options,
+        class: 'no-link-icon', data: { tooltip: "Show ALL. ⚠️ Expect delays." } 
+      )
     end
   end
 

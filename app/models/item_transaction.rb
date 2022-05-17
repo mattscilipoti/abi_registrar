@@ -27,6 +27,12 @@ class ItemTransaction < ApplicationRecord
   has_one :resident, through: :residency
   has_one :property, through: :residency
 
+  scope :in_the_future, -> { where('transacted_at >= ?', Time.now) }
+  scope :large_quantity, -> { where('quantity > ?', 50) }
+  scope :not_paid, -> { in_the_future }
+  scope :problematic, -> { large_quantity.or(in_the_future) }
+
+
   validates_presence_of :quantity, :residency, :transacted_at, :activity
   validate :requested_transfer_quantity_is_available
 

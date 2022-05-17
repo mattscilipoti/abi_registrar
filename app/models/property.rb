@@ -27,6 +27,11 @@ class Property < ApplicationRecord
 
   scope :lot_fees_paid, -> { distinct.joins(:lots).merge(Lot.fee_paid) }
   scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
+  scope :not_paid, -> { lot_fees_not_paid }
+  scope :problematic, -> { without_lot.or(without_street_number).or(without_street_name) }
+  scope :without_lot, -> { joins(:lots).where(lots: nil) }
+  scope :without_street_number, -> { where(street_number: nil) }
+  scope :without_street_name, -> { where(street_name: nil) }
 
   def default_lot
     lots.first

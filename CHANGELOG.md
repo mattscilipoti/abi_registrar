@@ -9,8 +9,15 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 ## Upcoming: Performance improvements, via filtering records
 
+- Filter by "Problematic", "Not Paid"
+  - Defaults to "Problematic"
+  - Each Model has its own definition of "problematic" (e.g. No lot_number)
+    - Add scopes to all models
+  - Extract filter_models to ApplicationController
+
 - Style:
   - Indexes: h1/table wrapped in fieldset
+
 ## 2022/05/16: Import Members and Shares
 
 - New task: "import:abi_members"

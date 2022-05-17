@@ -45,6 +45,9 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Search via Sticker Number, Tag Number, or Resident info
   - Manage Transactions
     - Search via by Type, Activity, Resident, Property
+  - Search
+    - Can search by "Problematic" or "Expects Payment"
+    - Defaults to "Problematic"
   - Audit Transactions
     - ItemTransactions#show lists previous versions
   - Add Summary page (as Home page)
@@ -96,6 +99,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Without a Street Number (Hampton Dr)
   - Import Residents
     - How to Handle 2 Properties on 1 Lot (e.g. 1007/1007A Dockser)?
+    - Minor
     - Status (Deed Holder, etc.)
     - Verified
   - Import Phone, Mailing Address (to Property or Resident?)

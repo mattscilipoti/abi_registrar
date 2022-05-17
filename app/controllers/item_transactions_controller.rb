@@ -7,11 +7,7 @@ class ItemTransactionsController < ApplicationController
     if params[:sort].blank?
       params[:sort] = { column: default_sort_column, direction: 'desc' }
     end
-    if params[:q].present?
-      @item_transactions = ItemTransaction.search_by_all(params[:q])
-    else
-      @item_transactions = ItemTransaction.all
-    end
+    @item_transactions = filter_models(ItemTransaction, params[:q])
   end
 
   # GET /item_transactions/1 or /item_transactions/1.json

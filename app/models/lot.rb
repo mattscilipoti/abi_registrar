@@ -23,6 +23,12 @@ class Lot < ApplicationRecord
 
   scope :fee_not_paid, -> { where(paid_on: nil) }
   scope :fee_paid, -> { where.not(paid_on: nil) }
+  scope :not_paid, -> { fee_not_paid }
+  scope :problematic, -> { without_property.or(without_lot_number).or(without_section) }
+  scope :without_lot_number, -> { where(lot_number: nil) }
+  scope :without_property, -> { where(property_id: nil) }
+  scope :without_section, -> { where(section: nil) }
+
   class << self
     # support "interface" of other classes
     alias lot_fees_not_paid fee_not_paid

@@ -3,11 +3,7 @@ class PropertiesController < ApplicationController
 
   # GET /properties or /properties.json
   def index
-    if params[:q].present?
-      properties = Property.search_by_all(params[:q])
-    else
-      properties = Property.all
-    end
+    properties = filter_models(Property, params[:q])
     @properties = properties.includes(:lots).decorate
   end
 

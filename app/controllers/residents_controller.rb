@@ -3,12 +3,8 @@ class ResidentsController < ApplicationController
 
   # GET /residents or /residents.json
   def index
-    if params[:q].present?
-      @residents = Resident.search_by_all(params[:q])
-    else
-      @residents = Resident.includes(:properties, :lots)
-    end
-    @residents = @residents.decorate
+    residents = filter_models(Resident, params[:q])
+    @residents = residents.decorate
   end
 
   # GET /residents/1 or /residents/1.json

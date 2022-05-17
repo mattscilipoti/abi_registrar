@@ -36,6 +36,10 @@ class Resident < ApplicationRecord
     #   this returns ab=ny where ALL lot fees are paid
     where.not(id: lot_fees_not_paid)
   }
+  scope :not_paid, -> { lot_fees_not_paid }
+  scope :problematic, -> { without_last_name.or(without_email) }
+  scope :without_email, -> { where(email_address: nil) }
+  scope :without_last_name, -> { where(last_name: nil) }
 
   validates :age_of_minor, numericality: { integer: true, greater_than: 0, less_than: 21, allow_blank: true }
   validates :last_name, presence: true

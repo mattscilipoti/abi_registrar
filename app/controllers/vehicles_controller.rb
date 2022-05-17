@@ -3,12 +3,8 @@ class VehiclesController < ApplicationController
 
   # GET /vehicles or /vehicles.json
   def index
-    if params[:q].present?
-      @vehicles = Vehicle.search_by_all(params[:q])
-    else
-      @vehicles = Vehicle.includes(:resident)
-    end
-    @vehicles = @vehicles.decorate
+    vehicles = filter_models(Vehicle, params[:q])
+    @vehicles = vehicles.decorate
   end
 
   # GET /vehicles/1 or /vehicles/1.json
