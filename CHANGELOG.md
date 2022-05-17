@@ -21,6 +21,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Style:
   - Use "⁇" for unknown values
   - Indexes: h1/table wrapped in fieldset
+  - Search: add busy indicator to link clink and submit click
 
 ## 2022/05/16: Import Members and Shares
 

@@ -52,6 +52,7 @@ module ApplicationHelper
       concat label_tag(:q, 'Search')
       concat text_field_tag(:q, params[:q], class: 'search')
       concat submit_tag("Search")
+      concat content_tag(:i, nil, class: 'search busy activated')
       concat "Filters:&nbsp;".html_safe
       concat link_to(
         " 😈", 
@@ -68,6 +69,7 @@ module ApplicationHelper
         url_options,
         class: 'no-link-icon', data: { tooltip: "Show ALL. ⚠️ Expect delays." } 
       )
+      
     end
   end
 

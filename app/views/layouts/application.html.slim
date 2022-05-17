@@ -58,3 +58,38 @@ html lang=I18n.locale
 
     main.container
       = yield
+
+javascript:
+  function indicateBusySearch(event) {
+    // console.log("indicateBusySearch", event);
+    document.querySelectorAll('.busy.search').forEach(function(element) {
+      element.classList.add('activated');
+    })
+  }
+
+  document.addEventListener("turbo:load", function() {
+    //console.log("turbo:load", event);
+    
+    // deactivate ALL busy indicators
+    document.querySelectorAll('.busy.activated').forEach(function(element) {
+      element.classList.remove('activated');
+    });
+
+    // Events to activate busy indicators
+    document.querySelectorAll('input[type="submit"]').forEach(function(element) {
+      element.addEventListener("click", indicateBusySearch);
+    });
+
+    document.querySelectorAll('a').forEach(function(element) {
+      element.addEventListener("click", indicateBusySearch);
+    });
+  })
+  // find all submit buttons and add a data-turbo-track attribute
+  // On click, add an element to show a spinners
+  
+  
+
+
+
+    
+  

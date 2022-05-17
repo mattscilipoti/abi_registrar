@@ -146,14 +146,23 @@ hr.double {
 /* Busy Spinner: all CSS, no JS */
 i.busy {
   // see: https://www.w3schools.com/howto/howto_css_loader.asp
+  animation: busy-spinner 2s linear infinite;
   border: 4px solid $color-secondary;
   border-top: 4px solid $color-primary;
   border-bottom: 4px solid $color-primary;
   border-radius: 50%;
-  display: inline-block;
-  width: 20px;
   height: 20px;
-  animation: busy-spinner 2s linear infinite;
+  margin: 0 4px;
+  width: 20px;
+  
+  // show (should leave placeholder space for spinner)
+  display: inline-block;
+  visibility: hidden;
+
+  &.activated {
+    // hide
+    visibility: visible;
+  }
 
   @keyframes busy-spinner { /* Used by .busy */
     0% { transform: rotate(0deg); }
@@ -163,7 +172,6 @@ i.busy {
 
 main {
   clear: both;
-  padding: 10px;
 }
 
 // Section: Basic Nav
@@ -274,6 +282,24 @@ ul {
     color: $color-success;
   }
 }
+
+// Styling for CSS Classes >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// .badge{
+//   position: absolute;
+//   background: rgba(0,0,255,1);
+//   height: 1.2rem;
+//   bottom: .8rem;
+//   left: .8rem;
+//   width: 1.2rem;
+//   text-align: center;
+//   line-height: 1.2rem;;
+//   font-size: .8rem;
+//   border-radius: 50%;
+//   color:white;
+//   border:1px solid blue;
+//   z-index: auto;
+// }
 
 // To call attention to an element, add the class 'highlight'
 .highlight {
