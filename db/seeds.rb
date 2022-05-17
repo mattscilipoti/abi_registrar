@@ -21,6 +21,7 @@ DatabaseCleaner.clean_with :truncation, except: do_not_truncate
 puts "Seeding database..."
 Faker::Config.random = nil # seeds the PRNG using default entropy sources
 
+# Lots, Properties, and Residents
 lot69 = FactoryBot.create(:lot, :paid, lot_number: 69, section: 1, size: 1, account_number: 11942300)
 property_975 = FactoryBot.create(:property, lots: [lot69], street_number: '975', street_name: 'Waterview Dr')
 
@@ -72,12 +73,18 @@ jqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'John', midd
   )
 end
 
+# Comments
+FactoryBot.create(:comment, commentable: mms)
+
+# Shares
 FactoryBot.create(:share_transaction, :purchase, quantity: 10, residency: mms.residencies.first)
 FactoryBot.create(:share_transaction, :purchase, quantity: 20, residency: jr.residencies.first)
 FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: jr.residencies.first, residency: cbs.residencies.first)
 
+# Vehicles
 Resident.lot_fees_paid.each {|r| FactoryBot.create(:vehicle, resident: r) }
 
+# Admins
 test_admin_info = Rails.application.credentials.fetch(:test_admin)
 Account.create!(
   email: test_admin_info.fetch(:email),
