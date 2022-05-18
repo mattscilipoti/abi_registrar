@@ -48,7 +48,8 @@ class ImporterMembers < Importer
     )
 
     # Handle association
-    if !property.lots.find{|l| l.lot_number.casecmp?(lot.lot_number) }
+    # Using "to_s" to hanlde null
+    if !property.lots.find{|l| l.lot_number.to_s.casecmp?(lot.lot_number) }
       property.lots << lot # saves association
       import_info[:properties_updated] += 1
       announce("Property Lot Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: @row_index, prefix: "💾")
@@ -70,7 +71,8 @@ class ImporterMembers < Importer
     )
 
     # Handle association
-    if !resident1.properties.find{|p| p.street_number.casecmp?(property.street_number) && p.street_name.casecmp?(property.street_name) }
+    # Using "to_s" to hanlde null
+    if !resident1.properties.find{|p| p.street_number.to_s.casecmp?(property.street_number) && p.street_name.to_s.casecmp?(property.street_name) }
       resident1.properties << property # saves association
       import_info[:residents_updated] += 1
       announce("Resident1 Property Assigned #{ {id: resident1.id, property_ids: resident1.property_ids } }", row_index: @row_index, prefix: "💾")
@@ -99,7 +101,8 @@ class ImporterMembers < Importer
     )
 
     # Handle association
-    if !resident2.properties.find{|p| p.street_number.casecmp?(property.street_number) && p.street_name.casecmp?(property.street_name) }
+    # Using "to_s" to hanlde null
+    if !resident2.properties.find{|p| p.street_number.to_s.casecmp?(property.street_number) && p.street_name.to_s.casecmp?(property.street_name) }
       resident2.properties << property # saves association
       import_info[:residents_updated] += 1
       announce("Resident2 Property Assigned #{ {id: resident2.id, property_ids: resident2.property_ids } }", row_index: @row_index, prefix: "💾")
