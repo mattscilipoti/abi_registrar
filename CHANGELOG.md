@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: Filter by Scopes
+
+- Resident
+  - Add #verified?
+  - Index: displays verified?
+  - New scopes (verified/not_verified
+
 ## 2022/05/17: Performance improvements, via filtering records
 
 - Filter by "Problematic", "Not Paid"

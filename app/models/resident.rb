@@ -36,8 +36,12 @@ class Resident < ApplicationRecord
     #   this returns ab=ny where ALL lot fees are paid
     where.not(id: lot_fees_not_paid)
   }
+
   scope :not_paid, -> { lot_fees_not_paid }
-  scope :problematic, -> { without_last_name.or(without_email) }
+  scope :problematic, -> { not_verfied.or(without_last_name).or(without_email) }
+
+  scope :not_verified, -> { joins(:residencies).merge(Residency.not_verified) }
+  scope :verified, -> { joins(:residencies).merge(Residency.verified) }
   scope :without_email, -> { where(email_address: nil) }
   scope :without_last_name, -> { where(last_name: nil) }
 
@@ -66,5 +70,9 @@ class Resident < ApplicationRecord
 
   def to_s
     "#{full_name} (#{email_address})"
+  end
+
+  def verified?
+    residencies.any?(&:verified?)
   end
 end

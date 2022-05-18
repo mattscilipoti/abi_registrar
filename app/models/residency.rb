@@ -17,6 +17,9 @@ class Residency < ApplicationRecord
     where.not(id: lot_fees_not_paid)
   }
 
+  scope :not_verified, -> { where(verified_on: nil) }
+  scope :verified, -> { where.not(id: not_verified) }
+
   def resident_status_i18n
     resident_status && resident_status.gsub('_', ' ').titleize
   end
@@ -27,5 +30,9 @@ class Residency < ApplicationRecord
 
   def to_s
     [resident.to_s, property.to_s].compact.join(", ")
+  end
+
+  def verified?
+    verified_on?
   end
 end
