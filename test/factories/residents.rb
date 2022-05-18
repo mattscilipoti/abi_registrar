@@ -3,7 +3,7 @@ require 'faker'
 FactoryBot.define do
   factory :resident do
     first_name { Faker::Name.first_name }
-    # middle_name { Faker::Name.middle_name }
+    middle_name { 'TEST' }
     last_name { Faker::Name.last_name }
     email_address { Faker::Internet.email }
 
