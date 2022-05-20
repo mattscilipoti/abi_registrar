@@ -2,7 +2,14 @@ class PropertyDecorator < Draper::Decorator
   delegate_all
 
   def icon_name
-    lot_fees_paid? ? 'house-circle-check' : 'house-circle-xmark'
+    case residents.first.last_name.downcase
+    when 'scilipoti'
+      'house-flood-water'
+    when 'franklin, trustee'
+      'house-heart'
+    else    
+      lot_fees_paid? ? 'house-circle-check' : 'house-circle-xmark'
+    end
   end
 
   def lot_numbers
