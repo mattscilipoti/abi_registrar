@@ -32,6 +32,12 @@ class ItemTransaction < ApplicationRecord
   scope :not_paid, -> { in_the_future }
   scope :problematic, -> { large_quantity.or(in_the_future) }
 
+  def self.scopes 
+    %i[
+      in_the_future
+      large_quantity
+    ]
+  end
 
   validates_presence_of :quantity, :residency, :transacted_at, :activity
   validate :requested_transfer_quantity_is_available
