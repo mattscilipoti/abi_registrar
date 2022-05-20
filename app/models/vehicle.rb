@@ -24,13 +24,17 @@ class Vehicle < ApplicationRecord
     }
 
   scope :not_paid, -> { where('1=2') } # TODO: sticker fee not paid?
-  scope :problematic, -> { without_sticker_number.or(without_tag_number).or(without_state_code) }
-  scope :without_tag_number, -> { where(tag_number: nil) }
+  scope :problematic, -> { without_state_code }
   scope :without_state_code, -> { where(state_code: nil) }
-  scope :without_sticker_number, -> { where(sticker_number: nil) }
 
   validates_presence_of :tag_number, :sticker_number
-  
+
+  def self.scopes
+    %i[
+      without_state_code
+    ]
+  end
+
   # Useful for form collections
   # Displays summary, returns code
   # With

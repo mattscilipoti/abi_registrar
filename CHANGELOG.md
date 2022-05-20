@@ -13,6 +13,9 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Add #verified?
   - Index: displays verified?
   - New scopes (verified/not_verified
+- Convert to searchbar_tag, includes filter by scopes
+  - filter_models handles scopes
+  - Each models has .scopes
 
 ## 2022/05/17: Performance improvements, via filtering records
 

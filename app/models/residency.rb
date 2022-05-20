@@ -20,6 +20,15 @@ class Residency < ApplicationRecord
   scope :not_verified, -> { where(verified_on: nil) }
   scope :verified, -> { where.not(id: not_verified) }
 
+  def self.scopes
+    %i[
+      lot_fees_paid
+      lot_fees_not_paid
+      verified
+      not_verified
+    ]
+  end
+
   def resident_status_i18n
     resident_status && resident_status.gsub('_', ' ').titleize
   end

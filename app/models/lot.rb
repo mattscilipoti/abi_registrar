@@ -35,6 +35,16 @@ class Lot < ApplicationRecord
     alias lot_fees_paid fee_paid
   end
 
+  def self.scopes
+    %i[
+      fee_paid
+      fee_not_paid
+      without_lot_number
+      without_property
+      without_section
+    ]
+  end
+
   validates :district, numericality: { only_integer: true }
   validates :subdivision, numericality: { only_integer: true }
   validates :account_number, numericality: { only_integer: true }

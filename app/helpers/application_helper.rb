@@ -4,6 +4,35 @@ module ApplicationHelper
     content_tag(:span, "#{time_ago_in_words(datetime)} ago", class: "datetime", data: { tooltip: datetime.rfc2822})
   end
 
+  def icon_for_scope(scope_name)
+    case scope_name.to_s
+    when /email/
+      'at'
+    when /future/, /time/
+      'stopwatch'
+    when /fee/
+      'sack-dollar'
+    when /lot/
+      'mountain-sun'
+    when /name/
+      'signature'
+    when /property/
+      'house-chimney'
+    when /section/
+      'section'
+    when /state/
+      'flag-usa'
+    when /street/
+      'road'
+    when /quantity/
+      'buy-n-large'
+    when /verified/
+      'certificate'
+    else
+      raise NotImplementedError, "No icon for scope #{scope_name.inspect}"
+    end
+  end
+
   def flash_icon_name(flash_type)
     case flash_type.to_sym
     when :alert
@@ -41,6 +70,23 @@ module ApplicationHelper
     end
   end
 
+  def searchbar_tag(model, controller: model.table_name)
+    index_path = url_for(controller: controller, action: :index)
+    content_tag(:div, class: "searchbar row") do
+      concat(search_form_tag(index_path))
+      concat "&nbsp;|&nbsp;".html_safe
+      model.scopes.each do |scope_name|
+        - tooltip = scope_name.to_s.humanize
+        - icon_class = scope_name =~ /not|without/ ? 'not' : ''
+        - icon = icon_for_scope(scope_name)
+        search_path = url_for(controller: controller, action: :index, params: {q: scope_name})
+        concat(link_to(search_path, class: 'search-filter no-link-icon', data: {tooltip: tooltip}) do 
+          font_awesome_icon(icon, html_options: {class: icon_class})
+        end)
+      end
+    end
+  end
+
   def search_form_tag(url_options, html_options={})
     default_html_options = {
       class: 'search-form row',
@@ -69,7 +115,6 @@ module ApplicationHelper
         url_options,
         class: 'no-link-icon', data: { tooltip: "Show ALL. ⚠️ Expect delays." } 
       )
-      
     end
   end
 
@@ -87,5 +132,4 @@ module ApplicationHelper
     end
     models
   end
-
 end

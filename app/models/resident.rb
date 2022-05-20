@@ -33,21 +33,31 @@ class Resident < ApplicationRecord
   }
   scope :lot_fees_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
-    #   this returns ab=ny where ALL lot fees are paid
+    #   this returns those where ALL lot fees are paid
     where.not(id: lot_fees_not_paid)
   }
 
+  scope :not_verified, -> { distinct.joins(:residencies).merge(Residency.not_verified) }
+  scope :verified, -> { distinct.joins(:residencies).merge(Residency.verified) }
+  scope :without_email, -> { distinct.where(email_address: nil) }
+  scope :without_first_name, -> { distinct.where(first_name: nil) }
+  
   scope :not_paid, -> { lot_fees_not_paid }
-  scope :problematic, -> { not_verfied.or(without_last_name).or(without_email) }
-
-  scope :not_verified, -> { joins(:residencies).merge(Residency.not_verified) }
-  scope :verified, -> { joins(:residencies).merge(Residency.verified) }
-  scope :without_email, -> { where(email_address: nil) }
-  scope :without_last_name, -> { where(last_name: nil) }
+  scope :problematic, -> { not_verified.or(without_first_name).or(without_email) }
 
   validates :age_of_minor, numericality: { integer: true, greater_than: 0, less_than: 21, allow_blank: true }
   validates :last_name, presence: true
 
+  def self.scopes
+    %i[
+      lot_fees_paid
+      lot_fees_not_paid
+      verified
+      not_verified
+      without_email
+      without_first_name
+    ]
+  end
 
   def full_name
     name = last_name

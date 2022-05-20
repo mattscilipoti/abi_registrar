@@ -314,13 +314,25 @@ ul {
   margin: 0 -$padding-default;
 }
 
-.search-form {
+.searchbar {
   // make a little bit bigger
   font-size: 1.6em;
+  margin: 0 2*$padding-default 2*$padding-default 2*$padding-default;
   input {
     font-size: 1em; // matches text size?!?
   }
-  margin: 0 2*$padding-default 2*$padding-default 2*$padding-default;
+  .icon {
+    border: 1px dotted $color-secondary;
+    color: $color-primary;
+    // margin: 0 $padding-default;
+    &.active {
+      transform:scale(0.9);
+      box-shadow: inset 2px 2px 10px rgba(0,0,0,0.3);
+    }
+    &.not {
+      color: red;
+    }
+  }
 }
 
 /**

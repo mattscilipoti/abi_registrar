@@ -4,15 +4,20 @@ class ApplicationController < ActionController::Base
 
   def filter_models(model, search_query)
     if search_query.blank?
-      properties = model.all
+      model.all
     else
       case search_query
       when /not.paid/i
-        properties = model.not_paid
+        model.not_paid
       when /problematic/i
-        properties = model.problematic
+        model.problematic
+      when *model.scopes.collect(&:to_s)
+        # send the scope name as a method name
+        logger.info("Filtering by scope: #{search_query.inspect}")
+        model.send(search_query)
       else
-        properties = model.search_by_all(params[:q])
+        logger.info("Full-text search for: #{search_query.inspect}")
+        model.search_by_all(params[:q])
       end
     end
   end
