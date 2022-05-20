@@ -27,7 +27,7 @@ class ImporterMembers < Importer
   end
 
   def import_lot(row_info)
-    tax_id_parts = parse_tax_id(row_info.fetch(:taxid))
+    tax_id_parts = parse_tax_id(row_info.fetch(:acct))
     lot_info = { lot_number: row_info.fetch(:lot) }.merge(tax_id_parts)
 
     import_model(

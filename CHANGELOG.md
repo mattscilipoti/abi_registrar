@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Filter by Scopes
+## Upcoming: Import from ACA Data
+
+- Import: convert source from "_Relationship Tables" to "2022_ACA_Membership" files
+
+## 2022-05-20: Filter by Scopes
 
 - Resident
   - Add #verified?
