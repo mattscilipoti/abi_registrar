@@ -32,7 +32,7 @@ class ItemTransaction < ApplicationRecord
   scope :not_paid, -> { in_the_future }
   scope :problematic, -> { large_quantity.or(in_the_future) }
 
-  def scopes 
+  def self.scopes 
     %i[
       in_the_future
       large_quantity
