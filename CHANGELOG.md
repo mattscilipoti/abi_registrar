@@ -16,6 +16,8 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Convert to searchbar_tag, includes filter by scopes
   - filter_models handles scopes
   - Each models has .scopes
+- Seed
+  - seed: add data to exercise filters: renter w/o email, w/o first name
 
 ## 2022/05/17: Performance improvements, via filtering records
 
