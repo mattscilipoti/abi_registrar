@@ -66,6 +66,7 @@ class ImporterResidents < Importer
       first_name: row_info.fetch(:fn1),
       middle_name: row_info.fetch(:mn1),
       email_address: row_info.fetch(:email1),
+      phone: row_info.fetch(:primphone),
     }
     resident1 = import_model(
       Resident,
@@ -89,6 +90,7 @@ class ImporterResidents < Importer
       first_name: row_info.fetch(:fn2),
       middle_name: row_info.fetch(:mn2),
       email_address: row_info.fetch(:email2),
+      phone: row_info.fetch(:altphone),
     }
 
     # Resident2 may not exist

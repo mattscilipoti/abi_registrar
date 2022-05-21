@@ -71,6 +71,7 @@ class ResidentsController < ApplicationController
         :middle_name,
         :first_name,
         :email_address,
+        :phone,
         :is_minor,
         :age_of_minor,
         residencies_attributes: [

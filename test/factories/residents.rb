@@ -6,6 +6,7 @@ FactoryBot.define do
     middle_name { 'TEST' }
     last_name { Faker::Name.last_name }
     email_address { Faker::Internet.email }
+    phone { Faker::PhoneNumber.cell_phone }
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.now) }

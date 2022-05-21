@@ -12,6 +12,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Import: convert source from "_Relationship Tables" to "2022_ACA_Membership" files
   - Rename ImporterMembers to ImporterResidents
   - ImporterResident: imports Lot#section
+  - Add/Import Resident#phone
 - Style
   - Index views: indicate resident_status & x of y models
     - Using new residencies/_property & _resident icon list views
