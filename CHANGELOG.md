@@ -15,6 +15,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Style
   - Index views: indicate resident_status & x of y models
     - Using new residencies/_property & _resident icon list views
+  - Property#show: lists Lot_fee_paid? (as well as date) 
 
 ## 2022-05-20: Filter by Scopes
 
