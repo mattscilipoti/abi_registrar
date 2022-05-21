@@ -105,7 +105,7 @@ module ApplicationHelper
     
     form_tag(url_options, default_html_options) do
       concat label_tag(:q, 'Search')
-      concat text_field_tag(:q, params[:q], class: 'search')
+      concat text_field_tag(:q, params[:q], class: 'search', type: 'search')
       concat submit_tag("Search")
       concat content_tag(:i, nil, class: 'search busy activated')
       concat "Filters:&nbsp;".html_safe
