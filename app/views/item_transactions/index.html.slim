@@ -9,7 +9,7 @@ fieldset.warning
 
 fieldset
   legend
-    = render 'layouts/h1', title: "Item Transactions", model_count: @item_transactions.size
+    = render 'layouts/h1', title: "Item Transactions", model_count: @item_transactions.size, model_total: ItemTransaction.count
 
   #item_transactions
     - columns = %i[type activity cost_per quantity cost_total transacted_at residency from_residency ]

@@ -2,7 +2,7 @@
 
 fieldset
   legend
-    = render 'layouts/h1', title: "Lots", model_count: @lots.size
+    = render 'layouts/h1', title: "Lots", model_count: @lots.size, model_total: Lot.count
 
   #lots
     - columns = %i[lot_number section street_address paid_on size tax_identifier]

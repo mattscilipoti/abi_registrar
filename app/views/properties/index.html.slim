@@ -2,7 +2,7 @@
 
 fieldset
   legend
-    = render 'layouts/h1', title: "Properties", model_count: @properties.size
+    = render 'layouts/h1', title: "Properties", model_count: @properties.size, model_total: Property.count
 
   #properties
     - columns = %i[street_address section lot_numbers lot_fees_paid? residents_summary]

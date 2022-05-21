@@ -1,4 +1,4 @@
 h1
   = title
-  span.subheader = " (#{model_count})"
+  span.subheader = " (#{model_count} of #{model_total})"
   span.subheader = " Filtered by '#{params[:q].humanize}'" if params[:q].present?
