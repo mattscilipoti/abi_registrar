@@ -5,11 +5,9 @@ one:
   first_name: MyText
   email_address: MyText
   is_minor: false
-  age_of_minor: MyText
 
 two:
   last_name: MyString
   first_name: MyText
   email_address: MyText
   is_minor: false
-  age_of_minor: MyText

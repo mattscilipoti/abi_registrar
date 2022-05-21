@@ -14,7 +14,6 @@ class ResidentsTest < ApplicationSystemTestCase
     visit residents_url
     click_on "New resident"
 
-    fill_in "Age of minor", with: @resident.age_of_minor
     fill_in "Email address", with: @resident.email_address
     fill_in "First name", with: @resident.first_name
     check "Is minor" if @resident.is_minor
@@ -30,7 +29,6 @@ class ResidentsTest < ApplicationSystemTestCase
     visit resident_url(@resident)
     click_on "Edit this resident", match: :first
 
-    fill_in "Age of minor", with: @resident.age_of_minor
     fill_in "Email address", with: @resident.email_address
     fill_in "First name", with: @resident.first_name
     check "Is minor" if @resident.is_minor

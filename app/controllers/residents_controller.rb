@@ -73,7 +73,6 @@ class ResidentsController < ApplicationController
         :email_address,
         :phone,
         :is_minor,
-        :age_of_minor,
         residencies_attributes: [
           :id,
           :resident_id,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_21_051327) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_21_172110) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -127,7 +127,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_21_051327) do
     t.text "first_name"
     t.text "email_address"
     t.boolean "is_minor"
-    t.text "age_of_minor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "middle_name"

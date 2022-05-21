@@ -14,6 +14,7 @@ In place of release version numbers, we organize via deploys to Production (by D
   - ImporterResident: imports Lot#section
   - Add/Import Resident#phone
   - Rename task: import:abi_membership -> import:residents
+- Resident: remove age_of_minor
 - ItemTransaction:
   - Fix: can edit activity
   - Validate not in future

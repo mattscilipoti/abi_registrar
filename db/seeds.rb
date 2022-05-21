@@ -39,7 +39,7 @@ cbs = FactoryBot.create(:resident, last_name: 'Scilipoti', first_name: 'Cindy', 
   )
 end
 
-jhs = FactoryBot.create(:resident, :minor, last_name: 'Scilipoti', first_name: 'J', email_address: 'jh@scilipoti.name', age_of_minor: 17, properties: [property_975]).tap do |resident|
+jhs = FactoryBot.create(:resident, :minor, last_name: 'Scilipoti', first_name: 'J', email_address: 'jh@scilipoti.name', properties: [property_975]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :dependent,
     verified_on: 1.day.ago,

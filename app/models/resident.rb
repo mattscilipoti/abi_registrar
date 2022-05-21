@@ -19,7 +19,6 @@ class Resident < ApplicationRecord
       tsearch: { prefix: true }
     }
 
-  encrypts :age_of_minor
   encrypts :email_address, deterministic: true
   encrypts :first_name, deterministic: true
 
@@ -45,7 +44,6 @@ class Resident < ApplicationRecord
   scope :not_paid, -> { lot_fees_not_paid }
   scope :problematic, -> { not_verified.or(without_first_name).or(without_email) }
 
-  validates :age_of_minor, numericality: { integer: true, greater_than: 0, less_than: 21, allow_blank: true }
   validates :last_name, presence: true
 
   def self.scopes
