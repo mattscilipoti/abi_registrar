@@ -46,7 +46,7 @@ class Property < ApplicationRecord
   end
 
   def inspect
-    { id: id, to_s: to_s }
+    [id, to_s]
   end
 
   def lot_count

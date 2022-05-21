@@ -60,7 +60,7 @@ class Resident < ApplicationRecord
   end
 
   def inspect
-    to_s
+    [id, to_s]
   end
 
   def full_name
