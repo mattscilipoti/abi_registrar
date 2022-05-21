@@ -68,6 +68,11 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
+  # Custom Config >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  # raise errors for missing params
+  config.action_controller.action_on_unpermitted_parameters = :raise
+
   # Required by rodauth
   config.action_mailer.default_url_options = { host: 'localhost', port: 3013 }
 

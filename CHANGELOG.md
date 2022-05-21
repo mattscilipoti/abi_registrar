@@ -21,6 +21,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Seed
   - Rename JimR to "Peter PartialPayment"
   - Add (random) comments
+- Config: Unpermitted parameters raises errors
 
 ## 2022-05-20: Filter by Scopes
 
