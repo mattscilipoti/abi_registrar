@@ -1,2 +1,3 @@
-= link_to(property_path(property), class: 'no-link-icon', data: { tooltip: property.to_s } ) do
+- tooltip ||= property.to_s
+= link_to(property_path(property), class: 'no-link-icon', data: { tooltip: tooltip } ) do
   = font_awesome_icon(property.icon_name)

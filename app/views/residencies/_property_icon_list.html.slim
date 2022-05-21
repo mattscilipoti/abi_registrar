@@ -1,0 +1,4 @@
+ul.horizontal-list
+  - residencies.each do |residency|
+    li.property-icon
+      = render 'properties/property_icon', property: residency.property.decorate, tooltip: residency.property_summary

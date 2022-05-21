@@ -11,6 +11,6 @@ class VehicleDecorator < Draper::Decorator
   #   end
 
   def property_summary(type: :icons)
-    h.render 'properties/property_icon_list', properties: object.properties.decorate
+    h.render 'residencies/property_icon_list', residencies: object.resident.residencies.decorate
   end
 end

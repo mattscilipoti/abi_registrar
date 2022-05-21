@@ -10,6 +10,9 @@ In place of release version numbers, we organize via deploys to Production (by D
 ## Upcoming: Import from ACA Data
 
 - Import: convert source from "_Relationship Tables" to "2022_ACA_Membership" files
+- Style
+  - Index views: indicate resident_status
+    - Using new residencies/_property & _resident icon list views
 
 ## 2022-05-20: Filter by Scopes
 
