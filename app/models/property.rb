@@ -25,8 +25,8 @@ class Property < ApplicationRecord
       tsearch: { prefix: true }
     }
 
-  scope :lot_fees_paid, -> { distinct.joins(:lots).merge(Lot.fee_paid) }
-  scope :lot_fees_not_paid, -> { where.not(id: lot_fees_paid) }
+  scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
+  scope :lot_fees_paid, -> { distinct.where.not(id: lot_fees_not_paid) }
   scope :not_paid, -> { lot_fees_not_paid }
   scope :problematic, -> { without_lot.or(without_street_info) }
   scope :without_lot, -> { joins(:lots).where(lots: nil) }

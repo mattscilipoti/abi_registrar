@@ -61,7 +61,7 @@ class Vehicle < ApplicationRecord
 
   def resident_paid_lot_fees
     unless resident.lot_fees_paid?
-      errors.add(:resident, "must pay lot fees")
+      errors.add(:resident, "must have paid lot fees")
     end
   end
 
