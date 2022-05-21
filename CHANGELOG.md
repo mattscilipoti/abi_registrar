@@ -14,6 +14,9 @@ In place of release version numbers, we organize via deploys to Production (by D
   - ImporterResident: imports Lot#section
   - Add/Import Resident#phone
   - Rename task: import:abi_membership -> import:residents
+- ItemTransaction:
+  - Fix: can edit activity
+  - Validate not in future
 - Style
   - Index views: indicate resident_status & x of y models
     - Using new residencies/_property & _resident icon list views

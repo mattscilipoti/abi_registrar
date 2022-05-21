@@ -40,27 +40,34 @@ class ItemTransaction < ApplicationRecord
   end
 
   validates_presence_of :quantity, :residency, :transacted_at, :activity
+  validate :expiration_date_cannot_be_in_the_future
   validate :requested_transfer_quantity_is_available
-
+  
   def cost_per=(value)
     super
     calculate_cost_total
   end
-
+  
   def quantity=(value)
     super
     calculate_cost_total
   end
-
+  
   def calculate_cost_total
     self.cost_total = cost_per.to_f * quantity.to_i
   end
-
+  
   private
+  
+  def expiration_date_cannot_be_in_the_future
+    if transacted_at.present? && transacted_at > Time.now
+      errors.add(:transacted_at, "can't be in the future")
+    end
+  end
 
   def requested_transfer_quantity_is_available
     return unless transfer?
-
+    
     raise NotImplementedError, "must be implementd in STI child class"
   end
 end

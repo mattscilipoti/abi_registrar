@@ -70,6 +70,7 @@ class ItemTransactionsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def item_transaction_params
       params.require(:item_transaction).permit(
+        :activity,
         :cost_per,
         :cost_total,
         :transacted_at,
