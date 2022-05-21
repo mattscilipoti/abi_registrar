@@ -1,7 +1,16 @@
 module ApplicationHelper
 
-  def datetime_tag(datetime)
-    content_tag(:span, "#{time_ago_in_words(datetime)} ago", class: "datetime", data: { tooltip: datetime.rfc2822})
+  
+  def date_tag(date)
+    datetime_tag(date, format: '%a %b %d, %Y')
+  end
+
+  def datetime_tag(datetime, format: '%c')
+    return '' if datetime.blank?
+
+    formatted_datetime = datetime.strftime(format)
+
+    content_tag(:span, "#{time_ago_in_words(datetime)} ago", class: "datetime", data: { tooltip: formatted_datetime})
   end
 
   def icon_for_scope(scope_name)

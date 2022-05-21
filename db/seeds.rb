@@ -56,7 +56,7 @@ pp = FactoryBot.create(:resident, last_name: 'PartialPayment', first_name: 'Pete
     verified_on: 1.day.ago)
 end
 
-lot11 = FactoryBot.create(:lot, lot_number: '11 (T)', size: 1, paid_on: 1.day.ago)
+lot11 = FactoryBot.create(:lot, :paid, lot_number: '11 (T)', size: 1)
 lot12 = FactoryBot.create(:lot, lot_number: '12 (T)', size: 0.5)
 property_123Main = FactoryBot.create(:property, lots: [lot11], street_number: '123', street_name: 'Main St (TEST)')
 property_975Main = FactoryBot.create(:property, lots: [lot12], street_number: '975', street_name: 'Main St (TEST)')
