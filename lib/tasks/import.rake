@@ -5,7 +5,7 @@ namespace :import do
     default_source_file = Rails.root.join('db', 'import' ,'2022_ACA_Membership.csv')
     args.with_defaults(source_file: default_source_file)
     
-    importer = ImporterMembers.new(args[:source_file])
+    importer = ImporterResidents.new(args[:source_file])
     importer.import(range: args[:import_range])
   end
 

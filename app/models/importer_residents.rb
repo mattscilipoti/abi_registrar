@@ -1,7 +1,7 @@
 require 'csv'
 require_relative 'importer'
 
-class ImporterMembers < Importer
+class ImporterResidents < Importer
   def initialize(source_file)
     super
 
@@ -28,7 +28,9 @@ class ImporterMembers < Importer
 
   def import_lot(row_info)
     tax_id_parts = parse_tax_id(row_info.fetch(:acct))
-    lot_info = { lot_number: row_info.fetch(:lot) }.merge(tax_id_parts)
+    lot_info = tax_id_parts.merge({ 
+      lot_number: row_info.fetch(:lot),
+    })
 
     import_model(
       Lot,
