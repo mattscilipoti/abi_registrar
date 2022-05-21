@@ -30,6 +30,7 @@ class ImporterResidents < Importer
     tax_id_parts = parse_tax_id(row_info.fetch(:acct))
     lot_info = tax_id_parts.merge({ 
       lot_number: row_info.fetch(:lot),
+      section: row_info.fetch(:section),
     })
 
     import_model(
