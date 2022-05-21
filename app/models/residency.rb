@@ -1,6 +1,7 @@
 class Residency < ApplicationRecord
   belongs_to :property
   belongs_to :resident
+  has_many :lots, through: :property
   has_many :share_transactions
   has_many :share_purchases, class_name: 'ShareTransaction', foreign_key: 'residency_id'
   has_many :share_transfers_from, class_name: 'ShareTransaction', foreign_key: 'from_residency_id'
@@ -13,7 +14,7 @@ class Residency < ApplicationRecord
   }
   scope :lot_fees_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
-    #   this returns ab=ny where ALL lot fees are paid
+    #   this returns only those where ALL lot fees are paid
     where.not(id: lot_fees_not_paid)
   }
 
@@ -27,6 +28,10 @@ class Residency < ApplicationRecord
       verified
       not_verified
     ]
+  end
+
+  def inspect
+    {id: id, summary: to_s}
   end
 
   def resident_status_i18n

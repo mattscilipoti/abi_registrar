@@ -59,6 +59,10 @@ class Resident < ApplicationRecord
     ]
   end
 
+  def inspect
+    to_s
+  end
+
   def full_name
     name = last_name
     name += ", #{first_name}" if first_name.present?
