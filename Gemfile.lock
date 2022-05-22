@@ -72,6 +72,8 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    address_composer (1.0.1)
+      mustache (~> 1.1)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     after_commit_everywhere (1.2.0)
@@ -151,6 +153,7 @@ GEM
     mini_portile2 (2.8.0)
     minitest (5.15.0)
     msgpack (1.5.1)
+    mustache (1.1.1)
     net-imap (0.2.3)
       digest
       net-protocol
@@ -325,6 +328,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_record_doctor
+  address_composer (~> 1.0)
   addressable
   amazing_print (~> 1.4)
   bootsnap
