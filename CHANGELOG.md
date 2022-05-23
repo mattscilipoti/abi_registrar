@@ -24,9 +24,13 @@ In place of release version numbers, we organize via deploys to Production (by D
     - Using new residencies/_property & _resident icon list views
   - Property#show: lists Lot_fee_paid? (as well as date) 
   - Lot#paid_on formatted time_ago_in_words
+  - Use icons for DeedHolder, Renter, Dependent
+    - uses residencies_controller and views
 - Seed
   - Rename JimR to "Peter PartialPayment"
+  - Add dependent (Jill, 123 Main St.)
   - Add (random) comments
+  - Phone numbers use 555 area code
 - Config: Unpermitted parameters raises errors
 
 ## 2022-05-20: Filter by Scopes

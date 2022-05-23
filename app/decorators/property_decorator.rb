@@ -6,7 +6,7 @@ class PropertyDecorator < Draper::Decorator
     when 'scilipoti'
       'house-flood-water'
     when 'franklin, trustee'
-      'house-heart'
+      'house-heart' # pro
     else    
       lot_fees_paid? ? 'house-circle-check' : 'house-circle-xmark'
     end

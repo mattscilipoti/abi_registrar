@@ -81,7 +81,8 @@ class Resident < ApplicationRecord
   end
 
   def to_s
-    "#{full_name} (#{email_address})"
+    # "#{full_name} (#{email_address})"
+    full_name
   end
 
   def verified?
