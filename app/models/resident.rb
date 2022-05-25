@@ -84,11 +84,7 @@ class Resident < ApplicationRecord
     # TODO: convert to attribute?
     return nil unless properties.present?
 
-    return properties.first if properties.size == 1
-
-    return properties.deed_holder.first if properties.deed_holder.present?
-
-    return properties.first
+    return properties.residence.first
   end
 
   def share_count

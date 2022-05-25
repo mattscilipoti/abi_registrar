@@ -28,13 +28,23 @@ RSpec.describe Residency, type: :model do
   end
 
   describe '(validations)' do
-    it 'can only have one owner' do
+    it 'each Property can only have one Owner' do
       r = FactoryBot.create(:residency, :owner)
       expect(r).to be_valid
 
       expect {
         FactoryBot.create(:residency, :owner, property: r.property)
       }.to raise_error ActiveRecord::RecordInvalid, /Validation.*one Owner/
+    end
+
+    it 'each Resident can only have one Residence' do
+      r = FactoryBot.create(:residency)
+      expect(r).to be_valid
+      expect(r).to be_residence
+
+      expect {
+        FactoryBot.create(:residency, resident: r.resident)
+      }.to raise_error ActiveRecord::RecordInvalid, /Validation.*one Residence/
     end
   end
 end

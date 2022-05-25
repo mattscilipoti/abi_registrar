@@ -7,11 +7,11 @@ class Residency < ApplicationRecord
   has_many :share_transfers_from, class_name: 'ShareTransaction', foreign_key: 'from_residency_id'
   delegate :lot_fees_paid?, :street_address, to: :property
   delegate :full_name, :email_address, :is_minor?, :phone, to: :resident
-  enum :resident_status, { 
-    owner: 'Owner', 
-    coowner: 'Co-owner', 
-    dependent: 'dependent', 
-    renter: 'renter' 
+  enum :resident_status, {
+    owner: 'Owner',
+    coowner: 'Co-owner',
+    dependent: 'dependent',
+    renter: 'renter'
   }, scopes: true
 
   scope :lot_fees_not_paid, -> {
@@ -27,8 +27,13 @@ class Residency < ApplicationRecord
   scope :not_verified, -> { where(verified_on: nil) }
   scope :verified, -> { where.not(id: not_verified) }
 
-  validates :resident_status, uniqueness: { 
-    if: -> { owner? }, 
+  validates :residence, uniqueness: {
+    scope: :resident_id,
+    message: "there can only be one Residence for each Resident"
+  }
+
+  validates :resident_status, uniqueness: {
+    if: -> { owner? },
     scope: :property_id,
     message: "there can only be one Owner for each Property"
   }

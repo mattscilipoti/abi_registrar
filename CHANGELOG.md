@@ -12,6 +12,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Residency
   - Convert Deed Holder to Owner/Co-owner
   - scope deed_holder is either owner/co-owner
+  - Add colummn residence:boolean
 - Resident
   - Add #residence and #mailing address
 
