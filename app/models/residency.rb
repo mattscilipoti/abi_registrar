@@ -19,14 +19,12 @@ class Residency < ApplicationRecord
   }
 
   scope :not_verified, -> { where(verified_on: nil) }
-  scope :primary_owner, -> { where(primary_owner: true) }
   scope :verified, -> { where.not(id: not_verified) }
 
   def self.scopes
     %i[
       lot_fees_paid
       lot_fees_not_paid
-      primary_owner
       verified
       not_verified
     ]
