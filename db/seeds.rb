@@ -28,14 +28,14 @@ property_975 = FactoryBot.create(:property, lots: [lot69], street_number: '975',
 
 mms = FactoryBot.create(:resident, last_name: 'Scilipoti', first_name: 'Matt', email_address: 'matt@scilipoti.name', properties: [property_975]).tap do |resident|
   resident.residencies.first.update(
-    resident_status: :deed_holder,
+    resident_status: :coowner,
     verified_on:Faker::Time.between(from: 1.year.ago, to: 1.week.ago)
   )
 end
 
 cbs = FactoryBot.create(:resident, last_name: 'Scilipoti', first_name: 'Cindy', email_address: 'cindy@scilipoti.name', properties: [property_975]).tap do |resident|
   resident.residencies.first.update(
-    resident_status: :deed_holder,
+    resident_status: :owner,
     verified_on: Faker::Time.between(from: 1.year.ago, to: 1.week.ago)
   )
 end
@@ -53,7 +53,7 @@ property_977 = FactoryBot.create(:property, lots: [lot70, lot71], street_number:
 
 pp = FactoryBot.create(:resident, last_name: 'PartialPayment', first_name: 'Peter', email_address: 'ppp@example.com', properties: [property_977]).tap do |resident|
   resident.residencies.first.update(
-    resident_status: :deed_holder,
+    resident_status: :owner,
     verified_on: Faker::Time.between(from: 1.year.ago, to: 1.week.ago)
   )
 end
@@ -65,8 +65,8 @@ property_975Main = FactoryBot.create(:property, lots: [lot12], street_number: '9
 
 jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com')
 
-FactoryBot.create(:residency, :deed_holder, :verified, property: property_123Main, resident: jqo)
-FactoryBot.create(:residency, :deed_holder, :verified, property: property_975Main, resident: jqo)
+FactoryBot.create(:residency, :owner, :verified, property: property_123Main, resident: jqo)
+FactoryBot.create(:residency, :owner, :verified, property: property_975Main, resident: jqo)
 
 jillqd = FactoryBot.create(:resident, last_name: 'Depends', first_name: 'Jill', properties: [property_123Main]).tap do |resident|
   resident.residencies.first.update(

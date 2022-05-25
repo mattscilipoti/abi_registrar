@@ -23,4 +23,17 @@ RSpec.describe Property, type: :model do
       end
     end
   end
+
+  describe '(validations)' do
+    it 'can only have one owner' do
+      p = FactoryBot.create(:property, :with_owner)
+
+      expect(p).to be_valid
+      expect(p.residencies.first).to be_owner
+
+      p.residencies.build(resident_status: :owner, property: p)
+      expect(p).to_not be_valid
+      expect(p.errors[:residencies]).to contain_exactly(/is invalid/i)
+    end
+  end
 end

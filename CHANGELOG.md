@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Import from ACA Data
+## Upcoming: Owner/Co-owner
+
+Residency: Convert Deed Holder to Owner/Co-owner
+
+## 2022/05/24: Import from ACA Data
 
 - Import: convert source from "_Relationship Tables" to "2022_ACA_Membership" files
   - Rename ImporterMembers to ImporterResidents

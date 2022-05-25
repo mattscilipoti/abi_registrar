@@ -15,5 +15,12 @@ FactoryBot.define do
         create_list(:lot, evaluator.lots_count, property: property)
       end
     end
+
+    trait :with_owner do
+      after(:create) do |property|
+        r = create(:resident)
+        property.residencies.create(resident_status: :owner, resident: r)
+      end
+    end
   end
 end

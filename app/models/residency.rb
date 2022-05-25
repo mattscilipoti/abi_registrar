@@ -7,7 +7,12 @@ class Residency < ApplicationRecord
   has_many :share_transfers_from, class_name: 'ShareTransaction', foreign_key: 'from_residency_id'
   delegate :lot_fees_paid?, :street_address, to: :property
   delegate :full_name, :email_address, :is_minor?, :phone, to: :resident
-  enum :resident_status, { deed_holder: 'deed_holder', dependent: 'dependent', renter: 'renter' }, scopes: true
+  enum :resident_status, { 
+    owner: 'Owner', 
+    coowner: 'Co-owner', 
+    dependent: 'dependent', 
+    renter: 'renter' 
+  }, scopes: true
 
   scope :lot_fees_not_paid, -> {
     distinct.joins(:property).merge(Property.lot_fees_not_paid)
@@ -18,8 +23,15 @@ class Residency < ApplicationRecord
     where.not(id: lot_fees_not_paid)
   }
 
+  scope :deed_holder, -> { owner.or(coowner) }
   scope :not_verified, -> { where(verified_on: nil) }
   scope :verified, -> { where.not(id: not_verified) }
+
+  validates :resident_status, uniqueness: { 
+    if: -> { owner? }, 
+    scope: :property_id,
+    message: "there can only be one Owner for each Property"
+  }
 
   def self.scopes
     %i[
@@ -28,6 +40,10 @@ class Residency < ApplicationRecord
       verified
       not_verified
     ]
+  end
+
+  def deed_holder?
+    owner? || coowner?
   end
 
   def inspect

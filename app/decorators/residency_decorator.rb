@@ -30,7 +30,7 @@ class ResidencyDecorator < Draper::Decorator
     case resident_status
     when nil
       '?'
-    when :deed_holder.to_s
+    when /owner/
       '' # gavel
     when :renter.to_s
       '' # suitcase
@@ -47,14 +47,15 @@ class ResidencyDecorator < Draper::Decorator
   end
 
   def resident_status_i18n
-    resident_status.try(:titleize) || "⁇"
+    status = I18n.t("activerecord.attributes.#{model_name.i18n_key}.resident_status.#{resident_status}")
+    status || "⁇"
   end
 
   def resident_status_icon
     icon_name = case resident_status
     when nil
       :question
-    when :deed_holder.to_s
+    when /owner/
       :gavel
     when :renter.to_s
       :suitcase

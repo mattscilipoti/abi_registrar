@@ -72,14 +72,14 @@ class Property < ApplicationRecord
 
     mailing_address = AddressComposer.compose(address_components)
 
-    recipient = primary_owner.try(:full_name)
+    recipient = owner.try(:full_name)
     mailing_address.prepend "#{recipient.upcase}\n" if recipient
 
     mailing_address
   end
 
-  def primary_owner
-    residencies.deed_holder.present? && residencies.deed_holder.first.resident
+  def owner
+    residencies.owner.present? && residencies.owner.first.resident
   end
 
   def share_count
@@ -92,5 +92,11 @@ class Property < ApplicationRecord
 
   def to_s
     street_address
+  end
+
+  private
+
+  def there_can_be_only_one_owner
+    errors.add(:residencies, "there can only be ONE... owner") if residencies.owner.count > 1
   end
 end
