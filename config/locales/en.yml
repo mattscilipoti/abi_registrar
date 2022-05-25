@@ -35,7 +35,9 @@ en:
     attributes:
       residency:
         resident_status:
-          coowner: Co-Owner
+          coowner:
+            one: Co-Owner
+            many: Co-Owners
           dependent: Dependent
           owner: Owner
           renter: Renter
