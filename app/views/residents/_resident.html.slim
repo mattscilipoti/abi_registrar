@@ -25,6 +25,12 @@ p
     | Is minor:
   = resident.is_minor
 
+p
+  strong
+    | Mailing address:
+  = simple_format(resident.mailing_address)
+
+
 fieldset
   legend
     h2 Properties

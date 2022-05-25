@@ -40,7 +40,7 @@ class Resident < ApplicationRecord
   scope :verified, -> { distinct.joins(:residencies).merge(Residency.verified) }
   scope :without_email, -> { distinct.where(email_address: nil) }
   scope :without_first_name, -> { distinct.where(first_name: nil) }
-  
+
   scope :not_paid, -> { lot_fees_not_paid }
   scope :problematic, -> { not_verified.or(without_first_name).or(without_email) }
 
@@ -72,8 +72,23 @@ class Resident < ApplicationRecord
     lots.lot_fees_paid.size == lots.size
   end
 
+  def mailing_address
+    residence.try(:mailing_address, resident: self)
+  end
+
   def property_count
     properties.size
+  end
+
+  def residence
+    # TODO: convert to attribute?
+    return nil unless properties.present?
+
+    return properties.first if properties.size == 1
+
+    return properties.deed_holder.first if properties.deed_holder.present?
+
+    return properties.first
   end
 
   def share_count

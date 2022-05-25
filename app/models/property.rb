@@ -27,9 +27,11 @@ class Property < ApplicationRecord
       tsearch: { prefix: true }
     }
 
+  scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
   scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
   scope :lot_fees_paid, -> { distinct.where.not(id: lot_fees_not_paid) }
   scope :not_paid, -> { lot_fees_not_paid }
+  scope :owner, -> { distinct.joins(:residencies).merge(Residency.owner) }
   scope :problematic, -> { without_lot.or(without_street_info) }
   scope :without_lot, -> { joins(:lots).where(lots: nil) }
   scope :without_street_info, -> { where(street_number: nil).or(where(street_name: nil)) }
@@ -59,7 +61,7 @@ class Property < ApplicationRecord
     lots.lot_fees_paid.size == lots.size
   end
 
-  def mailing_address
+  def mailing_address(resident: owner)
     address_components = {
       "house_number" => street_number,
       "road" => street_name.upcase,
@@ -72,7 +74,7 @@ class Property < ApplicationRecord
 
     mailing_address = AddressComposer.compose(address_components)
 
-    recipient = owner.try(:full_name)
+    recipient = resident.try(:full_name)
     mailing_address.prepend "#{recipient.upcase}\n" if recipient
 
     mailing_address
