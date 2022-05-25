@@ -15,12 +15,10 @@ class Residency < ApplicationRecord
   }, scopes: true
 
   scope :lot_fees_not_paid, -> {
-    distinct.joins(:property).merge(Property.lot_fees_not_paid)
+    where.not(id: lot_fees_paid)
   }
   scope :lot_fees_paid, -> {
-    # basic "joins" to property returns resident where ANY lots fees are paid,
-    #   this returns only those where ALL lot fees are paid
-    where.not(id: lot_fees_not_paid)
+    distinct.joins(:property).merge(Property.lot_fees_paid)
   }
 
   scope :deed_holder, -> { owner.or(coowner) }

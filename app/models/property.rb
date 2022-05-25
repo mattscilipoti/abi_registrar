@@ -28,8 +28,8 @@ class Property < ApplicationRecord
     }
 
   scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
-  scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
-  scope :lot_fees_paid, -> { distinct.where.not(id: lot_fees_not_paid) }
+  scope :lot_fees_not_paid, -> { distinct.where.not(id: lot_fees_paid) }
+  scope :lot_fees_paid, -> { distinct.joins(:lots).merge(Lot.fee_paid) }
   scope :not_paid, -> { lot_fees_not_paid }
   scope :owner, -> { distinct.joins(:residencies).merge(Residency.owner) }
   scope :problematic, -> { without_lot.or(without_street_info) }
