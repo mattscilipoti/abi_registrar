@@ -6,8 +6,8 @@ class Residency < ApplicationRecord
   has_many :share_purchases, class_name: 'ShareTransaction', foreign_key: 'residency_id'
   has_many :share_transfers_from, class_name: 'ShareTransaction', foreign_key: 'from_residency_id'
   delegate :lot_fees_paid?, :street_address, to: :property
-  delegate :full_name, :email_address, :is_minor, :phone, to: :resident
-  enum :resident_status, { deed_holder: 'Deed Holder', dependent: 'Dependent', renter: 'Renter' }, scopes: true
+  delegate :full_name, :email_address, :is_minor?, :phone, to: :resident
+  enum :resident_status, { deed_holder: 'deed_holder', dependent: 'dependent', renter: 'renter' }, scopes: true
 
   scope :lot_fees_not_paid, -> {
     distinct.joins(:property).merge(Property.lot_fees_not_paid)
@@ -19,12 +19,14 @@ class Residency < ApplicationRecord
   }
 
   scope :not_verified, -> { where(verified_on: nil) }
+  scope :primary_owner, -> { where(primary_owner: true) }
   scope :verified, -> { where.not(id: not_verified) }
 
   def self.scopes
     %i[
       lot_fees_paid
       lot_fees_not_paid
+      primary_owner
       verified
       not_verified
     ]
