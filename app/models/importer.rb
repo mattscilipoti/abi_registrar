@@ -6,7 +6,7 @@ class Importer
   def initialize(source_file)
     @row_index = 0
     @source_file = Pathname.new(source_file)
-    raise ArgumentError, "source_file does not exist: '#{@source_file.realpath}'" unless @source_file.exist?
+    raise ArgumentError, "source_file does not exist: '#{@source_file}'" unless @source_file.exist?
     @import_info = {
       rows_processed: 0,
       rows_skipped: 0,

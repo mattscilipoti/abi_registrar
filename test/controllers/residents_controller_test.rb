@@ -17,7 +17,7 @@ class ResidentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create resident" do
     assert_difference("Resident.count") do
-      post residents_url, params: { resident: { age_of_minor: @resident.age_of_minor, email_address: @resident.email_address, first_name: @resident.first_name, is_minor: @resident.is_minor, last_name: @resident.last_name } }
+      post residents_url, params: { resident: { email_address: @resident.email_address, first_name: @resident.first_name, is_minor: @resident.is_minor, last_name: @resident.last_name } }
     end
 
     assert_redirected_to resident_url(Resident.last)
@@ -34,7 +34,7 @@ class ResidentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update resident" do
-    patch resident_url(@resident), params: { resident: { age_of_minor: @resident.age_of_minor, email_address: @resident.email_address, first_name: @resident.first_name, is_minor: @resident.is_minor, last_name: @resident.last_name } }
+    patch resident_url(@resident), params: { resident: { email_address: @resident.email_address, first_name: @resident.first_name, is_minor: @resident.is_minor, last_name: @resident.last_name } }
     assert_redirected_to resident_url(@resident)
   end
 

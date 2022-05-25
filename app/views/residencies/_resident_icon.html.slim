@@ -1,0 +1,5 @@
+- resident = residency.resident
+- tooltip ||= residency.resident_summary
+
+= link_to(resident_path(resident), class: 'fas no-link-icon', data: { tooltip: tooltip } ) do
+  = residency.resident_status_character

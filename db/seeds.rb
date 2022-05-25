@@ -20,6 +20,7 @@ DatabaseCleaner.clean_with :truncation, except: do_not_truncate
 
 puts "Seeding database..."
 Faker::Config.random = nil # seeds the PRNG using default entropy sources
+Faker::Config.locale = 'en-US'
 
 # Lots, Properties, and Residents
 lot69 = FactoryBot.create(:lot, :paid, lot_number: '69 (T)', section: 1, size: 1, account_number: 11942300)
@@ -28,21 +29,21 @@ property_975 = FactoryBot.create(:property, lots: [lot69], street_number: '975',
 mms = FactoryBot.create(:resident, last_name: 'Scilipoti', first_name: 'Matt', email_address: 'matt@scilipoti.name', properties: [property_975]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :deed_holder,
-    verified_on: 1.day.ago
+    verified_on:Faker::Time.between(from: 1.year.ago, to: 1.week.ago)
   )
 end
 
 cbs = FactoryBot.create(:resident, last_name: 'Scilipoti', first_name: 'Cindy', email_address: 'cindy@scilipoti.name', properties: [property_975]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :deed_holder,
-    verified_on: 1.day.ago
+    verified_on: Faker::Time.between(from: 1.year.ago, to: 1.week.ago)
   )
 end
 
-jhs = FactoryBot.create(:resident, :minor, last_name: 'Scilipoti', first_name: 'J', email_address: 'jh@scilipoti.name', age_of_minor: 17, properties: [property_975]).tap do |resident|
+jhs = FactoryBot.create(:resident, :minor, last_name: 'Scilipoti', first_name: 'J', email_address: 'jh@scilipoti.name', properties: [property_975]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :dependent,
-    verified_on: 1.day.ago,
+    verified_on: Faker::Time.between(from: 1.year.ago, to: 1.week.ago)
   )
 end
 
@@ -50,30 +51,38 @@ lot70 = FactoryBot.create(:lot, :paid, lot_number: '70 (T)', section: 1, size: 1
 lot71 = FactoryBot.create(:lot, lot_number: '71 (T)', section: 1, size: 1)
 property_977 = FactoryBot.create(:property, lots: [lot70, lot71], street_number: '977', street_name: 'Waterview Dr (TEST)')
 
-jr = FactoryBot.create(:resident, last_name: 'Rainwater', first_name: 'Jim', email_address: 'jim@example.com', properties: [property_977]).tap do |resident|
+pp = FactoryBot.create(:resident, last_name: 'PartialPayment', first_name: 'Peter', email_address: 'ppp@example.com', properties: [property_977]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :deed_holder,
-    verified_on: 1.day.ago)
+    verified_on: Faker::Time.between(from: 1.year.ago, to: 1.week.ago)
+  )
 end
 
-lot11 = FactoryBot.create(:lot, lot_number: '11 (T)', size: 1, paid_on: 1.day.ago)
+lot11 = FactoryBot.create(:lot, :paid, lot_number: '11 (T)', size: 1)
 lot12 = FactoryBot.create(:lot, lot_number: '12 (T)', size: 0.5)
 property_123Main = FactoryBot.create(:property, lots: [lot11], street_number: '123', street_name: 'Main St (TEST)')
 property_975Main = FactoryBot.create(:property, lots: [lot12], street_number: '975', street_name: 'Main St (TEST)')
 
 jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com')
 
-FactoryBot.create(:residency, property: property_123Main, resident: jqo, resident_status: :deed_holder, verified_on: 1.day.ago)
-FactoryBot.create(:residency, property: property_975Main, resident: jqo, resident_status: :deed_holder, verified_on: 1.day.ago)
+FactoryBot.create(:residency, :deed_holder, :verified, property: property_123Main, resident: jqo)
+FactoryBot.create(:residency, :deed_holder, :verified, property: property_975Main, resident: jqo)
+
+jillqd = FactoryBot.create(:resident, last_name: 'Depends', first_name: 'Jill', properties: [property_123Main]).tap do |resident|
+  resident.residencies.first.update(
+    resident_status: :dependent,
+    verified_on: Faker::Time.between(from: 1.year.ago, to: 1.week.ago)
+  )
+end
 
 jqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'John (no email)', email_address: nil, properties: [property_975Main]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :renter,
-    verified_on: 1.day.ago
+    verified_on: Faker::Time.between(from: 1.year.ago, to: 1.week.ago)
   )
 end
 
-bqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'Bob', email_address: 'bobqrenter@example.com', properties: [property_975Main]).tap do |resident|
+bqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'Bob (unverified)', email_address: 'bobqrenter@example.com', properties: [property_975Main]).tap do |resident|
   resident.residencies.first.update(
     resident_status: :renter,
   )
@@ -87,12 +96,12 @@ end
 
 
 # Comments
-FactoryBot.create(:comment, commentable: mms)
+Resident.all.each {|r| FactoryBot.create_list(:comment, rand(5), commentable: r) }
 
 # Shares
-FactoryBot.create(:share_transaction, :purchase, quantity: 10, residency: mms.residencies.first)
-FactoryBot.create(:share_transaction, :purchase, quantity: 20, residency: jr.residencies.first)
-FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: jr.residencies.first, residency: cbs.residencies.first)
+FactoryBot.create(:share_transaction, :purchase, quantity: 10, residency: mms.residencies.deed_holder.sample)
+FactoryBot.create(:share_transaction, :purchase, quantity: 20, residency: pp.residencies.deed_holder.sample)
+FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: pp.residencies.deed_holder.sample, residency: cbs.residencies.deed_holder.sample)
 
 # Vehicles
 Resident.lot_fees_paid.each {|r| FactoryBot.create(:vehicle, resident: r) }

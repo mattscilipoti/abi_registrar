@@ -32,7 +32,7 @@ hr.double
 
 fieldset
   legend
-    = render 'layouts/h1', title: "Share Transactions", model_count: @share_transactions.size
+    = render 'layouts/h1', title: "Share Transactions", model_count: @share_transactions.size, model_total: ShareTransaction.count
 
   #share_transactions
     - columns = %i[activity cost_per quantity cost_total transacted_at residency from_residency]

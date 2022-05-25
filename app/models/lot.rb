@@ -53,6 +53,10 @@ class Lot < ApplicationRecord
 
   delegate :street_address, to: :property, allow_nil: true
 
+  def lot_fee_paid?
+    paid_on?
+  end
+  
   def summary
     [lot_number, property].join(', ')
   end

@@ -1,7 +1,7 @@
 require 'csv'
 require_relative 'importer'
 
-class ImporterMembers < Importer
+class ImporterResidents < Importer
   def initialize(source_file)
     super
 
@@ -27,8 +27,11 @@ class ImporterMembers < Importer
   end
 
   def import_lot(row_info)
-    tax_id_parts = parse_tax_id(row_info.fetch(:taxid))
-    lot_info = { lot_number: row_info.fetch(:lot) }.merge(tax_id_parts)
+    tax_id_parts = parse_tax_id(row_info.fetch(:acct))
+    lot_info = tax_id_parts.merge({ 
+      lot_number: row_info.fetch(:lot),
+      section: row_info.fetch(:section),
+    })
 
     import_model(
       Lot,
@@ -63,6 +66,7 @@ class ImporterMembers < Importer
       first_name: row_info.fetch(:fn1),
       middle_name: row_info.fetch(:mn1),
       email_address: row_info.fetch(:email1),
+      phone: row_info.fetch(:primphone),
     }
     resident1 = import_model(
       Resident,
@@ -86,6 +90,7 @@ class ImporterMembers < Importer
       first_name: row_info.fetch(:fn2),
       middle_name: row_info.fetch(:mn2),
       email_address: row_info.fetch(:email2),
+      phone: row_info.fetch(:altphone),
     }
 
     # Resident2 may not exist

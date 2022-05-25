@@ -1,7 +1,16 @@
 module ApplicationHelper
 
-  def datetime_tag(datetime)
-    content_tag(:span, "#{time_ago_in_words(datetime)} ago", class: "datetime", data: { tooltip: datetime.rfc2822})
+  
+  def date_tag(date)
+    datetime_tag(date, format: '%a %b %d, %Y')
+  end
+
+  def datetime_tag(datetime, format: '%c')
+    return '' if datetime.blank?
+
+    formatted_datetime = datetime.strftime(format)
+
+    content_tag(:span, "#{time_ago_in_words(datetime)} ago", class: "datetime", data: { tooltip: formatted_datetime})
   end
 
   def icon_for_scope(scope_name)
@@ -96,7 +105,7 @@ module ApplicationHelper
     
     form_tag(url_options, default_html_options) do
       concat label_tag(:q, 'Search')
-      concat text_field_tag(:q, params[:q], class: 'search')
+      concat text_field_tag(:q, params[:q], class: 'search', type: 'search')
       concat submit_tag("Search")
       concat content_tag(:i, nil, class: 'search busy activated')
       concat "Filters:&nbsp;".html_safe

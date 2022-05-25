@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_17_021939) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_22_223332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -114,7 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_021939) do
     t.bigint "resident_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "resident_status"
+    t.string "resident_status"
     t.date "verified_on"
     t.index ["property_id"], name: "index_residencies_on_property_id"
     t.index ["resident_id"], name: "index_residencies_on_resident_id"
@@ -127,10 +127,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_021939) do
     t.text "first_name"
     t.text "email_address"
     t.boolean "is_minor"
-    t.text "age_of_minor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "middle_name"
+    t.string "phone"
     t.index ["last_name"], name: "index_residents_on_last_name"
   end
 

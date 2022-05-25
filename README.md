@@ -58,8 +58,10 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Authentication, via password or email
     - List Application Administators
   - Import Lots, Properties, Residents
+    - Source: "2022 Membership.csv": https://drive.google.com/drive/folders/1I2f6KPanRLRBqU3eCySs9-FdKgQPRabm
   - Import Shares
     - Note: transacted_at DateTime will update for ALL Imported Share Transactions on EACH Import (I think this is appropriate, if we are using the same spreadsheet).
+    - Source: SharesRegistrarSpreadsheet: https://docs.google.com/spreadsheets/d/1F-FEmh14Go5bLmCDrcDax2tbJycWvHoz/edit?rtpof=true
 
 
 ### TODO
@@ -81,6 +83,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Residents
     - List residents w/o Resident Status (Deed Holder, etc.)
     - List residents w/o email
+    - Add Status of "Border"
   - Manage Beach Parties?
     - A: probably not. Registrar manages this outside of this app. Uses this app to verify Resident
     - Reservations
@@ -143,3 +146,6 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Yearly Closeout/Prep
       - Reset Lot Fees Paid?
       - Reset Resident Verification?
+    - Report with Mailing Address
+      - If Deed Holder has multiple properties, the invoices should be sent to mailing address NOT property address
+  - Export to CSV

@@ -6,7 +6,7 @@ class PropertyDecorator < Draper::Decorator
     when 'scilipoti'
       'house-flood-water'
     when 'franklin, trustee'
-      'house-heart'
+      'house-heart' # pro
     else    
       lot_fees_paid? ? 'house-circle-check' : 'house-circle-xmark'
     end
@@ -19,7 +19,7 @@ class PropertyDecorator < Draper::Decorator
   end
 
   def residents_summary(type: :icons)
-    h.render 'residents/resident_icon_list', residents: object.residents.decorate
+    h.render 'residencies/resident_icon_list', residencies: object.residencies.decorate
   end
 
   def street_number

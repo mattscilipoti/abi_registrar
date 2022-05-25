@@ -1,3 +1,5 @@
+require "address_composer"
+
 class Property < ApplicationRecord
   include Commentable
 
@@ -25,8 +27,8 @@ class Property < ApplicationRecord
       tsearch: { prefix: true }
     }
 
-  scope :lot_fees_paid, -> { distinct.joins(:lots).merge(Lot.fee_paid) }
   scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
+  scope :lot_fees_paid, -> { distinct.where.not(id: lot_fees_not_paid) }
   scope :not_paid, -> { lot_fees_not_paid }
   scope :problematic, -> { without_lot.or(without_street_info) }
   scope :without_lot, -> { joins(:lots).where(lots: nil) }
@@ -45,12 +47,39 @@ class Property < ApplicationRecord
     lots.first
   end
 
+  def inspect
+    [id, to_s]
+  end
+
   def lot_count
     lots.size
   end
 
   def lot_fees_paid?
     lots.lot_fees_paid.size == lots.size
+  end
+
+  def mailing_address
+    address_components = {
+      "house_number" => street_number,
+      "road" => street_name.upcase,
+      "city" => "CROWNSVILLE",
+      "postcode" => 31032,
+      "county" => "Anne Arundel",
+      "state" => "Maryland",
+      "country_code" => "US"
+    }
+
+    mailing_address = AddressComposer.compose(address_components)
+
+    recipient = primary_owner.try(:full_name)
+    mailing_address.prepend "#{recipient.upcase}\n" if recipient
+
+    mailing_address
+  end
+
+  def primary_owner
+    residencies.deed_holder.present? && residencies.deed_holder.first.resident
   end
 
   def share_count

@@ -4,6 +4,7 @@
 {
 	"name": "ABI Registrar",
 	"dockerComposeFile": "docker-compose.yml",
+	"postCreateCommand": "bundle install",
 	"service": "app",
 	"workspaceFolder": "/workspace",
 
@@ -12,7 +13,13 @@
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"rebornix.Ruby"
+		"BriteSnow.vscode-toggle-quotes",
+		"deerawan.vscode-dash",
+		"mechatroner.rainbow-csv",
+		"noku.rails-run-spec-vscode"
+		"rebornix.Ruby",
+		"sianglim.slim",
+		"wingrunr21.vscode-ruby",
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

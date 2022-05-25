@@ -1,19 +1,20 @@
 class Residency < ApplicationRecord
   belongs_to :property
   belongs_to :resident
+  has_many :lots, through: :property
   has_many :share_transactions
   has_many :share_purchases, class_name: 'ShareTransaction', foreign_key: 'residency_id'
   has_many :share_transfers_from, class_name: 'ShareTransaction', foreign_key: 'from_residency_id'
-  delegate :street_address, to: :property
-  delegate :full_name, :email_address, to: :resident
-  enum :resident_status, { deed_holder: 0, dependent: 1, renter: 2 }, scopes: true
+  delegate :lot_fees_paid?, :street_address, to: :property
+  delegate :full_name, :email_address, :is_minor?, :phone, to: :resident
+  enum :resident_status, { deed_holder: 'deed_holder', dependent: 'dependent', renter: 'renter' }, scopes: true
 
   scope :lot_fees_not_paid, -> {
     distinct.joins(:property).merge(Property.lot_fees_not_paid)
   }
   scope :lot_fees_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
-    #   this returns ab=ny where ALL lot fees are paid
+    #   this returns only those where ALL lot fees are paid
     where.not(id: lot_fees_not_paid)
   }
 
@@ -29,6 +30,10 @@ class Residency < ApplicationRecord
     ]
   end
 
+  def inspect
+    {id: id, summary: to_s}
+  end
+
   def resident_status_i18n
     resident_status && resident_status.gsub('_', ' ').titleize
   end
@@ -38,7 +43,7 @@ class Residency < ApplicationRecord
   end
 
   def to_s
-    [resident.to_s, property.to_s].compact.join(", ")
+    [resident.to_s, resident_status_i18n, property.to_s].compact.join(", ")
   end
 
   def verified?

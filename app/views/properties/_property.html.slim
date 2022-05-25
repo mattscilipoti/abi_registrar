@@ -10,6 +10,9 @@ p
   strong Lot Fees Paid?&nbsp;
   =property.lot_fees_paid?
 
+p
+  strong Mailing Address:
+  = simple_format(property.mailing_address)
 
 fieldset
   legend
@@ -24,5 +27,5 @@ fieldset
     h2
       | Lots
       small= "(#{property.lots.size} ct.)"
-  - columns = %i[lot_number paid_on]
+  - columns = %i[lot_number lot_fee_paid? paid_on]
   =render 'layouts/models_table', models: property.lots, columns: columns

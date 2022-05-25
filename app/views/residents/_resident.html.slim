@@ -18,37 +18,17 @@ p
   = resident.email_address
 p
   strong
-    | Is minor:
-  = resident.is_minor
+    | Phone:
+  = resident.phone
 p
   strong
-    | Age of minor:
-  = resident.age_of_minor
+    | Is minor:
+  = resident.is_minor
 
 fieldset
   legend
     h2 Properties
 
-  ol
-    - for residency in resident.residencies
-      li
-        = link_to residency.street_address, residency.property
-        | ,
-        = residency.resident_status_i18n
-        | , 
-        strong
-          | Verified On:
-        = residency.verified_on
-
-        fieldset
-          legend
-            h2 Lot(s)
-
-          ol
-            - for lot in residency.property.lots
-              li
-                = link_to lot.lot_number, lot
-                | , 
-                strong
-                  | Paid On:
-                = lot.paid_on
+  #residencies
+    - columns = %i[property_summary  lot_summary lot_fees_paid?]
+    =render 'layouts/models_table', models: resident.residencies.decorate, columns: columns, allow_edit: false, allow_sort: true

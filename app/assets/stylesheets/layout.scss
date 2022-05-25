@@ -13,7 +13,7 @@
 
 body {
   background-color: $color-background-body;
-  font-family: Helvetica, Arial, sans-serif
+  font-family: $font-family;
 }
 
 a {
@@ -298,6 +298,10 @@ ul {
 //   z-index: auto;
 // }
 
+.fas {
+  font-family: 'Font Awesome 6 Solid';
+}
+
 // To call attention to an element, add the class 'highlight'
 .highlight {
   background-color: yellow !important; // important overrides flash message background-color
@@ -364,6 +368,7 @@ ul {
   border-radius: 3px;
   color: #fff;
   content: attr(data-tooltip);
+  font-family: $font-family;
   font-size: 14px;
   // margin-left: -80px;
   padding: 7px;

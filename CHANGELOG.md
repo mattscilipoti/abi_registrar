@@ -7,7 +7,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Filter by Scopes
+## Upcoming: Import from ACA Data
+
+- Import: convert source from "_Relationship Tables" to "2022_ACA_Membership" files
+  - Rename ImporterMembers to ImporterResidents
+  - ImporterResident: imports Lot#section
+  - Add/Import Resident#phone
+  - Rename task: import:abi_membership -> import:residents
+- Property: add mailing_address (Crownsville)
+- Resident: remove age_of_minor
+- ItemTransaction:
+  - Fix: can edit activity
+  - Validate not in future
+- Style
+  - Index views: indicate resident_status & x of y models
+    - Using new residencies/_property & _resident icon list views
+  - Property#show: lists Lot_fee_paid? (as well as date) 
+  - Lot#paid_on formatted time_ago_in_words
+  - Use icons for DeedHolder, Renter, Dependent
+    - uses residencies_controller and views
+- Seed
+  - Rename JimR to "Peter PartialPayment"
+  - Add dependent (Jill, 123 Main St.)
+  - Add (random) comments
+  - Phone numbers use 555 area code
+- Config: Unpermitted parameters raises errors
+
+## 2022-05-20: Filter by Scopes
 
 - Resident
   - Add #verified?

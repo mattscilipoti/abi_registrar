@@ -1,6 +1,6 @@
 fieldset
   legend
-    = render 'layouts/h1', title: "Application Administrators", model_count: @accounts.size
+    = render 'layouts/h1', title: "Application Administrators", model_count: @accounts.size, model_total: Account.count
 
   #accounts
     - columns = %i[email status]

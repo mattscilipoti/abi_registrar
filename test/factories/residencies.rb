@@ -18,7 +18,7 @@ FactoryBot.define do
     end
 
     trait :verified do
-      verified_on { 1.minute.ago }
+      verified_on { Faker::Time.between(from: 1.year.ago, to: 1.minute.ago) }
     end
   end
 end

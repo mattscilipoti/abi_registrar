@@ -6,13 +6,13 @@ FactoryBot.define do
     middle_name { 'TEST' }
     last_name { Faker::Name.last_name }
     email_address { Faker::Internet.email }
+    phone { "555#{rand(100..999)}#{rand(1000..9999)}" }
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.now) }
 
     trait :minor do
       is_minor { true }
-      age_of_minor { rand(1..20) }
     end
 
     trait :with_properties do

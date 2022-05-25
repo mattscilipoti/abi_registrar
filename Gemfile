@@ -74,6 +74,7 @@ end
 # App Custom gems
 gem 'active_record_doctor', group: :development
 gem 'addressable'
+gem 'address_composer', "~> 1.0", require: false
 gem 'amazing_print', "~> 1.4" # Pretty print your Ruby objects with style -- in full color and with proper indentation
 gem 'bullet', group: [:development] # help to kill N+1 queries and unused eager loading
 gem 'database_cleaner-active_record', require: false# , group: [:development, :test]

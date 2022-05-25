@@ -1,0 +1,5 @@
+- property = residency.property.decorate
+- tooltip ||= residency.property.to_s
+= link_to(property_path(property), class: 'no-link-icon' ) do
+  = residency.property_tag
+  = residency.resident_status_tag
