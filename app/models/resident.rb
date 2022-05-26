@@ -27,13 +27,13 @@ class Resident < ApplicationRecord
   has_many :properties, through: :residencies
   has_many :lots, through: :properties
 
-  scope :lot_fees_not_paid, -> {
-    distinct.joins(:properties).merge(Property.lot_fees_not_paid)
-  }
   scope :lot_fees_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
     #   this returns those where ALL lot fees are paid
-    where.not(id: lot_fees_not_paid)
+    distinct.where.not(id: lot_fees_not_paid)
+  }
+  scope :lot_fees_not_paid, -> {
+    distinct.joins(:lots).merge(Lot.lot_fees_not_paid)
   }
 
   scope :not_verified, -> { distinct.joins(:residencies).merge(Residency.not_verified) }

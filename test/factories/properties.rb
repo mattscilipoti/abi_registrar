@@ -6,13 +6,23 @@ FactoryBot.define do
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.now) }
 
-    trait :with_lot do
+    trait :with_paid_lots do
       transient do
         lots_count { 1 }
       end
 
       after(:create) do |property, evaluator|
-        create_list(:lot, evaluator.lots_count, property: property)
+        create_list(:lot, evaluator.lots_count, :paid, property: property)
+      end
+    end
+
+    trait :with_unpaid_lots do
+      transient do
+        lots_count { 1 }
+      end
+
+      after(:create) do |property, evaluator|
+        create_list(:lot, evaluator.lots_count, :unpaid, property: property)
       end
     end
 
