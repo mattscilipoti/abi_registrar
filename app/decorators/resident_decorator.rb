@@ -5,7 +5,7 @@ class ResidentDecorator < Draper::Decorator
     'user'
   end
 
-  def phone
+  def phone_i18n
     h.number_to_phone(object.phone, area_code: true)
   end
 

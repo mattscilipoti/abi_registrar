@@ -17,7 +17,7 @@ class ResidencyDecorator < Draper::Decorator
               '' # house-flood-water
             when 'franklin, trustee'
                # house-heart, pro
-            else    
+            else
               lot_fees_paid? ? '' : '' # house-circle-check, house-circle-xmark
             end
 
@@ -47,7 +47,8 @@ class ResidencyDecorator < Draper::Decorator
   end
 
   def resident_status_i18n
-    status = I18n.t("activerecord.attributes.#{model_name.i18n_key}.resident_status.#{resident_status}")
+    i18n_key = "activerecord.attributes.#{model_name.i18n_key}.resident_status.#{resident_status}"
+    status = I18n.t(i18n_key)
     status || "⁇"
   end
 
