@@ -38,7 +38,7 @@ RSpec.describe Residency, type: :model do
     it 'each Resident can only have one Residence' do
       r = FactoryBot.create(:residency)
       expect(r).to be_valid
-      expect(r).to be_residence
+      expect(r).to be_primary_residence
 
       expect {
         FactoryBot.create(:residency, resident: r.resident)

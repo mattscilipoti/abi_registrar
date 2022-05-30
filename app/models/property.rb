@@ -95,10 +95,4 @@ class Property < ApplicationRecord
   def to_s
     street_address
   end
-
-  private
-
-  def there_can_be_only_one_owner
-    errors.add(:residencies, "there can only be ONE... owner") if residencies.owner.count > 1
-  end
 end

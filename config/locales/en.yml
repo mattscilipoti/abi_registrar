@@ -35,6 +35,7 @@ en:
     attributes:
       residency:
         resident_status:
+          one: 'Resident Status' # Fixes: transalation data, key 'one' is missing
           coowner: Co-Owner
           dependent: Dependent
           owner: Owner

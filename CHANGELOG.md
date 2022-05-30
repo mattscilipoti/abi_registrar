@@ -12,9 +12,10 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Residency
   - Convert Deed Holder to Owner/Co-owner
   - scope deed_holder is either owner/co-owner
-  - Add colummn residence:boolean
+  - Add column Residency#primary_residence:boolean
 - Resident
-  - Add #residence and #mailing address
+  - Add #primary_residence and #mailing address
+- VS Code: use EditorConfig
 
 ## 2022/05/24: Import from ACA Data
 

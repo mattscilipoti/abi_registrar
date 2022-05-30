@@ -116,7 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_034325) do
     t.datetime "updated_at", null: false
     t.string "resident_status"
     t.date "verified_on"
-    t.boolean "residence"
+    t.boolean "primary_residence"
     t.index ["property_id"], name: "index_residencies_on_property_id"
     t.index ["resident_id"], name: "index_residencies_on_resident_id"
     t.index ["resident_status"], name: "index_residencies_on_resident_status"

@@ -32,6 +32,9 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Mark as verified
     - Search by Last Name, Property Address, or Lot info
     - Add date-stamped Comments
+    - Mailing Address
+      - Select Primary Residence, default if only one
+      - Mailing address defaults to Primary Residence address
   - Manage Shares
     - Record Purchased Shares
       - Only Deed Holders

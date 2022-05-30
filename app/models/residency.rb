@@ -10,8 +10,8 @@ class Residency < ApplicationRecord
   enum :resident_status, {
     owner: 'Owner',
     coowner: 'Co-owner',
-    dependent: 'dependent',
-    renter: 'renter'
+    dependent: 'Dependent',
+    renter: 'Renter'
   }, scopes: true
 
   scope :lot_fees_not_paid, -> {
@@ -23,9 +23,10 @@ class Residency < ApplicationRecord
 
   scope :deed_holder, -> { owner.or(coowner) }
   scope :not_verified, -> { where(verified_on: nil) }
+  scope :primary_residence, -> { where(primary_residence: true) }
   scope :verified, -> { where.not(id: not_verified) }
 
-  validates :residence, uniqueness: {
+  validates :primary_residence, uniqueness: {
     scope: :resident_id,
     message: "there can only be one Residence for each Resident"
   }

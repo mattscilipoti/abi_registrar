@@ -3,7 +3,7 @@ require 'faker'
 FactoryBot.define do
   factory :residency do
     property
-    residence { true }
+    primary_residence { true }
     resident
     resident_status { :owner }
 
@@ -12,7 +12,7 @@ FactoryBot.define do
 
     # traits for each resident_status are automatically created, thx FactoryBot!
     trait :second_home do
-      residence { false }
+      primary_residence { false }
     end
 
     trait :verified do

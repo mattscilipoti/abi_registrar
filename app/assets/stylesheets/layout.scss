@@ -151,7 +151,7 @@ i.busy {
   height: 20px;
   margin: 0 4px;
   width: 20px;
-  
+
   // show (should leave placeholder space for spinner)
   display: inline-block;
   visibility: hidden;
@@ -298,10 +298,6 @@ ul {
 //   z-index: auto;
 // }
 
-.fas {
-  font-family: 'Font Awesome 6 Solid';
-}
-
 // To call attention to an element, add the class 'highlight'
 .highlight {
   background-color: yellow !important; // important overrides flash message background-color
@@ -309,6 +305,12 @@ ul {
 
 .icon {
   padding: $padding-default/2;
+
+  &.primary_residence {
+  }
+  &.second_home {
+    color: purple;
+  }
 }
 
 .row {

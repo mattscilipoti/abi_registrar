@@ -76,6 +76,7 @@ class ResidentsController < ApplicationController
         residencies_attributes: [
           :id,
           :resident_id,
+          :primary_residence,
           :property_id,
           :resident_status,
           :verified_on,

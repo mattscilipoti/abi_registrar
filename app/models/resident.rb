@@ -26,6 +26,8 @@ class Resident < ApplicationRecord
   accepts_nested_attributes_for :residencies, reject_if: :all_blank, allow_destroy: true
   has_many :properties, through: :residencies
   has_many :lots, through: :properties
+  has_one :primary_residency, -> { where(primary_residence: true) }, class_name: 'Residency'
+  has_one :primary_residence, through: :primary_residency, source: :property
 
   scope :lot_fees_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
@@ -73,18 +75,11 @@ class Resident < ApplicationRecord
   end
 
   def mailing_address
-    residence.try(:mailing_address, resident: self)
+    primary_residence.try(:mailing_address, resident: self)
   end
 
   def property_count
     properties.size
-  end
-
-  def residence
-    # TODO: convert to attribute?
-    return nil unless properties.present?
-
-    return properties.residence.first
   end
 
   def share_count
