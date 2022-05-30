@@ -15,6 +15,8 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Add column Residency#primary_residence:boolean
 - Resident
   - Add #primary_residence and #mailing address
+  - #phone removes non-numeric chars
+  - #phone_i18n uses number_to_phone
 - VS Code: use EditorConfig
 
 ## 2022/05/24: Import from ACA Data

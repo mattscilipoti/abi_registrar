@@ -46,6 +46,7 @@ class Resident < ApplicationRecord
   scope :not_paid, -> { lot_fees_not_paid }
   scope :problematic, -> { not_verified.or(without_first_name).or(without_email) }
 
+  validates :phone, format: { with: /\A[0-9]+\z/, message: "only allows numbers" }
   validates :last_name, presence: true
 
   def self.scopes
@@ -76,6 +77,14 @@ class Resident < ApplicationRecord
 
   def mailing_address
     primary_residence.try(:mailing_address, resident: self)
+  end
+
+  def phone=(value)
+    if value.present?
+      # remove all formatting, leave only numbers
+      value = value.gsub(/\D/, '')
+    end
+    super(value)
   end
 
   def property_count

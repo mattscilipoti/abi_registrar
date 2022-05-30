@@ -118,7 +118,6 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Status (Deed Holder, etc.)
       - Owner, Co-owner, Dependent, Boarder, Renter
     - Verified
-  - Import Phone, Mailing Address (to Property or Resident?)
   - Sync Lot Fees with QuickBooks
   - Manage Donations
     - In QuickBooks?

@@ -25,4 +25,26 @@ RSpec.describe Resident, type: :model do
       end
     end
   end
+
+  describe '(instance methods)' do
+    subject(:resident) { FactoryBot.build(:resident) }
+
+    describe '(validations)' do
+      # SKIP: non-numberic chars are removed
+      # it 'ensures phone is JUST numbers' do
+      #   resident.phone = '1234567890'
+      #   expect(resident).to be_valid
+      #   resident.phone = '123-456-7890'
+      #   expect(resident).to_not be_valid
+      #   expect(resident.errors[:phone]).to contain_exactly(/only allows numbers/)
+      # end
+    end
+
+    describe '#phone' do
+      it 'removes all non-number chars' do
+        subject.phone = '(555) 443-1212'
+        expect(subject.phone).to eql('5554431212')
+      end
+    end
+  end
 end
