@@ -13,5 +13,9 @@ FactoryBot.define do
     trait :paid do
       paid_on { Faker::Time.between(from: 1.year.ago, to: Time.now) }
     end
+
+    trait :unpaid do
+      paid_on { nil }
+    end
   end
 end

@@ -61,7 +61,7 @@ class ResidentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_resident
-      @resident = Resident.find(params[:id])
+      @resident = Resident.find(params[:id]).decorate
     end
 
     # Only allow a list of trusted parameters through.
@@ -76,6 +76,7 @@ class ResidentsController < ApplicationController
         residencies_attributes: [
           :id,
           :resident_id,
+          :primary_residence,
           :property_id,
           :resident_status,
           :verified_on,

@@ -1,0 +1,11 @@
+fieldset
+  = content_tag :div, class: "nested-fields", data: { new_record: form.object.new_record? } do
+    .form-group
+      = form.association :property, label_method: :street_address
+      = form.input :resident_status, as: :radio_buttons, checked: Residency.resident_statuses[form.object.resident_status], collection: Residency.resident_statuses.to_a.collect{|c| [c[1], c[1]]}
+      = form.input :verified_on
+      = form.input :primary_residence
+
+    .form-actions
+      small= link_to "Remove", "#", data: { action: "click->nested-form#remove_association" }
+      = form.hidden_field :_destroy

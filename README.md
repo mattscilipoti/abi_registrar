@@ -32,6 +32,9 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Mark as verified
     - Search by Last Name, Property Address, or Lot info
     - Add date-stamped Comments
+    - Mailing Address
+      - Select Primary Residence, default if only one
+      - Mailing address defaults to Primary Residence address
   - Manage Shares
     - Record Purchased Shares
       - Only Deed Holders
@@ -84,6 +87,15 @@ Not only do we need to gather and manage the approprite information, we need to 
     - List residents w/o Resident Status (Deed Holder, etc.)
     - List residents w/o email
     - Add Status of "Border"
+    - Mailing Address
+      - Select Primary Residence, default if only one
+      - Mailing address defaults to Primary Residence address
+      - Can assign Alternate Mailing Address
+  - Manage Members
+    - All Residents w/Shares?
+      - No
+    - Who are eligable?
+      - Deed holders of Properties identified as Sunrise Beach Subdivision (748)
   - Manage Beach Parties?
     - A: probably not. Registrar manages this outside of this app. Uses this app to verify Resident
     - Reservations
@@ -104,8 +116,8 @@ Not only do we need to gather and manage the approprite information, we need to 
     - How to Handle 2 Properties on 1 Lot (e.g. 1007/1007A Dockser)?
     - Minor
     - Status (Deed Holder, etc.)
+      - Owner, Co-owner, Dependent, Boarder, Renter
     - Verified
-  - Import Phone, Mailing Address (to Property or Resident?)
   - Sync Lot Fees with QuickBooks
   - Manage Donations
     - In QuickBooks?

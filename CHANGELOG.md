@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Import from ACA Data
+## Upcoming: Owner/Co-owner
+
+- Residency
+  - Convert Deed Holder to Owner/Co-owner
+  - scope deed_holder is either owner/co-owner
+  - Add column Residency#primary_residence:boolean
+- Resident
+  - Add #primary_residence and #mailing address
+  - #phone removes non-numeric chars
+  - #phone_i18n uses number_to_phone
+- VS Code: use EditorConfig
+
+## 2022/05/24: Import from ACA Data
 
 - Import: convert source from "_Relationship Tables" to "2022_ACA_Membership" files
   - Rename ImporterMembers to ImporterResidents
@@ -22,7 +34,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Style
   - Index views: indicate resident_status & x of y models
     - Using new residencies/_property & _resident icon list views
-  - Property#show: lists Lot_fee_paid? (as well as date) 
+  - Property#show: lists Lot_fee_paid? (as well as date)
   - Lot#paid_on formatted time_ago_in_words
   - Use icons for DeedHolder, Renter, Dependent
     - uses residencies_controller and views
@@ -52,7 +64,7 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Each Model has its own definition of "problematic" (e.g. No lot_number)
     - Add scopes to all models
   - Extract filter_models to ApplicationController
-- DB: 
+- DB:
   - Comment#content is required
   - Add Vehicle#state_code (searchable)
     - Vehicle.states for forms
@@ -71,7 +83,7 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Imports Lots, Properties, Resident1 & 2, via ImporterMembers
   - Add/Import Middle Name to Resident
 - New task: "import:shares"
-  - Imports Shares, via ImporterShares 
+  - Imports Shares, via ImporterShares
   - Add :import to ItemTransaction#activity
   - WARN: Newly imported Residents are not Deed Holders. We bypassed this verification and selected the "first" Resident.
   - WARN: transacted_at DateTime will update for ALL Imported Share Transactions on EACH Import (I think this is appropriate, if we are using the same spreadsheet).

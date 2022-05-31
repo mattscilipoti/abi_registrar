@@ -31,9 +31,12 @@
 
 en:
   hello: "Hello world"
-  enums:
-    residency:
-      resident_status:
-        deed_holder: Deed Holder
-        dependent: Dependent
-        renter: Renter
+  activerecord:
+    attributes:
+      residency:
+        resident_status:
+          one: 'Resident Status' # Fixes: transalation data, key 'one' is missing
+          coowner: Co-Owner
+          dependent: Dependent
+          owner: Owner
+          renter: Renter

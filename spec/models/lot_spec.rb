@@ -9,14 +9,14 @@ RSpec.describe Lot, type: :model do
     let(:lot_paid2) { FactoryBot.create(:lot, :paid, lot_number: 'PAID2') }
     let(:lot_unpaid1) { FactoryBot.create(:lot, lot_number: 'UnP1') }
     let(:lot_unpaid2) { FactoryBot.create(:lot, lot_number: 'UnP2') }
-    
+
     describe 'lot_fees_paid' do
       it 'returns all lots that are paid' do
         expect(subject.lot_fees_paid).to contain_exactly(lot_paid1, lot_paid2)
       end
     end
 
-    describe 'lot_fees_paid' do
+    describe 'lot_fees_not_paid' do
       it 'returns all lots that are NOT paid' do
         expect(subject.lot_fees_not_paid).to contain_exactly(lot_unpaid1, lot_unpaid2)
       end

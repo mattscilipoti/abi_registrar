@@ -26,24 +26,27 @@ class Resident < ApplicationRecord
   accepts_nested_attributes_for :residencies, reject_if: :all_blank, allow_destroy: true
   has_many :properties, through: :residencies
   has_many :lots, through: :properties
+  has_one :primary_residency, -> { where(primary_residence: true) }, class_name: 'Residency'
+  has_one :primary_residence, through: :primary_residency, source: :property
 
-  scope :lot_fees_not_paid, -> {
-    distinct.joins(:properties).merge(Property.lot_fees_not_paid)
-  }
   scope :lot_fees_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
     #   this returns those where ALL lot fees are paid
-    where.not(id: lot_fees_not_paid)
+    distinct.where.not(id: lot_fees_not_paid)
+  }
+  scope :lot_fees_not_paid, -> {
+    distinct.joins(:lots).merge(Lot.lot_fees_not_paid)
   }
 
   scope :not_verified, -> { distinct.joins(:residencies).merge(Residency.not_verified) }
   scope :verified, -> { distinct.joins(:residencies).merge(Residency.verified) }
   scope :without_email, -> { distinct.where(email_address: nil) }
   scope :without_first_name, -> { distinct.where(first_name: nil) }
-  
+
   scope :not_paid, -> { lot_fees_not_paid }
   scope :problematic, -> { not_verified.or(without_first_name).or(without_email) }
 
+  validates :phone, format: { with: /\A[0-9]+\z/, message: "only allows numbers" }
   validates :last_name, presence: true
 
   def self.scopes
@@ -70,6 +73,18 @@ class Resident < ApplicationRecord
 
   def lot_fees_paid?
     lots.lot_fees_paid.size == lots.size
+  end
+
+  def mailing_address
+    primary_residence.try(:mailing_address, resident: self)
+  end
+
+  def phone=(value)
+    if value.present?
+      # remove all formatting, leave only numbers
+      value = value.gsub(/\D/, '')
+    end
+    super(value)
   end
 
   def property_count

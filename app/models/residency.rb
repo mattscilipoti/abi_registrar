@@ -7,19 +7,35 @@ class Residency < ApplicationRecord
   has_many :share_transfers_from, class_name: 'ShareTransaction', foreign_key: 'from_residency_id'
   delegate :lot_fees_paid?, :street_address, to: :property
   delegate :full_name, :email_address, :is_minor?, :phone, to: :resident
-  enum :resident_status, { deed_holder: 'deed_holder', dependent: 'dependent', renter: 'renter' }, scopes: true
+  enum :resident_status, {
+    owner: 'Owner',
+    coowner: 'Co-owner',
+    dependent: 'Dependent',
+    renter: 'Renter'
+  }, scopes: true
 
   scope :lot_fees_not_paid, -> {
-    distinct.joins(:property).merge(Property.lot_fees_not_paid)
+    where.not(id: lot_fees_paid)
   }
   scope :lot_fees_paid, -> {
-    # basic "joins" to property returns resident where ANY lots fees are paid,
-    #   this returns only those where ALL lot fees are paid
-    where.not(id: lot_fees_not_paid)
+    distinct.joins(:property).merge(Property.lot_fees_paid)
   }
 
+  scope :deed_holder, -> { owner.or(coowner) }
   scope :not_verified, -> { where(verified_on: nil) }
+  scope :primary_residence, -> { where(primary_residence: true) }
   scope :verified, -> { where.not(id: not_verified) }
+
+  validates :primary_residence, uniqueness: {
+    scope: :resident_id,
+    message: "there can only be one Residence for each Resident"
+  }
+
+  validates :resident_status, uniqueness: {
+    if: -> { owner? },
+    scope: :property_id,
+    message: "there can only be one Owner for each Property"
+  }
 
   def self.scopes
     %i[
@@ -28,6 +44,10 @@ class Residency < ApplicationRecord
       verified
       not_verified
     ]
+  end
+
+  def deed_holder?
+    owner? || coowner?
   end
 
   def inspect

@@ -17,11 +17,17 @@ class ResidencyDecorator < Draper::Decorator
               '' # house-flood-water
             when 'franklin, trustee'
                # house-heart, pro
-            else    
+            else
               lot_fees_paid? ? '' : '' # house-circle-check, house-circle-xmark
             end
+    css_classes = %w[fas icon]
+    css_classes << 'primary_residence' if primary_residence?
+    css_classes << 'second_home' unless primary_residence?
 
-    h.content_tag(:span, icon, class: 'fas', data: {tooltip: property.to_s})
+    tooltip = property.to_s
+    tooltip += ':2nd Home' unless primary_residence
+
+    h.content_tag(:span, icon, class: css_classes.join(' '), data: {tooltip: tooltip})
   end
 
   def resident_status_character
@@ -30,7 +36,7 @@ class ResidencyDecorator < Draper::Decorator
     case resident_status
     when nil
       '?'
-    when :deed_holder.to_s
+    when /owner/
       '' # gavel
     when :renter.to_s
       '' # suitcase
@@ -42,19 +48,24 @@ class ResidencyDecorator < Draper::Decorator
     end
   end
 
-  def resident_status_tag
-    h.content_tag(:span, resident_status_character, class: 'fas', data: {tooltip: resident_status_i18n})
+  def resident_status_tag(tooltip: resident_status_i18n)
+    css_classes = %w[fas icon]
+    css_classes << 'primary_residence' if primary_residence?
+    css_classes << 'second_home' unless primary_residence?
+    h.content_tag(:span, resident_status_character, class: css_classes.join(' '), data: {tooltip: tooltip})
   end
 
   def resident_status_i18n
-    resident_status.try(:titleize) || "⁇"
+    i18n_key = "activerecord.attributes.#{model_name.i18n_key}.resident_status.#{resident_status}"
+    status = I18n.t(i18n_key)
+    status || "⁇"
   end
 
   def resident_status_icon
     icon_name = case resident_status
     when nil
       :question
-    when :deed_holder.to_s
+    when /owner/
       :gavel
     when :renter.to_s
       :suitcase
@@ -71,6 +82,7 @@ class ResidencyDecorator < Draper::Decorator
     summary += "("
     summary += resident_status_i18n
     summary += ", minor" if is_minor?
+    summary += ", 2nd home" unless primary_residence?
     summary += ")"
     summary
   end

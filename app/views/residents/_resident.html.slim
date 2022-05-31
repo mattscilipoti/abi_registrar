@@ -19,16 +19,22 @@ p
 p
   strong
     | Phone:
-  = resident.phone
+  = resident.phone_i18n
 p
   strong
     | Is minor:
   = resident.is_minor
+
+p
+  strong
+    | Mailing address:
+  = simple_format(resident.mailing_address)
+
 
 fieldset
   legend
     h2 Properties
 
   #residencies
-    - columns = %i[property_summary  lot_summary lot_fees_paid?]
+    - columns = %i[property_summary  lot_summary lot_fees_paid? primary_residence?]
     =render 'layouts/models_table', models: resident.residencies.decorate, columns: columns, allow_edit: false, allow_sort: true

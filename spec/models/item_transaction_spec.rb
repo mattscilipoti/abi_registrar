@@ -14,8 +14,8 @@ RSpec.describe ItemTransaction, type: :model do
       let(:resident_a) { FactoryBot.create(:resident, last_name: 'LastNameA') }
       let(:resident_b) { FactoryBot.create(:resident, last_name: 'LastNameB') }
 
-      let!(:residency_a) { FactoryBot.create(:residency, :deed_holder, resident: resident_a, property: property_123) }
-      let!(:residency_b) { FactoryBot.create(:residency, :deed_holder, resident: resident_b, property: property_456) }
+      let!(:residency_a) { FactoryBot.create(:residency, :owner, resident: resident_a, property: property_123) }
+      let!(:residency_b) { FactoryBot.create(:residency, :owner, resident: resident_b, property: property_456) }
 
       let!(:transaction_1) { FactoryBot.create(:share_transaction, activity: :purchase, residency: residency_a) }
       let!(:transaction_2) { FactoryBot.create(:share_transaction, activity: :purchase, residency: residency_b) }

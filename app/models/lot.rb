@@ -56,7 +56,8 @@ class Lot < ApplicationRecord
   def lot_fee_paid?
     paid_on?
   end
-  
+  alias_method :paid?, :lot_fee_paid? # alias, original
+
   def summary
     [lot_number, property].join(', ')
   end

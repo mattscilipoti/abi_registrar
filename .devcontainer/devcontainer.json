@@ -16,10 +16,11 @@
 		"BriteSnow.vscode-toggle-quotes",
 		"deerawan.vscode-dash",
 		"mechatroner.rainbow-csv",
-		"noku.rails-run-spec-vscode"
+		"noku.rails-run-spec-vscode",
 		"rebornix.Ruby",
 		"sianglim.slim",
 		"wingrunr21.vscode-ruby",
+		"EditorConfig.EditorConfig"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

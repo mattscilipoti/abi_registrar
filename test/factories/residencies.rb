@@ -3,18 +3,16 @@ require 'faker'
 FactoryBot.define do
   factory :residency do
     property
+    primary_residence { true }
     resident
-    resident_status { :deed_holder }
+    resident_status { :owner }
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.now) }
 
-    trait :deed_holder do
-      resident_status { :deed_holder }
-    end
-
-    trait :renter do
-      resident_status { :renter }
+    # traits for each resident_status are automatically created, thx FactoryBot!
+    trait :second_home do
+      primary_residence { false }
     end
 
     trait :verified do
