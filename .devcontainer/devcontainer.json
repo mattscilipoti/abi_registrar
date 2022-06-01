@@ -20,7 +20,8 @@
 		"rebornix.Ruby",
 		"sianglim.slim",
 		"wingrunr21.vscode-ruby",
-		"EditorConfig.EditorConfig"
+		"EditorConfig.EditorConfig",
+		"GitHub.vscode-pull-request-github"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
