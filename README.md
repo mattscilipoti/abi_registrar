@@ -32,6 +32,9 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Mark as verified
     - Search by Last Name, Property Address, or Lot info
     - Add date-stamped Comments
+    - List residents w/o Resident Status (Deed Holder, etc.)
+    - List residents w/o email
+    - List residents w/o mailing address
     - Mailing Address
       - Select Primary Residence, default if only one
       - Mailing address defaults to Primary Residence address
@@ -85,8 +88,6 @@ Not only do we need to gather and manage the approprite information, we need to 
       - What steps occur for new Residents?
     - List past Owners
   - Manage Residents
-    - List residents w/o Resident Status (Deed Holder, etc.)
-    - List residents w/o email
     - Add Status of "Border"
   - Manage Members
     - All Residents w/Shares?
