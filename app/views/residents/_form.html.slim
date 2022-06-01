@@ -1,0 +1,41 @@
+
+= simple_form_for(@resident) do |form|
+  = form.error_notification
+  = form.error_notification message: form.object.errors[:base].to_sentence if form.object.errors[:base].present?
+
+  .form-inputs
+    = form.input :first_name, as: :string
+    = form.input :middle_name
+    = form.input :last_name
+    = form.input :email_address, as: :email
+    = form.input :phone, as: :tel
+    = form.input :is_minor
+
+    <!-- #### ADDRESS FIELD STARTS HERE #### -->
+    fieldset
+      legend
+        h4= "Mailing Address (if not '#{@resident.primary_residence}')"
+      .fields
+        / Use OpenStruct to provide methods for hstore (hash)
+        =form.simple_fields_for :mailing_address, OpenStruct.new(@resident.mailing_address) do |a|
+          =a.input :street_number
+          =a.input :street_name
+          =a.input :city
+          =a.input :state_code, collection: Vehicle.states
+          =a.input :zip_code
+    <!-- #### ADDRESS FIELD ENDS HERE #### -->
+
+    h4 Properties
+    div(data-controller="nested-form")
+      template data-target="nested-form.template"
+        = form.fields_for :residencies, Residency.new, child_index: 'NEW_RECORD' do |residency_form|
+          = render "residency_fields", form: residency_form
+
+      = form.fields_for :residencies do |residency|
+        = render "residency_fields", form: residency
+
+      .mb-3(data-target="nested-form.links")
+        = link_to "Add property", "#", class: "btn btn-outline-primary", data: { action: "click->nested-form#add_association" }
+
+  .form-actions
+    = form.button :submit

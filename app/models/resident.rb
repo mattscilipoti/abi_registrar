@@ -75,10 +75,6 @@ class Resident < ApplicationRecord
     lots.lot_fees_paid.size == lots.size
   end
 
-  def mailing_address
-    primary_residence.try(:mailing_address, resident: self)
-  end
-
   def phone=(value)
     if value.present?
       # remove all formatting, leave only numbers

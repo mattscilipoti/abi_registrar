@@ -27,8 +27,10 @@ p
 
 p
   strong
-    | Mailing address:
-  = simple_format(resident.mailing_address)
+    | Mailing address
+    =" (for primary resident)" unless resident.mailing_address?
+    | :
+  = simple_format(resident.mailing_address_i18n)
 
 
 fieldset
@@ -36,5 +38,5 @@ fieldset
     h2 Properties
 
   #residencies
-    - columns = %i[property_summary  lot_summary lot_fees_paid? primary_residence?]
-    =render 'layouts/models_table', models: resident.residencies.decorate, columns: columns, allow_edit: false, allow_sort: true
+    - columns = %i[property_summary lot_summary lot_fees_paid? primary_residence?]
+    =render 'layouts/models_table', models: resident.residencies.decorate, columns: columns, allow_edit: false, allow_show: false, allow_sort: true
