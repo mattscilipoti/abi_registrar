@@ -73,6 +73,7 @@ class ResidentsController < ApplicationController
         :email_address,
         :phone,
         :is_minor,
+        mailing_address: [:street_number, :street_name, :city, :state_code, :zip_code],
         residencies_attributes: [
           :id,
           :resident_id,

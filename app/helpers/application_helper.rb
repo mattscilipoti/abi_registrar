@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-  
+
   def date_tag(date)
     datetime_tag(date, format: '%a %b %d, %Y')
   end
@@ -23,10 +23,14 @@ module ApplicationHelper
       'sack-dollar'
     when /lot/
       'mountain-sun'
+    when /address/
+      'location-dot'
     when /name/
       'signature'
     when /property/
       'house-chimney'
+    when /resident_status/
+      'gavel'
     when /section/
       'section'
     when /state/
@@ -89,7 +93,7 @@ module ApplicationHelper
         - icon_class = scope_name =~ /not|without/ ? 'not' : ''
         - icon = icon_for_scope(scope_name)
         search_path = url_for(controller: controller, action: :index, params: {q: scope_name})
-        concat(link_to(search_path, class: 'search-filter no-link-icon', data: {tooltip: tooltip}) do 
+        concat(link_to(search_path, class: 'search-filter no-link-icon', data: {tooltip: tooltip}) do
           font_awesome_icon(icon, html_options: {class: icon_class})
         end)
       end
@@ -102,7 +106,7 @@ module ApplicationHelper
       method: :get
     }
     default_html_options.merge!(html_options)
-    
+
     form_tag(url_options, default_html_options) do
       concat label_tag(:q, 'Search')
       concat text_field_tag(:q, params[:q], class: 'search', type: 'search')
@@ -110,19 +114,19 @@ module ApplicationHelper
       concat content_tag(:i, nil, class: 'search busy activated')
       concat "Filters:&nbsp;".html_safe
       concat link_to(
-        " 😈", 
+        " 😈",
         Addressable::URI.new(path: url_options, query_values: {q: 'Problematic'}).to_s,
-        class: 'no-link-icon', data: { tooltip: "Show only 'problematic'" } 
+        class: 'no-link-icon', data: { tooltip: "Show only 'problematic'" }
       )
       concat link_to(
-        " 💸", 
+        " 💸",
         Addressable::URI.new(path: url_options, query_values: {q: 'Not Paid'}).to_s,
-        class: 'no-link-icon', data: { tooltip: "Show items 'Expecting a Payment'" } 
+        class: 'no-link-icon', data: { tooltip: "Show items 'Expecting a Payment'" }
       )
       concat link_to(
-        " 🚫", 
+        " 🚫",
         url_options,
-        class: 'no-link-icon', data: { tooltip: "Show ALL. ⚠️ Expect delays." } 
+        class: 'no-link-icon', data: { tooltip: "Show ALL. ⚠️ Expect delays." }
       )
     end
   end

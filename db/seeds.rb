@@ -47,7 +47,9 @@ lot12 = FactoryBot.create(:lot, lot_number: '12 (T)', size: 0.5)
 property_123Main = FactoryBot.create(:property, lots: [lot11], street_number: '123', street_name: 'Main St (TEST)')
 property_975Main = FactoryBot.create(:property, lots: [lot12], street_number: '975', street_name: 'Main St (TEST)')
 
-jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com')
+jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com',
+  mailing_address: { street_number: 987, street_name: 'Other St', city: 'SomewhereElse', state_code: 'MD', zip_code: '11111' }
+)
 
 FactoryBot.create(:residency, :owner, :verified, property: property_123Main, resident: jqo)
 FactoryBot.create(:residency, :owner, :second_home, :verified, property: property_975Main, resident: jqo)
@@ -62,7 +64,7 @@ bqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'Bob (unveri
 FactoryBot.create(:residency, :renter, :verified, property: property_975Main, resident: bqr)
 
 jdoe = FactoryBot.create(:resident, last_name: 'Doe', first_name: nil, email_address: nil)
-FactoryBot.create(:residency, :renter, :verified, property: property_975Main, resident: jdoe)
+FactoryBot.create(:residency, :verified, property: property_975Main, resident: jdoe, resident_status: nil)
 
 
 # Comments

@@ -35,6 +35,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Mailing Address
       - Select Primary Residence, default if only one
       - Mailing address defaults to Primary Residence address
+      - Can assign Alternate Mailing Address
   - Manage Shares
     - Record Purchased Shares
       - Only Deed Holders
@@ -87,10 +88,6 @@ Not only do we need to gather and manage the approprite information, we need to 
     - List residents w/o Resident Status (Deed Holder, etc.)
     - List residents w/o email
     - Add Status of "Border"
-    - Mailing Address
-      - Select Primary Residence, default if only one
-      - Mailing address defaults to Primary Residence address
-      - Can assign Alternate Mailing Address
   - Manage Members
     - All Residents w/Shares?
       - No

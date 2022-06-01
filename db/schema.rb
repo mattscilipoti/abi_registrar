@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_25_034325) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_31_020729) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
+  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "account_email_auth_keys", force: :cascade do |t|
@@ -132,6 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_034325) do
     t.datetime "updated_at", null: false
     t.string "middle_name"
     t.string "phone"
+    t.hstore "mailing_address"
     t.index ["last_name"], name: "index_residents_on_last_name"
   end
 
