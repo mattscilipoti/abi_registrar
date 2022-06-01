@@ -12,6 +12,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Resident:
   - Add mailing_address
   - Filter without_resident_status
+  - Filter with/without mailing_address
 - DB: add hstore extension
 
 ## 2022/05/29: Owner/Co-owner

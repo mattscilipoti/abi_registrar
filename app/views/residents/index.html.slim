@@ -5,7 +5,7 @@ fieldset
     = render 'layouts/h1', title: "Residents", model_count: @residents.size, model_total: Resident.count
 
   #residents
-    - columns = %i[full_name email_address phone_i18n property_summary verified? lot_fees_paid? is_minor]
+    - columns = %i[full_name email_address phone_i18n property_summary verified? lot_fees_paid? is_minor mailing_address?]
     =render 'layouts/models_table', models: @residents, columns: columns, allow_sort: true
 br
 = link_to "New resident", new_resident_path

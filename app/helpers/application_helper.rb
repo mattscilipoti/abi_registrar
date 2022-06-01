@@ -23,6 +23,8 @@ module ApplicationHelper
       'sack-dollar'
     when /lot/
       'mountain-sun'
+    when /address/
+      'location-dot'
     when /name/
       'signature'
     when /property/
