@@ -64,7 +64,7 @@ bqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'Bob (unveri
 FactoryBot.create(:residency, :renter, :verified, property: property_975Main, resident: bqr)
 
 jdoe = FactoryBot.create(:resident, last_name: 'Doe', first_name: nil, email_address: nil)
-FactoryBot.create(:residency, :renter, :verified, property: property_975Main, resident: jdoe)
+FactoryBot.create(:residency, :verified, property: property_975Main, resident: jdoe, resident_status: nil)
 
 
 # Comments

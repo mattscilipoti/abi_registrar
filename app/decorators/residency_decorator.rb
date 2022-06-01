@@ -35,7 +35,7 @@ class ResidencyDecorator < Draper::Decorator
 
     case resident_status
     when nil
-      '?'
+      '⁇'
     when /owner/
       '' # gavel
     when :renter.to_s
@@ -56,9 +56,13 @@ class ResidencyDecorator < Draper::Decorator
   end
 
   def resident_status_i18n
-    i18n_key = "activerecord.attributes.#{model_name.i18n_key}.resident_status.#{resident_status}"
-    status = I18n.t(i18n_key)
-    status || "⁇"
+    if resident_status
+      i18n_key = "activerecord.attributes.#{model_name.i18n_key}.resident_status.#{resident_status}"
+      status = I18n.t(i18n_key)
+      status || "⁇"
+    else
+      'Resident status: unknown'
+    end
   end
 
   def resident_status_icon
