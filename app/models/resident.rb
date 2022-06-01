@@ -42,6 +42,7 @@ class Resident < ApplicationRecord
   scope :verified, -> { distinct.joins(:residencies).merge(Residency.verified) }
   scope :without_email, -> { distinct.where(email_address: nil) }
   scope :without_first_name, -> { distinct.where(first_name: nil) }
+  scope :without_resident_status, -> { distinct.joins(:residencies).merge(Residency.without_resident_status) }
 
   scope :not_paid, -> { lot_fees_not_paid }
   scope :problematic, -> { not_verified.or(without_first_name).or(without_email) }
@@ -57,6 +58,7 @@ class Resident < ApplicationRecord
       not_verified
       without_email
       without_first_name
+      without_resident_status
     ]
   end
 

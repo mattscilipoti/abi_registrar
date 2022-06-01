@@ -25,6 +25,7 @@ class Residency < ApplicationRecord
   scope :not_verified, -> { where(verified_on: nil) }
   scope :primary_residence, -> { where(primary_residence: true) }
   scope :verified, -> { where.not(id: not_verified) }
+  scope :without_resident_status, -> { where(resident_status: nil) }
 
   validates :primary_residence, uniqueness: {
     scope: :resident_id,

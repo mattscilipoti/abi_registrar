@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Owner/Co-owner
+## Upcoming: Resident Mailing Address
+
+- Resident:
+  - Add mailing_address
+  - Filter without_resident_status
+- DB: add hstore extension
+
+## 2022/05/29: Owner/Co-owner
 
 - Residency
   - Convert Deed Holder to Owner/Co-owner
