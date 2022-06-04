@@ -28,14 +28,15 @@ class Residency < ApplicationRecord
   scope :without_resident_status, -> { where(resident_status: nil) }
 
   validates :primary_residence, uniqueness: {
+    if: -> { primary_residence? },
     scope: :resident_id,
-    message: "there can only be one Residence for each Resident"
+    message: "- there can only be one Primary Residence for each Resident"
   }
 
   validates :resident_status, uniqueness: {
     if: -> { owner? },
     scope: :property_id,
-    message: "there can only be one Owner for each Property"
+    message: "- there can only be one Owner for each Property"
   }
 
   def self.scopes
@@ -64,7 +65,9 @@ class Residency < ApplicationRecord
   end
 
   def to_s
-    [resident.to_s, resident_status_i18n, property.to_s].compact.join(", ")
+    info = [resident.to_s, resident_status_i18n, property.to_s]
+    info << '2nd Home' unless primary_residence?
+    info.compact.join(" | ")
   end
 
   def verified?

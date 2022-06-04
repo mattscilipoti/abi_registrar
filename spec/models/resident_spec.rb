@@ -46,5 +46,20 @@ RSpec.describe Resident, type: :model do
         expect(subject.phone).to eql('5554431212')
       end
     end
+
+    describe '#primary_residence/residency' do
+      let!(:r_primary) { FactoryBot.create(:residency, resident: subject) }
+      let!(:r_second)  { FactoryBot.create(:residency, :second_home, resident: subject) }
+
+      it 'returns the property that is the primary residence' do
+        expect(subject.residencies.size).to eql(2)
+        expect(subject.primary_residence).to eq(r_primary.property)
+      end
+
+      it 'returns the residency that is the primary residency' do
+        expect(subject.residencies.size).to eql(2)
+        expect(subject.primary_residency).to eq(r_primary)
+      end
+    end
   end
 end
