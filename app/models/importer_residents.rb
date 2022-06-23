@@ -27,12 +27,19 @@ class ImporterResidents < Importer
   end
 
   def import_lot(row_info)
+    logger.debug "Importing #{row_info}..."
+    if row_info.fetch(:section) == 0 ## Not in Arden?
+      print 'S'
+      logger.info "SKIP: Skipping row with section: 0, #{row_info}"
+      return
+    end
+
     tax_id_parts = parse_tax_id(row_info.fetch(:acct))
+debugger unless row_info.fetch(:section).nil? || (1..5).cover?(row_info.fetch(:section))
     lot_info = tax_id_parts.merge({
       lot_number: row_info.fetch(:lot),
       section: row_info.fetch(:section),
     })
-
     import_model(
       Lot,
       find_by: {lot_number: row_info.fetch(:lot)},
@@ -108,7 +115,7 @@ class ImporterResidents < Importer
     )
 
     # Handle association
-    # Using "to_s" to hanlde null
+    # Using "to_s" to handle null
     if !resident2.properties.find{|p| p.street_number.to_s.casecmp?(property.street_number) && p.street_name.to_s.casecmp?(property.street_name) }
       # assign primary or second home
       primary_residence = resident2.primary_residence.nil?
