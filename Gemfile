@@ -88,6 +88,7 @@ gem 'railroady', group: :development # UML class diagram generator.
 gem 'rodauth-rails', '~> 1.4' # Ruby's Most Advanced Authentication Framework
 gem 'rspec-rails', group: [:development, :test]
 gem 'sassc-rails'
+gem 'schema_plus_functions' # adding support for SQL functions
 gem 'simple_form' # Forms made easy for Rails
 gem 'slim-rails' # template language, reduces the syntax without becoming cryptic.
 

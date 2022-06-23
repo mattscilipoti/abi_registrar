@@ -152,6 +152,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.15.0)
+    modware (1.0.2)
     msgpack (1.5.1)
     mustache (1.1.1)
     net-imap (0.2.3)
@@ -266,6 +267,15 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    schema_monkey (3.0.2)
+      activerecord (>= 5.2)
+      modware (~> 1.0.2)
+    schema_plus_core (3.1.0)
+      activerecord (>= 5.2, < 7.1)
+      schema_monkey (~> 3.0.2)
+    schema_plus_functions (1.0.1)
+      activerecord (>= 5.2, < 7.1)
+      schema_plus_core (~> 3.1.0)
     selenium-webdriver (4.1.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -351,6 +361,7 @@ DEPENDENCIES
   rodauth-rails (~> 1.4)
   rspec-rails
   sassc-rails
+  schema_plus_functions
   selenium-webdriver
   simple_form
   slim-rails
