@@ -15,6 +15,8 @@ require 'database_cleaner-active_record'
 require 'factory_bot_rails'
 require 'faker'
 
+DatabaseCleaner.allow_production = true
+DatabaseCleaner.allow_remote_database_url = true
 do_not_truncate = [Account.table_name]
 DatabaseCleaner.clean_with :truncation, except: do_not_truncate
 
