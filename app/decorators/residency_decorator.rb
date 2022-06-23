@@ -16,7 +16,8 @@ class ResidencyDecorator < Draper::Decorator
             when 'scilipoti'
               '' # house-flood-water
             when 'franklin, trustee'
-               # house-heart, pro
+              '' # house-heart, pro
+              '' # house-laptop
             else
               lot_fees_paid? ? '' : '' # house-circle-check, house-circle-xmark
             end
