@@ -28,7 +28,7 @@ class ImporterResidents < Importer
 
   def import_lot(row_info)
     tax_id_parts = parse_tax_id(row_info.fetch(:acct))
-    lot_info = tax_id_parts.merge({ 
+    lot_info = tax_id_parts.merge({
       lot_number: row_info.fetch(:lot),
       section: row_info.fetch(:section),
     })
@@ -77,7 +77,9 @@ class ImporterResidents < Importer
     # Handle association
     # Using "to_s" to hanlde null
     if !resident1.properties.find{|p| p.street_number.to_s.casecmp?(property.street_number) && p.street_name.to_s.casecmp?(property.street_name) }
-      resident1.properties << property # saves association
+      # assign primary or second home
+      is_primary_residence = resident1.primary_residence.nil?
+      resident1.residencies.create!(property: property, primary_residence: is_primary_residence) # saves association
       import_info[:residents_updated] += 1
       announce("Resident1 Property Assigned #{ {id: resident1.id, property_ids: resident1.property_ids } }", row_index: @row_index, prefix: "💾")
     end
@@ -108,7 +110,9 @@ class ImporterResidents < Importer
     # Handle association
     # Using "to_s" to hanlde null
     if !resident2.properties.find{|p| p.street_number.to_s.casecmp?(property.street_number) && p.street_name.to_s.casecmp?(property.street_name) }
-      resident2.properties << property # saves association
+      # assign primary or second home
+      primary_residence = resident2.primary_residence.nil?
+      resident2.residencies.create!(property: property, primary_residence: primary_residence) # saves association
       import_info[:residents_updated] += 1
       announce("Resident2 Property Assigned #{ {id: resident2.id, property_ids: resident2.property_ids } }", row_index: @row_index, prefix: "💾")
     end
