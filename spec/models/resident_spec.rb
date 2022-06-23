@@ -24,6 +24,24 @@ RSpec.describe Resident, type: :model do
         expect(subject.lot_fees_not_paid).to contain_exactly(resident_unpaid, resident_mixed1, resident_mixed2)
       end
     end
+
+    describe 'search_by_name' do
+      before(:each) do
+        FactoryBot.create(:resident, last_name: 'FREDERICK, JR', first_name: 'RAYMOND', middle_name: 'F')
+      end
+
+      it 'finds by exact last_name, case-insensitive' do
+        residents = Resident.search_by_name("Frederick, Jr")
+        expect(residents.count).to eq(1)
+        expect(residents.first.last_name).to eq('FREDERICK, JR')
+      end
+
+      it 'finds partial names' do
+        residents = Resident.search_by_name("Frederick, Ray")
+        expect(residents.count).to eq(1)
+        expect(residents.first.last_name).to eq('FREDERICK, JR')
+      end
+    end
   end
 
   describe '(instance methods)' do
