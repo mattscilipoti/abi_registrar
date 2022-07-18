@@ -15,6 +15,8 @@ module ApplicationHelper
 
   def icon_for_scope(scope_name)
     case scope_name.to_s
+    when /deed_holder/
+      'gavel'
     when /email/
       'at'
     when /future/, /time/

@@ -40,6 +40,7 @@ class Resident < ApplicationRecord
   has_one :primary_residency, -> { where(primary_residence: true) }, class_name: 'Residency'
   has_one :primary_residence, through: :primary_residency, source: :property
 
+  scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
   scope :lot_fees_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
     #   this returns those where ALL lot fees are paid
@@ -48,7 +49,6 @@ class Resident < ApplicationRecord
   scope :lot_fees_not_paid, -> {
     distinct.joins(:lots).merge(Lot.lot_fees_not_paid)
   }
-
   scope :not_verified, -> { distinct.joins(:residencies).merge(Residency.not_verified) }
   scope :verified, -> { distinct.joins(:residencies).merge(Residency.verified) }
   scope :with_mailing_address, -> { distinct.where.not(mailing_address: nil) }
@@ -65,6 +65,7 @@ class Resident < ApplicationRecord
 
   def self.scopes
     %i[
+      deed_holder
       lot_fees_paid
       lot_fees_not_paid
       verified
