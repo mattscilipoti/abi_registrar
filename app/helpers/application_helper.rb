@@ -124,7 +124,7 @@ module ApplicationHelper
         class: 'no-link-icon', data: { tooltip: "Show items 'Expecting a Payment'" }
       )
       concat link_to(
-        " 🚫",
+        " 🥵",
         url_options,
         class: 'no-link-icon', data: { tooltip: "Show ALL. ⚠️ Expect delays." }
       )

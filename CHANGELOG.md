@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: Import Shares
+
+UI
+- Select contents of any input onClick
+- All index views default to none #performance
+
 ## 2022/05/31: Resident Mailing Address
 
 - Resident:

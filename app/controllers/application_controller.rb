@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
       model.all
     else
       case search_query
+      when '🚫'
+        model.where(id: 0) # none
       when /not.paid/i
         model.not_paid
       when /problematic/i
