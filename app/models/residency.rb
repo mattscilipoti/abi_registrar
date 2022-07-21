@@ -56,10 +56,6 @@ class Residency < ApplicationRecord
     {id: id, summary: to_s}
   end
 
-  def resident_status_i18n
-    resident_status && resident_status.gsub('_', ' ').titleize
-  end
-
   def share_count
     share_purchases.sum(:quantity) - share_transfers_from.sum(:quantity)
   end

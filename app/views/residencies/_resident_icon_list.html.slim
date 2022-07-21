@@ -1,4 +1,4 @@
 ul.horizontal-list
   - residencies.each do |residency|
     li.residenct-icon
-      = render 'residencies/resident_icon', residency: residency
+      = residency.resident_link_tag

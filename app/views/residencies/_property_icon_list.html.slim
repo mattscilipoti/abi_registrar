@@ -1,5 +1,4 @@
 ul.horizontal-list
   - residencies.each do |residency|
     li.property-icon
-      = render 'residencies/property_icon', residency: residency, tooltip: residency.property.to_s
-      | &nbsp;
+      = residency.property_link_tag
