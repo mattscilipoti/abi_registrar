@@ -61,9 +61,14 @@ class Residency < ApplicationRecord
   end
 
   def to_s
-    info = [resident.to_s, resident_status_i18n, property.to_s]
-    info << '2nd Home' unless primary_residence?
-    info.compact.join(" | ")
+    property_info = property.to_s
+    property_info += ' (2nd Home)' unless primary_residence?
+
+    info = []
+    info << property_info
+    info << resident.to_s
+    info << resident_status
+    info.compact.join(", ")
   end
 
   def verified?
