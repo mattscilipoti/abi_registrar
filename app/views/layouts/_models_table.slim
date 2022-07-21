@@ -14,7 +14,7 @@
   table
     thead
       - for column_name in columns do
-        - column_caption = column_name.to_s.gsub('_i18n', '').titleize
+        - column_caption = column_name.to_s.gsub('_i18n', '').gsub('_link_tag', '').gsub('_tag', '').titleize
         - index_path = models.first.class.table_name
 
         -# sort link

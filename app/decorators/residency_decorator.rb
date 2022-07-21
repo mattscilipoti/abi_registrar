@@ -13,10 +13,8 @@ class ResidencyDecorator < Draper::Decorator
     end
   end
 
-  def resident_link_tag(tooltip: self.tootlip(show_property: false))
-    h.link_to(object.resident, class: 'fas no-link-icon') do
-      resident_status_tag(tooltip: tooltip)
-    end
+  def resident_link_tag
+    h.link_to(object.resident, resident.to_s)
   end
 
   def resident_status_character
@@ -44,6 +42,12 @@ class ResidencyDecorator < Draper::Decorator
       status || "⁇"
     else
       'Resident status: unknown'
+    end
+  end
+
+  def resident_status_link_tag(tooltip: self.tootlip(show_property: false))
+    h.link_to(object.resident, class: 'fas no-link-icon') do
+      resident_status_tag(tooltip: tooltip)
     end
   end
 
