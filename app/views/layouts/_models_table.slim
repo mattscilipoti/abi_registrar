@@ -16,6 +16,8 @@
       - for column_name in columns do
         - column_caption = column_name.to_s.gsub('_i18n', '').gsub('_link_tag', '').gsub('_tag', '').titleize
         - index_path = models.first.class.table_name
+        - css_classes = []
+        - css_classes << 'boolean' if column_name.ends_with?('?')
 
         -# sort link
         - if column_name.to_s == sort_column.to_s
@@ -28,9 +30,9 @@
             -# toggle sort_direction
             - sort_link_params[:sort][:direction] = (sort_direction == 'asc') ? 'desc' : 'asc'
           - index_uri = Addressable::URI.new(path: index_path, query: sort_link_params.to_param)
-          th= link_to(column_caption, index_uri.to_s, class: 'no-link-icon')
+          th *{class: css_classes} = link_to(column_caption, index_uri.to_s, class: 'no-link-icon')
         - else
-          th= column_caption
+          th *{class: css_classes} = column_caption
 
       - if allow_edit
         th Edit
@@ -42,9 +44,11 @@
         tr
           - columns.each_with_index do |column_name, column_index|
             - column_value = model.send(column_name)
+            - css_classes = []
             - if column_value.in? [true, false]
               - column_value = column_value ? '✓' : '❌'
-            td
+              - css_classes << 'boolean'
+            td *{class: css_classes}
               -if column_index == 0
                 - if allow_show
                   - model_class = model.decorated? ? model.object.class : model.class

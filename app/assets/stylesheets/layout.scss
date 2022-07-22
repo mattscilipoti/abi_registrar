@@ -215,7 +215,7 @@ table {
     padding: $padding-default;
     overflow-wrap: break-word;
 
-    &.count {
+    &.boolean, &.count {
       max-width: 80px;
       text-align: center;
     }
