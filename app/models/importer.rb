@@ -102,6 +102,7 @@ class Importer
     else
       # Create a new model
       # e.g. lot.property = property
+debugger if model_attributes[:phone] && model_attributes[:phone].to_s !~ /^\d*$/
       model = model_class.create!(model_attributes)
       announce "#{label} Created #{ {id: model.id} }", row_index: @row_index, data: model_attributes, prefix: "💙"
 

@@ -27,12 +27,20 @@ class Property < ApplicationRecord
       tsearch: { prefix: true }
     }
 
+  pg_search_scope :search_by_address,
+    against: [:street_number, :street_name]
+    # using: {
+    #   tsearch: { prefix: true }
+    # }
+
   scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
   scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
   scope :lot_fees_paid, -> { distinct.where.not(id: lot_fees_not_paid) }
   scope :not_paid, -> { lot_fees_not_paid }
   scope :owner, -> { distinct.joins(:residencies).merge(Residency.owner) }
   scope :problematic, -> { without_lot.or(without_street_info) }
+  scope :test, -> { where("street_name LIKE '%TEST%'") }
+  scope :not_test, -> { where.not(id: test) }
   scope :without_lot, -> { joins(:lots).where(lots: nil) }
   scope :without_street_info, -> { where(street_number: nil).or(where(street_name: nil)) }
 
