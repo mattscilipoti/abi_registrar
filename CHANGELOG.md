@@ -15,7 +15,9 @@ In place of release version numbers, we organize via deploys to Production (by D
 - UI
   - Select contents of any input onClick
   - All index views default to none #performance
-  - Add abi? to lots#index
+  - Added lots#index: Abi?, SunriseBeach?
+  - Table
+    - Boolean cols: limited width, centered in header and rows
 - Lot
   - Add #abi?: Identifies lots asociated with ABI
     - Where subdivision is Sunrise Beach + exceptions

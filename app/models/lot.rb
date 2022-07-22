@@ -75,6 +75,7 @@ class Lot < ApplicationRecord
   def subdivision_is_sunrise_beach?
     district == 2 && subdivision == 748
   end
+  alias_method :sunrise_beach?, :subdivision_is_sunrise_beach? # alias, original
 
   def summary
     [lot_number, property].join(', ')
