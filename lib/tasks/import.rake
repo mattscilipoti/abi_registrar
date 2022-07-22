@@ -1,5 +1,15 @@
 namespace :import do
-  desc "Imports Lots and Properties (from ACA Membership source_"
+  desc "Imports Lots (from ACA Membership source_"
+  task :lots, [:source_file, :import_range] => [:environment] do |_t, args|
+    # default_source_file = Rails.root.join('db', 'import' ,'_Relationship Tables.xlsx - ABI Membership.csv')
+    default_source_file = Rails.root.join('db', 'import' ,'2022_ACA_Membership.csv')
+    args.with_defaults(source_file: default_source_file)
+
+    importer = ImporterLots.new(args[:source_file])
+    importer.import(range: args[:import_range])
+  end
+
+  desc "Imports Properties (from ACA Membership source_"
   task :properties, [:source_file, :import_range] => [:environment] do |_t, args|
     # default_source_file = Rails.root.join('db', 'import' ,'_Relationship Tables.xlsx - ABI Membership.csv')
     default_source_file = Rails.root.join('db', 'import' ,'2022_ACA_Membership.csv')

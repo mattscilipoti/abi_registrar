@@ -6,9 +6,6 @@ class ImporterProperties < Importer
     super
 
     import_info.merge!({
-      lots_created: 0,
-      lots_updated: 0,
-      lots_unchanged: 0,
       properties_created: 0,
       properties_updated: 0,
       properties_unchanged: 0,
@@ -17,32 +14,15 @@ class ImporterProperties < Importer
 
   # Template Method, called from import_via_csv
   def import_row(row_info)
-    lot = import_lot(row_info)
-    if lot.nil?
-      announce('Lot Skipped, nil'.gray, row_index: @row_index, prefix: "⏩".gray)
-      return
-    end
+    logger.debug "Importing #{row_info}..."
+    lot = find_lot(row_info)
+
     property = import_property(row_info, lot)
   end
 
-  def import_lot(row_info)
-    # logger.debug "Importing #{row_info}..."
-    if row_info.fetch(:section) == 0 ## Not in Arden?
-      announce('Lot Skipped, Section: 0'.gray, row_index: @row_index, prefix: "⏩".gray)
-      return nil
-    end
-
+  def find_lot(row_info)
     tax_id_parts = parse_tax_id(row_info.fetch(:acct))
-debugger unless (1..5).cover?(row_info.fetch(:section))
-    lot_info = tax_id_parts.merge({
-      lot_number: row_info.fetch(:lot),
-      section: row_info.fetch(:section),
-    })
-    import_model(
-      Lot,
-      find_by: {lot_number: row_info.fetch(:lot)},
-      model_attributes: lot_info
-    )
+    Lot.find_by!(tax_id_parts)
   end
 
   def import_property(row_info, lot)
