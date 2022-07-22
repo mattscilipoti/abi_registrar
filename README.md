@@ -21,6 +21,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Lots
     - Record Lot fee payments (not connected to Quickbooks)
     - Search by Lot, Property, or Resident info
+    - Lots indicate if part of ABI, including exceptions not in Sunrise Beach
   - Manage Properties
     - Have one or more Lots
     - Owned by one or more Residents

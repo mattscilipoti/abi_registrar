@@ -9,9 +9,19 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 ## Upcoming: Import Shares
 
-UI
-- Select contents of any input onClick
-- All index views default to none #performance
+- Imports
+  - Extract ImporterLots, ImporterProperties
+  - Identify Lot by TaxID, not LotNumber
+- UI
+  - Select contents of any input onClick
+  - All index views default to none #performance
+  - Add abi? to lots#index
+- Lot
+  - Add #abi?: Identifies lots asociated with ABI
+    - Where subdivision is Sunrise Beach + exceptions
+  - Add #abi_exceptions: lists tax_ids that are not in SB subdivision
+  - Add #subdivision_is_sunrise_beach?
+  - Fix #tax_identfier: pads all parts
 
 ## 2022/05/31: Resident Mailing Address
 

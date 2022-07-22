@@ -53,10 +53,28 @@ class Lot < ApplicationRecord
 
   delegate :street_address, to: :property, allow_nil: true
 
+  # Indicates if the lot is a part fo ABI
+  def abi?
+    subdivision_is_sunrise_beach? || abi_exceptions.include?(tax_identifier)
+  end
+
+  # Lists tax_ids that are not in Sunrise Beach subdivision, but are part of ABI
+  def abi_exceptions
+    [
+      '02 004 90049492', # 1007 Omar Dr (Hejl, Jan)
+      '02 004 05254975' # 1030 Omar Dr (Brown, Michael)
+    ]
+  end
+
   def lot_fee_paid?
     paid_on?
   end
   alias_method :paid?, :lot_fee_paid? # alias, original
+
+  # Indicates if this lot's subdivision is Sunrise Beach
+  def subdivision_is_sunrise_beach?
+    district == 2 && subdivision == 748
+  end
 
   def summary
     [lot_number, property].join(', ')
@@ -64,6 +82,9 @@ class Lot < ApplicationRecord
 
   def tax_identifier
     formatted_district = format('%02d', district)
-    [formatted_district, subdivision, account_number].join(' ')
+    formatted_subdivision = format('%03d', subdivision)
+    formatted_account_number = format('%08d', account_number)
+    [formatted_district, formatted_subdivision, formatted_account_number].join(' ')
   end
+  alias_method :tax_id, :tax_identifier # alias, original
 end
