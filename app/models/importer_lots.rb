@@ -1,5 +1,4 @@
 require 'csv'
-require 'wannabe_bool'
 require_relative 'importer'
 
 class ImporterLots < Importer
@@ -15,6 +14,7 @@ class ImporterLots < Importer
 
   # Template Method, called from import_via_csv
   def import_row(row_info)
+    logger.debug "Importing Lot: #{row_info}..."
     p import_info
     p row_info.to_s.truncate(80)
 debugger if import_info[:rows_processed] != (import_info[:lots_created] + import_info[:lots_unchanged] + import_info[:lots_updated])
@@ -27,13 +27,12 @@ debugger if import_info[:rows_processed] != (import_info[:lots_created] + import
   end
 
   def import_lot(row_info)
-    logger.debug "Importing #{row_info}..."
-
-    tax_id_parts = parse_tax_id(row_info.fetch(:acct))
-
+    tax_id = row_info.fetch(:acct)
+    tax_id_parts = parse_tax_id(tax_id)
     lot_info = tax_id_parts.merge({
       lot_number: row_info.fetch(:lot),
       section: parse_section(row_info),
+      tax_identifier: tax_id
     })
     import_model(
       Lot,

@@ -1,4 +1,5 @@
 class Lot < ApplicationRecord
+  alias_attribute :tax_id, :tax_identifier # alias, original
 
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
@@ -80,12 +81,4 @@ class Lot < ApplicationRecord
   def summary
     [lot_number, property].join(', ')
   end
-
-  def tax_identifier
-    formatted_district = format('%02d', district)
-    formatted_subdivision = format('%03d', subdivision)
-    formatted_account_number = format('%08d', account_number)
-    [formatted_district, formatted_subdivision, formatted_account_number].join(' ')
-  end
-  alias_method :tax_id, :tax_identifier # alias, original
 end
