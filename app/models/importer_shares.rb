@@ -23,20 +23,20 @@ class ImporterShares < Importer
     share_count = row_info.fetch(:abishares)
     if share_count.blank?
       import_info[:rows_skipped] += 1
-      announce("SKIPPED: No Shares Listed #{ {row: @row_index, tax_id: row_info[:taxid]} }".gray, row_index: @row_index, prefix: "⏩") 
+      announce("SKIPPED: No Shares Listed #{ {row: @row_index, tax_id: row_info[:taxid]} }".gray, row_index: @row_index, prefix: "⏩")
       return
     end
 
     property = Property.find_by(property_find_by(row_info))
     if property.blank?
       import_info[:properties_not_found] += 1
-      announce("WARN: Property Not Found! #{ property_find_by(row_info) }".red, row_index: @row_index, prefix: "❌") 
+      announce("WARN: Property Not Found! #{ property_find_by(row_info) }".red, row_index: @row_index, prefix: "❌")
       return
     end
 
     # WORKAROUND: during import, we do NOT know which resident purchased the sharres
     #  AND we don't know which (newly-imported) Resident is a Deed Holder, yet.
-    #  So we select the first one.    
+    #  So we select the first one.
     residency = property.residencies.first
 
     if residency.blank?
@@ -45,16 +45,17 @@ class ImporterShares < Importer
       return
     end
 
-    shares_find_by = { 
-      quantity: row_info.fetch(:abishares),
+    shares_find_by = {
       activity: :import,
+      quantity: row_info.fetch(:abishares),
       residency_id: residency.id,
+      transacted_at: DateTime.new(2021, 12, 31,0,0,0,'-05:00'), # we don't know what day, so we make the last day of last year.
     }
 
-    shares_info = shares_find_by.merge(
-      transacted_at: import_info.fetch(:time_start),
-    )
-    
+    shares_info = shares_find_by.merge({
+      # property: property,
+    })
+
     import_model(
       ShareTransaction,
       find_by: shares_find_by,

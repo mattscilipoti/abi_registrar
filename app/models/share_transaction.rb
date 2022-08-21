@@ -14,7 +14,7 @@ class ShareTransaction < ItemTransaction
       0
     end
   end
-  
+
   def set_defaults
     # if a non-default status has been assigned, it will remain
     # if no value has been assigned, the reader will return the default and assign it
@@ -24,8 +24,8 @@ class ShareTransaction < ItemTransaction
 
   def validate_purchaser_is_deed_holder
     return true if import? # Skip deed_holder validation when importing shares
-
-    errors.add(:residency, 'must be a Deed Holder') unless residency && residency.deed_holder?  
+debugger unless residency && residency.deed_holder?
+    errors.add(:residency, 'must be a Deed Holder') unless residency && residency.deed_holder?
   end
 
   private

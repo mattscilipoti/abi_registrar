@@ -12,6 +12,8 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Imports
   - Extract ImporterLots, ImporterProperties
   - Identify Lot by TaxID, not LotNumber
+  - Add import:shares_recent, ImporterSharesRecent
+    - find shares by activity, quantity, residency, transacted_at
 - UI
   - Select contents of any input onClick
   - All index views default to none #performance
