@@ -7,22 +7,22 @@ h1 Record a Share Purchase
   .form-inputs
     / = f.input :type, as: :hidden
     = f.input :activity, as: :hidden
-    
+
     = f.input :quantity
-    strong Total: 
-    span#quantity 0 
+    strong Total:
+    span#quantity 0
     | &nbsp;X $
     span#costPer= number_to_currency(@share_transaction.cost_per, unit: '')
-    
-    small 
+
+    small
       | (per share)
     |&nbsp;=&nbsp;
     span#costTotal= number_to_currency(@share_transaction.cost_total)
-    
+
     br
     br
     = f.input :transacted_at
-    = f.association :residency, collection: Residency.deed_holder
+    = f.association :residency, collection: Residency.includes(:property, :resident).joins(:property, :resident).deed_holder.order(:street_name, :street_number, :first_name)
 
   .form-actions
     = f.submit 'Save'
@@ -32,7 +32,7 @@ br
 div
   = link_to "Back to share transactions", share_transactions_path
 
-javascript: 
+javascript:
   var purchaseQuantityEl = document.querySelector('#share_transaction_quantity');
   purchaseQuantityEl.addEventListener('change', calculateCostTotal);
 
@@ -43,12 +43,12 @@ javascript:
       style: "currency",
       currency: "USD",
     });
-    let quantityEl = document.querySelector('#quantity'); 
+    let quantityEl = document.querySelector('#quantity');
     quantityEl.textContent = quantity;
-    
+
     let costPerEl = document.querySelector('#costPer');
     let costPer = Number(costPerEl.textContent);
-    
+
     let costTotal = quantity * costPer;
     let costTotalEl = document.querySelector('#costTotal');
     costTotalEl.textContent = dollarUSLocale.format(costTotal);
