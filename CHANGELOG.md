@@ -20,6 +20,7 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Added lots#index: Abi?, SunriseBeach?
   - Table
     - Boolean cols: limited width, centered in header and rows
+    - Sticky headers!
 - Lot
   - Add #abi_member?: Identifies lots asociated with ABI
     - Where subdivision is Sunrise Beach + exceptions
