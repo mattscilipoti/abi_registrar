@@ -14,7 +14,7 @@ class ImporterProperties < Importer
 
   # Template Method, called from import_via_csv
   def import_row(row_info)
-    logger.debug "Importing #{row_info}..."
+    logger.debug "Importing Property: #{row_info}..."
     lot = find_lot(row_info)
 
     property = import_property(row_info, lot)
@@ -27,6 +27,7 @@ class ImporterProperties < Importer
 
   def import_property(row_info, lot)
     property_info = {
+
       street_number: row_info.fetch(:phouse),
       street_name: row_info.fetch(:pstreet),
     }
@@ -36,9 +37,10 @@ class ImporterProperties < Importer
     )
 
     # Handle association
-    # Using "to_s" to hanlde null
-    if !property.lots.find{|l| l.lot_number.to_s.casecmp?(lot.lot_number) }
+    # Using "to_s" to handle null
+    if !property.lots.find{|l| l.tax_identifier.to_s.casecmp?(lot.tax_identifier) }
       property.lots << lot # saves association
+      property.update_attribute(:abi_member, property.lots.any?(&:abi_member?))
       import_info[:properties_updated] += 1
       announce("Property Lot Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: @row_index, prefix: "💾")
     end

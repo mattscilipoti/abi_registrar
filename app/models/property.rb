@@ -33,6 +33,8 @@ class Property < ApplicationRecord
     #   tsearch: { prefix: true }
     # }
 
+  scope :abi_member, -> { where(abi_member: true) }
+  scope :not_abi_member, -> { where(abi_member: false) }
   scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
   scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
   scope :lot_fees_paid, -> { distinct.where.not(id: lot_fees_not_paid) }
@@ -46,6 +48,8 @@ class Property < ApplicationRecord
 
   def self.scopes
     %i[
+      abi_member
+      not_abi_member
       lot_fees_paid
       lot_fees_not_paid
       without_lot

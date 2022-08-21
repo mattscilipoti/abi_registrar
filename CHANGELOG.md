@@ -19,11 +19,13 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Table
     - Boolean cols: limited width, centered in header and rows
 - Lot
-  - Add #abi?: Identifies lots asociated with ABI
+  - Add #abi_member?: Identifies lots asociated with ABI
     - Where subdivision is Sunrise Beach + exceptions
-  - Add #abi_exceptions: lists tax_ids that are not in SB subdivision
+  - Add #abi_member_exceptions: lists tax_ids that are not in SB subdivision
   - Add #subdivision_is_sunrise_beach?
   - Fix #tax_identfier: pads all parts
+- Property
+  -add abi_member?, assigned during import
 
 ## 2022/05/31: Resident Mailing Address
 

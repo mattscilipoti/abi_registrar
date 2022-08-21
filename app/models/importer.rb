@@ -74,7 +74,9 @@ class Importer
                   end
 
     table_rows.each do |row_info|
-      import_row(row_info)
+      unless import_row(row_info)
+        import_info[:rows_skipped] += 1
+      end
       @row_index += 1
       import_info[:rows_processed] += 1
     end
