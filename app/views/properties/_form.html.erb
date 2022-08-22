@@ -14,6 +14,7 @@
   <div>
     <%= form.input :street_number %>
     <%= form.input :street_name %>
+    <%= form.input :abi_member?, as: :boolean %>
     <%= form.association :lots, label_method: :lot_number %>
   </div>
 

@@ -28,12 +28,12 @@ html lang=I18n.locale
         ul.menu
           - if rodauth.logged_in?
             = menu_list_item "Home", root_path, class: 'no-link-icon'
-            = menu_list_item "Lots", lots_path(q: 'Problematic'), class: 'no-link-icon'
-            = menu_list_item "Properties", properties_path(q: 'Problematic'), class: 'no-link-icon'
-            = menu_list_item "Residents", residents_path(q: 'not_verified'), class: 'no-link-icon'
-            = menu_list_item "Vehicles", vehicles_path(q: 'Problematic'), class: 'no-link-icon'
-            = menu_list_item "Shares", share_transactions_path(q: 'Problematic'), class: 'no-link-icon'
-            = menu_list_item "Item Transactions", item_transactions_path(q: 'Problematic'), class: 'no-link-icon'
+            = menu_list_item "Lots", lots_path(q: '🚫'), class: 'no-link-icon'
+            = menu_list_item "Properties", properties_path(q: '🚫'), class: 'no-link-icon'
+            = menu_list_item "Residents", residents_path(q: '🚫'), class: 'no-link-icon'
+            = menu_list_item "Vehicles", vehicles_path(q: '🚫'), class: 'no-link-icon'
+            = menu_list_item "Shares", share_transactions_path(q: '🚫'), class: 'no-link-icon'
+            = menu_list_item "Item Transactions", item_transactions_path(q: '🚫'), class: 'no-link-icon'
             = menu_list_item "Admins", accounts_path, class: 'no-link-icon'
             li.account_actions
               = current_account.email.split('@').first.capitalize
@@ -60,6 +60,7 @@ html lang=I18n.locale
       = yield
 
 javascript:
+  //TODO: move to isolated javascript file
   function indicateBusySearch(event) {
     // console.log("indicateBusySearch", event);
     document.querySelectorAll('.busy.search').forEach(function(element) {
@@ -67,29 +68,31 @@ javascript:
     })
   }
 
-  document.addEventListener("turbo:load", function() {
-    //console.log("turbo:load", event);
-    
+  function initializeBusyIndicators() {
     // deactivate ALL busy indicators
     document.querySelectorAll('.busy.activated').forEach(function(element) {
       element.classList.remove('activated');
     });
 
     // Events to activate busy indicators
+    //   Show "busy" on click of any submit button
     document.querySelectorAll('input[type="submit"]').forEach(function(element) {
       element.addEventListener("click", indicateBusySearch);
     });
-
+    //   Show busy on click on any "a" tag
     document.querySelectorAll('a').forEach(function(element) {
       element.addEventListener("click", indicateBusySearch);
     });
+  }
+
+  function initializeInputs() {
+    document.querySelector('input').addEventListener('focusin', function() {
+      this.select();
+    });
+  }
+
+  document.addEventListener("turbo:load", function() {
+    //console.log("turbo:load", event);
+    initializeBusyIndicators();
+    initializeInputs();
   })
-  // find all submit buttons and add a data-turbo-track attribute
-  // On click, add an element to show a spinners
-  
-  
-
-
-
-    
-  

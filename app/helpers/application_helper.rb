@@ -15,6 +15,10 @@ module ApplicationHelper
 
   def icon_for_scope(scope_name)
     case scope_name.to_s
+    when /abi/
+      'umbrella-beach'
+    when /deed_holder/
+      'gavel'
     when /email/
       'at'
     when /future/, /time/
@@ -37,6 +41,8 @@ module ApplicationHelper
       'flag-usa'
     when /street/
       'road'
+    when /sun/
+      'sun'
     when /quantity/
       'buy-n-large'
     when /verified/
@@ -124,7 +130,7 @@ module ApplicationHelper
         class: 'no-link-icon', data: { tooltip: "Show items 'Expecting a Payment'" }
       )
       concat link_to(
-        " 🚫",
+        " 🥵",
         url_options,
         class: 'no-link-icon', data: { tooltip: "Show ALL. ⚠️ Expect delays." }
       )

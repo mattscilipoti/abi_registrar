@@ -6,12 +6,6 @@ class ImporterResidents < Importer
     super
 
     import_info.merge!({
-      lots_created: 0,
-      lots_updated: 0,
-      lots_unchanged: 0,
-      properties_created: 0,
-      properties_updated: 0,
-      properties_unchanged: 0,
       residents_created: 0,
       residents_updated: 0,
       residents_unchanged: 0,
@@ -20,44 +14,18 @@ class ImporterResidents < Importer
 
   # Template Method, called from import_via_csv
   def import_row(row_info)
-    lot = import_lot(row_info)
-    property = import_property(row_info, lot)
+    property = find_property(row_info)
     resident1 = import_resident1(row_info, property)
     resident2 = import_resident2(row_info, property)
   end
 
-  def import_lot(row_info)
-    tax_id_parts = parse_tax_id(row_info.fetch(:acct))
-    lot_info = tax_id_parts.merge({ 
-      lot_number: row_info.fetch(:lot),
-      section: row_info.fetch(:section),
-    })
 
-    import_model(
-      Lot,
-      find_by: {lot_number: row_info.fetch(:lot)},
-      model_attributes: lot_info
-    )
-  end
-
-  def import_property(row_info, lot)
+  def find_property(row_info)
     property_info = {
       street_number: row_info.fetch(:phouse),
       street_name: row_info.fetch(:pstreet),
     }
-    property = import_model(
-      Property,
-      model_attributes: property_info,
-    )
-
-    # Handle association
-    # Using "to_s" to hanlde null
-    if !property.lots.find{|l| l.lot_number.to_s.casecmp?(lot.lot_number) }
-      property.lots << lot # saves association
-      import_info[:properties_updated] += 1
-      announce("Property Lot Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: @row_index, prefix: "💾")
-    end
-    property
+    Property.find_by!(property_info)
   end
 
   def import_resident1(row_info, property)
@@ -73,11 +41,24 @@ class ImporterResidents < Importer
       model_attributes: resident_info,
       label: 'Resident1',
     )
+    import_info[:residents_created] += 1
 
     # Handle association
-    # Using "to_s" to hanlde null
+    # Using "to_s" to handle null
     if !resident1.properties.find{|p| p.street_number.to_s.casecmp?(property.street_number) && p.street_name.to_s.casecmp?(property.street_name) }
-      resident1.properties << property # saves association
+      # assign primary or second home
+      is_primary_residence = resident1.primary_residence.nil?
+      resident_status = case property.residencies.size
+                        when 0
+                          :owner
+                        else
+                          :coowner
+                        end
+      resident1.residencies.create!(
+        property: property,
+        primary_residence: is_primary_residence,
+        resident_status: resident_status,
+      ) # saves association
       import_info[:residents_updated] += 1
       announce("Resident1 Property Assigned #{ {id: resident1.id, property_ids: resident1.property_ids } }", row_index: @row_index, prefix: "💾")
     end
@@ -104,20 +85,17 @@ class ImporterResidents < Importer
       model_attributes: resident_info,
       label: 'Resident2',
     )
+    import_info[:residents_created] += 1
 
     # Handle association
-    # Using "to_s" to hanlde null
+    # Using "to_s" to handle null
     if !resident2.properties.find{|p| p.street_number.to_s.casecmp?(property.street_number) && p.street_name.to_s.casecmp?(property.street_name) }
-      resident2.properties << property # saves association
+      # assign primary or second home
+      primary_residence = resident2.primary_residence.nil?
+      resident2.residencies.create!(property: property, primary_residence: primary_residence) # saves association
       import_info[:residents_updated] += 1
       announce("Resident2 Property Assigned #{ {id: resident2.id, property_ids: resident2.property_ids } }", row_index: @row_index, prefix: "💾")
     end
     resident2
-  end
-
-  # Parses a tax id in a hash of its component parts
-  def parse_tax_id(tax_id)
-    district, subdivision, account_number = tax_id.split(' ')
-    {district: district, subdivision: subdivision, account_number: account_number}
   end
 end

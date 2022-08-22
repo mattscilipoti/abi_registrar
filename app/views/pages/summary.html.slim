@@ -31,8 +31,8 @@ fieldset
     tbody
       tr
         td =link_to 'Shares Purchased', share_transactions_path
-        td.number =ShareTransaction.purchase.sum(:quantity)
-        td.number =number_to_currency(ShareTransaction.purchase.sum(:cost_total))
+        td.number =ShareTransaction.purchase.sum(:quantity) + ShareTransaction.import.sum(:quantity)
+        td.number =number_to_currency(ShareTransaction.purchase.sum(:cost_total) + ShareTransaction.import.sum(:cost_total))
         td.datetime =datetime_tag(ShareTransaction.purchase.maximum(:updated_at))
       tr
         td =link_to 'Shares Transferred', share_transactions_path

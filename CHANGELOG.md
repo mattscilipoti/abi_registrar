@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: Import Shares
+
+- Imports
+  - Extract ImporterLots, ImporterProperties
+  - Identify Lot by TaxID, not LotNumber
+  - Add import:shares_recent, ImporterSharesRecent
+    - find shares by activity, quantity, residency, transacted_at
+  - Add share import data files
+- UI
+  - Select contents of any input onClick
+  - All index views default to none #performance
+  - Added lots#index: Abi?, SunriseBeach?
+  - Table
+    - Boolean cols: limited width, centered in header and rows
+    - Sticky headers!
+- Lot
+  - Add #abi_member?: Identifies lots asociated with ABI
+    - Where subdivision is Sunrise Beach + exceptions
+  - Add #abi_member_exceptions: lists tax_ids that are not in SB subdivision
+  - Add #subdivision_is_sunrise_beach?
+  - Fix #tax_identfier: pads all parts
+- Property
+  -add abi_member? (& scopes), assigned during import
+- Resident
+  - Add scope: deed_holder
+  - No longer encrypting first_name
+  - Can search_by_name with sounds-like (dmetaphone) and stems (tsearch)
+- DB
+  - Add dsupport for full-text searches, sounds-like (dmetaphone), stems (trigram), and fuzzy serch
+  - Add gem "schema_plus_functions" to support functions in schema.rb
+
 ## 2022/05/31: Resident Mailing Address
 
 - Resident:

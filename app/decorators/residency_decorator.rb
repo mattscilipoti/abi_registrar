@@ -7,27 +7,14 @@ class ResidencyDecorator < Draper::Decorator
     lots.collect{|lot| h.link_to(lot.lot_number, lot) }.join(', ').html_safe
   end
 
-  def property_summary
-    "#{resident_status_tag} #{object.property.to_s}".html_safe
+  def property_link_tag(tooltip: self.tootlip(show_resident: false))
+    h.link_to(object.property, class: 'no-link-icon' ) do
+      resident_status_tag(tooltip: tooltip)
+    end
   end
 
-  def property_tag
-    icon =  case object.resident.last_name.downcase
-            when 'scilipoti'
-              '' # house-flood-water
-            when 'franklin, trustee'
-               # house-heart, pro
-            else
-              lot_fees_paid? ? '' : '' # house-circle-check, house-circle-xmark
-            end
-    css_classes = %w[fas icon]
-    css_classes << 'primary_residence' if primary_residence?
-    css_classes << 'second_home' unless primary_residence?
-
-    tooltip = property.to_s
-    tooltip += ':2nd Home' unless primary_residence
-
-    h.content_tag(:span, icon, class: css_classes.join(' '), data: {tooltip: tooltip})
+  def resident_link_tag
+    h.link_to(object.resident, resident.to_s)
   end
 
   def resident_status_character
@@ -48,13 +35,6 @@ class ResidencyDecorator < Draper::Decorator
     end
   end
 
-  def resident_status_tag(tooltip: resident_status_i18n)
-    css_classes = %w[fas icon]
-    css_classes << 'primary_residence' if primary_residence?
-    css_classes << 'second_home' unless primary_residence?
-    h.content_tag(:span, resident_status_character, class: css_classes.join(' '), data: {tooltip: tooltip})
-  end
-
   def resident_status_i18n
     if resident_status
       i18n_key = "activerecord.attributes.#{model_name.i18n_key}.resident_status.#{resident_status}"
@@ -63,6 +43,19 @@ class ResidencyDecorator < Draper::Decorator
     else
       'Resident status: unknown'
     end
+  end
+
+  def resident_status_link_tag(tooltip: self.tootlip(show_property: false))
+    h.link_to(object.resident, class: 'fas no-link-icon') do
+      resident_status_tag(tooltip: tooltip)
+    end
+  end
+
+  def resident_status_tag(tooltip: resident_status_i18n)
+    css_classes = %w[fas icon]
+    css_classes << 'primary_residence' if primary_residence?
+    css_classes << 'second_home' unless primary_residence?
+    h.content_tag(:span, resident_status_character, class: css_classes.join(' '), data: {tooltip: tooltip})
   end
 
   def resident_status_icon
@@ -81,13 +74,14 @@ class ResidencyDecorator < Draper::Decorator
     h.font_awesome_icon(icon_name, accessible_label: resident_status_i18n, html_options: {data: {tooltip: resident_status_i18n}})
   end
 
-  def resident_summary
-    summary = full_name
-    summary += "("
-    summary += resident_status_i18n
-    summary += ", minor" if is_minor?
-    summary += ", 2nd home" unless primary_residence?
-    summary += ")"
-    summary
+  def tootlip(show_property: true, show_resident: true)
+    property_info = property.to_s
+    property_info += ' (2nd Home)' unless primary_residence?
+
+    info = []
+    info << property_info if show_property
+    info << resident.to_s if show_resident
+    info << resident_status_i18n
+    info.compact.join(", ")
   end
 end

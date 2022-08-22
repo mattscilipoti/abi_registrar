@@ -38,5 +38,5 @@ fieldset
     h2 Properties
 
   #residencies
-    - columns = %i[property_summary lot_summary lot_fees_paid? primary_residence?]
+    - columns = %i[property resident_status_tag lot_summary lot_fees_paid? primary_residence?]
     =render 'layouts/models_table', models: resident.residencies.decorate, columns: columns, allow_edit: false, allow_show: false, allow_sort: true

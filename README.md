@@ -21,6 +21,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Lots
     - Record Lot fee payments (not connected to Quickbooks)
     - Search by Lot, Property, or Resident info
+    - Lots indicate if part of ABI, including exceptions not in Sunrise Beach
   - Manage Properties
     - Have one or more Lots
     - Owned by one or more Residents
@@ -159,3 +160,13 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Report with Mailing Address
       - If Deed Holder has multiple properties, the invoices should be sent to mailing address NOT property address
   - Export to CSV
+
+## Deploy
+
+- Staging: https://nameless-eyrie-92885.herokuapp.com/
+  - `git push staging main`
+  - Staging is the default remote
+  - Command example: `heroku run rails db:migrate`
+- Production: https://abi-registrar.herokuapp.com/
+  - `git push heroku main`
+  - Command example: `heroku run -r heroku rails db:migrate`

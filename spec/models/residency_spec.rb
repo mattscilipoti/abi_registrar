@@ -35,14 +35,18 @@ RSpec.describe Residency, type: :model do
       }.to raise_error ActiveRecord::RecordInvalid, /Validation.*one Owner/
     end
 
-    it 'each Resident can only have one Residence' do
+    it 'each Resident can only have one Primary Residence' do
       r = FactoryBot.create(:residency)
       expect(r).to be_valid
       expect(r).to be_primary_residence
 
       expect {
-        FactoryBot.create(:residency, resident: r.resident)
-      }.to raise_error ActiveRecord::RecordInvalid, /Validation.*one Residence/
+        FactoryBot.create(:residency, resident: r.resident, primary_residence: false)
+      }.to change { r.resident.residencies.size }.from(1).to(2)
+
+      expect {
+        FactoryBot.create(:residency, resident: r.resident, primary_residence: true)
+      }.to raise_error ActiveRecord::RecordInvalid, /Validation.*one Primary Residence/
     end
   end
 end

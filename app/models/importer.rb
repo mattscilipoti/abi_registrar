@@ -1,4 +1,5 @@
 require 'csv'
+require 'semantic_logger'
 
 class Importer
   attr_accessor :import_info
@@ -19,7 +20,10 @@ class Importer
     msg_info << prefix if prefix
     msg_info << message
 
-    puts msg_info.compact.join(' ') if msg_info.present?
+    msg = msg_info.compact.join(' ')
+    logger.info(msg.to_s + data.to_s) unless msg.blank? && data.blank?
+
+    puts msg unless msg.blank?
     ap data if data.present?
   end
 
@@ -70,7 +74,9 @@ class Importer
                   end
 
     table_rows.each do |row_info|
-      import_row(row_info)
+      unless import_row(row_info)
+        import_info[:rows_skipped] += 1
+      end
       @row_index += 1
       import_info[:rows_processed] += 1
     end
@@ -98,6 +104,7 @@ class Importer
     else
       # Create a new model
       # e.g. lot.property = property
+debugger if model_attributes[:phone] && model_attributes[:phone].to_s !~ /^\d*$/
       model = model_class.create!(model_attributes)
       announce "#{label} Created #{ {id: model.id} }", row_index: @row_index, data: model_attributes, prefix: "💙"
 
@@ -107,9 +114,25 @@ class Importer
     model
   end
 
+  def logger
+    @logger ||= begin
+
+      # Set the global default log level
+      SemanticLogger.default_level = :debug
+
+      # Log to a file, and use the colorized formatter
+      log_name = "#{Rails.root.join('log', self.class.name.underscore)}.log"
+      SemanticLogger.add_appender(file_name: log_name, formatter: :color)
+
+      # Create an instance of a logger
+      # Add the application/class name to every log message
+      logger = SemanticLogger[self.class.name]
+    end
+  end
+
   def property_find_by(row_info)
-    { 
-      street_number: row_info.fetch(:phouse), 
+    {
+      street_number: row_info.fetch(:phouse),
       street_name: row_info.fetch(:pstreet)
     }
   end

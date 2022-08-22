@@ -211,11 +211,18 @@ table {
   border-spacing: 1px;
   margin: .5em 0;
 
+  thead { // sticky table headers
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
+    z-index: 2;
+  }
+
   th, td {
     padding: $padding-default;
     overflow-wrap: break-word;
 
-    &.count {
+    &.boolean, &.count {
       max-width: 80px;
       text-align: center;
     }

@@ -6,7 +6,7 @@ class Resident < ApplicationRecord
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
   def self.searchable_columns
-    [:last_name]
+    [:last_name, :first_name]
   end
   pg_search_scope :search_by_all,
     # Reminder: first_name, email_address are encrypted
@@ -19,16 +19,28 @@ class Resident < ApplicationRecord
       tsearch: { prefix: true }
     }
 
-  encrypts :email_address, deterministic: true
-  encrypts :first_name, deterministic: true
+  pg_search_scope :search_by_name,
+    # Reminder: first_name, email_address are encrypted
+    against: [:last_name, :first_name, :middle_name],
+    using: :dmetaphone,
+    using: {
+      tsearch: {
+        prefix: true,
+        dictionary: "english"
+      }
+    }
 
-  has_many :residencies
+  encrypts :email_address, deterministic: true
+  # encrypts :first_name, deterministic: true if minor?
+
+  has_many :residencies, dependent: :destroy
   accepts_nested_attributes_for :residencies, reject_if: :all_blank, allow_destroy: true
   has_many :properties, through: :residencies
   has_many :lots, through: :properties
   has_one :primary_residency, -> { where(primary_residence: true) }, class_name: 'Residency'
   has_one :primary_residence, through: :primary_residency, source: :property
 
+  scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
   scope :lot_fees_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
     #   this returns those where ALL lot fees are paid
@@ -37,7 +49,6 @@ class Resident < ApplicationRecord
   scope :lot_fees_not_paid, -> {
     distinct.joins(:lots).merge(Lot.lot_fees_not_paid)
   }
-
   scope :not_verified, -> { distinct.joins(:residencies).merge(Residency.not_verified) }
   scope :verified, -> { distinct.joins(:residencies).merge(Residency.verified) }
   scope :with_mailing_address, -> { distinct.where.not(mailing_address: nil) }
@@ -49,11 +60,12 @@ class Resident < ApplicationRecord
   scope :not_paid, -> { lot_fees_not_paid }
   scope :problematic, -> { not_verified.or(without_first_name).or(without_email) }
 
-  validates :phone, format: { with: /\A[0-9]+\z/, message: "only allows numbers" }
+  validates :phone, format: { with: /\A[0-9]+\z/, message: "only allows numbers" }, allow_nil: true
   validates :last_name, presence: true
 
   def self.scopes
     %i[
+      deed_holder
       lot_fees_paid
       lot_fees_not_paid
       verified
@@ -84,7 +96,7 @@ class Resident < ApplicationRecord
   def phone=(value)
     if value.present?
       # remove all formatting, leave only numbers
-      value = value.gsub(/\D/, '')
+      value = value.to_s.gsub(/\D/, '')
     end
     super(value)
   end
