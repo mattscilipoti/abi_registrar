@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Import Shares
+## 2022/08/22: Import Shares, Clean up import
 
 - Imports
   - Extract ImporterLots, ImporterProperties
