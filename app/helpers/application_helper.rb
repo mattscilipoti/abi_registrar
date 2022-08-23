@@ -33,8 +33,10 @@ module ApplicationHelper
       'signature'
     when /property/
       'house-chimney'
+    when /renter/
+      'suitcase'
     when /resident_status/
-      'gavel'
+      'house-user'
     when /section/
       'section'
     when /state/
