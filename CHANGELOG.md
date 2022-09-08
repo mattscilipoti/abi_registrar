@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: Toggle attributes from table
+
+- Resident:
+  - add scopes not_deed_holder, renter
+  - multiple places to verify resident
+- Add jQuery
+- Residency: new scope "by_property", sorts by property street, number
+
 ## 2022/08/22: Import Shares, Clean up import
 
 - Imports

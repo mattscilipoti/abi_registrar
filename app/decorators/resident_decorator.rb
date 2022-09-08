@@ -34,6 +34,6 @@ class ResidentDecorator < Draper::Decorator
   end
 
   def property_summary(type: :icons)
-    h.render 'residencies/property_icon_list', residencies: resident.residencies.decorate
+    h.render 'residencies/property_icon_list', residencies: resident.residencies.by_property.decorate
   end
 end

@@ -30,6 +30,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Residents
     - Associated with one or more Properties
     - Can be Deed Holders, Renters, or Dependents
+    - Can toggle verified from index table
     - Mark as verified
     - Search by Last Name, Property Address, or Lot info
     - Add date-stamped Comments
@@ -84,6 +85,8 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Property Transfer
     - Inform ACA
     - Transfer Residency
+      - Invalidate previous residents
+      - (?) Validate new residents or assist validating new?
     - Transfer Shares
     - Support Onboarding
       - What steps occur for new Residents?
@@ -157,6 +160,8 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Yearly Closeout/Prep
       - Reset Lot Fees Paid?
       - Reset Resident Verification?
+        - Deed Holders change validation when property changes ownership
+        - Non-deed holders (renters, dependents, borders) need to be revalidated yearly
     - Report with Mailing Address
       - If Deed Holder has multiple properties, the invoices should be sent to mailing address NOT property address
   - Export to CSV

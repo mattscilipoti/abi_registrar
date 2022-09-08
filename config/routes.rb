@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :item_transactions
     resources :properties
     resources :residents
-    resources :residencies, only: [:index, :show]
+    resources :residencies, only: [:index, :show, :update]
     resources :share_transactions, only: [:create, :index, :new, :show] do
       collection do
         get :purchase_new, as: :purchase_new

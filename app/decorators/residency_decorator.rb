@@ -7,9 +7,22 @@ class ResidencyDecorator < Draper::Decorator
     lots.collect{|lot| h.link_to(lot.lot_number, lot) }.join(', ').html_safe
   end
 
-  def property_link_tag(tooltip: self.tootlip(show_resident: false))
-    h.link_to(object.property, class: 'no-link-icon' ) do
+  def property_link_tag(tooltip: self.tooltip(show_resident: false))
+    status_tag = h.link_to(object.property, class: 'no-link-icon' ) do
       resident_status_tag(tooltip: tooltip)
+    end
+    if object.verified_on?
+      status_tag
+      # h.concat(h.content_tag(:span, '✓', title: 'Verified at this address'))
+    else
+      h.content_tag(:div, class: 'group') do
+        h.concat(status_tag)
+        h.concat(helpers.simple_form_for(object, remote: true) do |f|
+          f.input :verified_on, as: :hidden, input_html: { value: DateTime.now }
+        end)
+        tooltip = "Click to verify: #{object.resident.full_name.inspect} at #{object.property.street_address.inspect}"
+        h.concat(helpers.check_box_tag("#{object.to_global_id}_verified", object.verified?, object.verified?, onclick: 'updateVerifiedOn(this)', data: {tooltip: tooltip} ))
+      end
     end
   end
 
@@ -45,9 +58,28 @@ class ResidencyDecorator < Draper::Decorator
     end
   end
 
-  def resident_status_link_tag(tooltip: self.tootlip(show_property: false))
-    h.link_to(object.resident, class: 'fas no-link-icon') do
+  # def resident_status_link_tag(tooltip: self.tooltip(show_property: false, show_resident: false))
+  #   h.link_to(object.resident, class: 'fas no-link-icon') do
+  #     resident_status_tag(tooltip: tooltip)
+  #   end
+  # end
+  def resident_status_link_tag(tooltip: self.tooltip(show_property: false))
+    # h.link_to(object.resident, resident.to_s)
+    status_tag = h.link_to(object.resident, class: 'no-link-icon' ) do
       resident_status_tag(tooltip: tooltip)
+    end
+    if object.verified_on?
+      status_tag
+      # h.concat(h.content_tag(:span, '✓', title: 'Verified at this address'))
+    else
+      h.content_tag(:div, class: 'group') do
+        h.concat(status_tag)
+        h.concat(helpers.simple_form_for(object, remote: true) do |f|
+          f.input :verified_on, as: :hidden, input_html: { value: DateTime.now }
+        end)
+        tooltip = "Click to verify: #{object.resident.full_name.inspect} at #{object.property.street_address.inspect}"
+        h.concat(helpers.check_box_tag("#{object.to_global_id}_verified", object.verified?, object.verified?, onclick: 'updateVerifiedOn(this)', data: {tooltip: tooltip} ))
+      end
     end
   end
 
@@ -74,14 +106,13 @@ class ResidencyDecorator < Draper::Decorator
     h.font_awesome_icon(icon_name, accessible_label: resident_status_i18n, html_options: {data: {tooltip: resident_status_i18n}})
   end
 
-  def tootlip(show_property: true, show_resident: true)
-    property_info = property.to_s
-    property_info += ' (2nd Home)' unless primary_residence?
-
+  def tooltip(show_property: true, show_resident: true)
     info = []
-    info << property_info if show_property
+    info << property.to_s if show_property
     info << resident.to_s if show_resident
+    info << '2nd Home' unless primary_residence?
     info << resident_status_i18n
+    info << 'verified' if verified_on?
     info.compact.join(", ")
   end
 end

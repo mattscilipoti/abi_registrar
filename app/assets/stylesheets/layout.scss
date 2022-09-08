@@ -305,6 +305,13 @@ ul {
 //   z-index: auto;
 // }
 
+.group {
+  align-items: center;
+  border: lightgray dotted;
+  display: flex;
+  flex-direction: column;
+}
+
 // To call attention to an element, add the class 'highlight'
 .highlight {
   background-color: yellow !important; // important overrides flash message background-color
