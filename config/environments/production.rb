@@ -91,7 +91,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.host = 'mysterious-stream-38479.herokuapp.com'
+  config.host = 'abi-registrar.herokuapp.com'
   # requires by rodauth
   # config.action_mailer.default_url_options = { host: 'registrar.ardenbeachesinc.com'}
   config.action_mailer.default_url_options = { host: config.host }

@@ -14,6 +14,7 @@ In place of release version numbers, we organize via deploys to Production (by D
   - multiple places to verify resident
 - Add jQuery
 - Residency: new scope "by_property", sorts by property street, number
+- config.host to abi-registrar.herokuapp.com
 
 ## 2022/08/22: Import Shares, Clean up import
 
