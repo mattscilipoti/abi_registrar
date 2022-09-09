@@ -14,6 +14,10 @@ class Residency < ApplicationRecord
     renter: 'Renter'
   }, scopes: true
 
+  scope :by_property, -> {
+    includes(:property).order('properties.street_name', 'properties.street_number')
+  }
+
   scope :lot_fees_not_paid, -> {
     where.not(id: lot_fees_paid)
   }

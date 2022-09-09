@@ -61,3 +61,11 @@
             td= link_to "Edit", edit_polymorphic_path(model)
           - if allow_destroy
             td= button_to "Destroy", model, method: :delete
+
+javascript:
+  function updateVerifiedOn(target) {
+    form = jQuery(target).siblings('form');
+    console.debug("submitForm", 'form:', form, 'target:', target);
+    form.trigger('submit.rails');
+    // form.submit();
+  }
