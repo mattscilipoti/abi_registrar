@@ -14,6 +14,7 @@
   <div>
     <%= form.input :street_number %>
     <%= form.input :street_name %>
+    <%= form.input :tax_identifier, hint: 'Use format from SDAT (## ### ########)' %>
     <%= form.input :membership_eligible?, as: :boolean %>
     <%= form.association :lots, label_method: :lot_number %>
   </div>

@@ -2,6 +2,7 @@ require "address_composer"
 
 class Property < ApplicationRecord
   include Commentable
+  alias_attribute :tax_id, :tax_identifier # alias, original
 
   has_many :lots
   has_many :residencies
@@ -13,7 +14,11 @@ class Property < ApplicationRecord
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
   def self.searchable_columns
-    [:street_number, :street_name]
+    [
+      :street_name,
+      :street_number,
+      :tax_identifier,
+    ]
   end
   # Configure search
   include PgSearch::Model
@@ -46,6 +51,8 @@ class Property < ApplicationRecord
   scope :without_lot, -> { joins(:lots).where(lots: nil) }
   scope :without_street_info, -> { where(street_number: nil).or(where(street_name: nil)) }
 
+  validates :tax_identifier, presence: true, format: { with: /\A\d{2}\s\d{3}\s\d{8}\Z/ } # describes format provided by SDAT
+
   def self.scopes
     %i[
       membership_eligible
@@ -57,8 +64,18 @@ class Property < ApplicationRecord
     ]
   end
 
+  # account_number portion of tax_id
+  def account_number(tax_id = self.tax_id)
+    tax_id[7..14]
+  end
+
   def default_lot
     lots.first
+  end
+
+  # district portion of tax_id
+  def district(tax_id = self.tax_id)
+    tax_id[0..1]
   end
 
   def inspect
@@ -102,6 +119,11 @@ class Property < ApplicationRecord
 
   def street_address
     [street_number || '⁇', street_name || '⁇'].join(' ')
+  end
+
+  # subdivision portion of tax_id
+  def subdivision(tax_id = self.tax_id)
+    tax_id[3..5]
   end
 
   def to_s
