@@ -64,6 +64,13 @@ class Property < ApplicationRecord
     ]
   end
 
+  def self.subdivisions
+    {
+      sunrise_beach: '748',
+      arden_on_the_severn: '004',
+    }
+  end
+
   # account_number portion of tax_id
   def account_number(tax_id = self.tax_id)
     tax_id[7..14]
@@ -109,6 +116,16 @@ class Property < ApplicationRecord
     mailing_address
   end
 
+  # Lists tax_ids that are not in Sunrise Beach subdivision, but are part of ABI
+  def membership_eligible_exceptions
+    [
+      '02 004 90049492', # 1007 Omar Dr (Arden on the Severn)
+      '02 004 05254975', # 1030 Omar Dr (Arden on the Severn)
+      '02 000 90050935', # 920 Waterview Dr (Sunrise Beach)
+      '02 000 90050936', # 1035 Miller Cir (Sunrise Beach)
+    ]
+  end
+
   def owner
     residencies.owner.present? && residencies.owner.first.resident
   end
@@ -125,6 +142,12 @@ class Property < ApplicationRecord
   def subdivision(tax_id = self.tax_id)
     tax_id[3..5]
   end
+
+  # Indicates if this lot's subdivision is Sunrise Beach
+  def subdivision_is_sunrise_beach?
+    district == '002' && subdivision == Lot.subdivisions.fetch(:sunrise_beach)
+  end
+  alias_method :sunrise_beach?, :subdivision_is_sunrise_beach? # alias, original
 
   def to_s
     street_address

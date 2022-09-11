@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_11_200701) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_11_214541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -82,17 +82,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_200701) do
   end
 
   create_table "lots", force: :cascade do |t|
-    t.integer  "district"
-    t.integer  "subdivision"
-    t.integer  "account_number"
     t.string   "lot_number"
     t.integer  "section"
     t.decimal  "size"
-    t.datetime "created_at",     :null=>false
-    t.datetime "updated_at",     :null=>false
+    t.datetime "created_at",  :null=>false
+    t.datetime "updated_at",  :null=>false
     t.bigint   "property_id"
     t.date     "paid_on"
-    t.string   "tax_identifier"
 
     t.index ["lot_number"], :name=>"index_lots_on_lot_number"
     t.index ["paid_on"], :name=>"index_lots_on_paid_on"

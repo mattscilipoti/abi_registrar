@@ -3,9 +3,6 @@
   <%= form.error_notification message: form.object.errors[:base].to_sentence if form.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= form.input :district %>
-    <%= form.input :subdivision %>
-    <%= form.input :account_number %>
     <%= form.input :lot_number %>
     <%= form.input :section %>
     <%= form.input :size %>

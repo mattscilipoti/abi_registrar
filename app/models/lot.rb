@@ -1,10 +1,8 @@
 class Lot < ApplicationRecord
-  alias_attribute :tax_id, :tax_identifier # alias, original
-
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
   def self.searchable_columns
-    [:district, :subdivision, :account_number, :lot_number, :section]
+    [:lot_number, :section]
   end
   # Configure search
   include PgSearch::Model
@@ -36,13 +34,6 @@ class Lot < ApplicationRecord
     alias lot_fees_paid fee_paid
   end
 
-  def self.subdivisions
-    {
-      sunrise_beach: 748,
-      arden_on_the_severn: 4
-    }
-  end
-
   def self.scopes
     %i[
       fee_paid
@@ -53,39 +44,15 @@ class Lot < ApplicationRecord
     ]
   end
 
-  validates :district, numericality: { only_integer: true }
-  validates :subdivision, numericality: { only_integer: true }
-  validates :account_number, numericality: { only_integer: true }
   validates :section, numericality: { allow_nil: true, only_integer: true, in: 1..5 }
   validates :size, inclusion: { in: [0.5, 1], allow_nil: true }
 
   delegate :street_address, to: :property, allow_nil: true
 
-  # Indicates if the lot is a part fo ABI
-  def membership_eligible?
-    subdivision_is_sunrise_beach? || membership_eligible_exceptions.include?(tax_identifier)
-  end
-
-  # Lists tax_ids that are not in Sunrise Beach subdivision, but are part of ABI
-  def membership_eligible_exceptions
-    [
-      '02 004 90049492', # 1007 Omar Dr
-      '02 004 05254975', # 1030 Omar Dr
-      '02 000 90050935', # 920 Waterview Dr
-      '02 000 90050936', # 1035 Miller Cir
-    ]
-  end
-
   def lot_fee_paid?
     paid_on?
   end
   alias_method :paid?, :lot_fee_paid? # alias, original
-
-  # Indicates if this lot's subdivision is Sunrise Beach
-  def subdivision_is_sunrise_beach?
-    district == 2 && subdivision == Lot.subdivisions.fetch(:sunrise_beach)
-  end
-  alias_method :sunrise_beach?, :subdivision_is_sunrise_beach? # alias, original
 
   def summary
     [lot_number, property].join(', ')

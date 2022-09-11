@@ -70,7 +70,7 @@ class PropertiesController < ApplicationController
         :membership_eligible,
         :street_number,
         :street_name,
-        :tax_id,
+        :tax_identifier,
         lot_ids: []
       )
     end
