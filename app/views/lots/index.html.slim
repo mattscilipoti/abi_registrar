@@ -5,7 +5,7 @@ fieldset
     = render 'layouts/h1', title: "Lots", model_count: @lots.size, model_total: Lot.count
 
   #lots
-    - columns = %i[lot_number section street_address lot_fee_paid? paid_on size]
+    - columns = %i[lot_number street_address lot_fee_paid? paid_on size]
     =render 'layouts/models_table', models: @lots, columns: columns, allow_sort: true
 br
 = link_to "New lot", new_lot_path

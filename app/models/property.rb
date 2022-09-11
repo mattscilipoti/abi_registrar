@@ -9,8 +9,6 @@ class Property < ApplicationRecord
   has_many :residents, through: :residencies
   has_many :share_transactions, through: :residencies
 
-  delegate :section, to: :default_lot, allow_nil: true
-
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
   def self.searchable_columns
@@ -45,12 +43,14 @@ class Property < ApplicationRecord
   scope :lot_fees_paid, -> { distinct.where.not(id: lot_fees_not_paid) }
   scope :not_paid, -> { lot_fees_not_paid }
   scope :owner, -> { distinct.joins(:residencies).merge(Residency.owner) }
-  scope :problematic, -> { without_lot.or(without_street_info) }
+  scope :problematic, -> { without_lot.or(without_section).or(without_street_info) }
   scope :test, -> { where("street_name LIKE '%TEST%'") }
   scope :not_test, -> { where.not(id: test) }
   scope :without_lot, -> { joins(:lots).where(lots: nil) }
+  scope :without_section, -> { where(section: nil) }
   scope :without_street_info, -> { where(street_number: nil).or(where(street_name: nil)) }
 
+  validates :section, numericality: { allow_nil: true, only_integer: true, in: 1..5 }
   validates :tax_identifier, presence: true, format: { with: /\A\d{2}\s\d{3}\s\d{8}\Z/ } # describes format provided by SDAT
 
   def self.scopes
@@ -60,6 +60,7 @@ class Property < ApplicationRecord
       lot_fees_paid
       lot_fees_not_paid
       without_lot
+      without_section
       without_street_info
     ]
   end

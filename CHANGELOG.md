@@ -11,7 +11,8 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 - Property
   - Rename abi_member to membership_eligible
-  - Move tax_id from Lot to Property
+  - Move section, tax_id from Lot to Property
+  - Derive tax_id comnponents (they were stored)
 
 ## 2022/09/08: Toggle attributes from table
 

@@ -25,8 +25,8 @@ Faker::Config.random = nil # seeds the PRNG using default entropy sources
 Faker::Config.locale = 'en-US'
 
 # Lots, Properties, and Residents
-lot69 = FactoryBot.create(:lot, :paid, lot_number: '69 (T)', section: 1, size: 1, account_number: 11942300)
-property_975 = FactoryBot.create(:property, lots: [lot69], street_number: '975', street_name: 'Waterview Dr (TEST)')
+lot69 = FactoryBot.create(:lot, :paid, lot_number: '69 (T)', size: 1)
+property_975 = FactoryBot.create(:property, lots: [lot69], section: 1, street_number: '975', street_name: 'Waterview Dr (TEST)', tax_identifier: '02 748 11942300')
 
 mms = FactoryBot.create(:resident, last_name: 'Scilipoti', first_name: 'Matt', email_address: 'matt@scilipoti.name')
 FactoryBot.create(:residency, :coowner, :verified, property: property_975, resident: mms)
@@ -37,9 +37,9 @@ FactoryBot.create(:residency, :owner, :verified, property: property_975, residen
 jhs = FactoryBot.create(:resident, :minor, last_name: 'Scilipoti', first_name: 'J', email_address: 'jh@scilipoti.name')
 FactoryBot.create(:residency, :dependent, :verified, property: property_975, resident: jhs)
 
-lot70 = FactoryBot.create(:lot, :paid, lot_number: '70 (T)', section: 1, size: 1)
-lot71 = FactoryBot.create(:lot, lot_number: '71 (T)', section: 1, size: 1)
-property_977 = FactoryBot.create(:property, lots: [lot70, lot71], street_number: '977', street_name: 'Waterview Dr (TEST)')
+lot70 = FactoryBot.create(:lot, :paid, lot_number: '70 (T)', size: 1)
+lot71 = FactoryBot.create(:lot, lot_number: '71 (T)', size: 1)
+property_977 = FactoryBot.create(:property, lots: [lot70, lot71], section: 1, street_number: '977', street_name: 'Waterview Dr (TEST)')
 
 pp = FactoryBot.create(:resident, last_name: 'PartialPayment', first_name: 'Peter', email_address: 'ppp@example.com')
 FactoryBot.create(:residency, :owner, :verified, property: property_977, resident: pp)

@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :property do
+    membership_eligible { true }
+    section { rand(1..4) }
     street_number { Faker::Address.building_number }
     street_name { "#{Faker::Address.street_name} TEST" }
     tax_identifier { '%{district} %{subdivision} %{acct_number}' % { acct_number: Faker::Number.number(digits: 8), district: '02', subdivision: '748'} }

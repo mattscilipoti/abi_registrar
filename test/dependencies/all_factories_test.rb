@@ -1,5 +1,6 @@
 require "test_helper"
 require "minitest/spec"
+require 'factory_bot_rails'
 
 class AllFactoriesTest < ActiveSupport::TestCase
 

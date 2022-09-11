@@ -69,7 +69,6 @@ class LotsController < ApplicationController
       params.require(:lot).permit(
         :lot_number,
         :paid_on,
-        :section,
         :size)
     end
 end

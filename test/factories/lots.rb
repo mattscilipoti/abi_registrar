@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :lot do
     lot_number { rand(1..975) }
-    section { rand(1..4) }
     size { [0.5, 1].sample }
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }

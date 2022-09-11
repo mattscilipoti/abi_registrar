@@ -68,6 +68,7 @@ class PropertiesController < ApplicationController
     def property_params
       params.require(:property).permit(
         :membership_eligible,
+        :section,
         :street_number,
         :street_name,
         :tax_identifier,
