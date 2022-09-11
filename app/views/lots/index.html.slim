@@ -5,7 +5,7 @@ fieldset
     = render 'layouts/h1', title: "Lots", model_count: @lots.size, model_total: Lot.count
 
   #lots
-    - columns = %i[lot_number abi_member? sunrise_beach? section street_address lot_fee_paid? paid_on size tax_identifier]
+    - columns = %i[lot_number membership_eligible? sunrise_beach? section street_address lot_fee_paid? paid_on size tax_identifier]
     =render 'layouts/models_table', models: @lots, columns: columns, allow_sort: true
 br
 = link_to "New lot", new_lot_path

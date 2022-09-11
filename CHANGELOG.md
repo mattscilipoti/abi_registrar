@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Toggle attributes from table
+## Upcoming: Meeting 2022/09/11
+
+- Property
+  - Rename abi_member to membership_eligible
+
+## 2022/09/08: Toggle attributes from table
 
 - Resident:
   - add scopes not_deed_holder, renter

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_24_202314) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_11_191108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -112,9 +112,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_24_202314) do
   create_table "properties", force: :cascade do |t|
     t.string   "street_number"
     t.string   "street_name"
-    t.datetime "created_at",    :null=>false
-    t.datetime "updated_at",    :null=>false
-    t.boolean  "abi_member"
+    t.datetime "created_at",          :null=>false
+    t.datetime "updated_at",          :null=>false
+    t.boolean  "membership_eligible"
 
     t.index ["street_name"], :name=>"index_properties_on_street_name"
     t.index ["street_number"], :name=>"index_properties_on_street_number"

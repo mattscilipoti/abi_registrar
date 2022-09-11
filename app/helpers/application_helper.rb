@@ -15,7 +15,7 @@ module ApplicationHelper
 
   def icon_for_scope(scope_name)
     case scope_name.to_s
-    when /abi/
+    when /membership_eligible/
       'umbrella-beach'
     when /deed_holder/
       'gavel'

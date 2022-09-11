@@ -62,15 +62,17 @@ class Lot < ApplicationRecord
   delegate :street_address, to: :property, allow_nil: true
 
   # Indicates if the lot is a part fo ABI
-  def abi_member?
-    subdivision_is_sunrise_beach? || abi_member_exceptions.include?(tax_identifier)
+  def membership_eligible?
+    subdivision_is_sunrise_beach? || membership_eligible_exceptions.include?(tax_identifier)
   end
 
   # Lists tax_ids that are not in Sunrise Beach subdivision, but are part of ABI
-  def abi_member_exceptions
+  def membership_eligible_exceptions
     [
-      '02 004 90049492', # 1007 Omar Dr (Hejl, Jan)
-      '02 004 05254975' # 1030 Omar Dr (Brown, Michael)
+      '02 004 90049492', # 1007 Omar Dr
+      '02 004 05254975', # 1030 Omar Dr
+      '02 000 90050935', # 920 Waterview Dr
+      '02 000 90050936', # 1035 Miller Cir
     ]
   end
 

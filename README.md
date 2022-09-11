@@ -25,6 +25,7 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Properties
     - Have one or more Lots
     - Owned by one or more Residents
+    - Can mark as membership_eligible?
     - Add date-stamped Comments
     - Search by Property, Lot, or Resident info
   - Manage Residents
@@ -74,14 +75,38 @@ Not only do we need to gather and manage the approprite information, we need to 
 
 
 ### TODO
-
+  - Meeting 2022/09/11
+    - Move TaxID to Property
+    - Property:
+      - ~~Rename AbiMember -> MembershipEligible~~
+      - Have partial lots (shared among multiple properties)
+    - Resident
+      -  Shareholder? (has 1 or more shares)
+        - Remaining shares are automatically transferred to new owner on property transfer(unless transferred)
+    - Summary page from Registrar Report
+      - Over time?
+    - Resident type: add spouse,
+    - Ownership verified (via SDAT) (Not the same as verified residency)
+      - When transferring ownership, may not be verified for a while
+      - Deed holder
+    - Residency:
+      - Add ResidentType: Border, Trustee, Spouse
+    - Resident: add birth year for minors
+      - Display Birth Year, Age
+      - Is verified once we assign Resident Status
+    - Lot: add Comments
+    - Passes:
+      - Rename: Vehicle Pass,
+      - Add: Ramp Pass (Sticker, Tag, Vessel Registration Number), Dinghy Pass (), Watercraft Pass
+  - ABI
+    - Indicate non-Sunrise beach that have access (Not)
   - Audit Transactions
     - Undo lastest change
     - Revert to previous version
     - List deleted transactions
       - Restore  deleted transaction
   - Manage Property
-    - Link to SDAT
+    - Link to SDAT (cannot find direct link, can probably mechanize fill-in of search fields)
   - Manage Property Transfer
     - Inform ACA
     - Transfer Residency

@@ -40,7 +40,7 @@ class ImporterProperties < Importer
     # Using "to_s" to handle null
     if !property.lots.find{|l| l.tax_identifier.to_s.casecmp?(lot.tax_identifier) }
       property.lots << lot # saves association
-      property.update_attribute(:abi_member, property.lots.any?(&:abi_member?))
+      property.update_attribute(:membership_eligible, property.lots.any?(&:membership_eligible?))
       import_info[:properties_updated] += 1
       announce("Property Lot Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: @row_index, prefix: "💾")
     end
