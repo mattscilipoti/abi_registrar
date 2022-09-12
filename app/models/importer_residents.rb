@@ -17,17 +17,42 @@ class ImporterResidents < Importer
 
   def add_notes_to_property(property, row_info)
     notes = row_info.fetch(:notes)
-    return if notes.blank?
+    if notes.blank?
+      import_info[:property_notes_skipped] += 1
+      announce("Property Notes Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
+      return
+    end
 
     if property.comments.any?{|comment| comment.content == notes}
       import_info[:property_notes_skipped] += 1
-      announce("#{resident_status.to_s.humanize} Property Notes Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
-    else
-      property.comments.create!(content: notes)
-      import_info[:property_notes_added] += 1
-      announce("Property Notes Added #{ {id: property.id, notes: notes.truncate(20) } }", row_index: @row_index, prefix: "💾")
+      announce("Property Notes Skipped (exists)".gray, row_index: @row_index, prefix: "⏩".gray)
+      return
     end
+
+    property.comments.create!(content: notes)
+    import_info[:property_notes_added] += 1
+    announce("Property Notes Added (as Comment) #{ {id: property.id, notes: notes.truncate(20) } }", row_index: @row_index, prefix: "💾")
   end
+
+  def assign_alternate_email_as_comment(resident, row_info)
+    alt_email = row_info.fetch(:alt_email)
+    if alt_email.blank?
+      import_info[:property_notes_skipped] += 1
+      announce("Property Alt. Email Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
+      return
+    end
+
+    if resident.comments.any?{|comment| comment.content == alt_email}
+      import_info[:property_notes_skipped] += 1
+      announce("Property Alt. Email Skipped (exists)".gray, row_index: @row_index, prefix: "⏩".gray)
+      return
+    end
+
+    resident.comments.create!(content: "Alternate email: #{alt_email}")
+    import_info[:property_notes_added] += 1
+    announce("Property Alt. Email Added (as Comment) #{ {id: resident.id, alt_email: alt_email.truncate(20) } }", row_index: @row_index, prefix: "💾")
+  end
+
 
   def assign_to_property(resident, property, resident_status, row_info)
     return if resident.nil?
@@ -57,6 +82,7 @@ class ImporterResidents < Importer
     add_notes_to_property(property, row_info)
 
     import_owner(row_info, property).tap do |owner|
+      assign_alternate_email_as_comment(owner, row_info)
       assign_to_property(owner, property, :owner, row_info)
     end
     import_coowner(row_info, property).tap do |coowner|
