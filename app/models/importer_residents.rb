@@ -21,7 +21,7 @@ class ImporterResidents < Importer
 
     if property.comments.any?{|comment| comment.content == notes}
       import_info[:property_notes_skipped] += 1
-      announce("#{resident_status.to_s.humanize} Property NOtes Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
+      announce("#{resident_status.to_s.humanize} Property Notes Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
     else
       property.comments.create!(content: notes)
       import_info[:property_notes_added] += 1

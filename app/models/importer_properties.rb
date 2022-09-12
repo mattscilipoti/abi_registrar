@@ -9,7 +9,23 @@ class ImporterProperties < Importer
       properties_created: 0,
       properties_updated: 0,
       properties_unchanged: 0,
+      property_notes_added: 0,
+      property_notes_skipped: 0,
     })
+  end
+
+  def add_notes_to_property(property, row_info)
+    notes = row_info.fetch(:notes)
+    return if notes.blank?
+
+    if property.comments.any?{|comment| comment.content == notes}
+      import_info[:property_notes_skipped] += 1
+      announce("#{resident_status.to_s.humanize} Property Notes Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
+    else
+      property.comments.create!(content: notes)
+      import_info[:property_notes_added] += 1
+      announce("Property Notes Added #{ {id: property.id, notes: notes.truncate(20) } }", row_index: @row_index, prefix: "💾")
+    end
   end
 
   def assign_lots(property, lot_numbers)
@@ -28,6 +44,8 @@ class ImporterProperties < Importer
     logger.debug "Importing Property: #{row_info}..."
 
     import_property(row_info).tap do |property|
+      add_notes_to_property(property, row_info)
+
       lot_numbers = row_info.fetch(:lot_s).to_s.split(',')
       assign_lots(property, lot_numbers)
     end
