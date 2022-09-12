@@ -10,7 +10,23 @@ class ImporterResidents < Importer
       residents_created: 0,
       residents_updated: 0,
       residents_unchanged: 0,
+      property_notes_added: 0,
+      property_notes_skipped: 0,
     })
+  end
+
+  def add_notes_to_property(property, row_info)
+    notes = row_info.fetch(:notes)
+    return if notes.blank?
+
+    if property.comments.any?{|comment| comment.content == notes}
+      import_info[:property_notes_skipped] += 1
+      announce("#{resident_status.to_s.humanize} Property NOtes Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
+    else
+      property.comments.create!(content: notes)
+      import_info[:property_notes_added] += 1
+      announce("Property Notes Added #{ {id: property.id, notes: notes.truncate(20) } }", row_index: @row_index, prefix: "💾")
+    end
   end
 
   def assign_to_property(resident, property, resident_status, row_info)
@@ -34,9 +50,11 @@ class ImporterResidents < Importer
 
   # Template Method, called from import_via_csv
   def import_row(row_info)
-    ap "DEBUG:"
-    ap row_info
+    # ap "DEBUG:"
+    # ap row_info
+
     property = find_property(row_info)
+    add_notes_to_property(property, row_info)
 
     import_owner(row_info, property).tap do |owner|
       assign_to_property(owner, property, :owner, row_info)
