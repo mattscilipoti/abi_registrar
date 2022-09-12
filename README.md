@@ -83,6 +83,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Resident
       -  Shareholder? (has 1 or more shares)
         - Remaining shares are automatically transferred to new owner on property transfer(unless transferred)
+      - Deceased?
     - Summary page from Registrar Report
       - Over time?
     - Resident type: add spouse,

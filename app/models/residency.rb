@@ -26,9 +26,8 @@ class Residency < ApplicationRecord
   }
 
   scope :deed_holder, -> { owner.or(coowner) }
-  scope :not_verified, -> { where(verified_on: nil) }
   scope :primary_residence, -> { where(primary_residence: true) }
-  scope :verified, -> { where.not(id: not_verified) }
+  scope :with_resident_status, -> { where.not(id: without_resident_status) }
   scope :without_resident_status, -> { where(resident_status: nil) }
 
   validates :primary_residence, uniqueness: {
@@ -47,8 +46,8 @@ class Residency < ApplicationRecord
     %i[
       lot_fees_paid
       lot_fees_not_paid
-      verified
-      not_verified
+      with_resident_status
+      without_resident_status
     ]
   end
 
@@ -76,6 +75,6 @@ class Residency < ApplicationRecord
   end
 
   def verified?
-    verified_on?
+    !resident_status?
   end
 end
