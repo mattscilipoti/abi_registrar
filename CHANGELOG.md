@@ -12,7 +12,10 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Property
   - Rename abi_member to membership_eligible
   - Move section, tax_id from Lot to Property
-  - Derive tax_id comnponents (they were stored)
+  - Derive tax_id components (they were stored)
+- Import from new data file
+  - revamp ImportLots, ImportProperties, ImportResidents
+  - add gem: wannabe_bool
 
 ## 2022/09/08: Toggle attributes from table
 

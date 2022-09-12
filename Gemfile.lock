@@ -321,6 +321,7 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     uniform_notifier (1.16.0)
+    wannabe_bool (0.7.1)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -376,6 +377,7 @@ DEPENDENCIES
   stimulus-rails
   turbo-rails
   tzinfo-data
+  wannabe_bool
   web-console
   webdrivers
 

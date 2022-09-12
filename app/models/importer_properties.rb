@@ -12,44 +12,43 @@ class ImporterProperties < Importer
     })
   end
 
+  def assign_lots(property, lot_numbers)
+    # Handle association
+    # Using "to_s" to handle null
+    return if lot_numbers.empty?
+
+    lot_ids = lot_numbers.collect{|lot_number| Lot.find_by!(lot_number: lot_number).id }
+    property.lot_ids = lot_ids
+    import_info[:properties_updated] += 1
+    announce("Property Lot(s) Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: @row_index, prefix: "💾")
+  end
+
   # Template Method, called from import_via_csv
   def import_row(row_info)
     logger.debug "Importing Property: #{row_info}..."
-    lot = find_lot(row_info)
 
-    property = import_property(row_info, lot)
+    import_property(row_info).tap do |property|
+      lot_numbers = row_info.fetch(:lot_s).to_s.split(',')
+      assign_lots(property, lot_numbers)
+    end
   end
 
-  def find_lot(row_info)
-    tax_id_parts = parse_tax_id(row_info.fetch(:acct))
-    Lot.find_by!(tax_id_parts)
-  end
-
-  def import_property(row_info, lot)
+  def import_property(row_info)
+# debugger
     property_info = {
-
-      street_number: row_info.fetch(:phouse),
-      street_name: row_info.fetch(:pstreet),
+      # comment: row_info.fetch(:notes),
+      membership_eligible: true,
+      section: row_info.fetch(:section),
+      street_number: row_info.fetch(:house),
+      street_name: row_info.fetch(:street_name),
+      tax_identifier: row_info.fetch(:account),
     }
+
     property = import_model(
       Property,
       model_attributes: property_info,
     )
-
-    # Handle association
-    # Using "to_s" to handle null
-    if !property.lots.find{|l| l.tax_identifier.to_s.casecmp?(lot.tax_identifier) }
-      property.lots << lot # saves association
-      property.update_attribute(:membership_eligible, property.lots.any?(&:membership_eligible?))
-      import_info[:properties_updated] += 1
-      announce("Property Lot Assigned #{ {id: property.id, lot_ids: property.lot_ids } }", row_index: @row_index, prefix: "💾")
-    end
+    import_info[:properties_created] += 1
     property
-  end
-
-  # Parses a tax id in a hash of its component parts
-  def parse_tax_id(tax_id)
-    district, subdivision, account_number = tax_id.split(' ')
-    {district: district, subdivision: subdivision, account_number: account_number}
   end
 end
