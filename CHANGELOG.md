@@ -15,7 +15,12 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Derive tax_id components (they were stored)
 - Import from new data file
   - revamp ImportLots, ImportProperties, ImportResidents
-  - add gem: wannabe_bool
+  - add gems: wannabe_bool, ruby_postal
+  - add dependency: libpostal
+    - heroku create --buildpack https://github.com/homelight/heroku-buildback-libpostal.git
+  - ImportResident: assign_alt_email_as_comment, assign_alt_phone_as_comment, assign_mailing_address, assign_notes_to_property
+    - strip names
+  - ImportProperty: assign_notes_to_property
 
 ## 2022/09/08: Toggle attributes from table
 

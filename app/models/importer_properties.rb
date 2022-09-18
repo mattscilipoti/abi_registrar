@@ -20,7 +20,7 @@ class ImporterProperties < Importer
 
     if property.comments.any?{|comment| comment.content == notes}
       import_info[:property_notes_skipped] += 1
-      announce("#{resident_status.to_s.humanize} Property Notes Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
+      announce("Property Notes Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
     else
       property.comments.create!(content: notes)
       import_info[:property_notes_added] += 1
@@ -62,11 +62,9 @@ class ImporterProperties < Importer
       tax_identifier: row_info.fetch(:account),
     }
 
-    property = import_model(
+    import_model(
       Property,
       model_attributes: property_info,
     )
-    import_info[:properties_created] += 1
-    property
   end
 end

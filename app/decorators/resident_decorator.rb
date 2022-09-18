@@ -7,16 +7,20 @@ class ResidentDecorator < Draper::Decorator
 
   def mailing_address_i18n
     if object.mailing_address?
-      address = OpenStruct.new(object.mailing_address)
+      address = OpenStruct.new(object.mailing_address) # formatted as StreetAddress, https://github.com/street-address-rb/street-address
       address_components = {
-        "house_number" => address.street_number,
-        "road" => address.street_name.upcase,
+        "house_number" => address.house_number,
+        "road" => address.road.upcase,
         "city" => address.city.upcase,
         "postcode" => address.zip_code,
         # "county" => "Anne Arundel",
         "state_code" => address.state_code,
         "country_code" => "US"
       }
+
+      if address.unit
+        address_components['unit'] = "#{address.prefix&.upcase} #{address.unit}"
+      end
 
       mailing_address = AddressComposer.compose(address_components)
 

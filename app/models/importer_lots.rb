@@ -29,16 +29,14 @@ class ImporterLots < Importer
     lots.each do |lot_number|
       total_lot_count = row_info.fetch(:total_lots)
       # partial lots will be handled manually
-      lot_size = (total_lot_count == total_lot_count.to_i) ? total_lot_count / (lots.size || 1) : nil
+      lot_size = (total_lot_count == total_lot_count.to_i) ? total_lot_count.to_f / (lots.size || 1) : nil
 
       find_lot = { lot_number: lot_number }
-      lot = import_model(
+      import_model(
         Lot,
         find_by: find_lot,
         model_attributes: find_lot.merge(size: lot_size)
       )
-      import_info[:lots_created] += 1
-      lot
     end
     return true
   end

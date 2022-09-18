@@ -1,4 +1,5 @@
 require 'csv'
+require 'ruby_postal/parser'
 require 'wannabe_bool'
 require_relative 'importer'
 
@@ -7,6 +8,9 @@ class ImporterResidents < Importer
     super
 
     import_info.merge!({
+      resident_mailing_address_assigned: 0,
+      resident_notes_added: 0,
+      resident_notes_skipped: 0,
       residents_created: 0,
       residents_updated: 0,
       residents_unchanged: 0,
@@ -37,22 +41,58 @@ class ImporterResidents < Importer
   def assign_alternate_email_as_comment(resident, row_info)
     alt_email = row_info.fetch(:alt_email)
     if alt_email.blank?
-      import_info[:property_notes_skipped] += 1
-      announce("Property Alt. Email Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
+      import_info[:resident_notes_skipped] += 1
+      announce("Resident Alt. Email Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
       return
     end
 
     if resident.comments.any?{|comment| comment.content == alt_email}
-      import_info[:property_notes_skipped] += 1
-      announce("Property Alt. Email Skipped (exists)".gray, row_index: @row_index, prefix: "⏩".gray)
+      import_info[:resident_notes_skipped] += 1
+      announce("Resident Alt. Email Skipped (exists)".gray, row_index: @row_index, prefix: "⏩".gray)
       return
     end
 
     resident.comments.create!(content: "Alternate email: #{alt_email}")
-    import_info[:property_notes_added] += 1
-    announce("Property Alt. Email Added (as Comment) #{ {id: resident.id, alt_email: alt_email.truncate(20) } }", row_index: @row_index, prefix: "💾")
+    import_info[:resident_notes_added] += 1
+    announce("Resident Alt. Email Added (as Comment) #{ {id: resident.id, alt_email: alt_email.truncate(20) } }", row_index: @row_index, prefix: "💾")
   end
 
+  def assign_alternate_phone_as_comment(resident, row_info)
+    alt_phone = row_info.fetch(:alt_phone)
+    if alt_phone.blank?
+      import_info[:resident_notes_skipped] += 1
+      announce("Resident Alt. Phone Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
+      return
+    end
+
+    if resident.comments.any?{|comment| comment.content == alt_phone}
+      import_info[:resident_notes_skipped] += 1
+      announce("Resident Alt. Phone Skipped (exists)".gray, row_index: @row_index, prefix: "⏩".gray)
+      return
+    end
+
+    resident.comments.create!(content: "Alternate phone: #{alt_phone}")
+    import_info[:resident_notes_added] += 1
+    announce("Resident Alt. Phone Added (as Comment) #{ {id: resident.id, alt_phone: alt_phone.truncate(20) } }", row_index: @row_index, prefix: "💾")
+  end
+
+  def assign_mailing_address(resident, row_info)
+    mail_address = row_info.fetch(:mailing_address)
+
+    if mail_address.nil?
+      announce("Resident Mailing Address Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
+      return
+    end
+    address = Postal::Parser.parse_address(mail_address)
+    formatted_address = address.inject({}) do |address_items, address_item|
+      address_items[address_item.fetch(:label)] = address_item.fetch(:value).upcase
+      address_items
+    end
+
+    resident.update_attribute(:mailing_address, formatted_address)
+    import_info[:resident_mailing_address_assigned] += 1
+    announce("Resident Mailing Address assigned #{ { id: resident.id, mailing_address: address.to_s.truncate(20) } }", row_index: @row_index, prefix: "💾")
+  end
 
   def assign_to_property(resident, property, resident_status, row_info)
     return if resident.nil?
@@ -83,6 +123,8 @@ class ImporterResidents < Importer
 
     import_owner(row_info, property).tap do |owner|
       assign_alternate_email_as_comment(owner, row_info)
+      assign_alternate_phone_as_comment(owner, row_info)
+      assign_mailing_address(owner, row_info)
       assign_to_property(owner, property, :owner, row_info)
     end
     import_coowner(row_info, property).tap do |coowner|
@@ -104,13 +146,11 @@ class ImporterResidents < Importer
       phone: row_info.fetch(:prim_phone),
     })
 
-    owner = import_model(
+    import_model(
       Resident,
       model_attributes: resident_info,
       label: 'Owner',
     )
-    import_info[:residents_created] += 1
-    owner
   end
 
   def import_coowner(row_info, property)
@@ -140,9 +180,9 @@ class ImporterResidents < Importer
 
     parts = full_name.split(' ')
     {
-      last_name: parts[0],
-      first_name: parts[1],
-      middle_name: parts[2..-1].join(' ')
+      last_name: parts[0].to_s.strip,
+      first_name: parts[1].to_s.strip,
+      middle_name: parts[2..-1].join(' ').to_s.strip
     }
   end
 end

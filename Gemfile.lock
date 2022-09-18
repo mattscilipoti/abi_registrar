@@ -262,6 +262,7 @@ GEM
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
     ruby2_keywords (0.0.5)
+    ruby_postal (1.0.0)
     rubyzip (2.3.2)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -368,6 +369,7 @@ DEPENDENCIES
   rails_semantic_logger
   rodauth-rails (~> 1.4)
   rspec-rails
+  ruby_postal
   sassc-rails
   schema_plus_functions
   selenium-webdriver
