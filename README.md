@@ -21,9 +21,9 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Lots
     - Record Lot fee payments (not connected to Quickbooks)
     - Search by Lot, Property, or Resident info
-    - Lots indicate if part of ABI, including exceptions not in Sunrise Beach
   - Manage Properties
     - Have one or more Lots
+    - Identified by TaxID
     - Owned by one or more Residents
     - Can mark as membership_eligible?
     - Add date-stamped Comments
@@ -68,7 +68,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Authentication, via password or email
     - List Application Administators
   - Import Lots, Properties, Residents
-    - Source: "2022 Membership.csv": https://drive.google.com/drive/folders/1I2f6KPanRLRBqU3eCySs9-FdKgQPRabm
+    - Source: "Arden Property Owners & NSB Properties": https://docs.google.com/spreadsheets/d/1a8-fnFI-7YImNmB9dSKZG4xj_stYDBkl/edit?usp=sharing&ouid=101094552356953280075&rtpof=true&sd=true
   - Import Shares
     - Note: transacted_at DateTime will update for ALL Imported Share Transactions on EACH Import (I think this is appropriate, if we are using the same spreadsheet).
     - Source: SharesRegistrarSpreadsheet: https://docs.google.com/spreadsheets/d/1F-FEmh14Go5bLmCDrcDax2tbJycWvHoz/edit?rtpof=true
@@ -76,7 +76,9 @@ Not only do we need to gather and manage the approprite information, we need to 
 
 ### TODO
   - Meeting 2022/09/11
-    - Move TaxID to Property
+    - ~~Move TaxID to Property~~
+    - Import from new spreadsheet
+      - Code Complete, awaiting updated spreadsheet for testing
     - Property:
       - ~~Rename AbiMember -> MembershipEligible~~
       - Have partial lots (shared among multiple properties)
@@ -86,7 +88,6 @@ Not only do we need to gather and manage the approprite information, we need to 
       - Deceased?
     - Summary page from Registrar Report
       - Over time?
-    - Resident type: add spouse,
     - Ownership verified (via SDAT) (Not the same as verified residency)
       - When transferring ownership, may not be verified for a while
       - Deed holder
