@@ -13,6 +13,8 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Rename abi_member to membership_eligible
   - Move section, tax_id from Lot to Property
   - Derive tax_id components (they were stored)
+- Resident
+  - Add .search_by_name_sounds_like
 - Import from new data file
   - revamp ImportLots, ImportProperties, ImportResidents
   - add gems: wannabe_bool, ruby_postal

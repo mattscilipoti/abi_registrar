@@ -19,16 +19,22 @@ class Resident < ApplicationRecord
       tsearch: { prefix: true }
     }
 
-  pg_search_scope :search_by_name,
+  pg_search_scope(:search_by_name,
     # Reminder: first_name, email_address are encrypted
     against: [:last_name, :first_name, :middle_name],
-    using: :dmetaphone,
     using: {
       tsearch: {
         prefix: true,
         dictionary: "english"
       }
     }
+  )
+
+  pg_search_scope(:search_by_name_sounds_like,
+    # Reminder: first_name, email_address are encrypted
+    against: [:last_name, :first_name, :middle_name],
+    using: :dmetaphone
+  )
 
   encrypts :email_address, deterministic: true
   # encrypts :first_name, deterministic: true if minor?
