@@ -61,6 +61,24 @@ RSpec.describe Resident, type: :model do
         end
       end
     end
+
+    describe '.without_primary_residence' do
+      let(:property1) { FactoryBot.create(:property, :with_paid_lots, street_name: "PRIMARY RES") }
+      let!(:resident_with_primary_residence) do
+        FactoryBot.create(:resident, last_name: 'WITH_PRIMARY_RES').tap do |r|
+          r.residencies << FactoryBot.create(:residency, property: property1, resident: r)
+        end
+      end
+      let!(:resident_without_primary_residence) do
+        FactoryBot.create(:resident, last_name: 'WITHOUT_PRIMARY_RES').tap do |r|
+          r.residencies << FactoryBot.create(:residency, :coowner, :second_home, property: property1, resident: r)
+        end
+      end
+
+      it 'should return all residents without a primary residence' do
+        expect(Resident.without_primary_residence).to contain_exactly(resident_without_primary_residence)
+      end
+    end
   end
 
   describe '(instance methods)' do

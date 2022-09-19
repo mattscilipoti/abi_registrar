@@ -27,6 +27,8 @@ class Residency < ApplicationRecord
 
   scope :deed_holder, -> { owner.or(coowner) }
   scope :primary_residence, -> { where(primary_residence: true) }
+  scope :with_primary_residence, -> { where.not(id: without_primary_residence) }
+  scope :without_primary_residence, -> { where(primary_residence: false).or(where(primary_residence: nil)) }
   scope :with_resident_status, -> { where.not(id: without_resident_status) }
   scope :without_resident_status, -> { where(resident_status: nil) }
 
@@ -46,6 +48,7 @@ class Residency < ApplicationRecord
     %i[
       lot_fees_paid
       lot_fees_not_paid
+      without_primary_residence
       with_resident_status
       without_resident_status
     ]

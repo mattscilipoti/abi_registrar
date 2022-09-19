@@ -15,6 +15,7 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Derive tax_id components (they were stored)
 - Resident
   - Add .search_by_name_sounds_like
+  - Add scope without_primary_residence
 - Import from new data file
   - revamp ImportLots, ImportProperties, ImportResidents
   - add gems: wannabe_bool, ruby_postal

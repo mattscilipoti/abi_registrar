@@ -63,6 +63,7 @@ class Resident < ApplicationRecord
   scope :without_mailing_address, -> { distinct.where(mailing_address: nil) }
   scope :without_email, -> { distinct.where(email_address: nil) }
   scope :without_first_name, -> { distinct.where(first_name: nil) }
+  scope :without_primary_residence, -> { distinct.joins(:residencies).merge(Residency.without_primary_residence) }
   scope :without_resident_status, -> { distinct.joins(:residencies).merge(Residency.without_resident_status) }
 
   scope :not_paid, -> { lot_fees_not_paid }
@@ -77,6 +78,7 @@ class Resident < ApplicationRecord
       not_deed_holder
       renter
       without_resident_status
+      without_primary_residence
       lot_fees_paid
       lot_fees_not_paid
       verified

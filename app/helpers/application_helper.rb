@@ -31,12 +31,12 @@ module ApplicationHelper
       'location-dot'
     when /name/
       'signature'
-    when /property/
+    when /property/, /primary_residence/
       'house-chimney'
+    when /quantity/
+      'buy-n-large'
     when /renter/
       'suitcase'
-    when /resident_status/
-      'house-user'
     when /section/
       'section'
     when /state/
@@ -45,8 +45,8 @@ module ApplicationHelper
       'road'
     when /sun/
       'sun'
-    when /quantity/
-      'buy-n-large'
+    when /without_resident_status/
+      'tent'
     when /verified/
       'certificate'
     else
