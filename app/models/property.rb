@@ -9,33 +9,6 @@ class Property < ApplicationRecord
   has_many :residents, through: :residencies
   has_many :share_transactions, through: :residencies
 
-  # List of searchable columns for this Model
-  # ! this must be declared before pg_search_scope
-  def self.searchable_columns
-    [
-      :street_name,
-      :street_number,
-      :tax_identifier,
-    ]
-  end
-  # Configure search
-  include PgSearch::Model
-  pg_search_scope :search_by_all,
-    against: searchable_columns,
-    associated_against: {
-      lots: Lot.searchable_columns,
-      residents: Resident.searchable_columns
-    },
-    using: {
-      tsearch: { prefix: true }
-    }
-
-  pg_search_scope :search_by_address,
-    against: [:street_number, :street_name]
-    # using: {
-    #   tsearch: { prefix: true }
-    # }
-
   scope :membership_eligible, -> { where(membership_eligible: true) }
   scope :not_membership_eligible, -> { where(membership_eligible: false) }
   scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
@@ -52,6 +25,36 @@ class Property < ApplicationRecord
 
   validates :section, numericality: { allow_nil: true, only_integer: true, in: 1..5 }
   validates :tax_identifier, presence: true, format: { with: /\A\d{2}\s\d{3}\s\d{8}\Z/ } # describes format provided by SDAT
+
+  def self.configure_pgsearch
+    # List of searchable columns for this Model
+    # ! this must be declared before pg_search_scope
+    def self.searchable_columns
+      [
+        :street_name,
+        :street_number,
+        :tax_identifier,
+      ]
+    end
+    # Configure pgsearch
+    include PgSearch::Model
+    pg_search_scope(:search_by_all,
+      against: searchable_columns,
+      associated_against: {
+        lots: Lot.searchable_columns,
+        residents: Resident.searchable_columns
+      },
+      using: {
+        tsearch: { prefix: true }
+      }
+    )
+    pg_search_scope(:search_by_address,
+      against: [:street_number, :street_name]
+      # using: {
+      #   tsearch: { prefix: true }
+      # }
+    )
+  end.tap { configure_pgsearch } # this syntax ensures the running of the configuration happens after the config and is not separate from the config
 
   def self.scopes
     %i[

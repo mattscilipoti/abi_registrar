@@ -1,41 +1,6 @@
 class Resident < ApplicationRecord
   include Commentable
 
-  # Configure search
-  include PgSearch::Model
-  # List of searchable columns for this Model
-  # ! this must be declared before pg_search_scope
-  def self.searchable_columns
-    [:last_name, :first_name]
-  end
-  pg_search_scope :search_by_all,
-    # Reminder: first_name, email_address are encrypted
-    against: searchable_columns,
-    associated_against: {
-      properties: Property.searchable_columns,
-      lots: Lot.searchable_columns
-    },
-    using: {
-      tsearch: { prefix: true }
-    }
-
-  pg_search_scope(:search_by_name,
-    # Reminder: first_name, email_address are encrypted
-    against: [:last_name, :first_name, :middle_name],
-    using: {
-      tsearch: {
-        prefix: true,
-        dictionary: "english"
-      }
-    }
-  )
-
-  pg_search_scope(:search_by_name_sounds_like,
-    # Reminder: first_name, email_address are encrypted
-    against: [:last_name, :first_name, :middle_name],
-    using: :dmetaphone
-  )
-
   encrypts :email_address, deterministic: true
   # encrypts :first_name, deterministic: true if minor?
 
@@ -71,6 +36,43 @@ class Resident < ApplicationRecord
 
   validates :phone, format: { with: /\A[0-9]+\z/, message: "only allows numbers" }, allow_nil: true
   validates :last_name, presence: true
+
+  def self.configure_pgsearch
+    # List of searchable columns for this Model
+    # ! this must be declared before pg_search_scope
+    def self.searchable_columns
+      [:last_name, :first_name]
+    end
+    # Configure pgsearch
+    include PgSearch::Model
+    pg_search_scope(:search_by_all,
+      # Reminder: first_name, email_address are encrypted
+      against: searchable_columns,
+      associated_against: {
+        properties: Property.searchable_columns,
+        lots: Lot.searchable_columns
+      },
+      using: {
+        tsearch: { prefix: true }
+      }
+    )
+    pg_search_scope(:search_by_name,
+      # Reminder: first_name, email_address are encrypted
+      against: [:last_name, :first_name, :middle_name],
+      using: {
+        tsearch: {
+          prefix: true,
+          dictionary: "english"
+        }
+      }
+    )
+    pg_search_scope(:search_by_name_sounds_like,
+      # Reminder: first_name, email_address are encrypted
+      against: [:last_name, :first_name, :middle_name],
+      using: :dmetaphone
+    )
+  end.tap { configure_pgsearch } # this syntax ensures the running of the configuration happens after the config and is not separate from the config
+
 
   def self.scopes
     %i[
