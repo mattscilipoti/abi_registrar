@@ -19,12 +19,12 @@
         / Use OpenStruct to provide methods for hstore (hash)
         / Uses fields for libpostal
         =form.simple_fields_for :mailing_address, OpenStruct.new(@resident.mailing_address) do |a|
-          =a.input :house_number
+          =a.input :number
           =a.input :road
           =a.input :unit
           =a.input :city
           =a.input :state_code, collection: Vehicle.states
-          =a.input :zip_code
+          =a.input :postal_code
     <!-- #### ADDRESS FIELD ENDS HERE #### -->
 
     h4 Properties

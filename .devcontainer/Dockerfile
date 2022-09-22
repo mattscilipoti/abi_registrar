@@ -32,14 +32,14 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # Dependencies for libpostal (https://github.com/openvenues/libpostal#installation-maclinux)
 # - curl autoconf automake libtool pkg-config
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends \
-    curl autoconf automake libtool pkg-config
+# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get -y install --no-install-recommends \
+#     curl autoconf automake libtool pkg-config
 
 # make libpostal, see: https://github.com/scpike/libpostal-docker
-RUN git clone https://github.com/openvenues/libpostal
-WORKDIR libpostal
-COPY ./.devcontainer/startup_scripts/build_libpostal.sh .
-RUN ./build_libpostal.sh
+# RUN git clone https://github.com/openvenues/libpostal
+# WORKDIR libpostal
+# COPY ./.devcontainer/startup_scripts/build_libpostal.sh .
+# RUN ./build_libpostal.sh
 
 ENV EDITOR=vi PORT=3013

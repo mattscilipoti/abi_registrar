@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    StreetAddress (1.0.6)
     actioncable (7.0.2.3)
       actionpack (= 7.0.2.3)
       activesupport (= 7.0.2.3)
@@ -262,7 +263,6 @@ GEM
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
     ruby2_keywords (0.0.5)
-    ruby_postal (1.0.0)
     rubyzip (2.3.2)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -345,6 +345,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  StreetAddress
   active_record_doctor
   address_composer (~> 1.0)
   addressable
@@ -369,7 +370,6 @@ DEPENDENCIES
   rails_semantic_logger
   rodauth-rails (~> 1.4)
   rspec-rails
-  ruby_postal
   sassc-rails
   schema_plus_functions
   selenium-webdriver

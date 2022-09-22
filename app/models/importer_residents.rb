@@ -1,5 +1,6 @@
 require 'csv'
-require 'ruby_postal/parser'
+# require 'ruby_postal/parser'
+require 'street_address'
 require 'wannabe_bool'
 require_relative 'importer'
 
@@ -9,6 +10,7 @@ class ImporterResidents < Importer
 
     import_info.merge!({
       resident_mailing_address_assigned: 0,
+      resident_mailing_address_skipped: 0,
       resident_notes_added: 0,
       resident_notes_skipped: 0,
       residents_created: 0,
@@ -80,15 +82,34 @@ class ImporterResidents < Importer
     mail_address = row_info.fetch(:mailing_address)
 
     if mail_address.nil?
+      # import_info[:resident_mailing_address_skipped] += 1
       announce("Resident Mailing Address Skipped (blank)".gray, row_index: @row_index, prefix: "⏩".gray)
       return
     end
-    address = Postal::Parser.parse_address(mail_address)
-    formatted_address = address.inject({}) do |address_items, address_item|
-      address_items[address_item.fetch(:label)] = address_item.fetch(:value).upcase
-      address_items
-    end
 
+    # address = Postal::Parser.parse_address(mail_address)
+
+    # formatted_address = address.inject({}) do |address_items, address_item|
+    #   address_items[address_item.fetch(:label)] = address_item.fetch(:value).upcase
+    #   address_items
+    # end
+
+    address = StreetAddress::US.parse(mail_address)
+    if address.nil?
+      import_info[:resident_mailing_address_skipped] += 1
+      announce("Resident Mailing Address Skipped (unparseable) #{ {id: resident.id, mailing_address: mail_address.truncate(30)} }".gray, row_index: @row_index, prefix: "⏩".gray)
+      return
+    end
+    formatted_address = { # formatted using residents/_form naming convention
+      'number' => address.number,
+      'road' => "#{address.street.to_s.upcase} #{address.street_type.to_s.upcase}".strip,
+      'city' => address.city,
+      'state_code' => address.state,
+      'postal_code' => address.postal_code,
+    }
+    if address.unit
+      formatted_address['unit'] = "#{address.unit_prefix} #{address.unit}".strip
+    end
     resident.update_attribute(:mailing_address, formatted_address)
     import_info[:resident_mailing_address_assigned] += 1
     announce("Resident Mailing Address assigned #{ { id: resident.id, mailing_address: address.to_s.truncate(20) } }", row_index: @row_index, prefix: "💾")

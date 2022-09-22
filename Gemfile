@@ -88,10 +88,11 @@ gem 'railroady', group: :development # UML class diagram generator.
 gem 'rails_semantic_logger' # feature rich logging framework
 gem 'rodauth-rails', '~> 1.4' # Ruby's Most Advanced Authentication Framework
 gem 'rspec-rails', group: [:development, :test]
-gem 'ruby_postal', require: false # Ruby bindings to libpostal for fast international address parsing/normalization
+# gem 'ruby_postal', require: false # Ruby bindings to libpostal for fast international address parsing/normalization
 gem 'sassc-rails'
 gem 'schema_plus_functions' # adding support for SQL functions
 gem 'simple_form' # Forms made easy for Rails
 gem 'slim-rails' # template language, reduces the syntax without becoming cryptic.
+gem 'StreetAddress', require: false #
 gem 'wannabe_bool', require: false # convert user input to boolean
 
