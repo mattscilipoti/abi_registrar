@@ -50,7 +50,7 @@ property_123Main = FactoryBot.create(:property, lots: [lot11], street_number: '1
 property_975Main = FactoryBot.create(:property, lots: [lot12], street_number: '975', street_name: 'Main St (TEST)')
 
 jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com',
-  mailing_address: { house_number: 987, road: 'Other St', city: 'SomewhereElse', state_code: 'MD', postcode: '11111' }
+  mailing_address: { number: 987, road: 'Other St', city: 'SomewhereElse', state_code: 'MD', postcode: '11111' }
 )
 
 FactoryBot.create(:residency, :owner, :verified, property: property_123Main, resident: jqo)
