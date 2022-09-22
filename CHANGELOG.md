@@ -7,7 +7,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Toggle attributes from table
+## Upcoming: Meeting 2022/09/11
+
+- Property
+  - Rename abi_member to membership_eligible
+  - Move section, tax_id from Lot to Property
+  - Derive tax_id components (they were stored)
+- Resident
+  - Add .search_by_name_sounds_like
+  - Add scope without_primary_residence
+- Import from new data file
+  - revamp ImportLots, ImportProperties, ImportResidents
+  - add gems: wannabe_bool, ruby_postal
+  - add dependency: libpostal
+    - heroku create --buildpack https://github.com/homelight/heroku-buildback-libpostal.git
+  - ImportResident: assign_alt_email_as_comment, assign_alt_phone_as_comment, assign_mailing_address, assign_notes_to_property
+    - strip names
+  - ImportProperty: assign_notes_to_property
+
+## 2022/09/08: Toggle attributes from table
 
 - Resident:
   - add scopes not_deed_holder, renter

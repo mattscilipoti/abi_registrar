@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class PropertiesTest < ApplicationSystemTestCase
   setup do
-    @property = properties(:one)
+    @property = FactoryBot.build(:property)
   end
 
   test "visiting the index" do
@@ -14,8 +14,11 @@ class PropertiesTest < ApplicationSystemTestCase
     visit properties_url
     click_on "New property"
 
+    fill_in "Section", with: @lot.section
+
     fill_in "Street name", with: @property.street_name
     fill_in "Street number", with: @property.street_number
+    fill_in "Tax Identifier", with: @lot.tax_identifier
     click_on "Create Property"
 
     assert_text "Property was successfully created"

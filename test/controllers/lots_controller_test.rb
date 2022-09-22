@@ -34,7 +34,7 @@ class LotsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update lot" do
-    patch lot_url(@lot), params: { lot: FactoryBot.attributes_for(:lot, account_number: '12345678') }
+    patch lot_url(@lot), params: { lot: FactoryBot.attributes_for(:lot) }
     assert_redirected_to lot_url(@lot)
   end
 

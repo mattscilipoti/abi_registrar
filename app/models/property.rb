@@ -2,18 +2,21 @@ require "address_composer"
 
 class Property < ApplicationRecord
   include Commentable
+  alias_attribute :tax_id, :tax_identifier # alias, original
 
   has_many :lots
   has_many :residencies
   has_many :residents, through: :residencies
   has_many :share_transactions, through: :residencies
 
-  delegate :section, to: :default_lot, allow_nil: true
-
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
   def self.searchable_columns
-    [:street_number, :street_name]
+    [
+      :street_name,
+      :street_number,
+      :tax_identifier,
+    ]
   end
   # Configure search
   include PgSearch::Model
@@ -33,32 +36,54 @@ class Property < ApplicationRecord
     #   tsearch: { prefix: true }
     # }
 
-  scope :abi_member, -> { where(abi_member: true) }
-  scope :not_abi_member, -> { where(abi_member: false) }
+  scope :membership_eligible, -> { where(membership_eligible: true) }
+  scope :not_membership_eligible, -> { where(membership_eligible: false) }
   scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
   scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
   scope :lot_fees_paid, -> { distinct.where.not(id: lot_fees_not_paid) }
   scope :not_paid, -> { lot_fees_not_paid }
   scope :owner, -> { distinct.joins(:residencies).merge(Residency.owner) }
-  scope :problematic, -> { without_lot.or(without_street_info) }
+  scope :problematic, -> { without_lot.or(without_section).or(without_street_info) }
   scope :test, -> { where("street_name LIKE '%TEST%'") }
   scope :not_test, -> { where.not(id: test) }
   scope :without_lot, -> { joins(:lots).where(lots: nil) }
+  scope :without_section, -> { where(section: nil) }
   scope :without_street_info, -> { where(street_number: nil).or(where(street_name: nil)) }
+
+  validates :section, numericality: { allow_nil: true, only_integer: true, in: 1..5 }
+  validates :tax_identifier, presence: true, format: { with: /\A\d{2}\s\d{3}\s\d{8}\Z/ } # describes format provided by SDAT
 
   def self.scopes
     %i[
-      abi_member
-      not_abi_member
+      membership_eligible
+      not_membership_eligible
       lot_fees_paid
       lot_fees_not_paid
       without_lot
+      without_section
       without_street_info
     ]
   end
 
+  def self.subdivisions
+    {
+      sunrise_beach: '748',
+      arden_on_the_severn: '004',
+    }
+  end
+
+  # account_number portion of tax_id
+  def account_number(tax_id = self.tax_id)
+    tax_id[7..14]
+  end
+
   def default_lot
     lots.first
+  end
+
+  # district portion of tax_id
+  def district(tax_id = self.tax_id)
+    tax_id[0..1]
   end
 
   def inspect
@@ -92,6 +117,16 @@ class Property < ApplicationRecord
     mailing_address
   end
 
+  # Lists tax_ids that are not in Sunrise Beach subdivision, but are part of ABI
+  def membership_eligible_exceptions
+    [
+      '02 004 90049492', # 1007 Omar Dr (Arden on the Severn)
+      '02 004 05254975', # 1030 Omar Dr (Arden on the Severn)
+      '02 000 90050935', # 920 Waterview Dr (Sunrise Beach)
+      '02 000 90050936', # 1035 Miller Cir (Sunrise Beach)
+    ]
+  end
+
   def owner
     residencies.owner.present? && residencies.owner.first.resident
   end
@@ -103,6 +138,17 @@ class Property < ApplicationRecord
   def street_address
     [street_number || '⁇', street_name || '⁇'].join(' ')
   end
+
+  # subdivision portion of tax_id
+  def subdivision(tax_id = self.tax_id)
+    tax_id[3..5]
+  end
+
+  # Indicates if this lot's subdivision is Sunrise Beach
+  def subdivision_is_sunrise_beach?
+    district == '002' && subdivision == Lot.subdivisions.fetch(:sunrise_beach)
+  end
+  alias_method :sunrise_beach?, :subdivision_is_sunrise_beach? # alias, original
 
   def to_s
     street_address

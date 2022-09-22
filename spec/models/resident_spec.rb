@@ -5,41 +5,78 @@ RSpec.describe Resident, type: :model do
   describe 'class methods' do
     subject { described_class }
 
-    let(:property_mixed) { FactoryBot.create(:property, :with_paid_lots, :with_unpaid_lots, street_name: "MIXED") }
-    let(:property_paid) { FactoryBot.create(:property, :with_paid_lots, street_name: "PAID") }
-    let(:property_unpaid) { FactoryBot.create(:property, :with_unpaid_lots, street_name: "UNPAID") }
-    let!(:resident_mixed1) { FactoryBot.create(:resident, last_name: 'MIXED1', properties: [property_paid, property_unpaid]) }
-    let!(:resident_mixed2) { FactoryBot.create(:resident, last_name: 'MIXED2', properties: [property_paid, property_mixed]) }
-    let!(:resident_paid) { FactoryBot.create(:resident, last_name: 'PAID', properties: [property_paid]) }
-    let!(:resident_unpaid) { FactoryBot.create(:resident, last_name: 'UNPAID', properties: [property_unpaid]) }
+    context "(lot fees)" do
 
-    describe 'lot_fees_paid' do
-      it 'returns only residents who paid lot fees for ALL their properties' do
-        expect(subject.lot_fees_paid).to contain_exactly(resident_paid)
+      let(:property_mixed) { FactoryBot.create(:property, :with_paid_lots, :with_unpaid_lots, street_name: "MIXED") }
+      let(:property_paid) { FactoryBot.create(:property, :with_paid_lots, street_name: "PAID") }
+      let(:property_unpaid) { FactoryBot.create(:property, :with_unpaid_lots, street_name: "UNPAID") }
+      let!(:resident_mixed1) { FactoryBot.create(:resident, last_name: 'MIXED1', properties: [property_paid, property_unpaid]) }
+      let!(:resident_mixed2) { FactoryBot.create(:resident, last_name: 'MIXED2', properties: [property_paid, property_mixed]) }
+      let!(:resident_paid) { FactoryBot.create(:resident, last_name: 'PAID', properties: [property_paid]) }
+      let!(:resident_unpaid) { FactoryBot.create(:resident, last_name: 'UNPAID', properties: [property_unpaid]) }
+
+      describe '.lot_fees_paid' do
+        it 'returns only residents who paid lot fees for ALL their properties' do
+          expect(subject.lot_fees_paid).to contain_exactly(resident_paid)
+        end
+      end
+
+      describe '.lot_fees_not_paid' do
+        it 'returns any property where some lot fee is not paid' do
+          expect(subject.lot_fees_not_paid).to contain_exactly(resident_unpaid, resident_mixed1, resident_mixed2)
+        end
       end
     end
 
-    describe 'lot_fees_not_paid' do
-      it 'returns any property where some lot fee is not paid' do
-        expect(subject.lot_fees_not_paid).to contain_exactly(resident_unpaid, resident_mixed1, resident_mixed2)
+    context '(search)' do
+      let!(:fred) do
+        FactoryBot.create(:resident, last_name: 'FLINTSTONE, JR', first_name: 'FREDERICK', middle_name: 'J')
+      end
+
+      let!(:wilma) do
+        FactoryBot.create(:resident, last_name: 'FLINTSTONE', first_name: 'WILMA', middle_name: 'B')
+      end
+
+      describe '.search_by_name' do
+        it 'finds by exact last_name, case-insensitive' do
+          residents = Resident.search_by_name("FLINTSTONE")
+          expect(residents).to contain_exactly(fred, wilma)
+        end
+
+        it 'finds partial names' do
+          residents = Resident.search_by_name("Flintstone, Fred")
+          expect(residents).to contain_exactly(fred)
+        end
+      end
+
+      describe '.search_by_name_sounds_like' do
+        it 'finds by exact last_name, case-insensitive' do
+          residents = Resident.search_by_name_sounds_like("frederick")
+          expect(residents).to contain_exactly(fred)
+        end
+
+        it 'finds by similar sounding last_name, case-insensitive' do
+          residents = Resident.search_by_name_sounds_like("fredarick")
+          expect(residents).to contain_exactly(fred)
+        end
       end
     end
 
-    describe 'search_by_name' do
-      before(:each) do
-        FactoryBot.create(:resident, last_name: 'FREDERICK, JR', first_name: 'RAYMOND', middle_name: 'F')
+    describe '.without_primary_residence' do
+      let(:property1) { FactoryBot.create(:property, :with_paid_lots, street_name: "PRIMARY RES") }
+      let!(:resident_with_primary_residence) do
+        FactoryBot.create(:resident, last_name: 'WITH_PRIMARY_RES').tap do |r|
+          r.residencies << FactoryBot.create(:residency, property: property1, resident: r)
+        end
+      end
+      let!(:resident_without_primary_residence) do
+        FactoryBot.create(:resident, last_name: 'WITHOUT_PRIMARY_RES').tap do |r|
+          r.residencies << FactoryBot.create(:residency, :coowner, :second_home, property: property1, resident: r)
+        end
       end
 
-      it 'finds by exact last_name, case-insensitive' do
-        residents = Resident.search_by_name("Frederick, Jr")
-        expect(residents.count).to eq(1)
-        expect(residents.first.last_name).to eq('FREDERICK, JR')
-      end
-
-      it 'finds partial names' do
-        residents = Resident.search_by_name("Frederick, Ray")
-        expect(residents.count).to eq(1)
-        expect(residents.first.last_name).to eq('FREDERICK, JR')
+      it 'should return all residents without a primary residence' do
+        expect(Resident.without_primary_residence).to contain_exactly(resident_without_primary_residence)
       end
     end
   end

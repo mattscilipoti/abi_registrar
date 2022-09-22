@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class LotsTest < ApplicationSystemTestCase
   setup do
-    @lot = lots(:one)
+    @lot = FactoryBot.create(:lot)
   end
 
   test "visiting the index" do
@@ -14,10 +14,6 @@ class LotsTest < ApplicationSystemTestCase
     visit lots_url
     click_on "New lot"
 
-    fill_in "Account number", with: @lot.account_number
-    fill_in "District", with: @lot.district
-    fill_in "Lot number", with: @lot.lot_number
-    fill_in "Section", with: @lot.section
     fill_in "Size", with: @lot.size
     fill_in "Subdivision", with: @lot.subdivision
     click_on "Create Lot"
@@ -30,12 +26,8 @@ class LotsTest < ApplicationSystemTestCase
     visit lot_url(@lot)
     click_on "Edit this lot", match: :first
 
-    fill_in "Account number", with: @lot.account_number
-    fill_in "District", with: @lot.district
     fill_in "Lot number", with: @lot.lot_number
-    fill_in "Section", with: @lot.section
     fill_in "Size", with: @lot.size
-    fill_in "Subdivision", with: @lot.subdivision
     click_on "Update Lot"
 
     assert_text "Lot was successfully updated"

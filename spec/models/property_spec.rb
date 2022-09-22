@@ -53,4 +53,26 @@ RSpec.describe Property, type: :model do
       expect(p.errors[:residencies]).to contain_exactly(/is invalid/i)
     end
   end
+
+  describe '(instance methods)' do
+    subject(:property) { FactoryBot.create(:property) }
+
+    describe '(tax_id related)' do
+      describe 'district' do
+        it 'is derived from tax_id' do
+          expect(property.district('12 345 67890123')).to eql('12')
+        end
+      end
+      describe 'subdivision' do
+        it 'is derived from tax_id' do
+          expect(property.subdivision('12 345 67890123')).to eql('345')
+        end
+      end
+      describe 'account_number' do
+        it 'is derived from tax_id' do
+          expect(property.account_number('12 345 67890123')).to eql('67890123')
+        end
+      end
+    end
+  end
 end

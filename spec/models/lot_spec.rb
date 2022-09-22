@@ -16,7 +16,7 @@ RSpec.describe Lot, type: :model do
       end
     end
 
-    describe 'lot_fees_not_paid' do
+  describe 'lot_fees_not_paid' do
       it 'returns all lots that are NOT paid' do
         expect(subject.lot_fees_not_paid).to contain_exactly(lot_unpaid1, lot_unpaid2)
       end
@@ -25,22 +25,6 @@ RSpec.describe Lot, type: :model do
 
   describe ('instance methods') do
     subject(:lot) { FactoryBot.create(:lot) }
-    describe '#tax_identifier' do
-      it 'pads the district (00)' do
-        lot.district = 2
-        expect(lot.tax_identifier).to start_with('02 ')
-      end
 
-      it 'pads the subdivision (000)' do
-        lot.district = 2
-        lot.subdivision = 4
-        expect(lot.tax_identifier).to start_with('02 004')
-      end
-
-      it 'pads the account number (0*8)' do
-        lot.account_number = 123456
-        expect(lot.tax_identifier).to end_with(' 00123456')
-      end
-    end
   end
 end

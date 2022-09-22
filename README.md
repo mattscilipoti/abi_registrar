@@ -21,10 +21,11 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Lots
     - Record Lot fee payments (not connected to Quickbooks)
     - Search by Lot, Property, or Resident info
-    - Lots indicate if part of ABI, including exceptions not in Sunrise Beach
   - Manage Properties
     - Have one or more Lots
+    - Identified by TaxID
     - Owned by one or more Residents
+    - Can mark as membership_eligible?
     - Add date-stamped Comments
     - Search by Property, Lot, or Resident info
   - Manage Residents
@@ -67,21 +68,47 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Authentication, via password or email
     - List Application Administators
   - Import Lots, Properties, Residents
-    - Source: "2022 Membership.csv": https://drive.google.com/drive/folders/1I2f6KPanRLRBqU3eCySs9-FdKgQPRabm
+    - Source: "Arden Property Owners & NSB Properties": https://docs.google.com/spreadsheets/d/1a8-fnFI-7YImNmB9dSKZG4xj_stYDBkl/edit?usp=sharing&ouid=101094552356953280075&rtpof=true&sd=true
   - Import Shares
     - Note: transacted_at DateTime will update for ALL Imported Share Transactions on EACH Import (I think this is appropriate, if we are using the same spreadsheet).
     - Source: SharesRegistrarSpreadsheet: https://docs.google.com/spreadsheets/d/1F-FEmh14Go5bLmCDrcDax2tbJycWvHoz/edit?rtpof=true
 
 
 ### TODO
-
+  - Meeting 2022/09/11
+    - ~~Move TaxID to Property~~
+    - Import from new spreadsheet
+      - Code Complete, awaiting updated spreadsheet for testing
+    - Property:
+      - ~~Rename AbiMember -> MembershipEligible~~
+      - Have partial lots (shared among multiple properties)
+    - Resident
+      -  Shareholder? (has 1 or more shares)
+        - Remaining shares are automatically transferred to new owner on property transfer(unless transferred)
+      - Deceased?
+    - Summary page from Registrar Report
+      - Over time?
+    - Ownership verified (via SDAT) (Not the same as verified residency)
+      - When transferring ownership, may not be verified for a while
+      - Deed holder
+    - Residency:
+      - Add ResidentType: Border, Trustee, Spouse
+    - Resident: add birth year for minors
+      - Display Birth Year, Age
+      - Is verified once we assign Resident Status
+    - Lot: add Comments
+    - Passes:
+      - Rename: Vehicle Pass,
+      - Add: Ramp Pass (Sticker, Tag, Vessel Registration Number), Dinghy Pass (), Watercraft Pass
+  - ABI
+    - Indicate non-Sunrise beach that have access (Not)
   - Audit Transactions
     - Undo lastest change
     - Revert to previous version
     - List deleted transactions
       - Restore  deleted transaction
   - Manage Property
-    - Link to SDAT
+    - Link to SDAT (cannot find direct link, can probably mechanize fill-in of search fields)
   - Manage Property Transfer
     - Inform ACA
     - Transfer Residency

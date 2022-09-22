@@ -12,24 +12,8 @@ p
 
 p
   strong
-    | District:
-  = lot.district
-p
-  strong
-    | Subdivision:
-  = lot.subdivision
-p
-  strong
-    | Account number:
-  = lot.account_number
-p
-  strong
     | Lot number:
   = lot.lot_number
-p
-  strong
-    | Section:
-  = lot.section
 p
   strong
     | Size:
@@ -42,4 +26,4 @@ fieldset
       small= "(#{lot.residents.size} ct.)"
 
   - columns = %i[resident resident_status_i18n]
-  =render 'layouts/models_table', models: lot.residencies.includes(:resident), columns: columns, allow_edit: false, allow_show: false
+  =render 'layouts/models_table', models: lot.residencies.includes(:resident).decorate, columns: columns, allow_edit: false, allow_show: false
