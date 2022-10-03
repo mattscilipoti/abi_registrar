@@ -8,10 +8,13 @@ class Residency < ApplicationRecord
   delegate :lot_fees_paid?, :street_address, to: :property
   delegate :full_name, :email_address, :is_minor?, :phone, to: :resident
   enum :resident_status, {
-    owner: 'Owner',
-    coowner: 'Co-owner',
+    owner: 'Owner', # Deed Holder
+    coowner: 'Co-owner', # Deed Holder
+    trustee: 'Trustee', # Deed Holder
+    border: 'Border',
     dependent: 'Dependent',
-    renter: 'Renter'
+    renter: 'Renter',
+    significant_other: 'Significant Other',
   }, scopes: true
 
   scope :by_property, -> {
@@ -25,7 +28,7 @@ class Residency < ApplicationRecord
     distinct.joins(:property).merge(Property.lot_fees_paid)
   }
 
-  scope :deed_holder, -> { owner.or(coowner) }
+  scope :deed_holder, -> { owner.or(coowner).or(trustee) }
   scope :primary_residence, -> { where(primary_residence: true) }
   scope :with_primary_residence, -> { where.not(id: without_primary_residence) }
   scope :without_primary_residence, -> { where(primary_residence: false).or(where(primary_residence: nil)) }
@@ -55,7 +58,7 @@ class Residency < ApplicationRecord
   end
 
   def deed_holder?
-    owner? || coowner?
+    owner? || coowner? || trustee?
   end
 
   def inspect

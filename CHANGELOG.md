@@ -9,6 +9,9 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 ## Upcoming: Add ResidentTypes: border, significant_other, trustee
 
+- Residency
+  - Add ResidentTypes: Border, Spouse, Trustee (Deed Holder)
+
 ## 2022/09/22: Meeting 2022/09/11
 
 - Property

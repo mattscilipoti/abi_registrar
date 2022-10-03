@@ -11,6 +11,7 @@ class Resident < ApplicationRecord
   has_one :primary_residency, -> { where(primary_residence: true) }, class_name: 'Residency'
   has_one :primary_residence, through: :primary_residency, source: :property
 
+  scope :border, -> { distinct.joins(:residencies).merge(Residency.border) }
   scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
   scope :not_deed_holder, -> { where.not(id: deed_holder) }
   scope :lot_fees_paid, -> {
@@ -22,6 +23,7 @@ class Resident < ApplicationRecord
     distinct.joins(:lots).merge(Lot.lot_fees_not_paid)
   }
   scope :renter, -> { distinct.joins(:residencies).merge(Residency.renter) }
+  scope :significant_other, -> { distinct.joins(:residencies).merge(Residency.significant_other) }
   scope :not_verified, -> { distinct.joins(:residencies).merge(Residency.not_verified) }
   scope :verified, -> { distinct.joins(:residencies).merge(Residency.verified) }
   scope :with_mailing_address, -> { distinct.where.not(mailing_address: nil) }
@@ -73,12 +75,14 @@ class Resident < ApplicationRecord
     )
   end.tap { configure_pgsearch } # this syntax ensures the running of the configuration happens after the config and is not separate from the config
 
-
   def self.scopes
     %i[
       deed_holder
       not_deed_holder
+      border
+      dependent
       renter
+      significant_other
       without_resident_status
       without_primary_residence
       lot_fees_paid

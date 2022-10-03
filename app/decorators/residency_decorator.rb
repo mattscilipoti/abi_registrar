@@ -36,13 +36,17 @@ class ResidencyDecorator < Draper::Decorator
     case resident_status
     when nil
       '⁇'
-    when /owner/
+    when :border.to_s
+      '' # people-robbery
+    when /owner/, :trustee.to_s
       '' # gavel
     when :renter.to_s
       '' # suitcase
     when :dependent.to_s
       # '' # family, pro
       '' # user-graduate
+    when :significant_other.to_s
+      '' # user-group
     else
       raise NotImplementedError, "Unknown resident_status: #{resident_status.inspect}"
     end
@@ -50,9 +54,8 @@ class ResidencyDecorator < Draper::Decorator
 
   def resident_status_i18n
     if resident_status
-      i18n_key = "activerecord.attributes.#{model_name.i18n_key}.resident_status.#{resident_status}"
-      status = I18n.t(i18n_key)
-      status || "⁇"
+      # Convert from key to name
+      Residency.resident_statuses[resident_status]
     else
       'Resident status: unknown'
     end

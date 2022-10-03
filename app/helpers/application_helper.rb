@@ -15,10 +15,14 @@ module ApplicationHelper
 
   def icon_for_scope(scope_name)
     case scope_name.to_s
+    when /border/
+      'people-robbery'
     when /membership_eligible/
       'umbrella-beach'
     when /deed_holder/
       'gavel'
+    when /dependent/
+      'user-graduate'
     when /email/
       'at'
     when /future/, /time/
@@ -39,6 +43,8 @@ module ApplicationHelper
       'suitcase'
     when /section/
       'section'
+    when /significant_other/
+      'user-group'
     when /state/
       'flag-usa'
     when /street/

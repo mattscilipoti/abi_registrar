@@ -30,7 +30,8 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Search by Property, Lot, or Resident info
   - Manage Residents
     - Associated with one or more Properties
-    - Can be Deed Holders, Renters, or Dependents
+    - Deed Holders: Owner, Co-owner, Trustee
+    - Non-deed Holders: Border, Dependent, Renter, Spouse
     - Can toggle verified from index table
     - Mark as verified
     - Search by Last Name, Property Address, or Lot info
@@ -92,7 +93,7 @@ Not only do we need to gather and manage the approprite information, we need to 
       - When transferring ownership, may not be verified for a while
       - Deed holder
     - Residency:
-      - Add ResidentType: Border, Trustee, Spouse
+      - ~~Add ResidentType: Border, Trustee (Deed Holder), Spouse~~
     - Resident: add birth year for minors
       - Display Birth Year, Age
       - Is verified once we assign Resident Status
