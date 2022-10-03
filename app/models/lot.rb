@@ -1,20 +1,4 @@
 class Lot < ApplicationRecord
-  # List of searchable columns for this Model
-  # ! this must be declared before pg_search_scope
-  def self.searchable_columns
-    [:lot_number]
-  end
-  # Configure search
-  include PgSearch::Model
-  pg_search_scope :search_by_all,
-    against: searchable_columns,
-    associated_against: {
-      property: Property.searchable_columns,
-      residents: Resident.searchable_columns
-    },
-    using: {
-      tsearch: { prefix: true }
-    }
 
   belongs_to :property, optional: true
   has_many :residencies, through: :property
@@ -32,6 +16,27 @@ class Lot < ApplicationRecord
     alias lot_fees_not_paid fee_not_paid
     alias lot_fees_paid fee_paid
   end
+
+  def self.configure_pgsearch
+    # List of searchable columns for this Model
+    # ! this must be declared before pg_search_scope
+    def self.searchable_columns
+      [:lot_number]
+    end
+
+    # Configure pgsearch
+    include PgSearch::Model
+    pg_search_scope(:search_by_all,
+      against: searchable_columns,
+      associated_against: {
+        property: Property.searchable_columns,
+        residents: Resident.searchable_columns
+      },
+      using: {
+        tsearch: { prefix: true }
+      }
+    )
+  end.tap { configure_pgsearch } # this syntax ensures the running of the configuration happens after the config and is not separate from the config
 
   def self.scopes
     %i[

@@ -52,21 +52,32 @@ property_975Main = FactoryBot.create(:property, lots: [lot12], street_number: '9
 jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com',
   mailing_address: { number: 987, road: 'Other St', city: 'SomewhereElse', state_code: 'MD', postcode: '11111' }
 )
-
 FactoryBot.create(:residency, :owner, :verified, property: property_123Main, resident: jqo)
 FactoryBot.create(:residency, :owner, :second_home, :verified, property: property_975Main, resident: jqo)
+
+sso = FactoryBot.create(:resident, last_name: 'SignificatOther', first_name: 'Sally', email_address: 'sallyso@example.com')
+FactoryBot.create(:residency, :significant_other, :verified, property: property_123Main, resident: sso)
 
 jillqd = FactoryBot.create(:resident, last_name: 'Depends', first_name: 'Jill')
 FactoryBot.create(:residency, :dependent, :verified, property: property_123Main, resident: jillqd)
 
-jqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'John (no email)', email_address: nil)
-FactoryBot.create(:residency, :renter, :verified, property: property_975Main, resident: jqr)
+rqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'Rob (no email)', email_address: nil)
+FactoryBot.create(:residency, :renter, :verified, property: property_975Main, resident: rqr)
 
-bqr = FactoryBot.create(:resident, last_name: 'Renter', first_name: 'Bob (unverified)', email_address: 'bobqrenter@example.com')
-FactoryBot.create(:residency, :renter, :verified, property: property_975Main, resident: bqr)
+bqb = FactoryBot.create(:resident, last_name: 'Border', first_name: 'Bob (unverified)', email_address: 'bobqborder@example.com')
+FactoryBot.create(:residency, :border, :verified, property: property_975Main, resident: bqb)
 
 jdoe = FactoryBot.create(:resident, last_name: 'Doe', first_name: nil, email_address: nil)
 FactoryBot.create(:residency, :verified, property: property_975Main, resident: jdoe, resident_status: nil)
+
+
+lot13 = FactoryBot.create(:lot, lot_number: '13 (T)', size: 1)
+property_456Main = FactoryBot.create(:property, lots: [lot13], street_number: '456', street_name: 'Main St (TEST)')
+
+trust = FactoryBot.create(:resident, last_name: 'Trust', first_name: 'Irrevocable')
+FactoryBot.create(:residency, :owner, :verified, property: property_456Main, resident: trust)
+trustee = FactoryBot.create(:resident, last_name: 'Trustee', first_name: 'Tom')
+FactoryBot.create(:residency, :trustee, :verified, property: property_456Main, resident: trustee)
 
 
 # Comments

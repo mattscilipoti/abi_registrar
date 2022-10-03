@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Meeting 2022/09/11
+## Upcoming: Add ResidentTypes: border, significant_other, trustee
+
+- Group search configuration in class method (configure_pgsearch)
+- Residency
+  - Add ResidentTypes: Border, Spouse, Trustee (Deed Holder)
+    - Including db seeds
+  - Remove ResidentTypes dependency on en.yml
+- Dependencies
+  - add psql (for dbconsole)
+
+## 2022/09/22: Meeting 2022/09/11
 
 - Property
   - Rename abi_member to membership_eligible
