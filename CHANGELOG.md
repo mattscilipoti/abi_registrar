@@ -9,6 +9,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 ## Upcoming: Add ResidentTypes: border, significant_other, trustee
 
+- Group search configuration in class method (configure_pgsearch)
 - Residency
   - Add ResidentTypes: Border, Spouse, Trustee (Deed Holder)
   - Remove ResidentTypes dependency on en.yml
