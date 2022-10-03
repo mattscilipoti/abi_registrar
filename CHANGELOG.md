@@ -11,6 +11,9 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 - Residency
   - Add ResidentTypes: Border, Spouse, Trustee (Deed Holder)
+  - Remove ResidentTypes dependency on en.yml
+- Dependencies
+  - add psql (for dbconsole)
 
 ## 2022/09/22: Meeting 2022/09/11
 

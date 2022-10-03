@@ -28,7 +28,8 @@ RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSI
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
     git \
-    graphviz
+    graphviz \
+    postgresql-client
 
 # Dependencies for libpostal (https://github.com/openvenues/libpostal#installation-maclinux)
 # - curl autoconf automake libtool pkg-config
