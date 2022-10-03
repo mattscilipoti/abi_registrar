@@ -49,4 +49,30 @@ RSpec.describe Residency, type: :model do
       }.to raise_error ActiveRecord::RecordInvalid, /Validation.*one Primary Residence/
     end
   end
+
+  describe 'instance methods' do
+    subject { FactoryBot.create(:residency) }
+
+    describe '#deed_holder?' do
+      it 'returns true for owner' do
+        subject.resident_status = :owner
+        expect(subject.deed_holder?).to be true
+      end
+
+      it 'returns true for coowner' do
+        subject.resident_status = :coowner
+        expect(subject.deed_holder?).to be true
+      end
+
+      it 'returns true for trustee' do
+        subject.resident_status = :trustee
+        expect(subject.deed_holder?).to be true
+      end
+
+      it 'returns false for other status (e.g. border)' do
+        subject.resident_status = :border
+        expect(subject.deed_holder?).to be false
+      end
+    end
+  end
 end

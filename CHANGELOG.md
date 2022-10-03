@@ -12,6 +12,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Group search configuration in class method (configure_pgsearch)
 - Residency
   - Add ResidentTypes: Border, Spouse, Trustee (Deed Holder)
+    - Including db seeds
   - Remove ResidentTypes dependency on en.yml
 - Dependencies
   - add psql (for dbconsole)
