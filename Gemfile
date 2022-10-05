@@ -82,6 +82,7 @@ gem 'draper' # Decorators/View-Models for Rails Applications
 gem 'factory_bot_rails', require: false #, group: [:development, :test]
 gem 'faker', require: false #, group: [:development, :test]
 gem 'html2slim', require: false, group: :development
+gem "nilify_blanks" # a framework for saving incoming blank values as nil
 gem 'paper_trail'
 gem 'pg_search'
 gem 'railroady', group: :development # UML class diagram generator.

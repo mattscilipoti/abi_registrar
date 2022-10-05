@@ -170,6 +170,9 @@ GEM
       digest
       net-protocol
       timeout
+    nilify_blanks (1.4.0)
+      activerecord (>= 4.0.0)
+      activesupport (>= 4.0.0)
     nio4r (2.5.8)
     nokogiri (1.13.4)
       mini_portile2 (~> 2.8.0)
@@ -361,6 +364,7 @@ DEPENDENCIES
   html2slim
   importmap-rails
   jbuilder
+  nilify_blanks
   paper_trail
   pg (~> 1.1)
   pg_search
