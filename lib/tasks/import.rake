@@ -3,7 +3,8 @@ namespace :import do
   task :lots, [:source_file, :import_range] => [:environment] do |_t, args|
     # default_source_file = Rails.root.join('db', 'import' ,'_Relationship Tables.xlsx - ABI Membership.csv')
     # default_source_file = Rails.root.join('db', 'import' ,'2022_ACA_Membership.csv')
-    default_source_file = Rails.root.join('db', 'import' ,'Arden Property Owners & NSB Properties.xlsx - Property Attributes.csv')
+    # default_source_file = Rails.root.join('db', 'import' ,'Arden Property Owners & NSB Properties.xlsx - Property Attributes.csv')
+    default_source_file = Rails.root.join('db', 'import' ,'Arden Property Attributes.xlsx - Property Attributes.csv')
     args.with_defaults(source_file: default_source_file)
 
     importer = ImporterLots.new(args[:source_file])
@@ -14,7 +15,8 @@ namespace :import do
   task :properties, [:source_file, :import_range] => [:environment] do |_t, args|
     # default_source_file = Rails.root.join('db', 'import' ,'_Relationship Tables.xlsx - ABI Membership.csv')
     # default_source_file = Rails.root.join('db', 'import' ,'2022_ACA_Membership.csv')
-    default_source_file = Rails.root.join('db', 'import' ,'Arden Property Owners & NSB Properties.xlsx - Property Attributes.csv')
+    # default_source_file = Rails.root.join('db', 'import' ,'Arden Property Owners & NSB Properties.xlsx - Property Attributes.csv')
+    default_source_file = Rails.root.join('db', 'import' ,'Arden Property Attributes.xlsx - Property Attributes.csv')
     args.with_defaults(source_file: default_source_file)
 
     importer = ImporterProperties.new(args[:source_file])
@@ -25,7 +27,8 @@ namespace :import do
   task :residents, [:source_file, :import_range] => [:environment] do |_t, args|
     # default_source_file = Rails.root.join('db', 'import' ,'_Relationship Tables.xlsx - ABI Membership.csv')
     # default_source_file = Rails.root.join('db', 'import' ,'2022_ACA_Membership.csv')
-    default_source_file = Rails.root.join('db', 'import' ,'Arden Property Owners & NSB Properties.xlsx - Owner-Contact Info (8-24-22).csv')
+    # default_source_file = Rails.root.join('db', 'import' ,'Arden Property Owners & NSB Properties.xlsx - Owner-Contact Info (8-24-22).csv')
+    default_source_file = Rails.root.join('db', 'import' ,'Arden Property Attributes.xlsx - Owner-Contact Info.csv')
     args.with_defaults(source_file: default_source_file)
 
     importer = ImporterResidents.new(args[:source_file])
