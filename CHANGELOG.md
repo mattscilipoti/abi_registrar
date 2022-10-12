@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Add ResidentTypes: border, significant_other, trustee
+## Upcoming: Revised Import, Add gem: nilify_blanks
+
+- Dependencies
+  - add gem nilify_blanks to ensure empty input fields are persisted as nil
+- Import
+  - Import revised property and resident info
+- residents#index: fix dependent scope
+
+## 2022/10/02: Add ResidentTypes: border, significant_other, trustee
 
 - Group search configuration in class method (configure_pgsearch)
 - Residency

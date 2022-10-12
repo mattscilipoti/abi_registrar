@@ -13,6 +13,7 @@ class Resident < ApplicationRecord
 
   scope :border, -> { distinct.joins(:residencies).merge(Residency.border) }
   scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
+  scope :dependent, -> { distinct.joins(:residencies).merge(Residency.dependent) }
   scope :not_deed_holder, -> { where.not(id: deed_holder) }
   scope :lot_fees_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
