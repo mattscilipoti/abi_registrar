@@ -39,4 +39,4 @@ fieldset
 
   #residencies
     - columns = %i[property resident_status_link_tag verified? lot_summary lot_fees_paid? primary_residence?]
-    =render 'layouts/models_table', models: resident.residencies.by_property.decorate, columns: columns, allow_edit: false, allow_show: false, allow_sort: true
+    =render 'layouts/models_table', models: resident.residencies.by_property.decorate, columns: columns, allow_edit: false, allow_show: :property, allow_sort: true

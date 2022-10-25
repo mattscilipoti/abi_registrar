@@ -23,8 +23,8 @@ fieldset
     h2
       | Residents
       small= "(#{property.residents.size} ct.)"
-  - columns = %i[resident_link_tag resident_status_link_tag email_address primary_residence?]
-  =render 'layouts/models_table', models: property.residencies.includes(:resident).decorate, columns: columns, allow_edit: false, allow_show: false
+  - columns = %i[resident resident_status_link_tag email_address primary_residence?]
+  =render 'layouts/models_table', models: property.residencies.includes(:resident).decorate, columns: columns, allow_edit: false, allow_show: :resident
 
 fieldset
   legend

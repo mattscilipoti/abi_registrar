@@ -51,8 +51,11 @@
             td *{class: css_classes}
               -if column_index == 0
                 - if allow_show
-                  - model_class = model.decorated? ? model.object.class : model.class
-                  =link_to_if model, column_value || "⁇", model, title: "Show this #{model_class.name}"
+                  - column_model = model.decorated? ? model.object : model
+                  - if column_model.methods.include?(allow_show)
+                    - column_model = column_model.send(allow_show)
+
+                  =link_to_if column_model, column_value || "⁇", column_model, title: "Show this #{column_model.class.name}"
                 - else
                   =column_value
               -else

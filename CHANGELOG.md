@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Revised Import, Add gem: nilify_blanks
+## Upcoming: Add Resident on properties#show
+
+- Fix first column show of models_table
+
+## 2022/10/11: Revised Import, Add gem: nilify_blanks
 
 - Dependencies
   - add gem nilify_blanks to ensure empty input fields are persisted as nil
