@@ -9,6 +9,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 ## Upcoming: Add Resident on properties#show
 
+- Allow user to add a Resident on properties#show
 - Fix first column show of models_table
 
 ## 2022/10/11: Revised Import, Add gem: nilify_blanks
