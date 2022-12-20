@@ -87,6 +87,7 @@ test:
 #
 production:
   <<: *default
-  database: registrar_production
-  username: registrar
-  password: <%= ENV["REGISTRAR_DATABASE_PASSWORD"] %>
+  # url: <%= ENV["DATABASE_URL"] %>
+  # database: registrar_production
+  # username: registrar
+  # password: <%= ENV["REGISTRAR_DATABASE_PASSWORD"] %>
