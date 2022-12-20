@@ -149,6 +149,7 @@ Not only do we need to gather and manage the approprite information, we need to 
       - Owner, Co-owner, Dependent, Boarder, Renter
     - Verified
   - Sync Lot Fees with QuickBooks
+  - Manage Administrators
   - Manage Donations
     - In QuickBooks?
   - Manage Watercraft Slots

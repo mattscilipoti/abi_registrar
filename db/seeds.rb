@@ -114,3 +114,8 @@ Account.find_or_create_by(email: 'matt@scilipoti.name') do |account|
   account.password_hash = BCrypt::Password.create(test_admin_info.fetch(:password)).to_s
   account.status = 2 # verified
 end
+
+Account.find_or_create_by(email: 'chairman@ardenbeachesinc.com') do |account|
+  account.password_hash = BCrypt::Password.create(Rails.application.credentials.fetch(:temporary_password)).to_s
+  # account.status = 2 # verified
+end
