@@ -13,6 +13,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Fix first column show of models_table
 - seed: add chairman
 - db: config for heroku's DATABASE_URL
+- Login: increase width of email field
 
 ## 2022/10/11: Revised Import, Add gem: nilify_blanks
 
