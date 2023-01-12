@@ -110,6 +110,15 @@ form {
   }
 }
 
+footer {
+  // background-color: $color-secondary;
+  padding: $padding-default;
+
+  #links {
+    justify-content: flex-end;
+  }
+}
+
 h1, h2, h3, h4, h5 {
   font-family:Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 500;
@@ -170,6 +179,10 @@ i.busy {
 // login
 input[name="login"] {
   width: 30em;
+}
+
+li .list-delimiter {
+  color: $color-secondary;
 }
 
 main {

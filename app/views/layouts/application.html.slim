@@ -59,6 +59,18 @@ html lang=I18n.locale
     main.container
       = yield
 
+    footer
+      ul#links.horizontal-list
+        li= link_to font_awesome_icon('umbrella-beach'), '/', class: 'no-link-icon'
+        li= list_delimiter
+        li= external_link_to("Issues (on GitHub)", 'https://github.com/mattscilipoti/abi_registrar/issues')
+        li= list_delimiter
+        li
+          small &copy; Copyright 2023
+        li= list_delimiter
+        li
+          small Crafted with 💜 in MD
+
 javascript:
   //TODO: move to isolated javascript file
   function indicateBusySearch(event) {
