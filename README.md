@@ -76,6 +76,8 @@ Not only do we need to gather and manage the approprite information, we need to 
 
 
 ### TODO
+  - Meeting 2023/01/08
+    - Remove Resident from Property (for ownership transfer)
   - Meeting 2022/09/11
     - ~~Move TaxID to Property~~
     - Import from new spreadsheet

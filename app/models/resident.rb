@@ -18,7 +18,7 @@ class Resident < ApplicationRecord
   scope :lot_fees_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
     #   this returns those where ALL lot fees are paid
-    distinct.where.not(id: lot_fees_not_paid)
+    where.not(id: lot_fees_not_paid)
   }
   scope :lot_fees_not_paid, -> {
     distinct.joins(:lots).merge(Lot.lot_fees_not_paid)

@@ -74,5 +74,19 @@ RSpec.describe Residency, type: :model do
         expect(subject.deed_holder?).to be false
       end
     end
+
+    describe '#verified?' do
+      it 'returns true if has resident_status' do
+        subject.owner!
+        expect(subject.owner?).to eql true
+        expect(subject.resident_status).to eql 'owner'
+        expect(subject.verified?).to eql true
+      end
+
+      it 'returns false if does NOT have resident_status' do
+        subject.resident_status = nil
+        expect(subject.verified?).to eql false
+      end
+    end
   end
 end

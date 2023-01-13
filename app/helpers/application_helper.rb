@@ -13,6 +13,13 @@ module ApplicationHelper
     content_tag(:span, "#{time_ago_in_words(datetime)} ago", class: "datetime", data: { tooltip: formatted_datetime})
   end
 
+  # Creates a link to an external resource
+  # Follows the Rails' link_to signature
+  def external_link_to(name = nil, options = nil, html_options = {}, &block)
+    default_html_options = { class: 'external', target: '_blank' }
+    link_to(name, options, default_html_options.merge(html_options))
+  end
+
   def icon_for_scope(scope_name)
     case scope_name.to_s
     when /border/
@@ -51,7 +58,7 @@ module ApplicationHelper
       'road'
     when /sun/
       'sun'
-    when /without_resident_status/
+    when /resident_status/
       'tent'
     when /verified/
       'certificate'
@@ -78,6 +85,10 @@ module ApplicationHelper
       icon = flash_icon_name(flash_type)
       font_awesome_icon(icon, caption: caption) + "&nbsp;".html_safe + message
     end
+  end
+
+  def list_delimiter
+    content_tag(:span, '|', class: 'list-delimiter')
   end
 
   def menu_list_item(caption, url_options, html_options={})

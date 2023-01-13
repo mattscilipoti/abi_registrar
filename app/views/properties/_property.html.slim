@@ -23,7 +23,7 @@ fieldset
     h2
       | Residents
       small= "(#{property.residents.size} ct.)"
-  - columns = %i[resident resident_status_link_tag email_address primary_residence?]
+  - columns = %i[resident resident_updatable_status_link_tag email_address primary_residence?]
   =render 'layouts/models_table', models: property.residencies.includes(:resident).decorate, columns: columns, allow_edit: false, allow_show: :resident
 
   = link_to("Add Resident to Property", new_resident_path(resident: { residencies_attributes: { property_id: property } }))

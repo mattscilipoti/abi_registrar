@@ -66,6 +66,13 @@
             td= button_to "Destroy", model, method: :delete
 
 javascript:
+  function updateResidentStatus(target) {
+    form = jQuery(target).siblings('form');
+    console.debug("submitForm", 'form:', form, 'target:', target);
+    form.trigger('submit.rails');
+    // form.submit();
+  }
+
   function updateVerifiedOn(target) {
     form = jQuery(target).siblings('form');
     console.debug("submitForm", 'form:', form, 'target:', target);
