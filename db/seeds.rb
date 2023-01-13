@@ -117,5 +117,10 @@ end
 
 Account.find_or_create_by(email: 'chairman@ardenbeachesinc.com') do |account|
   account.password_hash = BCrypt::Password.create(Rails.application.credentials.fetch(:temporary_password)).to_s
-  # account.status = 2 # verified
+  account.status = 2 # verified
+end
+
+Account.find_or_create_by(email: 'support@ardenbeachesinc.com') do |account|
+  account.password_hash = BCrypt::Password.create(Rails.application.credentials.fetch(:temporary_password)).to_s
+  account.status = 2 # verified
 end

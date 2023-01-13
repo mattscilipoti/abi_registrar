@@ -11,7 +11,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 - Allow user to add a Resident on properties#show
 - Fix first column show of models_table
-- seed: add chairman
+- seed: add chairman, support
 - db: config for heroku's DATABASE_URL
 - Login: increase width of email field
 - Create Footer: link to Github Issues
