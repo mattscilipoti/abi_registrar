@@ -11,6 +11,8 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 - Allow user to add a Resident on properties#show
 - Fix first column show of models_table
+- Residency:
+  - verified? is based on resident_status (not verified_on)
 - seed: add chairman, support
 - db: config for heroku's DATABASE_URL
 - Login: increase width of email field

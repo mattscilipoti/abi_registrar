@@ -34,8 +34,8 @@ class Residency < ApplicationRecord
   scope :without_primary_residence, -> { where(primary_residence: false).or(where(primary_residence: nil)) }
   scope :with_resident_status, -> { where.not(id: without_resident_status) }
   scope :without_resident_status, -> { where(resident_status: nil) }
-  scope :verified, -> { where.not(verified_on: nil) }
-  scope :not_verified, -> { where(verified_on: nil) }
+  scope :verified, -> { where.not(resident_status: nil) }
+  scope :not_verified, -> { where(resident_status: nil) }
 
   validates :primary_residence, uniqueness: {
     if: -> { primary_residence? },
@@ -83,6 +83,6 @@ class Residency < ApplicationRecord
   end
 
   def verified?
-    !resident_status?
+    resident_status?
   end
 end
