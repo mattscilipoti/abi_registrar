@@ -9,7 +9,9 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 ## Upcoming: Add Resident on properties#show
 
-- Allow user to add a Resident on properties#show
+- property#show
+  - Can add a Resident to a Property
+  - Can assign resident_type
 - Fix first column show of models_table
 - Residency:
   - verified? is based on resident_status (not verified_on)

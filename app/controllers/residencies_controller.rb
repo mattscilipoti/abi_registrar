@@ -33,7 +33,8 @@ class ResidenciesController < ApplicationController
 
     def residency_params
       params.require(:residency).permit(
-        :verified_on,
+        :resident_status,
+        :verified_on
       )
     end
 end

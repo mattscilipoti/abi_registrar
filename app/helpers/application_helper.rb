@@ -58,7 +58,7 @@ module ApplicationHelper
       'road'
     when /sun/
       'sun'
-    when /without_resident_status/
+    when /resident_status/
       'tent'
     when /verified/
       'certificate'
