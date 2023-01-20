@@ -10,7 +10,7 @@ fieldset
         th Lot Fee(s) Paid?
         th Last Updated
     tbody
-      - [Lot, Property, Resident, Vehicle].each do |model|
+      - [Lot, Property, Resident, VehicleParkingPass].each do |model|
         tr
           td =link_to model.name.pluralize, url_for(model.table_name)
           td.number =model.count

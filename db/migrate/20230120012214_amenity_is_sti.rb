@@ -3,8 +3,8 @@ class AmenityIsSti < ActiveRecord::Migration[7.0]
     add_column 'amenities', 'type', :string
 
     # All current Amenities are Vehicles
-    say_with_time "Assigning type:'Vehicle' to ALL amenities" do
-      Amenity.update_all(type: Vehicle.name)
+    say_with_time "Assigning type:'VehicleParkingPass' to ALL amenities" do
+      Amenity.update_all(type: VehicleParkingPass.name)
     end
   end
 end

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
         post :transfer
       end
     end
-    resources :vehicles
+    resources :vehicle_parking_passes
   end
   # Defines the root path route ("/")
   # root "articles#index"

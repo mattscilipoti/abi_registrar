@@ -1,4 +1,4 @@
-class VehicleDecorator < Draper::Decorator
+class VehicleParkingPassDecorator < Draper::Decorator
   delegate_all
 
   # Define presentation-specific methods here. Helpers are accessed through

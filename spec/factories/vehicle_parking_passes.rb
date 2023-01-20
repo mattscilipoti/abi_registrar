@@ -1,7 +1,8 @@
 FactoryBot.define do
-  factory :vehicle do
-    tag_number { Faker::Vehicle.license_plate(state_abbreviation: 'MD') }
+  factory :vehicle_parking_pass do
     sequence(:sticker_number) { |n| 123456 + n }
+    state_code { 'MD' }
+    tag_number { Faker::Vehicle.license_plate(state_abbreviation: state_code) }
 
     resident
 

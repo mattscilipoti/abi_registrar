@@ -1,4 +1,4 @@
-class Vehicle < Amenity
+class VehicleParkingPass < Amenity
   scope :problematic, -> { without_state_code }
   # scope :without_state_code, -> { where(state_code: nil) }
 

@@ -29,11 +29,11 @@ class Amenity < ApplicationRecord
 
   # validates_presence_of :tag_number, :sticker_number
 
-  def self.scopes
-    %i[
-      without_state_code
-    ]
-  end
+  # def self.scopes
+  #   %i[
+  #     without_state_code
+  #   ]
+  # end
 
   # Useful for form collections
   # Displays summary, returns code
