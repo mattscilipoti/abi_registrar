@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Add Resident on properties#show
+## Upcoming: Amentites
+
+- convert Vehicle to Amenity STI
+
+## 2023/01/12: Add Resident on properties#show
 
 - property#show
   - Can add a Resident to a Property

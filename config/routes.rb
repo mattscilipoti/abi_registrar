@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get 'summary', to: 'pages#summary'
 
     resources :accounts, only: [:index]
+    resources :amenities, only: [:index]
     resources :comments, only: [:create]
     resources :lots
     resources :item_transactions

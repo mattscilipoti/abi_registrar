@@ -108,7 +108,7 @@ module ApplicationHelper
     end
   end
 
-  def searchbar_tag(model, controller: model.table_name)
+  def searchbar_tag(model, controller: model.name.tableize)
     index_path = url_for(controller: controller, action: :index)
     content_tag(:div, class: "searchbar row") do
       concat(search_form_tag(index_path))
