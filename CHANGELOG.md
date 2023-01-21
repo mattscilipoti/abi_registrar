@@ -9,10 +9,11 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 ## Upcoming: Amentites
 
-- Convert Vehicle to Amenity (STI) as VehicleParkingPass
+- Convert Vehicle to AmenityPass (STI) as VehicleParkingPass
   - Rename vehicles table to amenities
-  - Rename Vehicle to VehicleParkingPass < Amenity
+  - Rename Vehicle to VehicleParkingPass < AmenityPass
     - Update routes, views, controllers, etc.
+- Can manage WatercraftStoragePasses
 
 ## 2023/01/12: Add Resident on properties#show
 

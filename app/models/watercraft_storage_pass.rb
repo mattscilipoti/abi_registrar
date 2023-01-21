@@ -1,4 +1,4 @@
-class WatercraftStoragePass < Amenity
+class WatercraftStoragePass < AmenityPass
   alias_attribute :rack_slot_number, :location
   scope :problematic, -> { without_description }
   # scope :without_state_code, -> { where(state_code: nil) }

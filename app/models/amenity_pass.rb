@@ -1,6 +1,6 @@
 require 'csv' # for states
 
-class Amenity < ApplicationRecord
+class AmenityPass < ApplicationRecord
   belongs_to :resident
   has_many :properties, :through => :resident
 

@@ -4,7 +4,7 @@ class AmenityIsSti < ActiveRecord::Migration[7.0]
 
     # All current Amenities are Vehicles
     say_with_time "Assigning type:'VehicleParkingPass' to ALL amenities" do
-      Amenity.update_all(type: VehicleParkingPass.name)
+      AmenityPass.update_all(type: VehicleParkingPass.name)
     end
   end
 end

@@ -7,7 +7,7 @@
   .form-inputs
     = f.input :sticker_number
     = f.input :tag_number
-    = f.input :state_code, collection: Amenity.states
+    = f.input :state_code, collection: AmenityPass.states
     = f.association :resident, collection: possible_residents
 
   .form-actions

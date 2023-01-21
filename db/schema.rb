@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_21_012016) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_013252) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -55,7 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_012016) do
     t.index ["email"], :name=>"index_accounts_on_email", :unique=>true, :where=>"(status = ANY (ARRAY[1, 2]))"
   end
 
-  create_table "amenities", force: :cascade do |t|
+  create_table "amenity_passes", force: :cascade do |t|
     t.string   "tag_number"
     t.integer  "sticker_number", :null=>false
     t.bigint   "resident_id",    :null=>false
@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_012016) do
     t.integer  "beach_number"
     t.string   "location"
 
-    t.index ["resident_id"], :name=>"index_amenities_on_resident_id"
+    t.index ["resident_id"], :name=>"index_amenity_passes_on_resident_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -178,7 +178,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_012016) do
   add_foreign_key "account_password_reset_keys", "accounts", column: "id"
   add_foreign_key "account_remember_keys", "accounts", column: "id"
   add_foreign_key "account_verification_keys", "accounts", column: "id"
-  add_foreign_key "amenities", "residents"
+  add_foreign_key "amenity_passes", "residents"
   add_foreign_key "item_transactions", "residencies"
   add_foreign_key "item_transactions", "residencies", column: "from_residency_id"
   add_foreign_key "lots", "properties"
