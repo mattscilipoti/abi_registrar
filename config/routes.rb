@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       end
     end
     resources :vehicle_parking_passes
+    resources :watercraft_storage_passes
   end
   # Defines the root path route ("/")
   # root "articles#index"

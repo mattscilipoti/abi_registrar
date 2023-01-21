@@ -91,6 +91,9 @@ FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: p
 # Vehicle Parking Passes
 Resident.lot_fees_paid.each {|r| FactoryBot.create(:vehicle_parking_pass, resident: r) }
 
+# Watercraft Storage Passes
+Resident.lot_fees_paid.each {|r| FactoryBot.create(:watercraft_storage_pass, resident: r) }
+
 # Admins
 test_admin_info = Rails.application.credentials.fetch(:test_admin)
 if !Rails.env.production?

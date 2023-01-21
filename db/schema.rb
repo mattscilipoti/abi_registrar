@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_20_012214) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_012016) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -56,13 +56,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_20_012214) do
   end
 
   create_table "amenities", force: :cascade do |t|
-    t.string   "tag_number",     :null=>false
+    t.string   "tag_number"
     t.integer  "sticker_number", :null=>false
     t.bigint   "resident_id",    :null=>false
     t.datetime "created_at",     :null=>false
     t.datetime "updated_at",     :null=>false
     t.string   "state_code",     :limit=>2
     t.string   "type"
+    t.string   "description"
+    t.integer  "beach_number"
+    t.string   "location"
 
     t.index ["resident_id"], :name=>"index_amenities_on_resident_id"
   end

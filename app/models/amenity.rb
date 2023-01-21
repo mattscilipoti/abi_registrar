@@ -9,7 +9,7 @@ class Amenity < ApplicationRecord
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
   def self.searchable_columns
-    [:state_code, :sticker_number, :tag_number]
+    [:beach_number, :description, :location, :state_code, :sticker_number, :tag_number]
   end
   # Configure search
   include PgSearch::Model
@@ -25,6 +25,7 @@ class Amenity < ApplicationRecord
 
   scope :not_paid, -> { where('1=2') } # TODO: sticker fee not paid?
   # scope :problematic, -> { without_state_code }
+  scope :without_description, -> { where(description: nil) }
   scope :without_state_code, -> { where(state_code: nil) }
 
   # validates_presence_of :tag_number, :sticker_number

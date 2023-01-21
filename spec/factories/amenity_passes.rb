@@ -9,4 +9,16 @@ FactoryBot.define do
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.now) }
   end
+
+  factory :watercraft_storage_pass do
+    sequence(:sticker_number) { |n| 234567 + n }
+    beach_number { rand(1..4) }
+    description { 'Lorem Ipsum' }
+    location { rand(1..22) }
+
+    resident
+
+    created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.now) }
+  end
 end

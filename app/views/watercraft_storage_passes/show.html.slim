@@ -1,0 +1,9 @@
+h1 Watercraft Storage Pass: #{@watercraft_storage_pass.to_s}
+== render @watercraft_storage_pass
+
+div
+  => link_to "Edit this Watercraft Storage Pass", edit_watercraft_storage_pass_path(@watercraft_storage_pass)
+  '|
+  =< link_to "Back to Watercraft Storage Passes", watercraft_storage_passes_path
+
+  = button_to "Destroy this Watercraft Storage Pass", @watercraft_storage_pass, method: :delete

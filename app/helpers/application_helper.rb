@@ -30,6 +30,8 @@ module ApplicationHelper
       'gavel'
     when /dependent/
       'user-graduate'
+    when /description/
+      'clipboard'
     when /email/
       'at'
     when /future/, /time/
@@ -62,6 +64,8 @@ module ApplicationHelper
       'tent'
     when /verified/
       'certificate'
+    when /watercraft/
+      'anchor'
     else
       raise NotImplementedError, "No icon for scope #{scope_name.inspect}"
     end
