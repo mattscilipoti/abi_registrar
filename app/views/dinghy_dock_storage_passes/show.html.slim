@@ -1,0 +1,9 @@
+h1 Dinghy Dock Storage Pass: #{@dinghy_dock_storage_pass.to_s}
+== render @dinghy_dock_storage_pass
+
+div
+  => link_to "Edit this Dinghy Dock Storage Pass", edit_dinghy_dock_storage_pass_path(@dinghy_dock_storage_pass)
+  '|
+  =< link_to "Back to Dinghy Dock Storage Passes", dinghy_dock_storage_passes_path
+
+  = button_to "Destroy this Dinghy Dock Storage Pass", @dinghy_dock_storage_pass, method: :delete

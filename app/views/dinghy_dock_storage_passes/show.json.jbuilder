@@ -1,0 +1,1 @@
+json.partial! "dinghy_dock_storage_passes/dinghy_dock_storage_pass", dinghy_dock_storage_pass: @dinghy_dock_storage_pass

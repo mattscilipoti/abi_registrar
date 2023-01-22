@@ -1,0 +1,15 @@
+- possible_residents = Resident.where(id: @dinghy_dock_storage_pass.resident_id).or(Resident.lot_fees_paid)
+
+= simple_form_for(@dinghy_dock_storage_pass) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :sticker_number
+    = f.input :beach_number
+    = f.input :location
+    = f.input :description, as: :text, input_html: { rows: 2, cols: 60 }
+    = f.association :resident, collection: possible_residents
+
+  .form-actions
+    = f.button :submit

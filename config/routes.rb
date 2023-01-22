@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :accounts, only: [:index]
     resources :amenities, only: [:index]
     resources :comments, only: [:create]
+    resources :dinghy_dock_storage_passes
     resources :lots
     resources :item_transactions
     resources :properties

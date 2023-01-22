@@ -51,9 +51,12 @@ Not only do we need to gather and manage the approprite information, we need to 
       - Assign shares to Property
     - Transfer Shares
     - Can Edit/Delete via Item Tranaactions
-  - Manage Vehicle Parking Passes
-    - Assign Sticker and Vehicle to Resident
-    - Search via Sticker Number, Tag Number, State, or Resident info
+  - Manage Amenity Passes
+    - Vehicle Parking Passes
+      - Assign Sticker and Vehicle to Resident
+      - Search via Sticker Number, Tag Number, State, or Resident info
+    - Dinghy Dock Storage Passes
+    - Watercraft Storage Passes
   - Manage Transactions
     - Search via by Type, Activity, Resident, Property
   - Search
@@ -101,7 +104,7 @@ Not only do we need to gather and manage the approprite information, we need to 
       - Is verified once we assign Resident Status
     - Lot: add Comments
     - Passes:
-      - Add: Ramp Pass (Sticker, Tag, Vessel Registration Number), Dinghy Pass (), Watercraft Pass
+      - Add: ~~Ramp Pass (Sticker, Tag, Vessel Registration Number), Dinghy Pass (description)~~, Watercraft Pass
   - ABI
     - Indicate non-Sunrise beach that have access (Not)
   - Audit Transactions
