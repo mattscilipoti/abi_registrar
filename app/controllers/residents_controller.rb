@@ -14,7 +14,7 @@ class ResidentsController < ApplicationController
   # GET /residents/new
   def new
     @resident = Resident.new
-    if resident_params
+    if params[:resident]
       property_id = resident_params[:residencies_attributes][:property_id]
       @property = Property.find(property_id)
       @resident.residencies.build(property: @property)
