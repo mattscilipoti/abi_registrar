@@ -1,0 +1,9 @@
+h1 Boat Ramp Access Pass: #{@boat_ramp_access_pass.to_s}
+== render @boat_ramp_access_pass
+
+div
+  => link_to "Edit this Boat Ramp Access Pass", edit_boat_ramp_access_pass_path(@boat_ramp_access_pass)
+  '|
+  =< link_to "Back to Boat Ramp Access Passes", boat_ramp_access_passes_path
+
+  = button_to "Destroy this Boat Ramp Access Pass", @boat_ramp_access_pass, method: :delete

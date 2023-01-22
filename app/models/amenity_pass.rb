@@ -27,6 +27,7 @@ class AmenityPass < ApplicationRecord
   # scope :problematic, -> { without_state_code }
   scope :without_description, -> { where(description: nil) }
   scope :without_state_code, -> { where(state_code: nil) }
+  scope :without_tag_number, -> { where(tag_number: nil) }
 
   # validates_presence_of :tag_number, :sticker_number
 

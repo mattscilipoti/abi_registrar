@@ -55,6 +55,7 @@ Not only do we need to gather and manage the approprite information, we need to 
     - Vehicle Parking Passes
       - Assign Sticker and Vehicle to Resident
       - Search via Sticker Number, Tag Number, State, or Resident info
+    - Boat Ramp Access Passes
     - Dinghy Dock Storage Passes
     - Watercraft Storage Passes
   - Manage Transactions
@@ -104,7 +105,7 @@ Not only do we need to gather and manage the approprite information, we need to 
       - Is verified once we assign Resident Status
     - Lot: add Comments
     - Passes:
-      - Add: ~~Ramp Pass (Sticker, Tag, Vessel Registration Number), Dinghy Pass (description)~~, Watercraft Pass
+      - Add: ~~Ramp Pass (Sticker, Tag, Vessel Registration Number), Dinghy Pass (description), Watercraft Pass~~
   - ABI
     - Indicate non-Sunrise beach that have access (Not)
   - Audit Transactions

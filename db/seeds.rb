@@ -88,6 +88,9 @@ FactoryBot.create(:share_transaction, :purchase, quantity: 10, residency: mms.re
 FactoryBot.create(:share_transaction, :purchase, quantity: 20, residency: pp.residencies.deed_holder.sample)
 FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: pp.residencies.deed_holder.sample, residency: cbs.residencies.deed_holder.sample)
 
+# Boat Ramp Acccess Passes
+Resident.lot_fees_paid.each {|r| FactoryBot.create(:boat_ramp_access_pass, resident: r) }
+
 # Dinghy Dock Storage Passes
 Resident.lot_fees_paid.each {|r| FactoryBot.create(:dinghy_dock_storage_pass, resident: r) }
 
