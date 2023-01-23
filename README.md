@@ -125,7 +125,7 @@ Not only do we need to gather and manage the approprite information, we need to 
       - What steps occur for new Residents?
     - List past Owners
   - Manage Residents
-    - Add Status of "Border"
+    - ~~Add Status of "Border"~~
   - Manage Members
     - All Residents w/Shares?
       - No
