@@ -34,6 +34,8 @@ module ApplicationHelper
       'user-graduate'
     when /description/
       'clipboard'
+    when /dinghy/
+      'anchor'
     when /email/
       'at'
     when /fee/
@@ -68,7 +70,7 @@ module ApplicationHelper
       'road'
     when /sun/
       'sun'
-    when /tag/
+    when /tag/, /vehicle/, /parking/
       'car'
     when /verified/
       'certificate'
