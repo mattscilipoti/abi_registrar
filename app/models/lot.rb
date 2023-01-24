@@ -9,6 +9,7 @@ class Lot < ApplicationRecord
   scope :not_paid, -> { fee_not_paid }
   scope :problematic, -> { without_property.or(without_lot_number) }
   scope :without_lot_number, -> { where(lot_number: nil) }
+  scope :without_lot_size, -> { where(size: nil) }
   scope :without_property, -> { where(property_id: nil) }
 
   class << self
@@ -43,6 +44,7 @@ class Lot < ApplicationRecord
       fee_paid
       fee_not_paid
       without_lot_number
+      without_lot_size
       without_property
     ]
   end

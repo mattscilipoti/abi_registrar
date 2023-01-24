@@ -24,6 +24,8 @@ module ApplicationHelper
     case scope_name.to_s
     when /address/
       'location-dot'
+    when /boat/
+      'ship'
     when /border/
       'people-robbery'
     when /deed_holder/
@@ -44,6 +46,8 @@ module ApplicationHelper
       'umbrella-beach'
     when /name/
       'signature'
+    when /number/
+      'hashtag'
     when /property/, /primary_residence/
       'house-chimney'
     when /quantity/
@@ -56,6 +60,8 @@ module ApplicationHelper
       'section'
     when /significant_other/
       'user-group'
+    when /size/
+      'percent'
     when /state/
       'flag-usa'
     when /street/
@@ -67,7 +73,7 @@ module ApplicationHelper
     when /verified/
       'certificate'
     when /watercraft/
-      'anchor'
+      'warehouse'
     else
       raise NotImplementedError, "No icon for scope #{scope_name.inspect}"
     end
