@@ -3,6 +3,6 @@ h1 Resident: #{@resident.to_s}
 .model_actions
   = link_to "Edit this resident", edit_resident_path(@resident)
   = link_to "Back to residents", residents_path
-  = button_to "Destroy this resident", @resident, method: :delete
+  / = button_to "Destroy this resident", @resident, method: :delete
 
 = render partial: "comments/comments_table", locals: {commentable: @resident}
