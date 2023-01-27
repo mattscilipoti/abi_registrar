@@ -7,6 +7,7 @@ fieldset
       = form.input :verified_on
       = form.input :primary_residence
 
-    .form-actions
-      small= link_to "Remove", "#", data: { action: "click->nested-form#remove_association" }
-      = form.hidden_field :_destroy
+    - unless form.object.new_record?
+      .form-actions
+        small= link_to "Remove", "#", data: { action: "click->nested-form#remove_association" }
+        = form.hidden_field :_destroy

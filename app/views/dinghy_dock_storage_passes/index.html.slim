@@ -1,0 +1,11 @@
+= searchbar_tag(DinghyDockStoragePass)
+
+fieldset
+  legend
+    = render 'layouts/h1', title: "Dinghy Dock Storage Passes", model_count: @dinghy_dock_storage_passes.size, model_total: DinghyDockStoragePass.count
+
+  #dinghy_dock_storage_passes
+    - columns = %i[sticker_number beach_number location description resident property_summary]
+    =render 'layouts/models_table', models: @dinghy_dock_storage_passes, columns: columns, allow_sort: true
+br
+= link_to "New Dinghy Dock Storage Pass", new_dinghy_dock_storage_pass_path

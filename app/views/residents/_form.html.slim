@@ -11,10 +11,25 @@
     = form.input :phone, as: :tel
     = form.input :is_minor
 
-    <!-- #### ADDRESS FIELD STARTS HERE #### -->
     fieldset
       legend
-        h4= "Mailing Address (if not '#{@resident.primary_residence}')"
+        h4 Properties
+      div(data-controller="nested-form")
+        template data-target="nested-form.template"
+          = form.fields_for :residencies, Residency.new, child_index: 'NEW_RECORD' do |residency_form|
+            = render "residency_fields", form: residency_form
+
+        = form.fields_for :residencies do |residency|
+          = render "residency_fields", form: residency
+
+        .mb-3(data-target="nested-form.links")
+          = link_to "Assign additional property", "#", class: "btn btn-outline-primary", data: { action: "click->nested-form#add_association" }
+
+    <!-- #### ADDRESS FIELD STARTS HERE #### -->
+    br
+    fieldset
+      legend
+        h4= "Mailing Address (if not address of primary residence:'#{@resident.primary_residence}')"
       .fields
         / Use OpenStruct to provide methods for hstore (hash)
         / Uses fields for libpostal
@@ -23,21 +38,9 @@
           =a.input :road
           =a.input :unit
           =a.input :city
-          =a.input :state_code, collection: Vehicle.states
+          =a.input :state_code, collection: AmenityPass.states
           =a.input :postal_code
     <!-- #### ADDRESS FIELD ENDS HERE #### -->
-
-    h4 Properties
-    div(data-controller="nested-form")
-      template data-target="nested-form.template"
-        = form.fields_for :residencies, Residency.new, child_index: 'NEW_RECORD' do |residency_form|
-          = render "residency_fields", form: residency_form
-
-      = form.fields_for :residencies do |residency|
-        = render "residency_fields", form: residency
-
-      .mb-3(data-target="nested-form.links")
-        = link_to "Add property", "#", class: "btn btn-outline-primary", data: { action: "click->nested-form#add_association" }
 
   .form-actions
     = form.button :submit

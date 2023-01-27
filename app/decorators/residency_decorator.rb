@@ -7,6 +7,10 @@ class ResidencyDecorator < Draper::Decorator
     lots.collect{|lot| h.link_to(lot.lot_number, lot) }.join(', ').html_safe
   end
 
+  def phone_formatted
+    h.number_to_phone(phone)
+  end
+
   def property_link_tag(tooltip: self.tooltip(show_resident: false))
     status_tag = h.link_to(object.property, class: 'no-link-icon' ) do
       resident_status_tag(tooltip: tooltip)
@@ -101,12 +105,15 @@ class ResidencyDecorator < Draper::Decorator
     h.font_awesome_icon(icon_name, accessible_label: resident_status_i18n, html_options: {data: {tooltip: resident_status_i18n}})
   end
 
-  def tooltip(show_property: true, show_resident: true)
+  def tooltip(show_property: true, show_resident: true, show_resident_phone: true)
     info = []
     info << property.to_s if show_property
     info << resident.to_s if show_resident
     info << '2nd Home' unless primary_residence?
-    info << resident_status_i18n
+    # info << resident_status_i18n
+    if show_resident_phone && resident.phone
+      info << phone_formatted
+    end
     info << 'verified' if verified?
     info.compact.join(", ")
   end

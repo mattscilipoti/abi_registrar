@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_11_225944) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_013252) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_225944) do
   create_table "account_email_auth_keys", force: :cascade do |t|
     t.string   "key",             :null=>false
     t.datetime "deadline",        :null=>false
-    t.datetime "email_last_sent", :default=>"CURRENT_TIMESTAMP", :null=>false
+    t.datetime "email_last_sent", :null=>false
   end
 
   create_table "account_login_change_keys", force: :cascade do |t|
@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_225944) do
   create_table "account_password_reset_keys", force: :cascade do |t|
     t.string   "key",             :null=>false
     t.datetime "deadline",        :null=>false
-    t.datetime "email_last_sent", :default=>"CURRENT_TIMESTAMP", :null=>false
+    t.datetime "email_last_sent", :null=>false
   end
 
   create_table "account_remember_keys", force: :cascade do |t|
@@ -43,8 +43,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_225944) do
 
   create_table "account_verification_keys", force: :cascade do |t|
     t.string   "key",             :null=>false
-    t.datetime "requested_at",    :default=>"CURRENT_TIMESTAMP", :null=>false
-    t.datetime "email_last_sent", :default=>"CURRENT_TIMESTAMP", :null=>false
+    t.datetime "requested_at",    :null=>false
+    t.datetime "email_last_sent", :null=>false
   end
 
   create_table "accounts", force: :cascade do |t|
@@ -53,6 +53,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_225944) do
     t.string  "password_hash"
 
     t.index ["email"], :name=>"index_accounts_on_email", :unique=>true, :where=>"(status = ANY (ARRAY[1, 2]))"
+  end
+
+  create_table "amenity_passes", force: :cascade do |t|
+    t.string   "tag_number"
+    t.integer  "sticker_number", :null=>false
+    t.bigint   "resident_id",    :null=>false
+    t.datetime "created_at",     :null=>false
+    t.datetime "updated_at",     :null=>false
+    t.string   "state_code",     :limit=>2
+    t.string   "type"
+    t.string   "description"
+    t.integer  "beach_number"
+    t.string   "location"
+
+    t.index ["resident_id"], :name=>"index_amenity_passes_on_resident_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -146,17 +161,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_225944) do
     t.index ["last_name"], :name=>"index_residents_on_last_name"
   end
 
-  create_table "vehicles", force: :cascade do |t|
-    t.string   "tag_number",     :null=>false
-    t.integer  "sticker_number", :null=>false
-    t.bigint   "resident_id",    :null=>false
-    t.datetime "created_at",     :null=>false
-    t.datetime "updated_at",     :null=>false
-    t.string   "state_code",     :limit=>2
-
-    t.index ["resident_id"], :name=>"index_vehicles_on_resident_id"
-  end
-
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",      :null=>false
     t.bigint   "item_id",        :null=>false
@@ -174,12 +178,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_225944) do
   add_foreign_key "account_password_reset_keys", "accounts", column: "id"
   add_foreign_key "account_remember_keys", "accounts", column: "id"
   add_foreign_key "account_verification_keys", "accounts", column: "id"
+  add_foreign_key "amenity_passes", "residents"
   add_foreign_key "item_transactions", "residencies"
   add_foreign_key "item_transactions", "residencies", column: "from_residency_id"
   add_foreign_key "lots", "properties"
   add_foreign_key "residencies", "properties"
   add_foreign_key "residencies", "residents"
-  add_foreign_key "vehicles", "residents"
   create_function "pg_search_dmetaphone", "text text", <<-'END_FUNCTION_PG_SEARCH_DMETAPHONE', :force => true
 RETURNS text LANGUAGE sql AS $$ SELECT array_to_string(ARRAY(SELECT dmetaphone(unnest(regexp_split_to_array($1, E'\\s+')))), ' ') $$
   END_FUNCTION_PG_SEARCH_DMETAPHONE

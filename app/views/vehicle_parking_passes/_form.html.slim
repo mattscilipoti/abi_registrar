@@ -1,0 +1,14 @@
+- possible_residents = Resident.where(id: @vehicle_parking_pass.resident_id).or(Resident.lot_fees_paid)
+
+= simple_form_for(@vehicle_parking_pass) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :sticker_number
+    = f.input :tag_number
+    = f.input :state_code, collection: AmenityPass.states
+    = f.association :resident, collection: possible_residents
+
+  .form-actions
+    = f.button :submit

@@ -22,24 +22,26 @@ module ApplicationHelper
 
   def icon_for_scope(scope_name)
     case scope_name.to_s
+    when /address/
+      'location-dot'
     when /border/
       'people-robbery'
-    when /membership_eligible/
-      'umbrella-beach'
     when /deed_holder/
       'gavel'
     when /dependent/
       'user-graduate'
+    when /description/
+      'clipboard'
     when /email/
       'at'
-    when /future/, /time/
-      'stopwatch'
     when /fee/
       'sack-dollar'
+    when /future/, /time/
+      'stopwatch'
     when /lot/
       'mountain-sun'
-    when /address/
-      'location-dot'
+    when /membership_eligible/
+      'umbrella-beach'
     when /name/
       'signature'
     when /property/, /primary_residence/
@@ -48,6 +50,8 @@ module ApplicationHelper
       'buy-n-large'
     when /renter/
       'suitcase'
+    when /resident_status/
+      'tent'
     when /section/
       'section'
     when /significant_other/
@@ -58,10 +62,12 @@ module ApplicationHelper
       'road'
     when /sun/
       'sun'
-    when /resident_status/
-      'tent'
+    when /tag/
+      'car'
     when /verified/
       'certificate'
+    when /watercraft/
+      'anchor'
     else
       raise NotImplementedError, "No icon for scope #{scope_name.inspect}"
     end
@@ -108,7 +114,7 @@ module ApplicationHelper
     end
   end
 
-  def searchbar_tag(model, controller: model.table_name)
+  def searchbar_tag(model, controller: model.name.tableize)
     index_path = url_for(controller: controller, action: :index)
     content_tag(:div, class: "searchbar row") do
       concat(search_form_tag(index_path))

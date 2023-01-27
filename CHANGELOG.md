@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Add Resident on properties#show
+## Upcoming: Amenities
+
+- #21 Add spacing for Edit, List, Destroy links/buttons on Show pages
+- #24 Convert Vehicle to AmenityPass (STI) as VehicleParkingPass
+  - Rename vehicles table to amenities
+  - Rename Vehicle to VehicleParkingPass < AmenityPass
+    - Update routes, views, controllers, etc.
+- #24 Can manage BoatRampAccessPasses, DinghyDockStoragePasses, WatercraftStoragePasses
+- #28 Add phone to residents tooltip on properties#index
+- #30 FIX Add new Resident
+- #33 Clarify Mailing Address for new resident
+
+## 2023/01/12: Add Resident on properties#show
 
 - property#show
   - Can add a Resident to a Property

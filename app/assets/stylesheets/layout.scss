@@ -345,6 +345,10 @@ ul {
   }
 }
 
+.model_actions * {
+  padding: $padding-default;
+}
+
 .row {
   align-items: center;
   display: flex;

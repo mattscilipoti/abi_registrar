@@ -5,7 +5,10 @@ Rails.application.routes.draw do
     get 'summary', to: 'pages#summary'
 
     resources :accounts, only: [:index]
+    resources :amenities, only: [:index]
+    resources :boat_ramp_access_passes
     resources :comments, only: [:create]
+    resources :dinghy_dock_storage_passes
     resources :lots
     resources :item_transactions
     resources :properties
@@ -19,7 +22,8 @@ Rails.application.routes.draw do
         post :transfer
       end
     end
-    resources :vehicles
+    resources :vehicle_parking_passes
+    resources :watercraft_storage_passes
   end
   # Defines the root path route ("/")
   # root "articles#index"
