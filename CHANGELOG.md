@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: [#34](https://github.com/mattscilipoti/abi_registrar/issues/34), Mark Properties For Sale
+## 2023/01/29: [#34](https://github.com/mattscilipoti/abi_registrar/issues/34), Mark Properties For Sale
 
 - Can mark properties for sale, in edit or index
   - Adds scope: for_sale
