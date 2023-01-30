@@ -25,4 +25,19 @@ class PropertyDecorator < Draper::Decorator
   def street_number
     object.street_number || "⁇"
   end
+
+  def toggleable_for_sale?
+    h.form_with model: property, data: { controller: 'autosave'} do |f|
+      f.check_box :for_sale, data: { action: 'autosave#save' }
+    end
+
+    # h.simple_form_for(property, remote: true) do |f|
+    #   f.input :for_sale, label: false, input_html: {data: { url: h.property_path(property), remote: true, method: :patch }}
+    # end
+
+    # data-remote
+    # h.check_box_tag 'for_sale', '1', property.for_sale,
+    #   onchange: "this.setAttribute('data-params', 'checked=' + this.checked*this.checked)",
+    #   data: { remote: true, url: h.property_path(property), method: :patch }
+  end
 end

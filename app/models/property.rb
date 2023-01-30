@@ -12,6 +12,8 @@ class Property < ApplicationRecord
   scope :membership_eligible, -> { where(membership_eligible: true) }
   scope :not_membership_eligible, -> { where(membership_eligible: false) }
   scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
+  scope :for_sale, -> { where(for_sale: true) }
+  scope :not_for_sale, -> { where.not(for_sale: true).or(where(for_sale: nil)) }
   scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
   scope :lot_fees_paid, -> { distinct.where.not(id: lot_fees_not_paid) }
   scope :not_paid, -> { lot_fees_not_paid }
@@ -62,6 +64,7 @@ class Property < ApplicationRecord
       not_membership_eligible
       lot_fees_paid
       lot_fees_not_paid
+      for_sale
       without_lot
       without_section
       without_street_info

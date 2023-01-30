@@ -39,9 +39,13 @@ class PropertiesController < ApplicationController
   def update
     respond_to do |format|
       if @property.update(property_params)
-        format.html { redirect_to property_url(@property), notice: "Property was successfully updated." }
+        resulting_location = property_url(@property)
+        # if update is from index, return to index
+        resulting_location = request.referrer if request.referrer.present? && request.referrer.ends_with?('properties')
+        format.html { redirect_to(resulting_location, notice: "Property was successfully updated.") }
         format.json { render :show, status: :ok, location: @property }
       else
+    debugger
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @property.errors, status: :unprocessable_entity }
       end
@@ -67,6 +71,7 @@ class PropertiesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def property_params
       params.require(:property).permit(
+        :for_sale,
         :membership_eligible,
         :section,
         :street_number,

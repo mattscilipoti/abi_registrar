@@ -11,7 +11,7 @@ RSpec.describe Property, type: :model do
 
     describe 'spec setup' do
       ## There was some confusion early on, where the setup re-used lot_paid/lot_unpaid
-      ##  This cause lots to be reassigned to new properties, rather than having the appropriate lots per property.
+      ##  This caused lots to be reassigned to new properties, rather than having the appropriate lots per property.
       ## Now, we test the setup to make sure it's right
       it 'property_paid has one, paid lot' do
         expect(property_paid.lots.size).to eql(1)
@@ -28,13 +28,30 @@ RSpec.describe Property, type: :model do
       end
     end
 
+    describe 'for/not_for_sale' do
+      let!(:for_sale) { property_mixed.update_attribute(:for_sale, true) }
+      let!(:not_for_sale) { property_paid.update_attribute(:for_sale, false) }
+
+      describe 'for_sale' do
+        it 'returns only properties for sale' do
+          expect(subject.for_sale).to contain_exactly(property_mixed)
+        end
+      end
+
+      describe 'not_for_sale' do
+        it 'returns all properties NOT for sale' do
+          expect(subject.not_for_sale).to contain_exactly(property_paid, property_unpaid)
+        end
+      end
+    end
+
     describe 'lot_fees_paid' do
       it 'returns only properties with all lots paid' do
         expect(subject.lot_fees_paid).to contain_exactly(property_paid)
       end
     end
 
-    describe 'lot_fees_paid' do
+    describe 'lot_fees_not_paid' do
       it 'returns all properties with at least one lot fee NOT paid' do
         expect(subject.lot_fees_not_paid).to contain_exactly(property_mixed, property_unpaid)
       end

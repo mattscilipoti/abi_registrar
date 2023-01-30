@@ -14,7 +14,8 @@
   table
     thead
       - for column_name in columns do
-        - column_caption = column_name.to_s.gsub('_i18n', '').gsub('_link_tag', '').gsub('_tag', '').titleize
+        - excluded_name_adjusters = ['_i18n', '_link_tag', '_tag', 'toggleable_']
+        - column_caption = column_name.to_s.gsub(Regexp.union(excluded_name_adjusters), '').titleize
         - index_path = models.first.class.table_name
         - css_classes = []
         - css_classes << 'boolean' if column_name.ends_with?('?')
@@ -48,6 +49,7 @@
             - if column_value.in? [true, false]
               - column_value = column_value ? '✓' : '❌'
               - css_classes << 'boolean'
+
             td *{class: css_classes}
               -if column_index == 0
                 - if allow_show
