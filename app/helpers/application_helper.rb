@@ -40,6 +40,8 @@ module ApplicationHelper
       'at'
     when /fee/
       'sack-dollar'
+    when /for_sale/
+      'sign-hanging'
     when /future/, /time/
       'stopwatch'
     when /lot/

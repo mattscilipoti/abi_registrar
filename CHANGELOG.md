@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Amenities
+## Upcoming: [#34](https://github.com/mattscilipoti/abi_registrar/issues/34), Mark Properties For Sale
+
+- Can mark properties for sale, in edit or index
+  - Adds scope: for_sale
+  - Property supports toggleable_for_sale? (via decorator)
+- Add new JS: stimulus-rails-autosave
+  - Upgrades stimulus to v3.2.1
+
+## 2023/01/27: Amenities
 
 - #21 Add spacing for Edit, List, Destroy links/buttons on Show pages
 - #24 Convert Vehicle to AmenityPass (STI) as VehicleParkingPass

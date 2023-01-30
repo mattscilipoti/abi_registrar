@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_21_013252) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_27_041919) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -127,6 +127,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_013252) do
     t.boolean  "membership_eligible"
     t.string   "tax_identifier"
     t.integer  "section"
+    t.boolean  "for_sale"
 
     t.index ["street_name"], :name=>"index_properties_on_street_name"
     t.index ["street_number"], :name=>"index_properties_on_street_number"
