@@ -45,7 +45,6 @@ class PropertiesController < ApplicationController
         format.html { redirect_to(resulting_location, notice: "Property was successfully updated.") }
         format.json { render :show, status: :ok, location: @property }
       else
-    debugger
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @property.errors, status: :unprocessable_entity }
       end
