@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: [#38](https://github.com/mattscilipoti/abi_registrar/issues/38) Add Property to Resident, not Resident to Property
+
+- Removes the ability to add a Resident to a Property (when looking at a Property), instead you add Properties to a Resident. We didn't see a way for you to search through existing Residents. Forcing this through a Resident, encourages us to search first, but we can add new one when we need to.
+
 ## 2023/01/29: [#34](https://github.com/mattscilipoti/abi_registrar/issues/34), Mark Properties For Sale
 
 - Can mark properties for sale, in edit or index
