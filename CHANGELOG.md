@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## 2023/02/01: [#42](https://github.com/mattscilipoti/abi_registrar/issues/42) Easier Lot fee payment
+
+- Checkbox in lot list on properties#show
+- Added toggleable_lot_fee_paid? to LotDecorator
+
 ## 2023/01/31: [#38](https://github.com/mattscilipoti/abi_registrar/issues/38) Add Property to Resident, not Resident to Property
 
 - Removes the ability to add a Resident to a Property (when looking at a Property), instead you add Properties to a Resident. We didn't see a way for you to search through existing Residents. Forcing this through a Resident, encourages us to search first, but we can add new one when we need to.
