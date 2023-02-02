@@ -2,8 +2,9 @@ div id="#{dom_id(lot)}"
 
 p
   strong
-    | Paid On:
-  = lot.paid_on
+    | Paid? #{boolean_tag(lot.paid?)}
+    - if lot.paid?
+      |  On: #{lot.paid_on}
 
 p
   strong

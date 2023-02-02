@@ -1,3 +1,5 @@
+require 'wannabe_bool'
+
 class LotsController < ApplicationController
   before_action :set_lot, only: %i[ show edit update destroy ]
 
@@ -38,7 +40,10 @@ class LotsController < ApplicationController
   # PATCH/PUT /lots/1 or /lots/1.json
   def update
     respond_to do |format|
-      params[:lot].delete('lot_fee_paid') # support toggleable_lot_fee_paid?
+      # Support toggleable_lot_fee_paid?
+      if(lot_fee_paid = params[:lot].delete(:lot_fee_paid))
+        params[:lot][:paid_on] = lot_fee_paid.to_bool ? Date.today : nil
+      end
 
       if @lot.update(lot_params)
         default_destination = lot_url(@lot)

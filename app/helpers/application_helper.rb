@@ -1,5 +1,10 @@
 module ApplicationHelper
 
+  def boolean_tag(boolean_value)
+    char = boolean_value ? '✓' : '❌'
+    css_class = "bool_#{boolean_value.to_s}"
+    content_tag(:span, char, class: css_class, data: { tooltip: boolean_value ? 'Yes' : 'No' })
+  end
 
   def date_tag(date)
     datetime_tag(date, format: '%a %b %d, %Y')
