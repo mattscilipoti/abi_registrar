@@ -323,6 +323,16 @@ ul {
 //   z-index: auto;
 // }
 
+.bool_true {
+  color: green;
+  font-size: larger;
+  font-weight: bold;
+}
+.bool_false {
+  color: red;
+  font-size: smaller;
+}
+
 .group {
   align-items: center;
   border: lightgray dotted;
