@@ -37,5 +37,5 @@ fieldset
     h2
       | Lots
       small= "(#{property.lots.size} ct.)"
-  - columns = %i[lot_number lot_fee_paid? paid_on]
-  =render 'layouts/models_table', models: property.lots, columns: columns
+  - columns = %i[lot_number toggleable_lot_fee_paid? paid_on]
+  =render 'layouts/models_table', models: property.lots.decorate, columns: columns

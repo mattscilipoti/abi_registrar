@@ -38,8 +38,14 @@ class LotsController < ApplicationController
   # PATCH/PUT /lots/1 or /lots/1.json
   def update
     respond_to do |format|
+      params[:lot].delete('lot_fee_paid') # support toggleable_lot_fee_paid?
+
       if @lot.update(lot_params)
-        format.html { redirect_to lot_url(@lot), notice: "Lot was successfully updated." }
+        default_destination = lot_url(@lot)
+        # if update is from index or show, return to referrer
+        destination_path = (request.referrer.present? && !request.referrer.ends_with?('edit')) ? request.referrer : default_destination
+
+        format.html { redirect_to destination_path, notice: "Lot was successfully updated." }
         format.json { render :show, status: :ok, location: @lot }
       else
         format.html { render :edit, status: :unprocessable_entity }
