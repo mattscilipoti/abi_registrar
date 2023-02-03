@@ -18,7 +18,7 @@
     <%= form.input :tax_identifier, hint: 'Use format from SDAT (## ### ########)' %>
     <%= form.input :membership_eligible?, as: :boolean %>
     <%= form.input :for_sale?, as: :boolean %>
-    <%= form.association :lots, label_method: :lot_number %>
+    <%= form.association :lots, label_method: :lot_number, collection: Lot.order(:lot_number) %>
   </div>
 
 
