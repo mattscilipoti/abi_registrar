@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: Improve Lot/Property selection
+
+- Sort Lots by lot_number
+- Sort properties by street_name, street_number
+
 ## 2023/02/01: [#42](https://github.com/mattscilipoti/abi_registrar/issues/42) Easier Lot fee payment
 
 - Checkbox in lot list on properties#show
