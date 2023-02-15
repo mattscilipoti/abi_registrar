@@ -5,6 +5,8 @@ class AmenityPass < ApplicationRecord
   has_many :properties, :through => :resident
 
   validate :resident_paid_lot_fees
+  validates :sticker_number, uniqueness: true
+
 
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope

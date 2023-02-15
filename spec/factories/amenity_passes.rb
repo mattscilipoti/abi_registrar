@@ -2,7 +2,7 @@ FactoryBot.define do
   LOREM_IPSUM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 
   factory :boat_ramp_access_pass do
-    sequence(:sticker_number) { |n| 123456 + n }
+    sequence(:sticker_number) { |n| "R-#{123456 + n}" }
     description { LOREM_IPSUM }
     state_code { 'MD' }
     tag_number { Faker::Vehicle.license_plate(state_abbreviation: state_code) }
@@ -13,7 +13,7 @@ FactoryBot.define do
   end
 
   factory :dinghy_dock_storage_pass do
-    sequence(:sticker_number) { |n| 123456 + n }
+    sequence(:sticker_number) { |n| "D-#{234567 + n}" }
     beach_number { 4 }
     description { LOREM_IPSUM }
     resident
@@ -23,7 +23,7 @@ FactoryBot.define do
   end
 
   factory :vehicle_parking_pass do
-    sequence(:sticker_number) { |n| 123456 + n }
+    sequence(:sticker_number) { |n| "P-#{345678 + n}" }
     state_code { 'MD' }
     tag_number { Faker::Vehicle.license_plate(state_abbreviation: state_code) }
 
@@ -34,7 +34,7 @@ FactoryBot.define do
   end
 
   factory :watercraft_storage_pass do
-    sequence(:sticker_number) { |n| 234567 + n }
+    sequence(:sticker_number) { |n| "W-#{456789 + n}" }
     beach_number { rand(1..4) }
     description { LOREM_IPSUM }
     location { rand(1..22) }

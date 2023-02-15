@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Improve Lot/Property selection
+## 2023-02-15 Amenity Passes accept letters
+
+- Amenity Passes:
+  - Residents are sorted by last_name, first_name
+  - (#53) Amentiy Sticker Numbers accept letters and numbers
+    -  Sticker numbers must be unique
+
+## 2023-02-03: Improve Lot/Property selection
 
 - Sort Lots by lot_number
 - Sort properties by street_name, street_number
