@@ -42,7 +42,7 @@ class LotsController < ApplicationController
     respond_to do |format|
       # Support toggleable_lot_fee_paid?
       if(lot_fee_paid = params[:lot].delete(:lot_fee_paid))
-        params[:lot][:paid_on] = lot_fee_paid.to_bool ? Date.today : nil
+        params[:lot][:paid_on] = lot_fee_paid.to_bool ? Time.zone.today : nil
       end
 
       if @lot.update(lot_params)

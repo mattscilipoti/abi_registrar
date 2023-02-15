@@ -8,7 +8,7 @@ FactoryBot.define do
     resident_status { :owner }
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
-    updated_at { Faker::Time.between(from: created_at, to: Time.now) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
 
     # traits for each resident_status are automatically created, thx FactoryBot!
     trait :second_home do

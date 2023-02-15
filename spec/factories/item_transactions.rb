@@ -4,9 +4,9 @@ FactoryBot.define do
     activity { :purchase }
     cost_per { rand(1..100) }
     quantity { rand(1..100) }
-    transacted_at { Faker::Time.between(from: 1.year.ago, to: Time.now) }
+    transacted_at { Faker::Time.between(from: 1.year.ago, to: Time.zone.now) }
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
-    updated_at { Faker::Time.between(from: created_at, to: Time.now) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
 
     trait :purchase do
       activity { :purchase }

@@ -22,7 +22,7 @@ class ResidencyDecorator < Draper::Decorator
       h.content_tag(:div, class: 'group') do
         h.concat(status_tag)
         h.concat(helpers.simple_form_for(object, remote: true) do |f|
-          f.input :verified_on, as: :hidden, input_html: { value: DateTime.now }
+          f.input :verified_on, as: :hidden, input_html: { value: Time.zone.now }
         end)
         tooltip = "Click to verify: #{object.resident.full_name.inspect} at #{object.property.street_address.inspect}"
         h.concat(helpers.check_box_tag("#{object.to_global_id}_verified", object.verified?, object.verified?, onclick: 'updateVerifiedOn(this)', data: {tooltip: tooltip} ))
@@ -70,7 +70,7 @@ class ResidencyDecorator < Draper::Decorator
         h.concat(status_name)
         h.concat(helpers.simple_form_for(object, remote: true) do |f|
           h.concat(f.input :resident_status, as: :hidden, input_html: { value: status_name })
-          h.concat(f.input :verified_on, as: :hidden, input_html: { value: Time.now })
+          h.concat(f.input :verified_on, as: :hidden, input_html: { value: Time.zone.now })
         end)
         tooltip = "Click to assign: #{object.resident.full_name.inspect} as #{status_name} at #{object.property.street_address.inspect}"
         # h.concat(helpers.check_box_tag("#{object.to_global_id}_verified", object.verified?, object.verified?, onclick: 'updateVerifiedOn(this)', data: {tooltip: tooltip} ))

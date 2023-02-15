@@ -15,7 +15,7 @@ module ApplicationHelper
 
     formatted_datetime = datetime.strftime(format)
 
-    content_tag(:span, "#{time_ago_in_words(datetime)} ago", class: "datetime", data: { tooltip: formatted_datetime})
+    content_tag(:span, "#{distance_of_time_in_words(datetime, Time.zone.now)} ago", class: "datetime", data: { tooltip: formatted_datetime})
   end
 
   # Creates a link to an external resource

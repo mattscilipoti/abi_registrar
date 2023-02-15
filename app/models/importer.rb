@@ -31,12 +31,12 @@ class Importer
     puts "Importing data from '#{source_file}'"
     converted_range = range.nil? ? nil : Range.new(*range.split("..").map(&:to_i))
     import_info.merge!({
-      time_start: Time.now,
+      time_start: Time.zone.now,
     })
 
     results = import_via_csv(range: converted_range)
 
-    time_end = Time.now
+    time_end = Time.zone.now
     duration = ActiveSupport::Duration.build(time_end - import_info.fetch(:time_start))
     import_info.merge!({
       time_end: time_end,

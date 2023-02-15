@@ -9,7 +9,7 @@ FactoryBot.define do
     resident
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
-    updated_at { Faker::Time.between(from: created_at, to: Time.now) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
   end
 
   factory :dinghy_dock_storage_pass do
@@ -19,7 +19,7 @@ FactoryBot.define do
     resident
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
-    updated_at { Faker::Time.between(from: created_at, to: Time.now) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
   end
 
   factory :vehicle_parking_pass do
@@ -30,7 +30,7 @@ FactoryBot.define do
     resident
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
-    updated_at { Faker::Time.between(from: created_at, to: Time.now) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
   end
 
   factory :watercraft_storage_pass do
@@ -42,6 +42,6 @@ FactoryBot.define do
     resident
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
-    updated_at { Faker::Time.between(from: created_at, to: Time.now) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
   end
 end

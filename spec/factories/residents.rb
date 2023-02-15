@@ -9,7 +9,7 @@ FactoryBot.define do
     phone { "555#{rand(100..999)}#{rand(1000..9999)}" }
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
-    updated_at { Faker::Time.between(from: created_at, to: Time.now) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
 
     trait :minor do
       is_minor { true }
