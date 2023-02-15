@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_27_041919) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_15_221909) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -57,7 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_041919) do
 
   create_table "amenity_passes", force: :cascade do |t|
     t.string   "tag_number"
-    t.integer  "sticker_number", :null=>false
+    t.string   "sticker_number", :null=>false
     t.bigint   "resident_id",    :null=>false
     t.datetime "created_at",     :null=>false
     t.datetime "updated_at",     :null=>false
@@ -68,6 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_041919) do
     t.string   "location"
 
     t.index ["resident_id"], :name=>"index_amenity_passes_on_resident_id"
+    t.index ["sticker_number"], :name=>"index_amenity_passes_on_sticker_number", :unique=>true
   end
 
   create_table "comments", force: :cascade do |t|
