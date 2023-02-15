@@ -1,4 +1,4 @@
-- possible_residents = Resident.where(id: @dinghy_dock_storage_pass.resident_id).or(Resident.lot_fees_paid)
+- possible_residents = Resident.where(id: @dinghy_dock_storage_pass.resident_id).or(Resident.lot_fees_paid).order(last_name: :asc, first_name: :asc)
 
 = simple_form_for(@dinghy_dock_storage_pass) do |f|
   = f.error_notification
