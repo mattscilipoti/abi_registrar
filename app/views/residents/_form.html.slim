@@ -7,7 +7,7 @@
     = form.input :first_name, as: :string
     = form.input :middle_name
     = form.input :last_name
-    = form.input :email_address, as: :email
+    = form.input :email_address, as: :email, input_html: { size: 50 }
     = form.input :phone, as: :tel
     = form.input :is_minor
 
