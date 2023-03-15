@@ -14,8 +14,8 @@ h1 Record a Share Transfer
                            id: @share_transaction.id, \
                            action: "share_purchase#calculate_total" \
                          }
-    
-    = f.input :transacted_at
+
+    = f.input :transacted_at, html5: true, include_blank: true
 
   .form-actions
     = f.button :submit

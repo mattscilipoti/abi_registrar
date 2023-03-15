@@ -7,8 +7,8 @@
     = f.input :activity, as: :radio_buttons
     = "Cost Per: $#{@share_transaction.cost_per}"
     = f.input :quantity
-    
-    = f.input :transacted_at
+
+    = f.input :transacted_at, html5: true, include_blank: true
     = f.association :residency, collection: Residency.deed_holder
     / = f.association :from_residency, collection: ShareTransaction.all.collect {|s| s.residency}.uniq
 

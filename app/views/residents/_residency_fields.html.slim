@@ -4,7 +4,7 @@ fieldset
     .form-group
       = form.association :property, label_method: :street_address, collection: Property.order(:street_name, :street_number)
       = form.input :resident_status, as: :radio_buttons, checked: Residency.resident_statuses[form.object.resident_status], collection: available_resident_types, hint: " (Deed Holders: Owner, Co-owner, and Trustee)"
-      = form.input :verified_on
+      = form.input :verified_on, html5: true, include_blank: true
       = form.input :primary_residence
 
     - unless form.object.new_record?
