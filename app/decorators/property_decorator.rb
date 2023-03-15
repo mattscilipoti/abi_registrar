@@ -26,6 +26,12 @@ class PropertyDecorator < Draper::Decorator
     object.street_number || "⁇"
   end
 
+  def toggleable_amenities_processed?
+    h.form_with model: property, data: { controller: 'autosave'} do |f|
+      f.check_box :amenities_processed?, data: { action: 'autosave#save' }
+    end
+  end
+
   def toggleable_for_sale?
     h.form_with model: property, data: { controller: 'autosave'} do |f|
       f.check_box :for_sale, data: { action: 'autosave#save' }
