@@ -31,6 +31,9 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     graphviz \
     postgresql-client
 
+# Install Heroku: https://devcenter.heroku.com/articles/heroku-cli#standalone-installation-with-a-tarball
+RUN curl https://cli-assets.heroku.com/install.sh | sh
+
 # Dependencies for libpostal (https://github.com/openvenues/libpostal#installation-maclinux)
 # - curl autoconf automake libtool pkg-config
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
