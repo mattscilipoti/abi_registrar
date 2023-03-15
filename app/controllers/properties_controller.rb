@@ -38,6 +38,10 @@ class PropertiesController < ApplicationController
   # PATCH/PUT /properties/1 or /properties/1.json
   def update
     respond_to do |format|
+      # Convert toggleable_amentities_processed into today's date
+      if params[:property] && params[:property][:amenities_processed] == '1'
+        params[:property][:amenities_processed] = Time.zone.today
+      end
       if @property.update(property_params)
         resulting_location = property_url(@property)
         # if update is from index, return to index
