@@ -15,6 +15,12 @@ p
   =boolean_tag(property.lot_fees_paid?)
 
 p
+  strong Amenities Processed?&nbsp;
+  =boolean_tag(property.amenities_processed?)
+  -if property.amenities_processed?
+    ="(#{property.amenities_processed})"
+
+p
   strong For Sale?&nbsp;
   =boolean_tag(property.for_sale?)
 
