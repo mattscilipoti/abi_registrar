@@ -9,8 +9,10 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 ## 2023-03-14 Amentities Processed, Create New from Show page
 
-- Can manage AmentiesProcessed. Can toggle from index (checked assignes today's date)
-- Added link to Create New Amenity Pass on each Amnenity Show page.
+- #35 Can manage AmentiesProcessed. Can toggle from index (checked assignes today's date)
+- #57 Added link to Create New Amenity Pass on each Amnenity Show page.
+- #55 Widen email field for Resident
+- Prettify Date inputs via html5
 
 ## 2023-02-15 Amenity Passes accept letters
 
