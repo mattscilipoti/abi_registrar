@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## 2023-03-14 Amentities Processed, Create New from Show page
+
+- Can manage AmentiesProcessed. Can toggle from index (checked assignes today's date)
+- Added link to Create New Amenity Pass on each Amnenity Show page.
+
 ## 2023-02-15 Amenity Passes accept letters
 
 - Amenity Passes:
