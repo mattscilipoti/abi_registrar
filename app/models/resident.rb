@@ -4,6 +4,7 @@ class Resident < ApplicationRecord
   encrypts :email_address, deterministic: true
   # encrypts :first_name, deterministic: true if minor?
 
+  has_many :amenity_passes, dependent: :destroy
   has_many :residencies, dependent: :destroy
   accepts_nested_attributes_for :residencies, reject_if: :all_blank, allow_destroy: true
   has_many :properties, through: :residencies

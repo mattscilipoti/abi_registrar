@@ -40,3 +40,11 @@ fieldset
   #residencies
     - columns = %i[property resident_status_link_tag verified? lot_summary lot_fees_paid? primary_residence?]
     =render 'layouts/models_table', models: resident.residencies.by_property.decorate, columns: columns, allow_edit: false, allow_show: :property, allow_sort: true
+
+fieldset
+  legend
+    h2 Amenity Passes
+
+  #amenity_passes
+    - columns = %i[type tag_number sticker_number beach_number location description]
+    =render 'layouts/models_table', models: resident.amenity_passes, columns: columns, allow_edit: false, allow_show: :property, allow_sort: true
