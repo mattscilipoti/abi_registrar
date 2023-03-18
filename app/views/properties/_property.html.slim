@@ -45,3 +45,11 @@ fieldset
       small= "(#{property.lots.size} ct.)"
   - columns = %i[lot_number toggleable_lot_fee_paid? paid_on]
   =render 'layouts/models_table', models: property.lots.decorate, columns: columns, allow_edit: false
+
+fieldset
+  legend
+    h2 Amenity Passes
+
+  #amenity_passes
+    - columns = %i[type resident tag_number sticker_number beach_number location description]
+    =render 'layouts/models_table', models: property.amenity_passes, columns: columns, allow_edit: false, allow_show: :property, allow_sort: true

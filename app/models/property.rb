@@ -7,6 +7,7 @@ class Property < ApplicationRecord
   has_many :lots
   has_many :residencies
   has_many :residents, through: :residencies
+  has_many :amenity_passes, through: :residents
   has_many :share_transactions, through: :residencies
 
   scope :membership_eligible, -> { where(membership_eligible: true) }
