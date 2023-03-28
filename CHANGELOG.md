@@ -7,14 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## 2023-03-17 Amenity Pass Summaries
+## 2023-03-27 Amentiy Pass Summaries
 
-- 68 Issue creating Dinghy
-- 68 Identified and fixed similar issue with Watercraft Passes
 - 66 Create AmenityPassDecorator (each Pass has a decorator too)
   - Each Pass Decorator provides an icon
 - 61 Add Passes to Summary page
+- 61 Add Amenities Processed to Summary page
 
+## 2023-03-17 Fix issue creating Dinghy/Watercraft Passes
+
+- 68 Issue creating Dinghy
+- Identified and fixed similar issue with Watercraft Passes
 
 ## 2023-03-14 Amentities Processed, Create New from Show page
 
