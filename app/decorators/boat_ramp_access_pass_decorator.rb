@@ -1,4 +1,4 @@
-class BoatRampAccessPassDecorator < Draper::Decorator
+class BoatRampAccessPassDecorator < AmenityPassDecorator
   delegate_all
 
   # Define presentation-specific methods here. Helpers are accessed through
@@ -10,7 +10,7 @@ class BoatRampAccessPassDecorator < Draper::Decorator
   #     end
   #   end
 
-  def property_summary(type: :icons)
-    h.render 'residencies/property_icon_list', residencies: object.resident.residencies.decorate
+  def self.icon_name
+    helpers.icon_for_scope('boat')
   end
 end

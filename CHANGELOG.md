@@ -11,6 +11,9 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 - 68 Issue creating Dinghy
 - Identified and fixed similar issue with Watercraft Passes
+- Create AmenityPassDecorator (each Pass has a decorator too)
+  - Each Pass Decorator provides an icon
+
 
 ## 2023-03-14 Amentities Processed, Create New from Show page
 
