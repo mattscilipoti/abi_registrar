@@ -7,8 +7,10 @@ class Property < ApplicationRecord
   has_many :lots
   has_many :residencies
   has_many :residents, through: :residencies
+  has_many :amenity_passes, through: :residents
   has_many :share_transactions, through: :residencies
 
+  scope :amenities_processed, -> { where.not(amenities_processed: nil) }
   scope :membership_eligible, -> { where(membership_eligible: true) }
   scope :not_membership_eligible, -> { where(membership_eligible: false) }
   scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
