@@ -13,7 +13,7 @@ fieldset
     tbody
       - [Lot, Property, Resident, AmenityPass, BoatRampAccessPass, DinghyDockStoragePass, VehicleParkingPass, WatercraftStoragePass].each do |model|
         tr
-          td =link_to model.name.pluralize, url_for(model.table_name)
+          td =link_to model.name.pluralize, url_for(model.name.tableize)
           td.number =model.count
           td.number =number_with_percentage(model.lot_fees_paid.count, model.count) if model.respond_to?(:lot_fees_paid)
           td.number =number_with_percentage(model.amenities_processed.count, model.count) if model.respond_to?(:amenities_processed)
