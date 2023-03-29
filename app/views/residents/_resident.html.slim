@@ -46,5 +46,5 @@ fieldset
     h2 Amenity Passes
 
   #amenity_passes
-    - columns = %i[sticker_number type tag_number beach_number location description]
-    =render 'layouts/models_table', models: resident.amenity_passes, columns: columns, allow_edit: false, allow_show: :property, allow_sort: true
+    - columns = %i[sticker_number type_as_icon tag_number beach_number location description]
+    =render 'layouts/models_table', models: resident.amenity_passes.decorate, columns: columns, allow_edit: false, allow_show: :property, allow_sort: true
