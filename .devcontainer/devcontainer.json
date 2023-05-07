@@ -21,7 +21,8 @@
 		"sianglim.slim",
 		"wingrunr21.vscode-ruby",
 		"EditorConfig.EditorConfig",
-		"GitHub.vscode-pull-request-github"
+		"GitHub.vscode-pull-request-github",
+		"ms-azuretools.vscode-docker"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
