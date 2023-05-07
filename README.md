@@ -209,3 +209,10 @@ Not only do we need to gather and manage the approprite information, we need to 
 - Production: https://abi-registrar.herokuapp.com/
   - `git push heroku main`
   - Command example: `heroku run -r heroku rails db:migrate`
+
+# Adding Administrators
+
+- Developer adds in rails console (eventually, we'll make forms)
+  - `account = Account.create!(email: "user@example.com", password: "secret123")`
+- Developer verifies the new email with MailGun (the email service we chose on heroku). https://app.mailgun.com/app/sending/domains/sandbox7a2b9c7d263548f59718e50737700902.mailgun.org
+  - If an administrator is not receiving emails, but others are, review MailGun (best accessed from the heroku interface).
