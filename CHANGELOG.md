@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming:
+
+- Ruby 3.1.3 to 3.1.4
+
+
 ## 2023-03-27 Amentiy Pass Summaries
 
 - 66 Create AmenityPassDecorator (each Pass has a decorator too)
