@@ -129,19 +129,38 @@ module ApplicationHelper
     end
   end
 
-  def searchbar_tag(model, controller: model.name.tableize)
+  def searchbar_tag(model, controller: model.name.tableize, show_filters: true)
     index_path = url_for(controller: controller, action: :index)
     content_tag(:div, class: "searchbar row") do
       concat(search_form_tag(index_path))
-      concat "&nbsp;|&nbsp;".html_safe
-      model.scopes.each do |scope_name|
-        - tooltip = scope_name.to_s.humanize
-        - icon_class = scope_name =~ /not|without/ ? 'not' : ''
-        - icon = icon_for_scope(scope_name)
-        search_path = url_for(controller: controller, action: :index, params: {q: scope_name})
-        concat(link_to(search_path, class: 'search-filter no-link-icon', data: {tooltip: tooltip}) do
-          font_awesome_icon(icon, html_options: {class: icon_class})
-        end)
+      if show_filters
+        url_options = index_path
+        concat "Filters:&nbsp;".html_safe
+        concat link_to(
+          " 😈",
+          Addressable::URI.new(path: url_options, query_values: {q: 'Problematic'}).to_s,
+          class: 'no-link-icon', data: { tooltip: "Show only 'problematic'" }
+        )
+        concat link_to(
+          " 💸",
+          Addressable::URI.new(path: url_options, query_values: {q: 'Not Paid'}).to_s,
+          class: 'no-link-icon', data: { tooltip: "Show items 'Expecting a Payment'" }
+        )
+        concat link_to(
+          " 🥵",
+          url_options,
+          class: 'no-link-icon', data: { tooltip: "Show ALL. ⚠️ Expect delays." }
+        )
+        concat "&nbsp;|&nbsp;".html_safe
+        model.scopes.each do |scope_name|
+          - tooltip = scope_name.to_s.humanize
+          - icon_class = scope_name =~ /not|without/ ? 'not' : ''
+          - icon = icon_for_scope(scope_name)
+          search_path = url_for(controller: controller, action: :index, params: {q: scope_name})
+          concat(link_to(search_path, class: 'search-filter no-link-icon', data: {tooltip: tooltip}) do
+            font_awesome_icon(icon, html_options: {class: icon_class})
+          end)
+        end
       end
     end
   end
@@ -158,22 +177,6 @@ module ApplicationHelper
       concat text_field_tag(:q, params[:q], class: 'search', type: 'search')
       concat submit_tag("Search")
       concat content_tag(:i, nil, class: 'search busy activated')
-      concat "Filters:&nbsp;".html_safe
-      concat link_to(
-        " 😈",
-        Addressable::URI.new(path: url_options, query_values: {q: 'Problematic'}).to_s,
-        class: 'no-link-icon', data: { tooltip: "Show only 'problematic'" }
-      )
-      concat link_to(
-        " 💸",
-        Addressable::URI.new(path: url_options, query_values: {q: 'Not Paid'}).to_s,
-        class: 'no-link-icon', data: { tooltip: "Show items 'Expecting a Payment'" }
-      )
-      concat link_to(
-        " 🥵",
-        url_options,
-        class: 'no-link-icon', data: { tooltip: "Show ALL. ⚠️ Expect delays." }
-      )
     end
   end
 

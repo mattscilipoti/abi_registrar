@@ -7,12 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## 2023-05-22 AmenityPasses#index for public
+
+- Allow anon access to amenity_passes#index
+- Extract filters from searchbar_tag
+- Change root to pages#home
+
 ## 2023-05-07 Upgrade ruby
 
 - Ruby 3.1.3 to 3.1.4
 - Add instructions to add administrators
 
-## 2023-03-27 Amentiy Pass Summaries
+## 2023-03-27 Amenity Pass Summaries
 
 - 66 Create AmenityPassDecorator (each Pass has a decorator too)
   - Each Pass Decorator provides an icon

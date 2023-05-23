@@ -7,6 +7,9 @@ class AmenityPass < ApplicationRecord
   validate :resident_paid_lot_fees
   validates :sticker_number, uniqueness: true
 
+  def self.scopes
+    []
+  end
 
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope

@@ -26,8 +26,8 @@ html lang=I18n.locale
     header
       nav.top-bar
         ul.menu
+          = menu_list_item "Home", root_path, class: 'no-link-icon'
           - if rodauth.logged_in?
-            = menu_list_item "Home", root_path, class: 'no-link-icon'
             = menu_list_item "Lots", lots_path(q: '🚫'), class: 'no-link-icon'
             = menu_list_item "Properties", properties_path(q: '🚫'), class: 'no-link-icon'
             = menu_list_item "Residents", residents_path(q: '🚫'), class: 'no-link-icon'
@@ -66,8 +66,9 @@ html lang=I18n.locale
       ul#links.horizontal-list
         li= link_to font_awesome_icon('umbrella-beach'), '/', class: 'no-link-icon'
         li= list_delimiter
-        li= external_link_to("Issues (on GitHub)", 'https://github.com/mattscilipoti/abi_registrar/issues')
-        li= list_delimiter
+        - if rodauth.logged_in?
+          li= external_link_to("Issues (on GitHub)", 'https://github.com/mattscilipoti/abi_registrar/issues')
+          li= list_delimiter
         li
           small &copy; Copyright 2023
         li= list_delimiter

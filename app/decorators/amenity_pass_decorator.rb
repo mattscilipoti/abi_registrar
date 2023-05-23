@@ -22,6 +22,10 @@ class AmenityPassDecorator < Draper::Decorator
     h.render 'residencies/property_icon_list', residencies: object.resident.residencies.decorate
   end
 
+  def street_addresses
+    (object.resident.residencies.collect &:street_address).join(', ')
+  end
+
   def type_as_icon
     self.class.icon(html_options: { title: object.class.name })
   end

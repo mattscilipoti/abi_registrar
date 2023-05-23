@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
+  before_action :authenticate
 
   private
+
+  def authenticate
+    rodauth.require_account # redirect to login page if not authenticated
+  end
 
   def filter_models(model, search_query)
     if search_query.blank?
