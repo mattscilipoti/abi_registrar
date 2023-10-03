@@ -29,6 +29,8 @@ module ApplicationHelper
     case scope_name.to_s
     when /address/
       'location-dot'
+    when /beach_pass/
+      'ticket'
     when /boat/
       'ship'
     when /border/
