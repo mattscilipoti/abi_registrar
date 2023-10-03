@@ -34,6 +34,10 @@ class AmenityPass < ApplicationRecord
   scope :without_state_code, -> { where(state_code: nil) }
   scope :without_tag_number, -> { where(tag_number: nil) }
 
+  def self.default_sort
+    { column: :sticker_number, direction: :desc }
+  end
+
   # validates_presence_of :tag_number, :sticker_number
 
   # def self.scopes
