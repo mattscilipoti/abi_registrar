@@ -125,6 +125,10 @@ class Property < ApplicationRecord
     mailing_address
   end
 
+  def mandatory_fees_paid?
+    user_fee_paid? && lot_fees_paid?
+  end
+
   # Lists tax_ids that are not in Sunrise Beach subdivision, but are part of ABI
   def membership_eligible_exceptions
     [
