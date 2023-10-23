@@ -91,6 +91,7 @@ class PropertiesController < ApplicationController
         :street_number,
         :street_name,
         :tax_identifier,
+        :user_fee_paid_on,
         lot_ids: []
       )
     end

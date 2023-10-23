@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
+=======
+ActiveRecord::Schema[7.0].define(version: 2023_10_05_192914) do
+>>>>>>> 2f61c0c (89 Record User Fees paid)
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -131,6 +135,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
     t.boolean  "for_sale"
     t.date     "amenities_processed"
     t.date     "lot_fees_paid_on"
+    t.date     "user_fee_paid_on"
 
     t.index ["street_name"], :name=>"index_properties_on_street_name"
     t.index ["street_number"], :name=>"index_properties_on_street_number"

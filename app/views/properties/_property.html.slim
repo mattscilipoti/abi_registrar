@@ -18,6 +18,10 @@ p
     ="(#{property.lot_fees_paid_on})"
 
 p
+  strong User Fee Paid?&nbsp;
+  =boolean_tag(property.user_fee_paid_on?)
+
+p
   strong Amenities Processed?&nbsp;
   =boolean_tag(property.amenities_processed?)
   -if property.amenities_processed?

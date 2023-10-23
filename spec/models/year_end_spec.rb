@@ -14,7 +14,7 @@ RSpec.describe Resident, type: :model do
         expect(Property.where(amenities_processed: nil).count).to eql(1)
       end
 
-      it 'clears all user_fee_paid' do
+      it 'clears all amenities_processed' do
         expect { YearEnd.reset_amenities_processed }.to change(Property.amenities_processed, :count).by(-2)\
       end
     end

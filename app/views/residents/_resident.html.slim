@@ -38,7 +38,7 @@ fieldset
     h2 Properties
 
   #residencies
-    - columns = %i[property resident_status_link_tag verified? lot_summary lot_fees_paid? primary_residence?]
+    - columns = %i[property resident_status_link_tag verified? lot_summary lot_fees_paid? user_fee_paid_on? primary_residence?]
     =render 'layouts/models_table', models: resident.residencies.by_property.decorate, columns: columns, allow_edit: false, allow_show: :property, allow_sort: true
 
 fieldset

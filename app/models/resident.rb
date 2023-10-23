@@ -134,6 +134,10 @@ class Resident < ApplicationRecord
     full_name
   end
 
+  def user_fee_paid?
+    properties.user_fee_paid_on.size == properties.size
+  end
+
   def verified?
     residencies.any?(&:verified?)
   end
