@@ -1,6 +1,15 @@
 FactoryBot.define do
   LOREM_IPSUM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 
+  factory :beach_pass do
+    sequence(:sticker_number) { |n| "B-#{012345 + n}" }
+    description { LOREM_IPSUM }
+    resident
+
+    created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
+  end
+
   factory :boat_ramp_access_pass do
     sequence(:sticker_number) { |n| "R-#{123456 + n}" }
     description { LOREM_IPSUM }
