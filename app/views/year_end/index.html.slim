@@ -1,0 +1,34 @@
+fieldset
+  legend
+    h2 Summary
+
+  table
+    thead
+      tr
+        th Item
+        th Quantity
+        th Last Updated
+    tbody
+      ruby:
+        column_data = [
+          { title: 'Lot Fees Paid', model: Lot, relationship: Lot.lot_fees_paid },
+          { title: 'Amenities Processed', model: Property, relationship: Property.amenities_processed },
+        ]
+
+      - column_data.each do |column_info|
+          - model = column_info.fetch(:model)
+          - relationship = column_info.fetch(:relationship)
+          - item_count = relationship.count
+          tr
+            td =column_info.fetch(:title)
+            td.number =number_with_percentage(item_count, model.count) if model.respond_to?(:lot_fees_paid)
+
+            td.datetime =datetime_tag(relationship.pluck(:updated_at).max)
+
+
+h2 Actions
+
+ul
+  li
+    =button_to "Reset Fees (performed annually)", reset_fees_path, form: { data: { turbo_confirm: 'Are you sure you want to reset ALL fees? This cannot be undone.' }}
+    | This will reset the Lot Fees Paid and Amenities Processed information. This allows Registrars to process the next year of information.
