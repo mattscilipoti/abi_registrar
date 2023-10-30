@@ -47,6 +47,7 @@ FactoryBot.create(:residency, :owner, :verified, property: property_977, residen
 lot11 = FactoryBot.create(:lot, :paid, lot_number: '11 (T)', size: 1)
 lot12 = FactoryBot.create(:lot, lot_number: '12 (T)', size: 0.5)
 property_123Main = FactoryBot.create(:property, lots: [lot11], street_number: '123', street_name: 'Main St (TEST)')
+property_234Main = FactoryBot.create(:property, lots: [], street_number: '234', street_name: 'Main St (TEST)')
 property_975Main = FactoryBot.create(:property, lots: [lot12], street_number: '975', street_name: 'Main St (TEST)')
 
 jqo = FactoryBot.create(:resident, last_name: 'Owner', first_name: 'Jane', email_address: 'janeowner@example.com',
