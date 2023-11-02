@@ -103,6 +103,8 @@ class Property < ApplicationRecord
   end
 
   def lot_fees_paid?
+    return false unless lots.present?
+
     lots.lot_fees_paid.size == lots.size
   end
 
