@@ -11,6 +11,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 - Add lot_fees_paid_on to Property
 - Copy Lot Fees Paid from Lot to Property
+- Update Year End to remove lot_fees_paid_on from Property
 
 ## 2023-11-15 Fix BoatRampPass#show
 

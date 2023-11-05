@@ -10,5 +10,6 @@ class YearEnd
 
   def self.reset_lot_fees
     Lot.update_all(paid_on: nil)
+    Property.update_all(lot_fees_paid_on: nil)
   end
 end
