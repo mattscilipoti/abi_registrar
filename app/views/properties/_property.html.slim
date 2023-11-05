@@ -12,7 +12,10 @@ p
 
 p
   strong Lot Fees Paid?&nbsp;
+  -# TODO: Make date_as_boolean_tag
   =boolean_tag(property.lot_fees_paid?)
+  -if property.lot_fees_paid?
+    ="(#{property.lot_fees_paid_on})"
 
 p
   strong Amenities Processed?&nbsp;

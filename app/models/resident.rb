@@ -22,7 +22,7 @@ class Resident < ApplicationRecord
     where.not(id: lot_fees_not_paid)
   }
   scope :lot_fees_not_paid, -> {
-    distinct.joins(:lots).merge(Lot.lot_fees_not_paid)
+    distinct.joins(:properties).merge(Property.lot_fees_not_paid)
   }
   scope :renter, -> { distinct.joins(:residencies).merge(Residency.renter) }
   scope :significant_other, -> { distinct.joins(:residencies).merge(Residency.significant_other) }
@@ -110,7 +110,7 @@ class Resident < ApplicationRecord
   end
 
   def lot_fees_paid?
-    lots.lot_fees_paid.size == lots.size
+    properties.all? {|p| p.lot_fees_paid? }
   end
 
   def phone=(value)

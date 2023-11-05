@@ -46,4 +46,11 @@ class PropertyDecorator < Draper::Decorator
     #   onchange: "this.setAttribute('data-params', 'checked=' + this.checked*this.checked)",
     #   data: { remote: true, url: h.property_path(property), method: :patch }
   end
+
+  def toggleable_lot_fees_paid?
+    h.form_with model: property, data: { controller: 'autosave'} do |f|
+      f.check_box :lot_fees_paid?, data: { action: 'autosave#save' }
+    end
+  end
+
 end
