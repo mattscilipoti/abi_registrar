@@ -12,6 +12,6 @@ class BoatRampAccessPass < AmenityPass
   end
 
   def to_s
-    [sticker_number, tag, description.truncate(50)].compact.join(', ')
+    [sticker_number, tag, description&.truncate(50)].compact.join(', ')
   end
 end
