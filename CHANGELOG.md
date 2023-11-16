@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## 2023-11-15 Fix BoatRampPass#show
+
+- Handle nil description
+
 ## 2023-05-22 AmenityPasses#index for public
 
 - Allow anon access to amenity_passes#index
