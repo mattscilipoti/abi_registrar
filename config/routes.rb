@@ -4,7 +4,6 @@ Rails.application.routes.draw do
     get 'summary', to: 'pages#summary'
 
     resources :accounts, only: [:index]
-    resources :amenity_passes, only: [:index]
     resources :beach_passes
     resources :boat_ramp_access_passes
     resources :comments, only: [:create]
@@ -29,6 +28,7 @@ Rails.application.routes.draw do
   get 'home', to: 'pages#home'
   get 'year_end', to: 'year_end#index'
   post 'reset_fees', to: 'year_end#reset_fees'
+  resources :amenity_passes, only: [:index] # must be unauthenticated for "public" access
 
   # Defines the root path route ("/")
   # root "articles#index"
