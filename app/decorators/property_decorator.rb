@@ -49,7 +49,7 @@ class PropertyDecorator < Draper::Decorator
 
   def toggleable_lot_fees_paid?
     h.form_with model: property, data: { controller: 'autosave'} do |f|
-      f.check_box :lot_fees_paid?, data: { action: 'autosave#save' }
+      f.check_box :lot_fees_paid?, data: { action: 'autosave#save', tooltip: "Paid on: #{property.lot_fees_paid_on}" }
     end
   end
 
