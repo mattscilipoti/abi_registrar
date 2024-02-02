@@ -50,6 +50,9 @@ class PropertiesController < ApplicationController
         end
         params[:property].delete(:lot_fees_paid)
       end
+      if params[:property] && params[:property][:user_fee_paid_on] == '1'
+        params[:property][:user_fee_paid_on] = Time.zone.today
+      end
       if @property.update(property_params)
         resulting_location = property_url(@property)
         # if update is from index, return to index

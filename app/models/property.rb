@@ -23,6 +23,8 @@ class Property < ApplicationRecord
   scope :problematic, -> { without_lot.or(without_section).or(without_street_info) }
   scope :test, -> { where("street_name LIKE '%TEST%'") }
   scope :not_test, -> { where.not(id: test) }
+  scope :user_fee_not_paid, -> { where(user_fee_paid_on: nil) }
+  scope :user_fee_paid, -> { where.not(user_fee_paid_on: nil) }
   scope :without_lot, -> { where.missing(:lots) }
   scope :without_section, -> { where(section: nil) }
   scope :without_street_info, -> { where(street_number: nil).or(where(street_name: nil)) }

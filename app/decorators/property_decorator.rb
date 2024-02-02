@@ -49,6 +49,10 @@ class PropertyDecorator < Draper::Decorator
     toggleable_date_as_boolean(model: property, attribute_name: :lot_fees_paid_on, boolean_attribute_name: 'lot_fees_paid?')
   end
 
+  def toggleable_user_fee_paid?
+    toggleable_date_as_boolean(model: property, attribute_name: :user_fee_paid_on)
+  end
+
   private
 
   def toggleable_date_as_boolean(model:, attribute_name:, boolean_attribute_name: "#{attribute_name}?")
