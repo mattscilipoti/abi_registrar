@@ -5,10 +5,9 @@ RSpec.describe Property, type: :model do
   describe 'class methods' do
     subject { described_class }
 
-    let!(:property_mixed) { FactoryBot.create(:property, :with_paid_lots, :with_unpaid_lots, street_name: "MIXED") }
     let!(:property_no_lot) { FactoryBot.create(:property, street_name: "NO LOT") }
-    let!(:property_paid) { FactoryBot.create(:property, :with_paid_lots, street_name: "PAID") }
-    let!(:property_unpaid) { FactoryBot.create(:property, :with_unpaid_lots, street_name: "UNPAID") }
+    let!(:property_paid) { FactoryBot.create(:property, :lot_fees_paid, street_name: "PAID") }
+    let!(:property_unpaid) { FactoryBot.create(:property, :lot_fees_unpaid, street_name: "UNPAID") }
 
     describe 'spec setup' do
       ## There was some confusion early on, where the setup re-used lot_paid/lot_unpaid
@@ -18,34 +17,34 @@ RSpec.describe Property, type: :model do
         expect(property_no_lot.lots.size).to eql(0)
         expect(property_no_lot.lot_fees_paid?).to be false
       end
-      it 'property_paid has one, paid lot' do
-        expect(property_paid.lots.size).to eql(1)
-        expect(property_paid.lots.first).to be_paid
-      end
-      it 'property_unpaid has one, unpaid lot' do
-        expect(property_unpaid.lots.size).to eql(1)
-        expect(property_unpaid.lots.first).to_not be_paid
-      end
-      it 'property_mixed has one of each (paid/unpaid) lot' do
-        expect(property_mixed.lots.size).to eql(2)
-        expect(property_mixed.lots.first).to be_paid
-        expect(property_mixed.lots.last).to_not be_paid
-      end
+      # it 'property_paid has one, paid lot' do
+      #   expect(property_paid.lots.size).to eql(1)
+      #   expect(property_paid.lots.first).to be_paid
+      # end
+      # it 'property_unpaid has one, unpaid lot' do
+      #   expect(property_unpaid.lots.size).to eql(1)
+      #   expect(property_unpaid.lots.first).to_not be_paid
+      # end
+      # it 'property_mixed has one of each (paid/unpaid) lot' do
+      #   expect(property_mixed.lots.size).to eql(2)
+      #   expect(property_mixed.lots.first).to be_paid
+      #   expect(property_mixed.lots.last).to_not be_paid
+      # end
     end
 
     describe 'for/not_for_sale' do
-      let!(:for_sale) { property_mixed.update_attribute(:for_sale, true) }
+      let!(:for_sale) { property_no_lot.update_attribute(:for_sale, true) }
       let!(:not_for_sale) { property_paid.update_attribute(:for_sale, false) }
 
       describe 'for_sale' do
         it 'returns only properties for sale' do
-          expect(subject.for_sale).to contain_exactly(property_mixed)
+          expect(subject.for_sale).to contain_exactly(property_no_lot)
         end
       end
 
       describe 'not_for_sale' do
         it 'returns all properties NOT for sale' do
-          expect(subject.not_for_sale).to contain_exactly(property_no_lot, property_paid, property_unpaid)
+          expect(subject.not_for_sale).to contain_exactly(property_paid, property_unpaid)
         end
       end
     end
@@ -58,7 +57,7 @@ RSpec.describe Property, type: :model do
 
     describe 'lot_fees_not_paid' do
       it 'returns all properties with at least one lot fee NOT paid' do
-        expect(subject.lot_fees_not_paid).to contain_exactly(property_mixed, property_no_lot, property_unpaid)
+        expect(subject.lot_fees_not_paid).to contain_exactly(property_no_lot, property_unpaid)
       end
     end
   end

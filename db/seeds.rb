@@ -26,7 +26,7 @@ Faker::Config.locale = 'en-US'
 
 # Lots, Properties, and Residents
 lot69 = FactoryBot.create(:lot, :paid, lot_number: '69 (T)', size: 1)
-property_975 = FactoryBot.create(:property, :paid, lots: [lot69], section: 1, street_number: '975', street_name: 'Waterview Dr (TEST)', tax_identifier: '00 748 11942300')
+property_975 = FactoryBot.create(:property, :lot_fees_paid, lots: [lot69], section: 1, street_number: '975', street_name: 'Waterview Dr (TEST)', tax_identifier: '00 748 11942300')
 
 mms = FactoryBot.create(:resident, last_name: 'Scilipoti', first_name: 'Matt', email_address: 'matt@scilipoti.name')
 FactoryBot.create(:residency, :coowner, :verified, property: property_975, resident: mms)
@@ -39,14 +39,14 @@ FactoryBot.create(:residency, :dependent, :verified, property: property_975, res
 
 lot70 = FactoryBot.create(:lot, :paid, lot_number: '70 (T)', size: 1)
 lot71 = FactoryBot.create(:lot, lot_number: '71 (T)', size: 1)
-property_977 = FactoryBot.create(:property, :paid, lots: [lot70, lot71], section: 1, street_number: '977', street_name: 'Waterview Dr (TEST)')
+property_977 = FactoryBot.create(:property, :lot_fees_paid, lots: [lot70, lot71], section: 1, street_number: '977', street_name: 'Waterview Dr (TEST)')
 
 pp = FactoryBot.create(:resident, last_name: 'PartialPayment', first_name: 'Peter', email_address: 'ppp@example.com')
 FactoryBot.create(:residency, :owner, :verified, property: property_977, resident: pp)
 
 lot11 = FactoryBot.create(:lot, :paid, lot_number: '11 (T)', size: 1)
 lot12 = FactoryBot.create(:lot, lot_number: '12 (T)', size: 0.5)
-property_123Main = FactoryBot.create(:property, :paid, lots: [lot11], street_number: '123', street_name: 'Main St (TEST)')
+property_123Main = FactoryBot.create(:property, :lot_fees_paid, lots: [lot11], street_number: '123', street_name: 'Main St (TEST)')
 property_234Main = FactoryBot.create(:property, lots: [], street_number: '234', street_name: 'Main St (TEST)')
 property_975Main = FactoryBot.create(:property, lots: [lot12], street_number: '975', street_name: 'Main St (TEST)')
 

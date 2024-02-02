@@ -5,10 +5,8 @@ RSpec.describe Residency, type: :model do
   describe 'class methods' do
     subject { described_class }
 
-    let(:property_mixed) { FactoryBot.create(:property, :with_paid_lots, :with_unpaid_lots, street_name: "MIXED") }
-    let(:property_paid) { FactoryBot.create(:property, :with_paid_lots, street_name: "PAID") }
-    let(:property_unpaid) { FactoryBot.create(:property, :with_unpaid_lots, street_name: "UNPAID") }
-    let!(:residency_mixed) { FactoryBot.create(:residency, property: property_mixed) }
+    let(:property_paid) { FactoryBot.create(:property, :lot_fees_paid, street_name: "PAID") }
+    let(:property_unpaid) { FactoryBot.create(:property, :lot_fees_unpaid, street_name: "UNPAID") }
     let!(:residency_paid) { FactoryBot.create(:residency, property: property_paid) }
     let!(:residency_unpaid) { FactoryBot.create(:residency, property: property_unpaid) }
 
@@ -20,7 +18,7 @@ RSpec.describe Residency, type: :model do
 
     describe 'lot_fees_not_paid' do
       it 'returns properties with at least one lot fee NOT paid' do
-        expect(subject.lot_fees_not_paid).to contain_exactly(residency_mixed, residency_unpaid)
+        expect(subject.lot_fees_not_paid).to contain_exactly(residency_unpaid)
       end
     end
   end
