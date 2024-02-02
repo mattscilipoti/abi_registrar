@@ -135,7 +135,7 @@ class Resident < ApplicationRecord
   end
 
   def user_fee_paid?
-    properties.user_fee_paid_on.size == properties.size
+    properties.user_fee_paid.size == properties.size
   end
 
   def verified?
