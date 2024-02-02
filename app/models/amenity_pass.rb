@@ -4,7 +4,7 @@ class AmenityPass < ApplicationRecord
   belongs_to :resident
   has_many :properties, :through => :resident
 
-  validate :resident_paid_lot_fees
+  validate :resident_paid_mandatory_fees
   validates :sticker_number, uniqueness: true
 
   def self.scopes
@@ -75,6 +75,18 @@ class AmenityPass < ApplicationRecord
       errors.add(:resident, "must have paid lot fees")
     end
   end
+
+  def resident_paid_mandatory_fees
+    resident_paid_lot_fees
+    resident_paid_user_fee
+  end
+
+  def resident_paid_user_fee
+    unless resident.user_fee_paid?
+      errors.add(:resident, "must have paid user fee")
+    end
+  end
+
 
   def tag
     [state_code, tag_number].compact.join('-')

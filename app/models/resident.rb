@@ -24,6 +24,22 @@ class Resident < ApplicationRecord
   scope :lot_fees_not_paid, -> {
     distinct.joins(:properties).merge(Property.lot_fees_not_paid)
   }
+  scope :mandatory_fees_paid, -> {
+    # basic "joins" to property returns resident where ANY lots fees are paid,
+    #   this returns those where ALL lot fees are paid
+    where.not(id: lot_fees_not_paid).where.not(id: user_fee_not_paid)
+  }
+  scope :mandatory_fees_not_paid, -> {
+    distinct.joins(:properties).merge(Property.user_fee_not_paid)
+  }
+  scope :luser_fee_paid, -> {
+    # basic "joins" to property returns resident where ANY lots fees are paid,
+    #   this returns those where ALL lot fees are paid
+    where.not(id: user_fee_not_paid)
+  }
+  scope :user_fee_not_paid, -> {
+    distinct.joins(:properties).merge(Property.user_fee_not_paid)
+  }
   scope :renter, -> { distinct.joins(:residencies).merge(Residency.renter) }
   scope :significant_other, -> { distinct.joins(:residencies).merge(Residency.significant_other) }
   scope :not_verified, -> { distinct.joins(:residencies).merge(Residency.not_verified) }
@@ -111,6 +127,10 @@ class Resident < ApplicationRecord
 
   def lot_fees_paid?
     properties.all? {|p| p.lot_fees_paid? }
+  end
+
+  def mandatory_fees_paid?
+    properties.all? {|p| p.mandatory_fees_paid? }
   end
 
   def phone=(value)

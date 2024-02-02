@@ -26,7 +26,7 @@ Faker::Config.locale = 'en-US'
 
 # Lots, Properties, and Residents
 lot69 = FactoryBot.create(:lot, :paid, lot_number: '69 (T)', size: 1)
-property_975 = FactoryBot.create(:property, :lot_fees_paid, lots: [lot69], section: 1, street_number: '975', street_name: 'Waterview Dr (TEST)', tax_identifier: '00 748 11942300')
+property_975 = FactoryBot.create(:property, :lot_fees_paid, :user_fee_paid, lots: [lot69], section: 1, street_number: '975', street_name: 'Waterview Dr (TEST)', tax_identifier: '00 748 11942300')
 
 mms = FactoryBot.create(:resident, last_name: 'Scilipoti', first_name: 'Matt', email_address: 'matt@scilipoti.name')
 FactoryBot.create(:residency, :coowner, :verified, property: property_975, resident: mms)
@@ -39,7 +39,7 @@ FactoryBot.create(:residency, :dependent, :verified, property: property_975, res
 
 lot70 = FactoryBot.create(:lot, :paid, lot_number: '70 (T)', size: 1)
 lot71 = FactoryBot.create(:lot, lot_number: '71 (T)', size: 1)
-property_977 = FactoryBot.create(:property, :lot_fees_paid, lots: [lot70, lot71], section: 1, street_number: '977', street_name: 'Waterview Dr (TEST)')
+property_977 = FactoryBot.create(:property, :lot_fees_paid, :user_fee_paid, lots: [lot70, lot71], section: 1, street_number: '977', street_name: 'Waterview Dr (TEST)')
 
 pp = FactoryBot.create(:resident, last_name: 'PartialPayment', first_name: 'Peter', email_address: 'ppp@example.com')
 FactoryBot.create(:residency, :owner, :verified, property: property_977, resident: pp)
@@ -90,19 +90,19 @@ FactoryBot.create(:share_transaction, :purchase, quantity: 20, residency: pp.res
 FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: pp.residencies.deed_holder.sample, residency: cbs.residencies.deed_holder.sample)
 
 # Boat Ramp Acccess Passes
-Resident.lot_fees_paid.each {|r| FactoryBot.create(:beach_pass, resident: r) }
+Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:beach_pass, resident: r) }
 
 # Boat Ramp Acccess Passes
-Resident.lot_fees_paid.each {|r| FactoryBot.create(:boat_ramp_access_pass, resident: r) }
+Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:boat_ramp_access_pass, resident: r) }
 
 # Dinghy Dock Storage Passes
-Resident.lot_fees_paid.each {|r| FactoryBot.create(:dinghy_dock_storage_pass, resident: r) }
+Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:dinghy_dock_storage_pass, resident: r) }
 
 # Vehicle Parking Passes
-Resident.lot_fees_paid.each {|r| FactoryBot.create(:vehicle_parking_pass, resident: r) }
+Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:vehicle_parking_pass, resident: r) }
 
 # Watercraft Storage Passes
-Resident.lot_fees_paid.each {|r| FactoryBot.create(:watercraft_storage_pass, resident: r) }
+Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:watercraft_storage_pass, resident: r) }
 
 # Admins
 test_admin_info = Rails.application.credentials.fetch(:test_admin)

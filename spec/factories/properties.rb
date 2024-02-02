@@ -43,5 +43,13 @@ FactoryBot.define do
     trait :lot_fees_unpaid do
       lot_fees_paid_on { nil }
     end
+
+    trait :user_fee_paid do
+      user_fee_paid_on { Faker::Time.between(from: 1.year.ago, to: Time.zone.now) }
+    end
+
+    trait :user_fee_unpaid do
+      user_fee_paid_on { nil }
+    end
   end
 end

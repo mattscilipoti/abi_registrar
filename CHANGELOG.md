@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: Add User Fee Paid On to Property
+
+- Add Property.user_fee_paid_on to DB
+- Add Property.mandatory_fees_paid?
+- Add to Property & Resident index
+- AmenityPass checks resident_paid_mandatory_fees
+
 ## Upcoming: Move Lot Fees To Property
 
 - Add lot_fees_paid_on to Property
