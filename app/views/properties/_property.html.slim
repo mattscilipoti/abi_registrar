@@ -20,6 +20,8 @@ p
 p
   strong User Fee Paid?&nbsp;
   =boolean_tag(property.user_fee_paid_on?)
+  -if property.user_fee_paid_on?
+    ="(#{property.user_fee_paid_on})"
 
 p
   strong Amenities Processed?&nbsp;
