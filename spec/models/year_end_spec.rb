@@ -26,10 +26,19 @@ RSpec.describe Resident, type: :model do
         expect(Lot.count).to eql(3)
         expect(Lot.fee_paid.count).to eql(2)
         expect(Lot.fee_not_paid.count).to eql(1)
+        FactoryBot.create_list(:property, 2, lot_fees_paid_on: 1.day.ago)
+        FactoryBot.create_list(:property, 1, lot_fees_paid_on: nil)
+        expect(Property.count).to eql(3)
+        expect(Property.lot_fees_paid.count).to eql(2)
+        expect(Property.lot_fees_not_paid.count).to eql(1)
       end
 
-      it 'clears all user_fee_paid' do
+      it 'clears all Lot#paid_on' do
         expect { YearEnd.reset_lot_fees }.to change(Lot.fee_paid, :count).by(-2)
+      end
+
+      it 'clears all Property#lot_fees_paid_on' do
+        expect { YearEnd.reset_lot_fees }.to change(Property.lot_fees_paid, :count).by(-2)
       end
     end
   end

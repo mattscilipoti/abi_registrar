@@ -7,9 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: Move Lot Fees To Property
+
+- Add lot_fees_paid_on to Property
+- Copy Lot Fees Paid from Lot to Property
+- Update Year End to remove lot_fees_paid_on from Property
+
 ## 2023-11-15 Fix BoatRampPass#show
 
 - Handle nil description
+
+## 2023-10-30 Yearly Reset
+
+- New menu/pages for Year End, resets Amenities Processed and Lot Fees
 
 ## 2023-05-22 AmenityPasses#index for public
 

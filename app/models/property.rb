@@ -16,14 +16,14 @@ class Property < ApplicationRecord
   scope :deed_holder, -> { distinct.joins(:residencies).merge(Residency.deed_holder) }
   scope :for_sale, -> { where(for_sale: true) }
   scope :not_for_sale, -> { where.not(for_sale: true).or(where(for_sale: nil)) }
-  scope :lot_fees_not_paid, -> { distinct.joins(:lots).merge(Lot.fee_not_paid) }
-  scope :lot_fees_paid, -> { distinct.where.not(id: lot_fees_not_paid) }
+  scope :lot_fees_not_paid, -> { where(lot_fees_paid_on: nil) }
+  scope :lot_fees_paid, -> { where.not(lot_fees_paid_on: nil) }
   scope :not_paid, -> { lot_fees_not_paid }
   scope :owner, -> { distinct.joins(:residencies).merge(Residency.owner) }
   scope :problematic, -> { without_lot.or(without_section).or(without_street_info) }
   scope :test, -> { where("street_name LIKE '%TEST%'") }
   scope :not_test, -> { where.not(id: test) }
-  scope :without_lot, -> { joins(:lots).where(lots: nil) }
+  scope :without_lot, -> { where.missing(:lots) }
   scope :without_section, -> { where(section: nil) }
   scope :without_street_info, -> { where(street_number: nil).or(where(street_name: nil)) }
 
@@ -103,7 +103,7 @@ class Property < ApplicationRecord
   end
 
   def lot_fees_paid?
-    lots.lot_fees_paid.size == lots.size
+    lot_fees_paid_on?
   end
 
   def mailing_address(resident: owner)
