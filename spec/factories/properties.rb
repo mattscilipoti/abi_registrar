@@ -35,5 +35,13 @@ FactoryBot.define do
         property.residencies.create(resident_status: :owner, resident: r)
       end
     end
+
+    trait :paid do
+      lot_fees_paid_on { Faker::Time.between(from: 1.year.ago, to: Time.zone.now) }
+    end
+
+    trait :unpaid do
+      lot_fees_paid_on { nil }
+    end
   end
 end
