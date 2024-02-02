@@ -42,8 +42,12 @@ class PropertiesController < ApplicationController
       if params[:property] && params[:property][:amenities_processed] == '1'
         params[:property][:amenities_processed] = Time.zone.today
       end
-      if params[:property] && params[:property][:lot_fees_paid] == '1'
-        params[:property][:lot_fees_paid_on] = Time.zone.today
+      if params[:property] && params[:property][:lot_fees_paid]
+        if params[:property][:lot_fees_paid] == '1'
+          params[:property][:lot_fees_paid_on] = Time.zone.today
+        else
+          params[:property][:lot_fees_paid_on] = nil
+        end
         params[:property].delete(:lot_fees_paid)
       end
       if @property.update(property_params)
@@ -80,6 +84,7 @@ class PropertiesController < ApplicationController
       params.require(:property).permit(
         :amenities_processed,
         :for_sale,
+        :lot_fees_paid,
         :lot_fees_paid_on,
         :membership_eligible,
         :section,
