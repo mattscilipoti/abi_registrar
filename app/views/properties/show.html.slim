@@ -1,8 +1,18 @@
-= render @property
-
 .model_actions
-  = link_to "Edit this property", edit_property_path(@property)
-  = link_to "Back to properties", properties_path
+  => link_to edit_property_path(@property) do
+    = safe_join([font_awesome_icon('pencil'), "Edit this property"])
+  '|
+  =< link_to properties_path do
+      = safe_join([font_awesome_icon('rectangle-list'), "Back to properties"])
+
+= render @property
+br
+.model_actions
+  => link_to edit_property_path(@property) do
+    = safe_join([font_awesome_icon('pencil'), "Edit this property"])
+  '|
+  =< link_to properties_path do
+    = safe_join([font_awesome_icon('rectangle-list'), "Back to properties"])
 
   = button_to "Destroy this property", @property, method: :delete
 

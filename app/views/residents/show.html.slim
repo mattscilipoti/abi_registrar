@@ -1,8 +1,22 @@
 h1 Resident: #{@resident.to_s}
-= render @resident
+
 .model_actions
-  = link_to "Edit this resident", edit_resident_path(@resident)
-  = link_to "Back to residents", residents_path
-  / = button_to "Destroy this resident", @resident, method: :delete
+  => link_to edit_resident_path(@resident) do
+    = safe_join([font_awesome_icon('pencil'), "Edit this resident"])
+  '|
+  =< link_to residents_path do
+      = safe_join([font_awesome_icon('rectangle-list'), "Back to residents"])
+
+= render @resident
+br
+.model_actions
+  => link_to edit_resident_path(@resident) do
+    = safe_join([font_awesome_icon('pencil'), "Edit this resident"])
+  '|
+  =< link_to residents_path do
+      = safe_join([font_awesome_icon('rectangle-list'), "Back to residents"])
+
+  / = button_to "Destroy this residents", @resident, method: :delete
+
 
 = render partial: "comments/comments_table", locals: {commentable: @resident}
