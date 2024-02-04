@@ -32,7 +32,7 @@ class Resident < ApplicationRecord
   scope :mandatory_fees_not_paid, -> {
     distinct.joins(:properties).merge(Property.user_fee_not_paid)
   }
-  scope :luser_fee_paid, -> {
+  scope :user_fee_paid, -> {
     # basic "joins" to property returns resident where ANY lots fees are paid,
     #   this returns those where ALL lot fees are paid
     where.not(id: user_fee_not_paid)
@@ -103,8 +103,8 @@ class Resident < ApplicationRecord
       significant_other
       without_resident_status
       without_primary_residence
-      lot_fees_paid
-      lot_fees_not_paid
+      mandatory_fees_paid
+      mandatory_fees_not_paid
       verified
       not_verified
       with_mailing_address

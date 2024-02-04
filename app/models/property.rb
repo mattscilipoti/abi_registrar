@@ -18,6 +18,8 @@ class Property < ApplicationRecord
   scope :for_sale, -> { where(for_sale: true) }
   scope :not_for_sale, -> { where.not(for_sale: true).or(where(for_sale: nil)) }
   scope :lot_fees_not_paid, -> { where(lot_fees_paid_on: nil) }
+  scope :mandatory_fees_paid, -> { where.not(lot_fees_paid_on: nil, user_fee_paid_on: nil) }
+  scope :mandatory_fees_not_paid, -> { where(lot_fees_paid_on: nil).where(user_fee_paid_on: nil) }
   scope :lot_fees_paid, -> { where.not(lot_fees_paid_on: nil) }
   scope :not_paid, -> { lot_fees_not_paid }
   scope :owner, -> { distinct.joins(:residencies).merge(Residency.owner) }
@@ -67,8 +69,8 @@ class Property < ApplicationRecord
     %i[
       membership_eligible
       not_membership_eligible
-      lot_fees_paid
-      lot_fees_not_paid
+      mandatory_fees_paid
+      mandatory_fees_not_paid
       for_sale
       without_lot
       without_section
