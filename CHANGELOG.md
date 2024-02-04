@@ -12,7 +12,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Add Property.user_fee_paid_on to DB
 - Add Property.mandatory_fees_paid?
 - Add to Property & Resident index
-- AmenityPass checks resident_paid_mandatory_fees
+- AmenityPass checks confirm_resident_paid_mandatory_fees
 - YearEnd resets user fee
 
 ## Upcoming: Move Lot Fees To Property
