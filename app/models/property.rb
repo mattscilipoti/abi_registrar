@@ -3,6 +3,7 @@ require "address_composer"
 class Property < ApplicationRecord
   include Commentable
   alias_attribute :tax_id, :tax_identifier # alias, original
+  validate :confirm_processing_amenities_is_allowed
 
   has_many :lots
   has_many :residencies
@@ -87,6 +88,12 @@ class Property < ApplicationRecord
     tax_id[7..14]
   end
 
+  def confirm_processing_amenities_is_allowed
+    if amenities_processed.present? and ! mandatory_fees_paid?
+      errors.add(:amenities_processed, "requires mandatory fees to be paid")
+    end
+  end
+
   def default_lot
     lots.first
   end
@@ -128,7 +135,7 @@ class Property < ApplicationRecord
   end
 
   def mandatory_fees_paid?
-    user_fee_paid? && lot_fees_paid?
+    user_fee_paid_on? && lot_fees_paid?
   end
 
   # Lists tax_ids that are not in Sunrise Beach subdivision, but are part of ABI

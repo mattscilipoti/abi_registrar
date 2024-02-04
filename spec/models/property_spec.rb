@@ -73,6 +73,31 @@ RSpec.describe Property, type: :model do
       expect(p).to_not be_valid
       expect(p.errors[:residencies]).to contain_exactly(/is invalid/i)
     end
+
+    context '(when mandatory fees are paid)' do
+      subject(:property) { FactoryBot.create(:property, :with_owner, :mandatory_fees_paid) }
+      it 'can set amenities_processed' do
+        property.amenities_processed = Time.now
+        expect(property).to be_valid
+      end
+    end
+
+    context '(when mandatory fees are not paid)' do
+      subject(:property) { FactoryBot.create(:property, :with_owner, :mandatory_fees_unpaid) }
+
+      it 'can NOT assign amenities_processed' do
+        property.amenities_processed = Time.now
+        expect(property).to_not be_valid
+      end
+
+      it 'can CLEAR amenities_processed' do
+        property.update_attribute(:amenities_processed, Time.now)
+        expect(property).to_not be_valid
+        property.amenities_processed = nil
+        expect(property).to be_valid
+        expect(property.save).to be true
+      end
+    end
   end
 
   describe '(instance methods)' do
