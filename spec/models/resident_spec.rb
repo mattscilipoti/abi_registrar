@@ -113,5 +113,12 @@ RSpec.describe Resident, type: :model do
         expect(subject.primary_residency).to eq(r_primary)
       end
     end
+
+    describe '#user_fee_paid?' do
+      it 'returns failse if no properties are assigned' do
+        subject.properties = []
+        expect(subject.user_fee_paid?).to be false
+      end
+    end
   end
 end

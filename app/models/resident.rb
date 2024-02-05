@@ -155,6 +155,8 @@ class Resident < ApplicationRecord
   end
 
   def user_fee_paid?
+    return false if properties.count == 0
+
     properties.all? {|p| p.user_fee_paid_on? }
   end
 
