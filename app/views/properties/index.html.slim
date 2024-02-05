@@ -5,7 +5,7 @@ fieldset
     = render 'layouts/h1', title: "Properties", model_count: @properties.size, model_total: Property.count
 
   #properties
-    - columns = %i[street_address membership_eligible? toggleable_lot_fees_paid? toggleable_amenities_processed? toggleable_for_sale? residents_summary section lot_numbers tax_identifier share_count]
+    - columns = %i[street_address membership_eligible? toggleable_lot_fees_paid? toggleable_user_fee_paid? toggleable_amenities_processed? toggleable_for_sale? residents_summary section lot_numbers tax_identifier share_count]
     =render 'layouts/models_table', models: @properties, columns: columns, allow_sort: true
 br
 = link_to "New property", new_property_path

@@ -8,7 +8,7 @@ class PropertyDecorator < Draper::Decorator
     when 'franklin, trustee'
       'house-heart' # pro
     else
-      lot_fees_paid? ? 'house-circle-check' : 'house-circle-xmark'
+      mandatory_fees_paid? ? 'house-circle-check' : 'house-circle-xmark'
     end
   end
 
@@ -47,6 +47,10 @@ class PropertyDecorator < Draper::Decorator
 
   def toggleable_lot_fees_paid?
     toggleable_date_as_boolean(model: property, attribute_name: :lot_fees_paid_on, boolean_attribute_name: 'lot_fees_paid?')
+  end
+
+  def toggleable_user_fee_paid?
+    toggleable_date_as_boolean(model: property, attribute_name: :user_fee_paid_on)
   end
 
   private

@@ -131,6 +131,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
     t.boolean  "for_sale"
     t.date     "amenities_processed"
     t.date     "lot_fees_paid_on"
+    t.date     "user_fee_paid_on"
 
     t.index ["street_name"], :name=>"index_properties_on_street_name"
     t.index ["street_number"], :name=>"index_properties_on_street_number"

@@ -24,6 +24,22 @@ class Resident < ApplicationRecord
   scope :lot_fees_not_paid, -> {
     distinct.joins(:properties).merge(Property.lot_fees_not_paid)
   }
+  scope :mandatory_fees_paid, -> {
+    # basic "joins" to property returns resident where ANY lots fees are paid,
+    #   this returns those where ALL lot fees are paid
+    where.not(id: lot_fees_not_paid).where.not(id: user_fee_not_paid)
+  }
+  scope :mandatory_fees_not_paid, -> {
+    distinct.joins(:properties).merge(Property.user_fee_not_paid)
+  }
+  scope :user_fee_paid, -> {
+    # basic "joins" to property returns resident where ANY lots fees are paid,
+    #   this returns those where ALL lot fees are paid
+    where.not(id: user_fee_not_paid)
+  }
+  scope :user_fee_not_paid, -> {
+    distinct.joins(:properties).merge(Property.user_fee_not_paid)
+  }
   scope :renter, -> { distinct.joins(:residencies).merge(Residency.renter) }
   scope :significant_other, -> { distinct.joins(:residencies).merge(Residency.significant_other) }
   scope :not_verified, -> { distinct.joins(:residencies).merge(Residency.not_verified) }
@@ -87,8 +103,8 @@ class Resident < ApplicationRecord
       significant_other
       without_resident_status
       without_primary_residence
-      lot_fees_paid
-      lot_fees_not_paid
+      mandatory_fees_paid
+      mandatory_fees_not_paid
       verified
       not_verified
       with_mailing_address
@@ -113,6 +129,10 @@ class Resident < ApplicationRecord
     properties.all? {|p| p.lot_fees_paid? }
   end
 
+  def mandatory_fees_paid?
+    properties.all? {|p| p.mandatory_fees_paid? }
+  end
+
   def phone=(value)
     if value.present?
       # remove all formatting, leave only numbers
@@ -132,6 +152,10 @@ class Resident < ApplicationRecord
   def to_s
     # "#{full_name} (#{email_address})"
     full_name
+  end
+
+  def user_fee_paid?
+    properties.user_fee_paid.size == properties.size
   end
 
   def verified?

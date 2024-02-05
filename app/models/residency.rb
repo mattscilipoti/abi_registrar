@@ -5,7 +5,7 @@ class Residency < ApplicationRecord
   has_many :share_transactions
   has_many :share_purchases, class_name: 'ShareTransaction', foreign_key: 'residency_id'
   has_many :share_transfers_from, class_name: 'ShareTransaction', foreign_key: 'from_residency_id'
-  delegate :lot_fees_paid?, :street_address, to: :property
+  delegate :lot_fees_paid?, :street_address, :user_fee_paid_on, to: :property
   delegate :full_name, :email_address, :is_minor?, :phone, to: :resident
   enum :resident_status, {
     owner: 'Owner', # Deed Holder

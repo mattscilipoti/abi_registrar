@@ -4,7 +4,7 @@ class AmenityPass < ApplicationRecord
   belongs_to :resident
   has_many :properties, :through => :resident
 
-  validate :resident_paid_lot_fees
+  validate :confirm_resident_paid_mandatory_fees
   validates :sticker_number, uniqueness: true
 
   def self.scopes
@@ -33,6 +33,10 @@ class AmenityPass < ApplicationRecord
   scope :without_description, -> { where(description: nil) }
   scope :without_state_code, -> { where(state_code: nil) }
   scope :without_tag_number, -> { where(tag_number: nil) }
+
+  def self.default_sort
+    { column: :sticker_number, direction: :desc }
+  end
 
   # validates_presence_of :tag_number, :sticker_number
 
@@ -66,9 +70,20 @@ class AmenityPass < ApplicationRecord
     end
   end
 
-  def resident_paid_lot_fees
+  def confirm_resident_paid_lot_fees
     unless resident.lot_fees_paid?
       errors.add(:resident, "must have paid lot fees")
+    end
+  end
+
+  def confirm_resident_paid_mandatory_fees
+    confirm_resident_paid_lot_fees
+    confirm_resident_paid_user_fee
+  end
+
+  def confirm_resident_paid_user_fee
+    unless resident.user_fee_paid?
+      errors.add(:resident, "must have paid user fee")
     end
   end
 

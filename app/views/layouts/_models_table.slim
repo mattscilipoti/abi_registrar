@@ -5,7 +5,9 @@
   - allow_edit = true if allow_edit.nil?
   - allow_show = true if allow_show.nil?
   - allow_sort = false if allow_sort.nil?
-  - default_sort = { column: columns.first, direction: :asc }
+  - example_model_class = models.first.class
+  - model_default_sort = example_model_class.respond_to?(:default_sort) ? example_model_class.default_sort : nil
+  - default_sort = model_default_sort || { column: columns.first, direction: :asc }
   - sort = params[:sort] || default_sort if sort.nil?
   - sort_column = sort.fetch(:column)
   - sort_direction = sort.fetch(:direction)

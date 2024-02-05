@@ -3,6 +3,7 @@ require "address_composer"
 class Property < ApplicationRecord
   include Commentable
   alias_attribute :tax_id, :tax_identifier # alias, original
+  validate :confirm_processing_amenities_is_allowed
 
   has_many :lots
   has_many :residencies
@@ -17,12 +18,16 @@ class Property < ApplicationRecord
   scope :for_sale, -> { where(for_sale: true) }
   scope :not_for_sale, -> { where.not(for_sale: true).or(where(for_sale: nil)) }
   scope :lot_fees_not_paid, -> { where(lot_fees_paid_on: nil) }
+  scope :mandatory_fees_paid, -> { where.not(lot_fees_paid_on: nil, user_fee_paid_on: nil) }
+  scope :mandatory_fees_not_paid, -> { where(lot_fees_paid_on: nil).where(user_fee_paid_on: nil) }
   scope :lot_fees_paid, -> { where.not(lot_fees_paid_on: nil) }
   scope :not_paid, -> { lot_fees_not_paid }
   scope :owner, -> { distinct.joins(:residencies).merge(Residency.owner) }
   scope :problematic, -> { without_lot.or(without_section).or(without_street_info) }
   scope :test, -> { where("street_name LIKE '%TEST%'") }
   scope :not_test, -> { where.not(id: test) }
+  scope :user_fee_not_paid, -> { where(user_fee_paid_on: nil) }
+  scope :user_fee_paid, -> { where.not(user_fee_paid_on: nil) }
   scope :without_lot, -> { where.missing(:lots) }
   scope :without_section, -> { where(section: nil) }
   scope :without_street_info, -> { where(street_number: nil).or(where(street_name: nil)) }
@@ -64,8 +69,8 @@ class Property < ApplicationRecord
     %i[
       membership_eligible
       not_membership_eligible
-      lot_fees_paid
-      lot_fees_not_paid
+      mandatory_fees_paid
+      mandatory_fees_not_paid
       for_sale
       without_lot
       without_section
@@ -83,6 +88,12 @@ class Property < ApplicationRecord
   # account_number portion of tax_id
   def account_number(tax_id = self.tax_id)
     tax_id[7..14]
+  end
+
+  def confirm_processing_amenities_is_allowed
+    if amenities_processed.present? and ! mandatory_fees_paid?
+      errors.add(:amenities_processed, "requires mandatory fees to be paid")
+    end
   end
 
   def default_lot
@@ -123,6 +134,10 @@ class Property < ApplicationRecord
     mailing_address.prepend "#{recipient.upcase}\n" if recipient
 
     mailing_address
+  end
+
+  def mandatory_fees_paid?
+    user_fee_paid_on? && lot_fees_paid?
   end
 
   # Lists tax_ids that are not in Sunrise Beach subdivision, but are part of ABI
