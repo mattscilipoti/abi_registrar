@@ -155,7 +155,7 @@ class Resident < ApplicationRecord
   end
 
   def user_fee_paid?
-    properties.user_fee_paid.size == properties.size
+    properties.all? {|p| p.user_fee_paid_on? }
   end
 
   def verified?
