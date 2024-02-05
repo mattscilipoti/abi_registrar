@@ -15,6 +15,8 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Add filters for mandatory fees
 - AmenityPass checks confirm_resident_paid_mandatory_fees
 - YearEnd resets user fee
+- Summary includes BeachPass and user fee
+- models_table supports model#default_sort
 
 ## Upcoming: Move Lot Fees To Property
 
