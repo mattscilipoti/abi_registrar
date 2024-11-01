@@ -68,6 +68,7 @@ class VehicleParkingPassesController < ApplicationController
     def vehicle_parking_pass_params
       params.require(:vehicle_parking_pass).permit(
         :resident_id,
+        :description,
         :state_code,
         :sticker_number,
         :tag_number
