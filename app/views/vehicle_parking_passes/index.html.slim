@@ -5,7 +5,7 @@ fieldset
     = render 'layouts/h1', title: "Vehicle Parking Passes", model_count: @vehicle_parking_passes.size, model_total: VehicleParkingPass.count
 
   #vehicle_parking_passes
-    - columns = %i[sticker_number state_code tag_number resident property_summary]
+    - columns = %i[sticker_number state_code tag_number description resident property_summary]
     =render 'layouts/models_table', models: @vehicle_parking_passes, columns: columns, allow_sort: true
 br
 = link_to "New Vehicle Parking Pass", new_vehicle_parking_pass_path
