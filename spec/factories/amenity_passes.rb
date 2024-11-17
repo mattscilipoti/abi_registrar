@@ -31,6 +31,16 @@ FactoryBot.define do
     updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
   end
 
+  factory :utility_cart_pass do
+    sequence(:sticker_number) { |n| "U-#{345678 + n}" }
+    description { 'TEST CART' }
+
+    resident
+
+    created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
+    updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
+  end
+
   factory :vehicle_parking_pass do
     sequence(:sticker_number) { |n| "P-#{345678 + n}" }
     state_code { 'MD' }

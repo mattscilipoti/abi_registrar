@@ -4,13 +4,16 @@ class VehicleParkingPass < AmenityPass
 
   validates_presence_of :tag_number, :sticker_number
 
+  scope :utility_cart_passes, -> { where("sticker_number ILIKE :prefix", prefix: "U%") }
+
   def self.scopes
     %i[
+      utility_cart_passes
       without_state_code
     ]
   end
 
   def to_s
-    [sticker_number, tag].compact.join(', ')
+    [id, sticker_number, tag].compact.join(', ')
   end
 end

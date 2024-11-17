@@ -21,6 +21,7 @@ Rails.application.routes.draw do
         post :transfer
       end
     end
+    resources :utility_cart_passes
     resources :vehicle_parking_passes
     resources :watercraft_storage_passes
   end

@@ -98,6 +98,9 @@ Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:boat_ramp_access_pass,
 # Dinghy Dock Storage Passes
 Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:dinghy_dock_storage_pass, resident: r) }
 
+# Utility Cart Passes
+Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:utility_cart_pass, resident: r) }
+
 # Vehicle Parking Passes
 Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:vehicle_parking_pass, resident: r) }
 
