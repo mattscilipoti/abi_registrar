@@ -10,6 +10,6 @@ class UtilityCartPass < AmenityPass
   end
 
   def to_s
-    [id, sticker_number, description.truncate(20)].compact.join(', ')
+    [sticker_number, description&.truncate(20)].compact.join(', ')
   end
 end
