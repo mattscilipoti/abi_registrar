@@ -12,8 +12,4 @@ class VehicleParkingPass < AmenityPass
       without_state_code
     ]
   end
-
-  def to_s
-    [id, sticker_number, tag].compact.join(', ')
-  end
 end
