@@ -81,6 +81,8 @@ module ApplicationHelper
       'sun'
     when /tag/, /vehicle/, /parking/
       'car'
+    when /utility/
+      'golf-ball-tee'
     when /verified/
       'certificate'
     when /watercraft/

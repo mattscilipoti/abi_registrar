@@ -1,0 +1,13 @@
+- possible_residents = Resident.where(id: @utility_cart_pass.resident_id).or(Resident.lot_fees_paid).order(last_name: :asc, first_name: :asc)
+
+= simple_form_for(@utility_cart_pass) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :sticker_number
+    = f.input :description, as: :text, input_html: { rows: 2, cols: 60 }
+    = f.association :resident, collection: possible_residents
+
+  .form-actions
+    = f.button :submit

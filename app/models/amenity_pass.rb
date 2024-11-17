@@ -91,6 +91,10 @@ class AmenityPass < ApplicationRecord
     [state_code, tag_number].compact.join('-')
   end
 
+  def to_param
+    [id, sticker_number].compact.join('-')
+  end
+
   def to_s
     [sticker_number, tag].compact.join(', ')
   end

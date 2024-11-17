@@ -1,0 +1,11 @@
+h1 Utility Cart Pass: #{@utility_cart_pass.to_s}
+== render @utility_cart_pass
+
+.model_actions
+  => link_to "Edit this Utility Cart Pass", edit_utility_cart_pass_path(@utility_cart_pass)
+  '|
+  =< link_to "Back to Utility Cart Passes", utility_cart_passes_path
+  '|
+  =< link_to "Create another Utility Cart Pass", new_utility_cart_pass_path
+
+  = button_to "Destroy this Utility Cart Pass", @utility_cart_pass, method: :delete
