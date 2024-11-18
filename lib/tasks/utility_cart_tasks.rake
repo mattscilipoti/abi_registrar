@@ -13,10 +13,13 @@ namespace :utility_carts do
     vehicle_passes_should_be_utility.each do |pass|
       utility_pass = pass.becomes(UtilityCartPass)
       utility_pass.type = UtilityCartPass.name
+      utility_pass.description = pass.tag_number
+      utility_pass.tag_number = nil
       print '  converting '
       ap utility_pass
-      debugger
+      #debugger
       utility_pass.save!
+      Rails.logger.info "Converted #{utility_pass.id}: #{utility_pass}"
     end
 
     stats_at_end = {
