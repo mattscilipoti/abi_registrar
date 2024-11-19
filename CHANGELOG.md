@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Add User Fee Paid On to Property
+## 2025-11-18: 111 Manage UtilityCartPasses, includes conversion
+
+- Add UtilityCartPass (and UI for managing)
+  - Add to Summary
+- Add task: utility_carts:convert_vehicle_passes
+
+## 2024-11-02 Can edit description of VehicleParkingPass
+
+## 2024-02-05: Add User Fee Paid On to Property
 
 - Add Property.user_fee_paid_on to DB
 - Add Property.mandatory_fees_paid?
@@ -18,7 +26,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Summary includes BeachPass and user fee
 - models_table supports model#default_sort
 
-## Upcoming: Move Lot Fees To Property
+## 2024-02-01: Move Lot Fees To Property
 
 - Add lot_fees_paid_on to Property
 - Copy Lot Fees Paid from Lot to Property
