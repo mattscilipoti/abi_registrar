@@ -22,8 +22,9 @@ namespace :utility_carts do
       utility_pass.attributes = converted_attributes
       print '  converting '
       ap utility_pass
-      # Note: this changes updated_at
-      utility_pass.save!
+      # Use update_columns to handle past Passes (which may not have today's requirements)
+      # Note: this does NOT change updated_at
+      utility_pass.update_columns(converted_attributes)
       Rails.logger.info "Converted UtilityCartPass #{utility_pass.id}: #{utility_pass}"
     end
 
