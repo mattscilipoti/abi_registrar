@@ -22,15 +22,17 @@ namespace :utility_carts do
       utility_pass.attributes = converted_attributes
       print '  converting '
       ap utility_pass
-
+      # Note: this changes updated_at
       utility_pass.save!
-      Rails.logger.info "Converted #{utility_pass.id}: #{utility_pass}"
+      Rails.logger.info "Converted UtilityCartPass #{utility_pass.id}: #{utility_pass}"
     end
 
     stats_at_end = {
       vehicle_passes_ct_at_end: VehicleParkingPass.count,
       utility_cart_passes_ct_at_end: UtilityCartPass.count,
     }
-    ap stats.merge(stats_at_end)
+    final_stats = stats.merge(stats_at_end)
+    Rails.logger.info "UtilityCartPass conversion stats: #{final_stats}"
+    ap final_stats
   end
 end
