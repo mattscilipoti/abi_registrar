@@ -12,12 +12,17 @@ namespace :utility_carts do
     puts "Converting (#{vehicle_passes_should_be_utility.size}) vehicle passes..."
     vehicle_passes_should_be_utility.each do |pass|
       utility_pass = pass.becomes(UtilityCartPass)
-      utility_pass.type = UtilityCartPass.name
-      utility_pass.description = pass.tag_number
-      utility_pass.tag_number = nil
+      converted_attributes = {
+        type: UtilityCartPass.name,
+        description: pass.tag_number,
+        tag_number: nil,
+        state_code: nil,
+      }
+      #debugger
+      utility_pass.attributes = converted_attributes
       print '  converting '
       ap utility_pass
-      #debugger
+
       utility_pass.save!
       Rails.logger.info "Converted #{utility_pass.id}: #{utility_pass}"
     end
