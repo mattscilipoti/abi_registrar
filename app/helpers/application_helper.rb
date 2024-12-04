@@ -1,24 +1,44 @@
 module ApplicationHelper
   # Returns a span tag with a check mark or cross mark based on the boolean value.
+  # Options:
+  # - :subdue_if - Adds the class 'subdued' if the value matches.
+  # - :hide_if - Does not generate a tag if the value matches.
   def boolean_tag(boolean_value, options = {})
+    return '' if options.delete(:hide_if) == boolean_value
+
     char = boolean_value ? '✓' : '❌'
     css_class = "bool_#{boolean_value.to_s}"
+    css_class += ' subdued' if options.delete(:subdue_if) == boolean_value
     default_options = { class: css_class, data: { tooltip: boolean_value ? 'Yes' : 'No' }}
-    content_tag(:span, char, default_options.deep_merge(options))
+    tag_options = default_options.deep_merge(options)
+    content_tag(:span, char, tag_options)
   end
 
   # Returns a span tag with a formatted date.
+  # Options:
+  # - :format - The strftime format of the date string.
   def date_tag(date)
     datetime_tag(date, format: '%a %b %d, %Y')
   end
 
   # Returns a boolean tag with a tooltip based on the datetime.
-  def datetime_as_boolean_tag(datetime, format: '%a %b %d, %Y')
-    tooltip = datetime.present? ? datetime.strftime(format) : 'Not voided'
-    boolean_tag(datetime.present?, data: { tooltip: tooltip })
+  # Options:
+  # - :format - The strftime format of the datetime string.
+  # - :subdue_if - Adds the class 'subdued' if the value matches.
+  # - :hide_if - Does not generate a tag if the value matches.
+  def datetime_as_boolean_tag(datetime, options = {})
+    format = options.delete(:format) || '%a %b %d, %Y'
+    if datetime.present?
+      # Note: cannot assign options[:data] = { tooltip"...}, since this overwrites ALL data values
+      options[:data] ||= {}
+      options[:data][:tooltip] = datetime.strftime(format)
+    end
+    boolean_tag(datetime.present?, options)
   end
 
   # Returns a span tag with a formatted datetime and a tooltip.
+  # Options:
+  # - :format - The strftime format of the datetime string.
   def datetime_tag(datetime, format: '%c')
     return '' if datetime.blank?
 

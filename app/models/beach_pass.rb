@@ -4,7 +4,7 @@ class BeachPass < AmenityPass
   validates_presence_of :sticker_number
 
   def self.scopes
-    %i[
+    super + %i[
       without_description
     ]
   end

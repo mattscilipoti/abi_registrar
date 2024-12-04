@@ -387,6 +387,10 @@ ul {
   }
 }
 
+.subdued {
+  filter: grayscale(100%) brightness(2) saturate(0.5);
+}
+
 /**
  * Tooltip Styles
  * see: https://codepen.io/cbracco/pen/nXEQLw

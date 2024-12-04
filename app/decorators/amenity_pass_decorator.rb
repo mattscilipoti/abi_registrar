@@ -31,6 +31,7 @@ class AmenityPassDecorator < Draper::Decorator
   end
 
   def voided?
-    h.datetime_as_boolean_tag(voided_at)
+    # does not display if value is false
+    h.datetime_as_boolean_tag(voided_at, hidden_value: false)
   end
 end

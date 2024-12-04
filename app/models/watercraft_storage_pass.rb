@@ -6,7 +6,7 @@ class WatercraftStoragePass < AmenityPass
   validates_presence_of :beach_number, :description, :rack_slot_number, :sticker_number
 
   def self.scopes
-    %i[
+    super + %i[
       without_description
     ]
   end

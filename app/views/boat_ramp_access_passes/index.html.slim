@@ -5,7 +5,7 @@ fieldset
     = render 'layouts/h1', title: "Boat Ramp Access Passes", model_count: @boat_ramp_access_passes.size, model_total: BoatRampAccessPass.count
 
   #boat_ramp_access_passes
-    - columns = %i[sticker_number tag_number description resident property_summary]
+    - columns = %i[sticker_number voided? tag_number description resident property_summary]
     =render 'layouts/models_table', models: @boat_ramp_access_passes, columns: columns, allow_sort: true
 br
 = link_to "New Boat Ramp Access Pass", new_boat_ramp_access_pass_path

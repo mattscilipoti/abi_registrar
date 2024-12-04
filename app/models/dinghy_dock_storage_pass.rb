@@ -5,7 +5,7 @@ class DinghyDockStoragePass < AmenityPass
   validates_presence_of :beach_number, :description, :sticker_number
 
   def self.scopes
-    %i[
+    super + %i[
       without_description
     ]
   end

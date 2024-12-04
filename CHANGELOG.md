@@ -12,7 +12,10 @@ In place of release version numbers, we organize via deploys to Production (by D
 - AmenityPass
   - #voided_at
   - scopes: voided, not_voided
-- Add helper: datetime_as_boolean_tag
+  - add voided? to all index pages
+- Helpers:
+  - added datetime_as_boolean_tag
+  - boolean_tag accepts subdue_if, hide_if
 - Specs
   - Add shoulda-matchers (expected by Copilot generated specs)
   - Add application_helper_spec (Thx Copilot)

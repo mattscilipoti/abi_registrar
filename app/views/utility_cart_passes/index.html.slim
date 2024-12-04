@@ -5,7 +5,7 @@ fieldset
     = render 'layouts/h1', title: "Utility Cart Passes", model_count: @utility_cart_passes.size, model_total: UtilityCartPass.count
 
   #utility_cart_passes
-    - columns = %i[sticker_number description tag_number resident property_summary]
+    - columns = %i[sticker_number voided? description tag_number resident property_summary]
     =render 'layouts/models_table', models: @utility_cart_passes, columns: columns, allow_sort: true
 br
 = link_to "New Utility Cart Pass", new_utility_cart_pass_path

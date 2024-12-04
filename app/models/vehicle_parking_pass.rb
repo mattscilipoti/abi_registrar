@@ -11,8 +11,9 @@ class VehicleParkingPass < AmenityPass
   }
 
   def self.scopes
-    %i[
+    super + %i[
       utility_cart_passes
+      voided
       without_state_code
     ]
   end

@@ -8,7 +8,7 @@ class AmenityPass < ApplicationRecord
   validates :sticker_number, uniqueness: true
 
   def self.scopes
-    []
+    [:not_voided, :voided]
   end
 
   # List of searchable columns for this Model
@@ -73,6 +73,10 @@ class AmenityPass < ApplicationRecord
 
   def to_s
     [sticker_number, tag].compact.join(', ')
+  end
+
+  def void
+    update_columns(voided_at: Time.current)
   end
 
   def voided?

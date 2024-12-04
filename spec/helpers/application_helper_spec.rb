@@ -7,7 +7,28 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     it 'returns a span with a cross mark for false' do
-      expect(helper.boolean_tag(false)).to include('❌')
+      expect(helper.boolean_tag(false)). to include('❌')
+    end
+
+    it 'adds the subdued class when specified for true' do
+      expect(helper.boolean_tag(true, subdue_if: true)).to include('class="bool_true subdued"')
+    end
+
+    it 'does not add the subdued class when specified for false' do
+      expect(helper.boolean_tag(true, subdue_if: false)).to include('class="bool_true"')
+    end
+
+    it 'adds the subdued class when specified for false' do
+      expect(helper.boolean_tag(false, subdue_if: false)).to include('class="bool_false subdued"')
+    end
+
+    it 'does not add the subdued class when specified for true' do
+      expect(helper.boolean_tag(false, subdue_if: true)).to include('class="bool_false"')
+    end
+
+    it 'does not generate a tag when the value matches hide_if' do
+      expect(helper.boolean_tag(true, hide_if: true)).to eq('')
+      expect(helper.boolean_tag(false, hide_if: false)).to eq('')
     end
   end
 
@@ -25,9 +46,33 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.datetime_as_boolean_tag(datetime)).to include('data-tooltip="Tue Oct 31, 2023"')
     end
 
-    it 'returns a boolean tag with a tooltip "Not voided" for a nil datetime' do
+    it 'returns a boolean tag with a tooltip "No" for a nil datetime' do
       expect(helper.datetime_as_boolean_tag(nil)).to include('❌')
-      expect(helper.datetime_as_boolean_tag(nil)).to include('data-tooltip="Not voided"')
+      expect(helper.datetime_as_boolean_tag(nil)).to include('data-tooltip="No"')
+    end
+
+    it 'adds the subdued class when specified for a present datetime' do
+      datetime = DateTime.new(2023, 10, 31, 12, 0, 0)
+      expect(helper.datetime_as_boolean_tag(datetime, subdue_if: true)).to include('class="bool_true subdued"')
+    end
+
+    it 'adds the subdued class when specified for a nil datetime' do
+      expect(helper.datetime_as_boolean_tag(nil, subdue_if: false)).to include('class="bool_false subdued"')
+    end
+
+    it 'does not generate a tag when the value matches hide_if' do
+      datetime = DateTime.new(2023, 10, 31, 12, 0, 0)
+      expect(helper.datetime_as_boolean_tag(datetime, hide_if: true)).to eq('')
+      expect(helper.datetime_as_boolean_tag(nil, hide_if: false)).to eq('')
+    end
+
+    it 'returns a boolean tag with options' do
+      datetime = DateTime.new(2023, 10, 31, 12, 0, 0)
+      options = { class: 'custom-class', data: { custom: 'value' } }
+      subject = helper.datetime_as_boolean_tag(datetime, options)
+      expect(subject).to include('✓')
+      expect(subject).to include('class="custom-class"')
+      expect(subject).to include('data-custom="value"')
     end
   end
 

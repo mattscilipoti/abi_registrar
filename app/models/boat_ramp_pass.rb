@@ -1,4 +1,5 @@
-class UtilityCartPass < AmenityPass
+
+class BoatRampPass < AmenityPass
   scope :problematic, -> { without_description }
 
   validates_presence_of :sticker_number
