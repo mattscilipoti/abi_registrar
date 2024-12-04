@@ -38,6 +38,14 @@ class WatercraftStoragePassesController < ApplicationController
   # PATCH/PUT /watercraft_storage_passes/1 or /watercraft_storage_passes/1.json
   def update
     respond_to do |format|
+      if params[:watercraft_storage_pass] && params[:watercraft_storage_pass][:voided]
+        if params[:watercraft_storage_pass][:voided] == '1'
+          params[:watercraft_storage_pass][:voided_at] = Time.current
+        else
+          params[:watercraft_storage_pass][:voided_at] = nil
+        end
+        params[:watercraft_storage_pass].delete(:voided)
+      end
       if @watercraft_storage_pass.update(watercraft_storage_pass_params)
         format.html { redirect_to watercraft_storage_pass_url(@watercraft_storage_pass), notice: "Watercraft Storage Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @watercraft_storage_pass }
@@ -72,6 +80,7 @@ class WatercraftStoragePassesController < ApplicationController
         :description,
         :location,
         :sticker_number,
+        :voided_at,
       )
     end
 end

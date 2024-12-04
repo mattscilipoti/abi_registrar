@@ -38,6 +38,14 @@ class UtilityCartPassesController < ApplicationController
   # PATCH/PUT /utility_cart_passes/1 or /utility_cart_passes/1.json
   def update
     respond_to do |format|
+      if params[:utility_cart_pass] && params[:utility_cart_pass][:voided]
+        if params[:utility_cart_pass][:voided] == '1'
+          params[:utility_cart_pass][:voided_at] = Time.current
+        else
+          params[:utility_cart_pass][:voided_at] = nil
+        end
+        params[:utility_cart_pass].delete(:voided)
+      end
       if @utility_cart_pass.update(utility_cart_pass_params)
         format.html { redirect_to utility_cart_pass_url(@utility_cart_pass), notice: "Utility Cart Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @utility_cart_pass }
@@ -71,6 +79,7 @@ class UtilityCartPassesController < ApplicationController
         :description,
         :state_code,
         :sticker_number,
+        :voided_at,
       )
     end
 end

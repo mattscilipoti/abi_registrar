@@ -240,4 +240,14 @@ module ApplicationHelper
     end
     models
   end
+
+  # Used by models_table to create toggleable fields for datetime attributes
+  def toggleable_date_as_boolean(model:, attribute_name:, boolean_attribute_name: "#{attribute_name}?")
+    form_with model: model, data: { controller: 'autosave'} do |f|
+      data_attrs = { action: 'autosave#save' }
+      attribute_value = model.send(attribute_name)
+      data_attrs[:tooltip] = "On: #{attribute_value} (#{time_ago_in_words(attribute_value)} ago)" if attribute_value
+      f.check_box boolean_attribute_name, data: data_attrs
+    end
+  end
 end

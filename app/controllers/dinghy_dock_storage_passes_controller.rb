@@ -38,6 +38,14 @@ class DinghyDockStoragePassesController < ApplicationController
   # PATCH/PUT /dinghy_dock_storage_passes/1 or /dinghy_dock_storage_passes/1.json
   def update
     respond_to do |format|
+      if params[:dinghy_dock_storage_pass] && params[:dinghy_dock_storage_pass][:voided]
+        if params[:dinghy_dock_storage_pass][:voided] == '1'
+          params[:dinghy_dock_storage_pass][:voided_at] = Time.current
+        else
+          params[:dinghy_dock_storage_pass][:voided_at] = nil
+        end
+        params[:dinghy_dock_storage_pass].delete(:voided)
+      end
       if @dinghy_dock_storage_pass.update(dinghy_dock_storage_pass_params)
         format.html { redirect_to dinghy_dock_storage_pass_url(@dinghy_dock_storage_pass), notice: "Dinghy Dock Storage Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @dinghy_dock_storage_pass }
@@ -72,6 +80,7 @@ class DinghyDockStoragePassesController < ApplicationController
         :description,
         :location,
         :sticker_number,
+        :voided_at,
       )
     end
 end

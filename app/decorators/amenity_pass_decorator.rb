@@ -26,12 +26,11 @@ class AmenityPassDecorator < Draper::Decorator
     (object.resident.residencies.collect &:street_address).join(', ')
   end
 
-  def type_as_icon
-    self.class.icon(html_options: { title: object.class.name })
+  def toggleable_voided?
+    h.toggleable_date_as_boolean(model: self, attribute_name: :voided_at, boolean_attribute_name: 'voided?')
   end
 
-  def voided?
-    # does not display if value is false
-    h.datetime_as_boolean_tag(voided_at, hidden_value: false)
+  def type_as_icon
+    self.class.icon(html_options: { title: object.class.name })
   end
 end

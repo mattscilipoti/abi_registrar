@@ -38,6 +38,14 @@ class BeachPassesController < ApplicationController
   # PATCH/PUT /beach_passes/1 or /beach_passes/1.json
   def update
     respond_to do |format|
+      if params[:beach_pass] && params[:beach_pass][:voided]
+        if params[:beach_pass][:voided] == '1'
+          params[:beach_pass][:voided_at] = Time.current
+        else
+          params[:beach_pass][:voided_at] = nil
+        end
+        params[:beach_pass].delete(:voided)
+      end
       if @beach_pass.update(beach_pass_params)
         format.html { redirect_to beach_pass_url(@beach_pass), notice: "Beach Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @beach_pass }
@@ -70,6 +78,7 @@ class BeachPassesController < ApplicationController
         :resident_id,
         :description,
         :sticker_number,
+        :voided_at,
       )
     end
 end

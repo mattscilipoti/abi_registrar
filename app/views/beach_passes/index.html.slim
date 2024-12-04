@@ -5,7 +5,7 @@ fieldset
     = render 'layouts/h1', title: "Beach Passes", model_count: @beach_passes.size, model_total: BeachPass.count
 
   #beach_passes
-    - columns = %i[sticker_number voided? resident property_summary description]
+    - columns = %i[sticker_number toggleable_voided? resident property_summary description]
     =render 'layouts/models_table', models: @beach_passes, columns: columns, allow_sort: true
 br
 = link_to "New Beach Pass", new_beach_pass_path

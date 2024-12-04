@@ -5,7 +5,7 @@ fieldset
     = render 'layouts/h1', title: "Watercraft Storage Passes", model_count: @watercraft_storage_passes.size, model_total: WatercraftStoragePass.count
 
   #watercraft_storage_passes
-    - columns = %i[sticker_number voided? beach_number rack_slot_number description resident property_summary]
+    - columns = %i[sticker_number toggleable_voided? beach_number rack_slot_number description resident property_summary]
     =render 'layouts/models_table', models: @watercraft_storage_passes, columns: columns, allow_sort: true
 br
 = link_to "New Watercraft Storage Pass", new_watercraft_storage_pass_path

@@ -12,7 +12,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 - AmenityPass
   - #voided_at
   - scopes: voided, not_voided
-  - add voided? to all index pages
+  - add toggleable_voided_at to index pages
 - Helpers:
   - added datetime_as_boolean_tag
   - boolean_tag accepts subdue_if, hide_if
