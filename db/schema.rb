@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_20_015845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -66,9 +66,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
     t.string   "description"
     t.integer  "beach_number"
     t.string   "location"
+    t.datetime "voided_at"
 
     t.index ["resident_id"], :name=>"index_amenity_passes_on_resident_id"
     t.index ["sticker_number"], :name=>"index_amenity_passes_on_sticker_number", :unique=>true
+    t.index ["voided_at"], :name=>"index_amenity_passes_on_voided_at"
   end
 
   create_table "comments", force: :cascade do |t|

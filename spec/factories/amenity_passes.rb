@@ -1,6 +1,16 @@
 FactoryBot.define do
   LOREM_IPSUM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 
+  factory :test_amenity_pass do
+    association :resident
+    sequence(:sticker_number) { |n| "A-#{012345 + n}" }
+    description { LOREM_IPSUM }
+    state_code { "MD" }
+    tag_number { Faker::Vehicle.license_plate(state_abbreviation: state_code) }
+    voided_at { nil }
+    # ...other attributes as needed...
+  end
+
   factory :beach_pass do
     sequence(:sticker_number) { |n| "B-#{012345 + n}" }
     description { LOREM_IPSUM }

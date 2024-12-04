@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: 93 Void Amenity
+
+- AmenityPass
+  - #voided_at
+  - scopes: voided, not_voided
+- Add helper: datetime_as_boolean_tag
+- Specs
+  - Add shoulda-matchers (expected by Copilot generated specs)
+  - Add application_helper_spec (Thx Copilot)
+
 ## 2025-11-18: 111 Manage UtilityCartPasses, includes conversion
 
 - Add UtilityCartPass (and UI for managing)

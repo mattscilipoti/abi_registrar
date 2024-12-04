@@ -29,4 +29,8 @@ class AmenityPassDecorator < Draper::Decorator
   def type_as_icon
     self.class.icon(html_options: { title: object.class.name })
   end
+
+  def voided?
+    h.datetime_as_boolean_tag(voided_at)
+  end
 end

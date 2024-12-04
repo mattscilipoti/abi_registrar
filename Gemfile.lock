@@ -295,6 +295,8 @@ GEM
       activerecord (>= 4.2, < 8)
       after_commit_everywhere (~> 1.1)
       sequel (~> 5.38)
+    shoulda-matchers (6.4.0)
+      activesupport (>= 5.2.0)
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
@@ -377,6 +379,7 @@ DEPENDENCIES
   sassc-rails
   schema_plus_functions
   selenium-webdriver
+  shoulda-matchers (~> 6.4)
   simple_form
   slim-rails
   sprockets-rails

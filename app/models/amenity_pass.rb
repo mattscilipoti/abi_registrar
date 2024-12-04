@@ -2,7 +2,7 @@ require 'csv' # for states
 
 class AmenityPass < ApplicationRecord
   belongs_to :resident
-  has_many :properties, :through => :resident
+  has_many :properties, through: :resident
 
   validate :confirm_resident_paid_mandatory_fees
   validates :sticker_number, uniqueness: true
@@ -16,6 +16,7 @@ class AmenityPass < ApplicationRecord
   def self.searchable_columns
     [:beach_number, :description, :location, :state_code, :sticker_number, :tag_number]
   end
+
   # Configure search
   include PgSearch::Model
   pg_search_scope :search_by_all,
@@ -28,8 +29,8 @@ class AmenityPass < ApplicationRecord
       tsearch: { prefix: true }
     }
 
-  scope :not_paid, -> { where('1=2') } # TODO: sticker fee not paid?
-  # scope :problematic, -> { without_state_code }
+  scope :not_voided, -> { where(voided_at: nil) }
+  scope :voided, -> { where.not(voided_at: nil) }
   scope :without_description, -> { where(description: nil) }
   scope :without_state_code, -> { where(state_code: nil) }
   scope :without_tag_number, -> { where(tag_number: nil) }
@@ -37,14 +38,6 @@ class AmenityPass < ApplicationRecord
   def self.default_sort
     { column: :sticker_number, direction: :desc }
   end
-
-  # validates_presence_of :tag_number, :sticker_number
-
-  # def self.scopes
-  #   %i[
-  #     without_state_code
-  #   ]
-  # end
 
   # Useful for form collections
   # Displays summary, returns code
@@ -70,23 +63,6 @@ class AmenityPass < ApplicationRecord
     end
   end
 
-  def confirm_resident_paid_lot_fees
-    unless resident.lot_fees_paid?
-      errors.add(:resident, "must have paid lot fees")
-    end
-  end
-
-  def confirm_resident_paid_mandatory_fees
-    confirm_resident_paid_lot_fees
-    confirm_resident_paid_user_fee
-  end
-
-  def confirm_resident_paid_user_fee
-    unless resident.user_fee_paid?
-      errors.add(:resident, "must have paid user fee")
-    end
-  end
-
   def tag
     [state_code, tag_number].compact.join('-')
   end
@@ -98,4 +74,20 @@ class AmenityPass < ApplicationRecord
   def to_s
     [sticker_number, tag].compact.join(', ')
   end
+
+  def voided?
+    voided_at?
+  end
+
+  private
+
+  def confirm_resident_paid_mandatory_fees
+    unless resident && resident.lot_fees_paid?
+      errors.add(:resident, "must have paid lot fees")
+    end
+    unless resident && resident.user_fee_paid?
+      errors.add(:resident, "must have paid user fee")
+    end
+  end
+
 end

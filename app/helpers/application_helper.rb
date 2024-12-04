@@ -1,15 +1,24 @@
 module ApplicationHelper
-
-  def boolean_tag(boolean_value)
+  # Returns a span tag with a check mark or cross mark based on the boolean value.
+  def boolean_tag(boolean_value, options = {})
     char = boolean_value ? '✓' : '❌'
     css_class = "bool_#{boolean_value.to_s}"
-    content_tag(:span, char, class: css_class, data: { tooltip: boolean_value ? 'Yes' : 'No' })
+    default_options = { class: css_class, data: { tooltip: boolean_value ? 'Yes' : 'No' }}
+    content_tag(:span, char, default_options.deep_merge(options))
   end
 
+  # Returns a span tag with a formatted date.
   def date_tag(date)
     datetime_tag(date, format: '%a %b %d, %Y')
   end
 
+  # Returns a boolean tag with a tooltip based on the datetime.
+  def datetime_as_boolean_tag(datetime, format: '%a %b %d, %Y')
+    tooltip = datetime.present? ? datetime.strftime(format) : 'Not voided'
+    boolean_tag(datetime.present?, data: { tooltip: tooltip })
+  end
+
+  # Returns a span tag with a formatted datetime and a tooltip.
   def datetime_tag(datetime, format: '%c')
     return '' if datetime.blank?
 
@@ -25,6 +34,7 @@ module ApplicationHelper
     link_to(name, options, default_html_options.merge(html_options))
   end
 
+  # Returns the appropriate icon name for a given scope name.
   def icon_for_scope(scope_name)
     case scope_name.to_s
     when /address/
@@ -85,6 +95,8 @@ module ApplicationHelper
       'golf-ball-tee'
     when /verified/
       'certificate'
+    when /void/
+      'ban'
     when /watercraft/
       'warehouse'
     else
@@ -92,6 +104,7 @@ module ApplicationHelper
     end
   end
 
+  # Returns the appropriate icon name for a given flash type.
   def flash_icon_name(flash_type)
     case flash_type.to_sym
     when :alert
@@ -105,6 +118,7 @@ module ApplicationHelper
     end
   end
 
+  # Returns a flash message with the appropriate icon.
   def flash_tag(flash_type, message, caption: nil)
     content_tag(:div, :class => "flash highlight #{flash_type}") do
       icon = flash_icon_name(flash_type)
@@ -112,10 +126,12 @@ module ApplicationHelper
     end
   end
 
+  # Returns a span tag with a list delimiter.
   def list_delimiter
     content_tag(:span, '|', class: 'list-delimiter')
   end
 
+  # Returns a list item with a link and optional active class.
   def menu_list_item(caption, url_options, html_options={})
     default_css_classes = []
     default_css_classes << 'is-active' if current_page?(url_options)
@@ -125,6 +141,7 @@ module ApplicationHelper
     end
   end
 
+  # Returns a span tag with a number and its percentage of the total.
   def number_with_percentage(number, total)
     percentage = (number.to_f / total.to_f) * 100
     content_tag(:span) do
@@ -133,6 +150,8 @@ module ApplicationHelper
     end
   end
 
+  # Returns a search bar with optional filters for a given model.
+  #   Creates filters for model's scopes
   def searchbar_tag(model, controller: model.name.tableize, show_filters: true)
     index_path = url_for(controller: controller, action: :index)
     content_tag(:div, class: "searchbar row") do
@@ -169,6 +188,7 @@ module ApplicationHelper
     end
   end
 
+  # Returns a search form with the given URL options.
   def search_form_tag(url_options, html_options={})
     default_html_options = {
       class: 'search-form row',
@@ -184,6 +204,8 @@ module ApplicationHelper
     end
   end
 
+  # Sorts models by the specified column and direction.
+  # Supports sorting by non-AR columns using string formatting.
   def sort_models(models, sort_info)
     sort_column = sort_info[:column]
     sort_direction = sort_info[:direction]

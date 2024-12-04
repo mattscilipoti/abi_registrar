@@ -92,6 +92,7 @@ gem 'rspec-rails', group: [:development, :test]
 # gem 'ruby_postal', require: false # Ruby bindings to libpostal for fast international address parsing/normalization
 gem 'sassc-rails'
 gem 'schema_plus_functions' # adding support for SQL functions
+gem "shoulda-matchers", "~> 6.4", group: [:development, :test] # provides RSpec and Minitest matchers
 gem 'simple_form' # Forms made easy for Rails
 gem 'slim-rails' # template language, reduces the syntax without becoming cryptic.
 gem 'StreetAddress', require: false #
