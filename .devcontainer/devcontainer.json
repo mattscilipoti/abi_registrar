@@ -17,12 +17,11 @@
 		"deerawan.vscode-dash",
 		"mechatroner.rainbow-csv",
 		"noku.rails-run-spec-vscode",
-		"rebornix.Ruby",
 		"sianglim.slim",
-		"wingrunr21.vscode-ruby",
 		"EditorConfig.EditorConfig",
 		"GitHub.vscode-pull-request-github",
-		"ms-azuretools.vscode-docker"
+		"ms-azuretools.vscode-docker",
+		"Shopify.ruby-lsp"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
