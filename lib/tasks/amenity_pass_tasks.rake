@@ -1,6 +1,7 @@
-namespace :utility_carts do
-  desc 'Converts Vehhicle Passes (U*,GOLF) to UtilityPasses'
-  task convert_vehicle_passes: [:environment] do |task, args|
+namespace :amenity_passes do
+
+  desc 'Converts Vehicle Passes (U*,GOLF) to UtilityPasses'
+  task convert_vehicle_passes_to_utility_cart_passes: [:environment] do |task, args|
     vehicle_passes_should_be_utility = VehicleParkingPass.utility_cart_passes
     stats = {
       vehicle_passes_ct_at_start: VehicleParkingPass.count,
@@ -34,6 +35,37 @@ namespace :utility_carts do
     }
     final_stats = stats.merge(stats_at_end)
     Rails.logger.info "UtilityCartPass conversion stats: #{final_stats}"
+    ap final_stats
+  end
+
+  desc 'Converts manually voided passes to voided.'
+  task void_passes: [:environment] do |task, args|
+    amenity_passes_should_be_voided = AmenityPass.where('description ILIKE :void OR sticker_number ILIKE :void', void: "%VOID%")
+    stats = {
+      unvoided_passes_ct_at_start: AmenityPass.not_voided.count,
+      voided_passes_ct_at_start: AmenityPass.voided.count,
+      amenity_passes_should_be_voided_ct: amenity_passes_should_be_voided.size,
+    }
+    # puts amenity_passes_should_be_voided.size
+    # ap amenity_passes_should_be_voided
+    puts "Voiding (#{amenity_passes_should_be_voided.size}) amenity passes..."
+    amenity_passes_should_be_voided.each do |pass|
+
+      #debugger_
+      print '  voiding '
+      ap pass
+      # Use update_columns to handle past Passes (which may not have today's requirements)
+      # Note: this does NOT change updated_at
+      pass.void
+      Rails.logger.info "Voided AmenityPass #{pass.id}: #{pass}"
+    end
+
+    stats_at_end = {
+      unvoided_passes_ct_at_end: AmenityPass.not_voided.count,
+      voided_passes_ct_at_end: AmenityPass.voided.count,
+    }
+    final_stats = stats.merge(stats_at_end)
+    Rails.logger.info "AmenityPass voided stats: #{final_stats}"
     ap final_stats
   end
 end
