@@ -31,7 +31,8 @@ module ApplicationHelper
     if datetime.present?
       # Note: cannot assign options[:data] = { tooltip"...}, since this overwrites ALL data values
       options[:data] ||= {}
-      options[:data][:tooltip] = datetime.strftime(format)
+      tooltip = "#{datetime.strftime(format)} #{time_ago_in_words(datetime)} ago".html_safe
+      options[:data][:tooltip] = tooltip.html_safe
     end
     boolean_tag(datetime.present?, options)
   end

@@ -1,5 +1,5 @@
 class BeachPassesController < ApplicationController
-  before_action :set_beach_pass, only: %i[ show edit update destroy ]
+  before_action :set_beach_pass, only: %i[ show edit update destroy void confirm_void ]
 
   # GET /beach_passes or /beach_passes.json
   def index
@@ -18,6 +18,25 @@ class BeachPassesController < ApplicationController
 
   # GET /beach_passes/1/edit
   def edit
+  end
+
+  # GET /beach_passes/1/void
+  def void
+    if @beach_pass.voided_at.present?
+      redirect_to beach_pass_url(@beach_pass), notice: "Beach Pass is already voided."
+    else
+      @beach_pass.voided_at = Time.zone.now
+      render :void
+    end
+  end
+
+  # PATCH /beach_passes/1/confirm_void
+  def confirm_void
+    if @beach_pass.update(beach_pass_params.merge(voided_at: Time.current))
+      redirect_to beach_pass_url(@beach_pass), notice: "Beach Pass was successfully voided."
+    else
+      render :void, status: :unprocessable_entity
+    end
   end
 
   # POST /beach_passes or /beach_passes.json
@@ -69,7 +88,7 @@ class BeachPassesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_beach_pass
-      @beach_pass = BeachPass.find(params[:id])
+      @beach_pass = BeachPass.find(params[:id]).decorate
     end
 
     # Only allow a list of trusted parameters through.
@@ -79,6 +98,7 @@ class BeachPassesController < ApplicationController
         :description,
         :sticker_number,
         :voided_at,
+        :voided_reason
       )
     end
 end

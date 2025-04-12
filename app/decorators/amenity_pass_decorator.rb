@@ -19,7 +19,15 @@ class AmenityPassDecorator < Draper::Decorator
   end
 
   def property_summary(type: :icons)
-    h.render 'residencies/property_icon_list', residencies: object.resident.residencies.decorate
+    template = case type
+    when :icons
+      'residencies/property_icon_list'
+    when :list
+      'residencies/property_list'
+    else
+      raise ArgumentError, "Invalid type: #{type}"
+    end
+    h.render template, residencies: resident.residencies.by_property.decorate
   end
 
   def street_addresses
@@ -32,5 +40,15 @@ class AmenityPassDecorator < Draper::Decorator
 
   def type_as_icon
     self.class.icon(html_options: { title: object.class.name })
+  end
+
+  # Displays voded datetime or a link to void the Amenity
+  def voided?
+    # Using a button styled link to navigate to the void action for the amenity
+    if object.voided_at?
+      h.datetime_tag(object.voided_at)
+    else
+      h.link_to("Void", h.void_beach_pass_path(object), class: "btn btn-warning")
+    end
   end
 end

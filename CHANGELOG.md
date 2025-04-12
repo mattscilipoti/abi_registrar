@@ -11,8 +11,11 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 - AmenityPass
   - #voided_at
+  - #voided_reason
   - scopes: voided, not_voided
-  - add toggleable_voided_at to index pages
+  - add voided? to index pages
+- ResidencyDecorator
+  - supports #property_summary(type: :list)
 - Helpers:
   - added datetime_as_boolean_tag
   - boolean_tag accepts subdue_if, hide_if

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_20_015845) do
+ActiveRecord::Schema[7.0].define(version: 2025_04_11_022620) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_20_015845) do
     t.integer  "beach_number"
     t.string   "location"
     t.datetime "voided_at"
+    t.string   "voided_reason"
 
     t.index ["resident_id"], :name=>"index_amenity_passes_on_resident_id"
     t.index ["sticker_number"], :name=>"index_amenity_passes_on_sticker_number", :unique=>true

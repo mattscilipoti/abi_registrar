@@ -4,7 +4,12 @@ Rails.application.routes.draw do
     get 'summary', to: 'pages#summary'
 
     resources :accounts, only: [:index]
-    resources :beach_passes
+    resources :beach_passes do
+      member do
+        get :void
+        patch :confirm_void
+      end
+    end
     resources :boat_ramp_access_passes
     resources :comments, only: [:create]
     resources :dinghy_dock_storage_passes

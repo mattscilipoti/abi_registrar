@@ -1,0 +1,13 @@
+h1 Void Beach Pass
+p Beach Pass ID: #{@beach_pass.id}
+p Pass Number: #{@beach_pass.sticker_number}
+p Resident: #{@beach_pass.resident.full_name}
+p
+  | Property:
+  = @beach_pass.property_summary(type: :list)
+
+= simple_form_for @beach_pass, url: confirm_void_beach_pass_path(@beach_pass), html: { method: :patch } do |f|
+  = f.input :voided_at, html5: true
+  = f.input :voided_reason, label: "Reason for voiding", as: :text, input_html: { rows: 5, style: "width:600px;" }
+
+  = f.button :submit, "Confirm Void", class: "btn btn-danger"
