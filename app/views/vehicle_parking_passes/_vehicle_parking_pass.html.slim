@@ -3,9 +3,6 @@ div id="#{dom_id vehicle_parking_pass}"
     strong Sticker number:
     =< vehicle_parking_pass.sticker_number
   p
-    strong Voided At:
-    =< vehicle_parking_pass.voided_at
-  p
     strong Tag:
     =< vehicle_parking_pass.tag
   p
@@ -14,3 +11,6 @@ div id="#{dom_id vehicle_parking_pass}"
   p
     strong Resident:
     =< vehicle_parking_pass.resident
+  p
+    =< voided_info_tag(vehicle_parking_pass)
+

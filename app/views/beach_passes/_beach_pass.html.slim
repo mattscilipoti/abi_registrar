@@ -3,15 +3,10 @@ div id="#{dom_id beach_pass}"
     strong Sticker number:
     =< beach_pass.sticker_number
   p
-    strong Voided At:
-    =< datetime_tag(beach_pass.voided_at)
-    | &nbsp;
-    strong Voided Reason:
-    =< beach_pass.voided_reason
-
-  p
     strong Resident:
     =< beach_pass.resident
   p
     strong Description:
     =< beach_pass.description
+  p
+    =< voided_info_tag(beach_pass)

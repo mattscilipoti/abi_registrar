@@ -3,9 +3,6 @@ div id="#{dom_id dinghy_dock_storage_pass}"
     strong Sticker number:
     =< dinghy_dock_storage_pass.sticker_number
   p
-    strong Voided At:
-    =< dinghy_dock_storage_pass.voided_at
-  p
     strong Beach Number:
     =< dinghy_dock_storage_pass.beach_number
   p
@@ -17,3 +14,5 @@ div id="#{dom_id dinghy_dock_storage_pass}"
   p
     strong Resident:
     =< dinghy_dock_storage_pass.resident
+  p
+    =< voided_info_tag(dinghy_dock_storage_pass)

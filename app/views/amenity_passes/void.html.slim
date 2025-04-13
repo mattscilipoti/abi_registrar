@@ -1,0 +1,14 @@
+- pass_class = @amenity_pass.model.model_name.human.titleize
+h1 Voiding a #{pass_class}
+p ID: #{@amenity_pass.id}
+p Pass Number: #{@amenity_pass.sticker_number}
+p Resident: #{@amenity_pass.resident.full_name}
+p
+  | Property:
+  = @amenity_pass.property_summary(type: :list)
+
+= simple_form_for @amenity_pass, url: confirm_void_amenity_pass_path(@amenity_pass), html: { method: :patch } do |f|
+  = f.input :voided_at, html5: true
+  = f.input :voided_reason, label: "Reason for voiding", as: :text, input_html: { rows: 5, style: "width:600px;" }
+
+  = f.button :submit, "Confirm Void", class: "btn btn-danger"

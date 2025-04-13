@@ -48,7 +48,8 @@ class AmenityPassDecorator < Draper::Decorator
     if object.voided_at?
       h.datetime_tag(object.voided_at)
     else
-      h.link_to("Void", h.void_beach_pass_path(object), class: "btn btn-warning")
+      # Use polymorphic_url to generate the correct void URL for an amenity pass.
+      h.link_to("Void", h.void_amenity_pass_path(object), class: "btn btn-warning")
     end
   end
 end

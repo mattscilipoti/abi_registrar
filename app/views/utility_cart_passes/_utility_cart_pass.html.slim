@@ -3,9 +3,6 @@ div id="#{dom_id utility_cart_pass}"
     strong Sticker number:
     =< utility_cart_pass.sticker_number
   p
-    strong Voided At:
-    =< utility_cart_pass.voided_at
-  p
     strong Description:
     =< utility_cart_pass.description
   p
@@ -14,3 +11,5 @@ div id="#{dom_id utility_cart_pass}"
   p
     strong Resident:
     =< utility_cart_pass.resident
+  p
+    =< voided_info_tag(utility_cart_pass)
