@@ -40,7 +40,7 @@ namespace :amenity_passes do
 
   desc 'Converts manually voided passes to voided.'
   task void_passes: [:environment] do |task, args|
-    amenity_passes_should_be_voided = AmenityPass.where('description ILIKE :void OR sticker_number ILIKE :void', void: "%VOID%")
+    amenity_passes_should_be_voided = AmenityPass.voided_legacy
     stats = {
       unvoided_passes_ct_at_start: AmenityPass.not_voided.count,
       voided_passes_ct_at_start: AmenityPass.voided.count,
@@ -66,6 +66,38 @@ namespace :amenity_passes do
     }
     final_stats = stats.merge(stats_at_end)
     Rails.logger.info "AmenityPass voided stats: #{final_stats}"
+    ap final_stats
+  end
+
+  desc 'Removes VOID text from manually voided passes.'
+  task remove_void_text: [:environment] do |task, args|
+    amenity_passes_should_be_voided = AmenityPass.voided_legacy
+    stats = {
+      voided_passes_ct_at_start: AmenityPass.voided.count,
+      amenity_passes_should_be_voided_ct: amenity_passes_should_be_voided.size,
+    }
+    # puts amenity_passes_should_be_voided.size
+    # ap amenity_passes_should_be_voided
+    puts "Removing VOID text from (#{amenity_passes_should_be_voided.size}) amenity passes..."
+    amenity_passes_should_be_voided.each do |pass|
+      print '  removing VOID text from '
+      ap pass
+      # Use update_columns to handle past Passes (which may not have today's requirements)
+      # Note: this does NOT change updated_at
+      corrected_description = pass.description.gsub(/\(VOID\)|VOID/i, '').strip
+      corrected_sticker_number = pass.sticker_number.gsub(/\(VOID\)|VOID/i, '').strip if pass.sticker_number.present?
+      corrected_description = nil if corrected_description.blank?
+      corrected_sticker_number = nil if corrected_sticker_number.blank?
+      pass.update_columns(description: corrected_description, sticker_number: corrected_sticker_number)
+
+      Rails.logger.info "Removed VOID text from AmenityPass #{pass.id}: #{pass}"
+    end
+
+    stats_at_end = {
+      voided_passes_ct_at_end: AmenityPass.voided.count,
+    }
+    final_stats = stats.merge(stats_at_end)
+    Rails.logger.info "AmenityPass VOID text removal stats: #{final_stats}"
     ap final_stats
   end
 end
