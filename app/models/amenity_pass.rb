@@ -8,7 +8,7 @@ class AmenityPass < ApplicationRecord
   validates :sticker_number, uniqueness: true
 
   def self.scopes
-    [:not_voided, :voided]
+    [:not_voided, :voided, :voided_legacy]
   end
 
   # List of searchable columns for this Model
@@ -31,6 +31,7 @@ class AmenityPass < ApplicationRecord
 
   scope :not_voided, -> { where(voided_at: nil) }
   scope :voided, -> { where.not(voided_at: nil) }
+  scope :voided_legacy, -> { where('description ILIKE :void OR sticker_number ILIKE :void', void: "%VOID%") }
   scope :without_description, -> { where(description: nil) }
   scope :without_state_code, -> { where(state_code: nil) }
   scope :without_tag_number, -> { where(tag_number: nil) }
