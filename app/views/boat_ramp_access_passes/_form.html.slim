@@ -6,7 +6,7 @@
 
   .form-inputs
     = f.input :sticker_number
-    = f.input :tag_number
+    = f.input :tag_number, label: 'Tag and/or Vessel Number'
     = f.input :state_code, collection: AmenityPass.states
     = f.input :description, as: :text, input_html: { rows: 2, cols: 60 }
     = f.association :resident, collection: possible_residents
