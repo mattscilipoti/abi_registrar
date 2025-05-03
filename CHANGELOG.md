@@ -12,7 +12,11 @@ In place of release version numbers, we organize via deploys to Production (by D
 - rails db:delete_item_transactions
 - rails db:delete_test_data
 
-## 2025-11-18: 111 Manage UtilityCartPasses, includes conversion
+## 2025-05-03: Rename Dinghy Dock Storage Location to Slip Number
+
+- Add decorator to show dinghy dock storage pass location field to be Slip Number
+
+## 2024-11-18: 111 Manage UtilityCartPasses, includes conversion
 
 - Add UtilityCartPass (and UI for managing)
   - Add to Summary

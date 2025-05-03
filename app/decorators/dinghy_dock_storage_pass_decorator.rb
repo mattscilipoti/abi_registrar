@@ -13,4 +13,8 @@ class DinghyDockStoragePassDecorator < AmenityPassDecorator
   def self.icon_name
     helpers.icon_for_scope('dinghy')
   end
+
+  def slip_number
+    object.location
+  end
 end
