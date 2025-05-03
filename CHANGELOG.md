@@ -12,6 +12,10 @@ In place of release version numbers, we organize via deploys to Production (by D
 - rails db:delete_item_transactions
 - rails db:delete_test_data
 
+## 2025-05-03: Changed Boat Ramp Access Pass Tag Number to Tag and/or Vessel Number
+
+- Add substition to models_table layout for "And Or" -> "and/or"
+
 ## 2025-11-18: 111 Manage UtilityCartPasses, includes conversion
 
 - Add UtilityCartPass (and UI for managing)

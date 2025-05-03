@@ -13,4 +13,8 @@ class BoatRampAccessPassDecorator < AmenityPassDecorator
   def self.icon_name
     helpers.icon_for_scope('boat')
   end
+
+  def tag_and_or_vessel_number
+    object.tag_number
+  end
 end
