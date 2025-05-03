@@ -21,7 +21,7 @@ fieldset
           td.number =number_with_percentage(model.amenities_processed.count, model.count) if model.respond_to?(:amenities_processed)
           td.datetime =datetime_tag(model.pluck(:updated_at).max)
 
-fieldset
+/*fieldset
   legend
     h2 Transaction Summary
 
