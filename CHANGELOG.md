@@ -12,6 +12,10 @@ In place of release version numbers, we organize via deploys to Production (by D
 - rails db:delete_item_transactions
 - rails db:delete_test_data
 
+## 2025-05-03: Removed Shares/Transactions from summary page and top navigation panel
+
+- Commented out code to display the shares/transactions information, until real data are available
+
 ## 2025-11-18: 111 Manage UtilityCartPasses, includes conversion
 
 - Add UtilityCartPass (and UI for managing)
