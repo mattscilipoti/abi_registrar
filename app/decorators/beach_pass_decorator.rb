@@ -13,4 +13,8 @@ class BeachPassDecorator < AmenityPassDecorator
   def self.icon_name
     helpers.icon_for_scope('beach_pass')
   end
+
+  def self.table_name
+    'beach_passes'
+  end
 end

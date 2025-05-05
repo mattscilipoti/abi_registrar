@@ -13,4 +13,8 @@ class UtilityCartPassDecorator < AmenityPassDecorator
   def self.icon_name
     helpers.icon_for_scope('utility_cart')
   end
+
+  def self.table_name
+    'utility_cart_passes'
+  end
 end

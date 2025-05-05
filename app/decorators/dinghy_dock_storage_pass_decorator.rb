@@ -17,4 +17,8 @@ class DinghyDockStoragePassDecorator < AmenityPassDecorator
   def slip_number
     object.location
   end
+
+  def self.table_name
+    'dinghy_dock_storage_passes'
+  end
 end
