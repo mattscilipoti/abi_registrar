@@ -13,4 +13,8 @@ class DinghyDockStoragePassDecorator < AmenityPassDecorator
   def self.icon_name
     helpers.icon_for_scope('dinghy')
   end
+
+  def self.table_name
+    'dinghy_dock_storage_passes'
+  end
 end

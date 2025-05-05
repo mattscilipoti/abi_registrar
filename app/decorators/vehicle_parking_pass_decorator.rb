@@ -13,4 +13,8 @@ class VehicleParkingPassDecorator < AmenityPassDecorator
   def self.icon_name
     helpers.icon_for_scope('parking')
   end
+
+  def self.table_name
+    'vehicle_parking_passes'
+  end
 end

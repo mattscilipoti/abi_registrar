@@ -13,4 +13,8 @@ class WatercraftStoragePassDecorator < AmenityPassDecorator
   def self.icon_name
     helpers.icon_for_scope('watercraft')
   end
+
+  def self.table_name
+    'watercraft_storage_passes'
+  end
 end
