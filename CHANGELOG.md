@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: Added sorting per Amenity Pass type
+
 ## Upcoming: 105 Delete Test Data
 
 - rails db:delete_item_transactions
