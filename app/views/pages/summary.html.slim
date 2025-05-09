@@ -21,25 +21,5 @@ fieldset
           td.number =number_with_percentage(model.amenities_processed.count, model.count) if model.respond_to?(:amenities_processed)
           td.datetime =datetime_tag(model.pluck(:updated_at).max)
 
-/*fieldset
-  legend
-    h2 Transaction Summary
-
-  table
-    thead
-      tr
-        th Item
-        th Quantity
-        th Total
-        th Last Updated
-    tbody
-      tr
-        td =link_to 'Shares Purchased', share_transactions_path
-        td.number =ShareTransaction.purchase.sum(:quantity) + ShareTransaction.import.sum(:quantity)
-        td.number =number_to_currency(ShareTransaction.purchase.sum(:cost_total) + ShareTransaction.import.sum(:cost_total))
-        td.datetime =datetime_tag(ShareTransaction.purchase.maximum(:updated_at))
-      tr
-        td =link_to 'Shares Transferred', share_transactions_path
-        td.number =ShareTransaction.transfer.sum(:quantity)
-        td.number
-        td.datetime =datetime_tag(ShareTransaction.transfer.maximum(:updated_at))
+/* As of 2025-05-08, Temporarily hiding Item Transactions until we have cleaned data
+/*= render 'transaction_summary'
