@@ -7,16 +7,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: 105 Delete Test Data
+## 2025-05-08: Removed Shares/Transactions from summary page and top navigation panel
+
+- Commented out code to display the shares/transactions information, until real data are available
+- Extracted partial for trandaction_summary
+
+## 2025-05-08: Rename Dinghy Dock Storage Location to Slip Number
+
+- Add decorator to show dinghy dock storage pass location field to be Slip Number
+
+## 2025-05-06: Added sorting per Amenity Pass type
+
+## 2025-04-23: 105 Delete Test Data
 
 - rails db:delete_item_transactions
 - rails db:delete_test_data
 
-## 2025-05-03: Removed Shares/Transactions from summary page and top navigation panel
-
-- Commented out code to display the shares/transactions information, until real data are available
-
-## 2025-11-18: 111 Manage UtilityCartPasses, includes conversion
+## 2024-11-18: 111 Manage UtilityCartPasses, includes conversion
 
 - Add UtilityCartPass (and UI for managing)
   - Add to Summary
