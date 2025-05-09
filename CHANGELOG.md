@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## 2025-05-08: Removed Shares/Transactions from summary page and top navigation panel
+
+- Commented out code to display the shares/transactions information, until real data are available
+- Extracted partial for trandaction_summary
+
 ## 2025-05-08: Rename Dinghy Dock Storage Location to Slip Number
 
 - Add decorator to show dinghy dock storage pass location field to be Slip Number
