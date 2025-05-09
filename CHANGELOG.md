@@ -7,16 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
-## Upcoming: Added sorting per Amenity Pass type
+## 2025-05-08: Rename Dinghy Dock Storage Location to Slip Number
 
-## Upcoming: 105 Delete Test Data
+- Add decorator to show dinghy dock storage pass location field to be Slip Number
+
+## 2025-05-06: Added sorting per Amenity Pass type
+
+## 2025-04-23: 105 Delete Test Data
 
 - rails db:delete_item_transactions
 - rails db:delete_test_data
-
-## 2025-05-03: Rename Dinghy Dock Storage Location to Slip Number
-
-- Add decorator to show dinghy dock storage pass location field to be Slip Number
 
 ## 2024-11-18: 111 Manage UtilityCartPasses, includes conversion
 
