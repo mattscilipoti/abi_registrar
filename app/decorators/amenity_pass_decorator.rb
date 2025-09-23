@@ -44,9 +44,10 @@ class AmenityPassDecorator < Draper::Decorator
 
   # Displays voded datetime or a link to void the Amenity
   def voided?
-    # Using a button styled link to navigate to the void action for the amenity
     if object.voided_at?
-      h.datetime_tag(object.voided_at)
+      element = h.date_tag(object.voided_at, format: '%m/%d/%y')
+      # Wrap it in a span with the 'voided' class
+      h.content_tag(:span, element, class: 'voided')
     else
       # Use polymorphic_url to generate the correct void URL for an amenity pass.
       h.link_to("Void", h.void_amenity_pass_path(object), class: "btn btn-warning")
