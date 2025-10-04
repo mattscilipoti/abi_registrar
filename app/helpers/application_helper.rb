@@ -1,4 +1,17 @@
 module ApplicationHelper
+  # Returns a formatted tooltip string for a datetime or date.
+  # If :include_words, returns e.g. "Tue Oct 31, 2023, 2 years ago"
+  def datetime_tooltip(datetime, include_words: true)
+    return '' if datetime.blank?
+
+    format = '%Y-%m-%d %H:%M:%S %Z, %A'
+    formatted = datetime.strftime(format)
+    if include_words
+      in_words = "#{distance_of_time_in_words(datetime, Time.zone.now)} ago"
+      formatted = "#{formatted}, #{in_words}"
+    end
+    formatted
+  end
   # Returns a span tag with a check mark or cross mark based on the boolean value.
   # Options:
   # - :subdue_if - Adds the class 'subdued' if the value matches.
@@ -17,8 +30,14 @@ module ApplicationHelper
   # Returns a span tag with a formatted date.
   # Options:
   # - :format - The strftime format of the date string.
-  def date_tag(date)
-    datetime_tag(date, format: '%a %b %d, %Y')
+  def date_tag(date, format: '%a %b %d, %Y')
+    tag = datetime_tag(date, format: format)
+    # Use regex to replace 'datetime' with 'date' in the class attribute, preserving other classes
+    tag.to_s.gsub(/class="([^"]*)\bdatetime\b([^"]*)"/) { |m|
+      classes = m.match(/class="([^"]*)"/)[1]
+      new_classes = classes.gsub(/\bdatetime\b/, 'date')
+      "class=\"#{new_classes}\""
+    }.html_safe
   end
 
   # Returns a boolean tag with a tooltip based on the datetime.
@@ -29,10 +48,8 @@ module ApplicationHelper
   def datetime_as_boolean_tag(datetime, options = {})
     format = options.delete(:format) || '%a %b %d, %Y'
     if datetime.present?
-      # Note: cannot assign options[:data] = { tooltip"...}, since this overwrites ALL data values
       options[:data] ||= {}
-      tooltip = "#{datetime.strftime(format)} #{time_ago_in_words(datetime)} ago".html_safe
-      options[:data][:tooltip] = tooltip.html_safe
+      options[:data][:tooltip] = datetime_tooltip(datetime).html_safe
     end
     boolean_tag(datetime.present?, options)
   end
@@ -43,9 +60,16 @@ module ApplicationHelper
   def datetime_tag(datetime, format: '%c')
     return '' if datetime.blank?
 
-    formatted_datetime = datetime.strftime(format)
+    case format
+    when :in_words
+      formatted_datetime = "#{distance_of_time_in_words(datetime, Time.zone.now)} ago"
+      formatted_tooltip = datetime_tooltip(datetime, include_words: false)
+    else
+      formatted_datetime = datetime.strftime(format)
+      formatted_tooltip = datetime_tooltip(datetime)
+    end
 
-    content_tag(:span, "#{distance_of_time_in_words(datetime, Time.zone.now)} ago", class: "datetime", data: { tooltip: formatted_datetime})
+    content_tag(:span, formatted_datetime, class: "datetime", data: { tooltip: formatted_tooltip })
   end
 
   # Creates a link to an external resource

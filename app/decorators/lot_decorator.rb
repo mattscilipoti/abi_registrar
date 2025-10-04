@@ -1,6 +1,10 @@
 class LotDecorator < Draper::Decorator
   delegate_all
 
+  def lot_fee_paid?
+    h.datetime_as_boolean_tag(object.paid_on)
+  end
+
   def lot_number
     object.lot_number || "⁇"
   end

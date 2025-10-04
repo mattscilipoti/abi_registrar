@@ -33,22 +33,28 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe '#date_tag' do
-    it 'returns a formatted date string' do
+    it 'returns a formatted date string with class and tooltip' do
       date = Date.new(2023, 10, 31)
-      expect(helper.date_tag(date)).to include('Tue Oct 31, 2023')
+      html = helper.date_tag(date)
+      fragment = Capybara.string(html)
+      expect(fragment).to have_css('span.date[data-tooltip*="2023-10-31"]', text: 'Tue Oct 31, 2023')
     end
   end
 
   describe '#datetime_as_boolean_tag' do
     it 'returns a boolean tag with a tooltip for a present datetime' do
       datetime = DateTime.new(2023, 10, 31, 12, 0, 0)
-      expect(helper.datetime_as_boolean_tag(datetime)).to include('✓')
-      expect(helper.datetime_as_boolean_tag(datetime)).to include('data-tooltip="Tue Oct 31, 2023"')
+      html = helper.datetime_as_boolean_tag(datetime)
+      fragment = Capybara.string(html)
+      expect(fragment).to have_text('✓')
+      expect(fragment).to have_css('[data-tooltip*="2023-10-31 12:00:00"]')
     end
 
     it 'returns a boolean tag with a tooltip "No" for a nil datetime' do
-      expect(helper.datetime_as_boolean_tag(nil)).to include('❌')
-      expect(helper.datetime_as_boolean_tag(nil)).to include('data-tooltip="No"')
+      html = helper.datetime_as_boolean_tag(nil)
+      fragment = Capybara.string(html)
+      expect(fragment).to have_text('❌')
+      expect(fragment).to have_css('[data-tooltip="No"]')
     end
 
     it 'adds the subdued class when specified for a present datetime' do
@@ -79,9 +85,20 @@ RSpec.describe ApplicationHelper, type: :helper do
   describe '#datetime_tag' do
     it 'returns a formatted datetime string with a tooltip' do
       datetime = DateTime.new(2023, 10, 31, 12, 0, 0)
+      html = helper.datetime_tag(datetime)
+      fragment = Capybara.string(html)
+      expect(fragment).to have_css('span.datetime')
+      expect(fragment).to have_text('Tue Oct 31 12:00:00 2023')
+      expect(fragment).to have_css('[data-tooltip*="2023-10-31 12:00:00"]')
+    end
 
-      expect(helper.datetime_tag(datetime)).to include(time_ago_in_words(datetime))
-      expect(helper.datetime_tag(datetime)).to include('Tue Oct 31 12:00:00 2023')
+    it 'returns a formatted datetime string with a tooltip, using words' do
+      datetime = DateTime.new(2023, 10, 31, 12, 0, 0)
+      html = helper.datetime_tag(datetime, format: :in_words)
+      fragment = Capybara.string(html)
+      expect(fragment).to have_css('span.datetime')
+      expect(fragment).to have_text(time_ago_in_words(datetime))
+      expect(fragment).to have_css('[data-tooltip*="2023-10-31 12:00:00"]')
     end
 
     it 'returns an empty string for a blank datetime' do
