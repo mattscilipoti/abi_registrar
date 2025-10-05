@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     end
     resources :utility_cart_passes
     resources :vehicle_parking_passes
+    resources :void_reasons
     resources :watercraft_storage_passes
   end
 

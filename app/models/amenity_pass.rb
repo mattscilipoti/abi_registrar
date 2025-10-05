@@ -3,6 +3,7 @@ require 'csv' # for states
 class AmenityPass < ApplicationRecord
   belongs_to :resident
   has_many :properties, through: :resident
+  belongs_to :void_reason, optional: true
 
   validate :confirm_resident_paid_mandatory_fees
   validates :sticker_number, uniqueness: true
@@ -82,6 +83,11 @@ class AmenityPass < ApplicationRecord
 
   def voided?
     voided_at?
+  end
+
+  # Returns the selected standard reason label if present; otherwise the free-text voided_reason
+  def void_reason_label
+    void_reason&.label.presence || voided_reason
   end
 
   private

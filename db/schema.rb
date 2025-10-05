@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_04_11_022620) do
+ActiveRecord::Schema[7.0].define(version: 2025_10_04_001000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_11_022620) do
   create_table "account_email_auth_keys", force: :cascade do |t|
     t.string   "key",             :null=>false
     t.datetime "deadline",        :null=>false
-    t.datetime "email_last_sent", :null=>false
+    t.datetime "email_last_sent", :default=>"CURRENT_TIMESTAMP", :null=>false
   end
 
   create_table "account_login_change_keys", force: :cascade do |t|
@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_11_022620) do
   create_table "account_password_reset_keys", force: :cascade do |t|
     t.string   "key",             :null=>false
     t.datetime "deadline",        :null=>false
-    t.datetime "email_last_sent", :null=>false
+    t.datetime "email_last_sent", :default=>"CURRENT_TIMESTAMP", :null=>false
   end
 
   create_table "account_remember_keys", force: :cascade do |t|
@@ -43,8 +43,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_11_022620) do
 
   create_table "account_verification_keys", force: :cascade do |t|
     t.string   "key",             :null=>false
-    t.datetime "requested_at",    :null=>false
-    t.datetime "email_last_sent", :null=>false
+    t.datetime "requested_at",    :default=>"CURRENT_TIMESTAMP", :null=>false
+    t.datetime "email_last_sent", :default=>"CURRENT_TIMESTAMP", :null=>false
   end
 
   create_table "accounts", force: :cascade do |t|
@@ -68,9 +68,11 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_11_022620) do
     t.string   "location"
     t.datetime "voided_at"
     t.string   "voided_reason"
+    t.bigint   "void_reason_id"
 
     t.index ["resident_id"], :name=>"index_amenity_passes_on_resident_id"
     t.index ["sticker_number"], :name=>"index_amenity_passes_on_sticker_number", :unique=>true
+    t.index ["void_reason_id"], :name=>"index_amenity_passes_on_void_reason_id"
     t.index ["voided_at"], :name=>"index_amenity_passes_on_voided_at"
   end
 
@@ -133,8 +135,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_11_022620) do
     t.integer  "section"
     t.boolean  "for_sale"
     t.date     "amenities_processed"
-    t.date     "lot_fees_paid_on"
     t.date     "user_fee_paid_on"
+    t.date     "lot_fees_paid_on"
 
     t.index ["street_name"], :name=>"index_properties_on_street_name"
     t.index ["street_number"], :name=>"index_properties_on_street_number"
@@ -181,18 +183,34 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_11_022620) do
     t.index ["item_type", "item_id"], :name=>"index_versions_on_item_type_and_item_id"
   end
 
+  create_table "void_reasons", force: :cascade do |t|
+    t.string   "label",         :null=>false
+    t.string   "code"
+    t.boolean  "active",        :default=>true, :null=>false
+    t.integer  "position"
+    t.string   "pass_type"
+    t.boolean  "requires_note", :default=>false, :null=>false
+    t.datetime "created_at",    :null=>false
+    t.datetime "updated_at",    :null=>false
+
+    t.index ["active"], :name=>"index_void_reasons_on_active"
+    t.index ["code"], :name=>"index_void_reasons_on_code", :unique=>true
+    t.index ["position"], :name=>"index_void_reasons_on_position"
+  end
+
   add_foreign_key "account_email_auth_keys", "accounts", column: "id"
   add_foreign_key "account_login_change_keys", "accounts", column: "id"
   add_foreign_key "account_password_reset_keys", "accounts", column: "id"
   add_foreign_key "account_remember_keys", "accounts", column: "id"
   add_foreign_key "account_verification_keys", "accounts", column: "id"
   add_foreign_key "amenity_passes", "residents"
+  add_foreign_key "amenity_passes", "void_reasons"
   add_foreign_key "item_transactions", "residencies"
   add_foreign_key "item_transactions", "residencies", column: "from_residency_id"
   add_foreign_key "lots", "properties"
   add_foreign_key "residencies", "properties"
   add_foreign_key "residencies", "residents"
-  create_function "pg_search_dmetaphone", "text text", <<-'END_FUNCTION_PG_SEARCH_DMETAPHONE', :force => true
+  create_function "pg_search_dmetaphone", "text", <<-'END_FUNCTION_PG_SEARCH_DMETAPHONE', :force => true
 RETURNS text LANGUAGE sql AS $$ SELECT array_to_string(ARRAY(SELECT dmetaphone(unnest(regexp_split_to_array($1, E'\\s+')))), ' ') $$
   END_FUNCTION_PG_SEARCH_DMETAPHONE
 end

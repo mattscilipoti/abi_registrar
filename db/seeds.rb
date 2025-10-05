@@ -107,6 +107,19 @@ Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:vehicle_parking_pass, 
 # Watercraft Storage Passes
 Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:watercraft_storage_pass, resident: r) }
 
+# Standard Void Reasons
+void_reasons = [
+  { label: 'Issued in error', code: 'issued_in_error', active: true, requires_note: false, position: 10 },
+  { label: 'Lost or damaged', code: 'lost_or_damaged', active: true, requires_note: false, position: 20 },
+  { label: 'Replaced by new pass', code: 'replaced', active: true, requires_note: false, position: 30 },
+  { label: 'Other', code: 'other', active: true, requires_note: true, position: 9999 }
+]
+void_reasons.each do |attrs|
+  record = VoidReason.find_or_initialize_by(code: attrs[:code])
+  record.assign_attributes(attrs)
+  record.save!
+end
+
 # Admins
 test_admin_info = Rails.application.credentials.fetch(:test_admin)
 if !Rails.env.production?

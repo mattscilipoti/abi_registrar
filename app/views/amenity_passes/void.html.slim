@@ -7,8 +7,24 @@ p
   | Property:
   = @amenity_pass.property_summary(type: :list)
 
+- reasons = VoidReason.active.for_pass_type(@amenity_pass.class.name).ordered
 = simple_form_for @amenity_pass, url: confirm_void_amenity_pass_path(@amenity_pass), html: { method: :patch } do |f|
   = f.input :voided_at, html5: true
-  = f.input :voided_reason, label: "Reason for voiding", as: :text, input_html: { rows: 5, style: "width:600px;" }
+
+  - if reasons.any?
+    .fieldset
+      -# wrap it for vertical alignment
+      = f.input :void_reason_id,
+        as: :radio_buttons,
+        collection: reasons.map { |r| [r.label + (r.requires_note? ? ' (requires note)' : ''), r.id] },
+        label: 'Select a standard reason:',
+        include_blank: false,
+        collection_wrapper_tag: :div,
+        item_wrapper_tag: :div,
+        item_wrapper_class: 'radio'
+  - else
+    p.small No standard reasons configured yet.
+
+  = f.input :voided_reason, label: "Additional notes for void", hint: 'Required for reasons marked as requiring a note (e.g., Other).', as: :text, input_html: { rows: 5, style: "width:600px;" }
 
   = f.button :submit, "Confirm Void", class: "btn btn-danger"

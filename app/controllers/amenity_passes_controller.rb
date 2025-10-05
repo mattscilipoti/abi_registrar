@@ -19,7 +19,26 @@ class AmenityPassesController < ApplicationController
 
   # PATCH /amenity_passes/1/confirm_void
   def confirm_void
-    if @amenity_pass.update(amenity_pass_params.merge(voided_at: Time.current))
+    attrs = amenity_pass_params.merge(voided_at: Time.current)
+
+    # Server-side guardrails for reason selection
+    selected_reason = if attrs[:void_reason_id].present?
+      VoidReason.find_by(id: attrs[:void_reason_id])
+    end
+
+    if selected_reason&.requires_note && attrs[:voided_reason].blank?
+      @amenity_pass.errors.add(:voided_reason, 'is required for the selected reason')
+      @amenity_pass.assign_attributes(attrs)
+      return render :void, status: :unprocessable_entity
+    end
+
+    if selected_reason.nil? && attrs[:voided_reason].blank?
+      @amenity_pass.errors.add(:base, 'Select a standard reason or provide a custom reason')
+      @amenity_pass.assign_attributes(attrs)
+      return render :void, status: :unprocessable_entity
+    end
+
+    if @amenity_pass.update(attrs)
       redirect_to polymorphic_url(@amenity_pass), notice: "Amenity Pass was successfully voided."
     else
       render :void, status: :unprocessable_entity
@@ -38,7 +57,8 @@ class AmenityPassesController < ApplicationController
 
       params.require(subclass_key).permit(
         :voided_at,
-        :voided_reason
+        :voided_reason,
+        :void_reason_id
       )
     end
 

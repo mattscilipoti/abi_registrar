@@ -16,6 +16,8 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Add voided? to index pages
 - ResidencyDecorator
   - Supports #property_summary(type: :list)
+- Add VoidReason, providing standard reasons
+  - Admins can manage
 - Helpers:
   - Added datetime_as_boolean_tag
   - boolean_tag accepts subdue_if, hide_if
