@@ -9,13 +9,13 @@ class AmenityPass < ApplicationRecord
   validates :sticker_number, uniqueness: true
   validates :sticker_number,
     format: {
-      with: /\A[A-Z]-\d+\z/,
+      with: ->(rec) { Regexp.new(rec.class.valid_sticker_regex_ruby) },
       message: 'must be letter-hyphen-digits like A-123'
     },
     if: :sticker_requires_letter_prefix?
 
   def self.scopes
-    [:not_voided, :voided, :voided_legacy, :with_valid_sticker_number, :with_invalid_sticker_number]
+    [:not_voided, :voided, :voided_legacy, :with_valid_sticker_number, :without_valid_sticker_number]
   end
 
   # List of searchable columns for this Model
@@ -39,28 +39,42 @@ class AmenityPass < ApplicationRecord
   scope :not_voided, -> { where(voided_at: nil) }
   scope :voided, -> { where.not(voided_at: nil) }
   scope :voided_legacy, -> { where('description ILIKE :void OR sticker_number ILIKE :void', void: "%VOID%") }
-  # Valid by STI type:
-  # - BeachPass:            ^\d+$
-  # - BoatRampAccessPass:   ^R-\d+$
-  # - DinghyDockStoragePass:^D-\d+$
-  # - UtilityCartPass:      ^U-\d+$
-  # - VehicleParkingPass:   ^P-\d+$
-  # - WatercraftStoragePass:^W-\d+$
-  # - Others/default:       ^[A-Z]-\d+$
+  # Default valid regex (PostgreSQL) for sticker_number; subclasses override.
+  def self.valid_sticker_regex_sql
+    '^[A-Z]-\\d+$'
+  end
+
+  # Default valid regex (Ruby) for sticker_number; subclasses override.
+  def self.valid_sticker_regex_ruby
+    '\\A[A-Z]-\\d+\\z'
+  end
+
+  # Build OR conditions using each subclass' published regex.
   scope :with_valid_sticker_number, -> {
-    where(<<~SQL)
-      CASE amenity_passes.type
-        WHEN 'BeachPass' THEN amenity_passes.sticker_number ~ '^\\d+$'
-        WHEN 'BoatRampAccessPass' THEN amenity_passes.sticker_number ~ '^R-\\d+$'
-        WHEN 'DinghyDockStoragePass' THEN amenity_passes.sticker_number ~ '^D-\\d+$'
-        WHEN 'UtilityCartPass' THEN amenity_passes.sticker_number ~ '^U-\\d+$'
-        WHEN 'VehicleParkingPass' THEN amenity_passes.sticker_number ~ '^P-\\d+$'
-        WHEN 'WatercraftStoragePass' THEN amenity_passes.sticker_number ~ '^W-\\d+$'
-        ELSE amenity_passes.sticker_number ~ '^[A-Z]-\\d+$'
-      END
-    SQL
+    klasses = (AmenityPass.descendants + [AmenityPass]).uniq
+    clauses = []
+    binds = []
+
+    subclass_names = []
+    klasses.each do |k|
+      regex = k.valid_sticker_regex_sql
+      if k == AmenityPass
+        # handled as fallback below
+        next
+      else
+        subclass_names << k.name
+        clauses << "(amenity_passes.type = ? AND amenity_passes.sticker_number ~ ?)"
+        binds += [k.name, regex]
+      end
+    end
+
+    # Fallback for any records with unrecognized type (or direct AmenityPass if present)
+    clauses << "(amenity_passes.type IS NULL OR amenity_passes.type NOT IN (?)) AND amenity_passes.sticker_number ~ ?"
+    binds += [subclass_names, AmenityPass.valid_sticker_regex_sql]
+
+    where(clauses.join(' OR '), *binds)
   }
-  scope :with_invalid_sticker_number, -> {
+  scope :without_valid_sticker_number, -> {
     where.not(id: with_valid_sticker_number.select(:id))
   }
   scope :without_description, -> { where(description: nil) }

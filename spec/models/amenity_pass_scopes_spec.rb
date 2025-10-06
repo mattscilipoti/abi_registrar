@@ -49,6 +49,6 @@ RSpec.describe 'AmenityPass sticker_number scopes', type: :model do
     invalid << ta_invalid
 
     expect(AmenityPass.with_valid_sticker_number).to match_array(valid)
-    expect(AmenityPass.with_invalid_sticker_number).to match_array(invalid)
+    expect(AmenityPass.without_valid_sticker_number).to match_array(invalid)
   end
 end
