@@ -7,6 +7,12 @@ class AmenityPass < ApplicationRecord
 
   validate :confirm_resident_paid_mandatory_fees
   validates :sticker_number, uniqueness: true
+  validates :sticker_number,
+    format: {
+      with: /\A[A-Z]-\d+\z/,
+      message: 'must be letter-hyphen-digits like A-123'
+    },
+    if: :sticker_requires_letter_prefix?
 
   def self.scopes
     [:not_voided, :voided, :voided_legacy]
@@ -91,6 +97,12 @@ class AmenityPass < ApplicationRecord
   end
 
   private
+
+  # By default, amenity passes expect a letter-hyphen-digits sticker format.
+  # Subclasses can override to disable or change behavior (e.g., BeachPass).
+  def sticker_requires_letter_prefix?
+    true
+  end
 
   def confirm_resident_paid_mandatory_fees
     unless resident && resident.lot_fees_paid?

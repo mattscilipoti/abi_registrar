@@ -27,6 +27,34 @@ RSpec.describe TestAmenityPass, type: :model do
       expect(amenity_pass.errors[:resident]).to include("must have paid lot fees")
       expect(amenity_pass.errors[:resident]).to include("must have paid user fee")
     end
+
+    context 'sticker_number format' do
+      it 'accepts letter-hyphen-digits e.g., A-123' do
+        amenity_pass.sticker_number = 'A-12345'
+        expect(amenity_pass).to be_valid
+      end
+
+      it 'rejects missing hyphen' do
+        amenity_pass.sticker_number = 'A12345'
+        expect(amenity_pass).to be_invalid
+        expect(amenity_pass.errors[:sticker_number]).to include('must be letter-hyphen-digits like A-123')
+      end
+
+      it 'rejects multi-letter prefixes' do
+        amenity_pass.sticker_number = 'AB-12345'
+        expect(amenity_pass).to be_invalid
+      end
+
+      it 'rejects non-digit suffix' do
+        amenity_pass.sticker_number = 'A-12B45'
+        expect(amenity_pass).to be_invalid
+      end
+
+      it 'rejects lowercase prefix (a-12345)' do
+        amenity_pass.sticker_number = 'a-12345'
+        expect(amenity_pass).to be_invalid
+      end
+    end
   end
 
   describe 'scopes' do

@@ -4,6 +4,12 @@ class WatercraftStoragePass < AmenityPass
   # scope :without_state_code, -> { where(state_code: nil) }
 
   validates_presence_of :beach_number, :description, :rack_slot_number, :sticker_number
+  validates :sticker_number,
+    format: {
+      with: /\AW/,
+      message: 'must start with W'
+    },
+    allow_nil: true
 
   def self.scopes
     super + %i[

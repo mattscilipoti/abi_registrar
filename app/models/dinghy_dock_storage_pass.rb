@@ -3,6 +3,12 @@ class DinghyDockStoragePass < AmenityPass
   # scope :without_state_code, -> { where(state_code: nil) }
 
   validates_presence_of :beach_number, :description, :sticker_number
+  validates :sticker_number,
+    format: {
+      with: /\AD/,
+      message: 'must start with D'
+    },
+    allow_nil: true
 
   def self.scopes
     super + %i[

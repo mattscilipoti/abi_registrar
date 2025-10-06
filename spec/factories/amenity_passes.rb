@@ -12,7 +12,7 @@ FactoryBot.define do
   end
 
   factory :beach_pass do
-    sequence(:sticker_number) { |n| "B-#{012345 + n}" }
+    sequence(:sticker_number) { |n| "#{100000 + n}" }
     description { LOREM_IPSUM }
     resident
 
