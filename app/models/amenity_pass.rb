@@ -15,7 +15,7 @@ class AmenityPass < ApplicationRecord
     if: :sticker_requires_letter_prefix?
 
   def self.scopes
-    [:not_voided, :voided, :voided_legacy]
+    [:not_voided, :voided, :voided_legacy, :with_valid_sticker_number, :with_invalid_sticker_number]
   end
 
   # List of searchable columns for this Model
@@ -39,6 +39,30 @@ class AmenityPass < ApplicationRecord
   scope :not_voided, -> { where(voided_at: nil) }
   scope :voided, -> { where.not(voided_at: nil) }
   scope :voided_legacy, -> { where('description ILIKE :void OR sticker_number ILIKE :void', void: "%VOID%") }
+  # Valid by STI type:
+  # - BeachPass:            ^\d+$
+  # - BoatRampAccessPass:   ^R-\d+$
+  # - DinghyDockStoragePass:^D-\d+$
+  # - UtilityCartPass:      ^U-\d+$
+  # - VehicleParkingPass:   ^P-\d+$
+  # - WatercraftStoragePass:^W-\d+$
+  # - Others/default:       ^[A-Z]-\d+$
+  scope :with_valid_sticker_number, -> {
+    where(<<~SQL)
+      CASE amenity_passes.type
+        WHEN 'BeachPass' THEN amenity_passes.sticker_number ~ '^\\d+$'
+        WHEN 'BoatRampAccessPass' THEN amenity_passes.sticker_number ~ '^R-\\d+$'
+        WHEN 'DinghyDockStoragePass' THEN amenity_passes.sticker_number ~ '^D-\\d+$'
+        WHEN 'UtilityCartPass' THEN amenity_passes.sticker_number ~ '^U-\\d+$'
+        WHEN 'VehicleParkingPass' THEN amenity_passes.sticker_number ~ '^P-\\d+$'
+        WHEN 'WatercraftStoragePass' THEN amenity_passes.sticker_number ~ '^W-\\d+$'
+        ELSE amenity_passes.sticker_number ~ '^[A-Z]-\\d+$'
+      END
+    SQL
+  }
+  scope :with_invalid_sticker_number, -> {
+    where.not(id: with_valid_sticker_number.select(:id))
+  }
   scope :without_description, -> { where(description: nil) }
   scope :without_state_code, -> { where(state_code: nil) }
   scope :without_tag_number, -> { where(tag_number: nil) }
