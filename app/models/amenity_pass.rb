@@ -98,4 +98,15 @@ class AmenityPass < ApplicationRecord
   def to_s
     [sticker_number, tag].compact.join(', ')
   end
+
+  # Return the first contiguous run of digits found in `sticker_number`.
+  # Examples:
+  #  "VOID R-25134" => "25134"
+  #  "R-24164 (VOID) - NOT RECEIVED" => "24164"
+  # Returns a String of digits, or nil if no digits present.
+  def sticker_digits
+    return nil if sticker_number.blank?
+    m = sticker_number.to_s.match(/\d+/)
+    m && m[0]
+  end
 end

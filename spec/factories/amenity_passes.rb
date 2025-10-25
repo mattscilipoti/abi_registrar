@@ -1,8 +1,10 @@
+require_relative 'factory_helpers'
+
 FactoryBot.define do
-  LOREM_IPSUM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+  LOREM_IPSUM = 'Lorem ipsum dolor sit amet' #, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 
   factory :beach_pass do
-    sequence(:sticker_number) { |n| "B-#{012345 + n}" }
+    sequence(:sticker_number) { |n| FactoryHelpers.sticker_with_year('B', n, n_width: 4) }
     description { LOREM_IPSUM }
     resident
 
@@ -11,7 +13,7 @@ FactoryBot.define do
   end
 
   factory :boat_ramp_access_pass do
-    sequence(:sticker_number) { |n| "R-#{123456 + n}" }
+    sequence(:sticker_number) { |n| FactoryHelpers.sticker_with_year('R', n, n_width: 4) }
     description { LOREM_IPSUM }
     state_code { 'MD' }
     tag_number { Faker::Vehicle.license_plate(state_abbreviation: state_code) }
@@ -22,7 +24,7 @@ FactoryBot.define do
   end
 
   factory :dinghy_dock_storage_pass do
-    sequence(:sticker_number) { |n| "D-#{234567 + n}" }
+    sequence(:sticker_number) { |n| FactoryHelpers.sticker_with_year('D', n, n_width: 4) }
     beach_number { 4 }
     description { LOREM_IPSUM }
     resident
@@ -32,7 +34,7 @@ FactoryBot.define do
   end
 
   factory :utility_cart_pass do
-    sequence(:sticker_number) { |n| "U-#{345678 + n}" }
+    sequence(:sticker_number) { |n| FactoryHelpers.sticker_with_year('U', n, n_width: 4) }
     description { 'TEST CART' }
 
     resident
@@ -42,7 +44,7 @@ FactoryBot.define do
   end
 
   factory :vehicle_parking_pass do
-    sequence(:sticker_number) { |n| "P-#{345678 + n}" }
+    sequence(:sticker_number) { |n| FactoryHelpers.sticker_with_year('P', n, n_width: 4) }
     state_code { 'MD' }
     tag_number { Faker::Vehicle.license_plate(state_abbreviation: state_code) }
 
@@ -53,7 +55,7 @@ FactoryBot.define do
   end
 
   factory :watercraft_storage_pass do
-    sequence(:sticker_number) { |n| "W-#{456789 + n}" }
+    sequence(:sticker_number) { |n| FactoryHelpers.sticker_with_year('W', n, n_width: 4) }
     beach_number { rand(1..4) }
     description { LOREM_IPSUM }
     location { rand(1..22) }
