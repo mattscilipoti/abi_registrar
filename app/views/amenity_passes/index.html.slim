@@ -5,5 +5,5 @@ fieldset
     = render 'layouts/h1', title: "Amenity Passes", model_count: @amenity_passes.size, model_total: AmenityPass.count
 
   #amenity_passes
-    - columns = %i[type_as_icon sticker_number tag_number description resident street_addresses]
+    - columns = %i[type_as_icon sticker_number season_year tag_number description resident street_addresses]
     =render 'layouts/models_table', models: @amenity_passes, columns: columns, allow_edit: false, allow_show: false, allow_sort: true
