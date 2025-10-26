@@ -7,8 +7,8 @@ RSpec.describe Resident, type: :model do
 
     describe "reset_amenities_processed" do
       before(:each) do
-        FactoryBot.create_list(:property, 2, amenities_processed: 1.day.ago)
-        FactoryBot.create_list(:property, 1, amenities_processed: nil)
+        FactoryBot.create_list(:property, 2, :mandatory_fees_paid, amenities_processed: 1.day.ago)
+        FactoryBot.create_list(:property, 1, :mandatory_fees_paid, amenities_processed: nil)
         expect(Property.count).to eql(3)
         expect(Property.amenities_processed.count).to eql(2)
         expect(Property.where(amenities_processed: nil).count).to eql(1)
@@ -26,7 +26,7 @@ RSpec.describe Resident, type: :model do
         expect(Lot.count).to eql(3)
         expect(Lot.fee_paid.count).to eql(2)
         expect(Lot.fee_not_paid.count).to eql(1)
-        FactoryBot.create_list(:property, 2, :lot_fees_paid, :user_fee_paid, amenities_processed: 1.day.ago)
+        FactoryBot.create_list(:property, 2, :mandatory_fees_paid, amenities_processed: 1.day.ago)
         FactoryBot.create_list(:property, 1, :lot_fees_unpaid, :user_fee_unpaid, amenities_processed: nil)
         expect(Property.count).to eql(3)
         expect(Property.lot_fees_paid.count).to eql(2)

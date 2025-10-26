@@ -27,4 +27,30 @@ RSpec.describe AmenityPass, type: :model do
       expect(p.sticker_digits).to eq('12')
     end
   end
+
+  describe '.by_year' do
+    let(:current_year) { Time.zone.now.year }
+
+    it 'filters by numeric year (string or integer)' do
+      p2024 = FactoryBot.create(:beach_pass, season_year: 2024)
+      p2025 = FactoryBot.create(:beach_pass, season_year: 2025)
+      expect(AmenityPass.by_year('2024')).to include(p2024)
+      expect(AmenityPass.by_year(2025)).to include(p2025)
+      expect(AmenityPass.by_year('2024')).not_to include(p2025)
+    end
+
+    it "treats nil/blank as the current year" do
+      now_pass = FactoryBot.create(:beach_pass, season_year: current_year)
+      other = FactoryBot.create(:beach_pass, season_year: current_year - 1)
+      expect(AmenityPass.by_year(nil)).to include(now_pass)
+      expect(AmenityPass.by_year('')).to include(now_pass)
+      expect(AmenityPass.by_year(nil)).not_to include(other)
+    end
+
+    it "'all' returns everything including nil season_year" do
+      with_year = FactoryBot.create(:beach_pass, season_year: 2023)
+      without = FactoryBot.create(:beach_pass, season_year: nil)
+      expect(AmenityPass.by_year('all')).to include(with_year, without)
+    end
+  end
 end

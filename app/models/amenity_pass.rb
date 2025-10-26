@@ -1,6 +1,7 @@
 require 'csv' # for states
 
 class AmenityPass < ApplicationRecord
+  include PassYearable
   belongs_to :resident
   has_many :properties, :through => :resident
 

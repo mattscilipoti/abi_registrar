@@ -19,6 +19,29 @@ module FactoryHelpers
     # call the instance method implementation
     FactoryHelpers.instance_method(:sticker_with_year).bind(new).call(prefix, n, n_width: n_width)
   end
+
+  # Ensure the given resident has at least one property with mandatory fees paid.
+  # If the resident has no properties, create one with the :mandatory_fees_paid trait
+  # and attach a residency as owner. If a property exists but is missing the
+  # mandatory fee timestamps, set them to now.
+  def ensure_property_with_mandatory_fees(resident)
+    return if resident.nil?
+
+    if resident.properties.empty?
+      prop = FactoryBot.create(:property, :mandatory_fees_paid)
+      FactoryBot.create(:residency, property: prop, resident: resident, resident_status: :owner)
+    else
+      prop = resident.properties.first
+      prop.update(lot_fees_paid_on: Time.zone.now) if prop.lot_fees_paid_on.nil?
+      prop.update(user_fee_paid_on: Time.zone.now) if prop.user_fee_paid_on.nil?
+    end
+    prop
+  end
+
+  def self.ensure_property_with_mandatory_fees(resident)
+    new = Object.new
+    FactoryHelpers.instance_method(:ensure_property_with_mandatory_fees).bind(new).call(resident)
+  end
 end
 
 # Make helper available inside FactoryBot sequences. Guard in case FactoryBot

@@ -10,6 +10,10 @@ FactoryBot.define do
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
+
+    after(:build) do |pass|
+      FactoryHelpers.ensure_property_with_mandatory_fees(pass.resident)
+    end
   end
 
   factory :boat_ramp_access_pass do
@@ -21,6 +25,9 @@ FactoryBot.define do
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
+    after(:build) do |pass|
+      FactoryHelpers.ensure_property_with_mandatory_fees(pass.resident)
+    end
   end
 
   factory :dinghy_dock_storage_pass do
@@ -31,6 +38,9 @@ FactoryBot.define do
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
+    after(:build) do |pass|
+      FactoryHelpers.ensure_property_with_mandatory_fees(pass.resident)
+    end
   end
 
   factory :utility_cart_pass do
@@ -41,6 +51,9 @@ FactoryBot.define do
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
+    after(:build) do |pass|
+      FactoryHelpers.ensure_property_with_mandatory_fees(pass.resident)
+    end
   end
 
   factory :vehicle_parking_pass do
@@ -52,6 +65,9 @@ FactoryBot.define do
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
+    after(:build) do |pass|
+      FactoryHelpers.ensure_property_with_mandatory_fees(pass.resident)
+    end
   end
 
   factory :watercraft_storage_pass do
@@ -64,5 +80,8 @@ FactoryBot.define do
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
+    after(:build) do |pass|
+      FactoryHelpers.ensure_property_with_mandatory_fees(pass.resident)
+    end
   end
 end
