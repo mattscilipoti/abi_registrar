@@ -110,4 +110,10 @@ class AmenityPass < ApplicationRecord
     m = sticker_number.to_s.match(/\d+/)
     m && m[0]
   end
+
+  # Return an array of distinct season years present in the table (excluding nil),
+  # ordered descending. Used to build year filters in the UI.
+  def self.available_years
+    where.not(season_year: nil).distinct.order(season_year: :desc).pluck(:season_year)
+  end
 end

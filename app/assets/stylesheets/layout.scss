@@ -387,6 +387,68 @@ ul {
   }
 }
 
+/* Year selector styles: compact, clear, and shared for full/small variants */
+.year-selector, .year-selector-small {
+  display: inline-block;
+  margin: 0 1rem 0 0;
+  vertical-align: middle;
+}
+
+/* container that holds the heading and the list side-by-side */
+.year-links {
+  display: flex;
+  align-items: center;
+  /* leave a bit more gap so the absolute 'Year' suffix has room */
+  gap: 1rem;
+}
+
+.year-links h2 {
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 1em;
+  font-weight: 600;
+  color: $color-text-dark-on-light;
+  /* limit the heading width so "Season Year" wraps to two lines (Year on second line)
+     set as ch units so it scales with the font and approximates the width of "Season" */
+  max-width: 7ch;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* the boxed year list (shared by both variants) */
+.year-list, .year-list-small {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem;
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  background: white;
+  border: 1px solid $color-secondary;
+  border-radius: 6px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+}
+
+.year-list li, .year-list-small li { list-style: none; }
+
+.year-list a, .year-list-small a {
+  display: inline-block;
+  padding: 6px 10px;
+  color: $color-text-dark-on-light;
+  font-size: 0.9em;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.year-list a.active, .year-list-small a.active {
+  background-color: $color-primary;
+  color: $color-text-light-on-dark;
+}
+
+/* small variant tweaks */
+.year-list-small a { padding: 4px 8px; font-size: 0.85em; }
+
+
 /**
  * Tooltip Styles
  * see: https://codepen.io/cbracco/pen/nXEQLw
