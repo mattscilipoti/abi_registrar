@@ -6,7 +6,9 @@ class UtilityCartPassesController < ApplicationController
   def index
     utility_cart_passes = filter_models(UtilityCartPass, params[:q])
     @year = params[:year]
-    @utility_cart_passes = utility_cart_passes.by_year(@year).decorate
+    @utility_cart_passes = utility_cart_passes.by_year(@year)
+                                              .includes(resident: :residencies) # preload relationships used by decorators/views
+                                              .decorate
   end
 
   # GET /utility_cart_passes/1 or /utility_cart_passes/1.json

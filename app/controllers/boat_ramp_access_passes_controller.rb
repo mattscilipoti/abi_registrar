@@ -6,7 +6,9 @@ class BoatRampAccessPassesController < ApplicationController
   def index
     boat_ramp_access_passes = filter_models(BoatRampAccessPass, params[:q])
     @year = params[:year]
-    @boat_ramp_access_passes = boat_ramp_access_passes.by_year(@year).decorate
+    @boat_ramp_access_passes = boat_ramp_access_passes.by_year(@year)
+                                                      .includes(resident: :residencies) # preload relationships used by decorators/views
+                                                      .decorate
   end
 
   # GET /boat_ramp_access_passes/1 or /boat_ramp_access_passes/1.json

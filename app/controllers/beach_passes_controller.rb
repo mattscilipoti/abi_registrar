@@ -6,7 +6,9 @@ class BeachPassesController < ApplicationController
   def index
     beach_passes = filter_models(BeachPass, params[:q])
     @year = params[:year]
-    @beach_passes = beach_passes.by_year(@year).decorate
+    @beach_passes = beach_passes.by_year(@year)
+                                .includes(resident: :residencies) # preload relationships used by decorators/views
+                                .decorate
   end
 
   # GET /beach_passes/1 or /beach_passes/1.json

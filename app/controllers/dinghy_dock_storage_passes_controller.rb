@@ -6,7 +6,9 @@ class DinghyDockStoragePassesController < ApplicationController
   def index
     dinghy_dock_storage_passes = filter_models(DinghyDockStoragePass, params[:q])
     @year = params[:year]
-    @dinghy_dock_storage_passes = dinghy_dock_storage_passes.by_year(@year).decorate
+    @dinghy_dock_storage_passes = dinghy_dock_storage_passes.by_year(@year)
+                                                            .includes(resident: :residencies) # preload relationships used by decorators/views
+                                                            .decorate
   end
 
   # GET /dinghy_dock_storage_passes/1 or /dinghy_dock_storage_passes/1.json

@@ -7,6 +7,8 @@ class AmenityPassesController < ApplicationController
     amenity_passes = filter_models(AmenityPass, params[:q])
     # apply year filter (controller ensures params[:year] exists)
     @year = params[:year]
-    @amenity_passes = amenity_passes.by_year(@year).decorate
+    @amenity_passes = amenity_passes.by_year(@year)
+                                    .includes(resident: :residencies) # preload relationships used by decorators/views
+                                    .decorate
   end
 end

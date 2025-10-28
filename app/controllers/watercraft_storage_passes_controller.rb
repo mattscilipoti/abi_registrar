@@ -6,7 +6,9 @@ class WatercraftStoragePassesController < ApplicationController
   def index
     watercraft_storage_passes = filter_models(WatercraftStoragePass, params[:q])
     @year = params[:year]
-    @watercraft_storage_passes = watercraft_storage_passes.by_year(@year).decorate
+    @watercraft_storage_passes = watercraft_storage_passes.by_year(@year)
+                                                          .includes(resident: :residencies) # preload relationships used by decorators/views
+                                                          .decorate
   end
 
   # GET /watercraft_storage_passes/1 or /watercraft_storage_passes/1.json

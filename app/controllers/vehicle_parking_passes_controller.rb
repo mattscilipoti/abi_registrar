@@ -6,7 +6,9 @@ class VehicleParkingPassesController < ApplicationController
   def index
     vehicle_parking_passes = filter_models(VehicleParkingPass, params[:q])
     @year = params[:year]
-    @vehicle_parking_passes = vehicle_parking_passes.by_year(@year).decorate
+    @vehicle_parking_passes = vehicle_parking_passes.by_year(@year)
+                                                    .includes(resident: :residencies) # preload relationships used by decorators/views
+                                                    .decorate
   end
 
   # GET /vehicle_parking_passes/1 or /vehicle_parking_passes/1.json
