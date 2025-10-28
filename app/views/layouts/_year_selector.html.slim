@@ -1,7 +1,7 @@
 - compact = local_assigns.fetch(:compact, false)
 - model = local_assigns.fetch(:model, AmenityPass)
 div class=(compact ? 'year-selector-small' : 'year-selector')
-  nav class=(compact ? 'year-links-small' : 'year-links')
+  nav class=(compact ? 'year-links-small' : 'year-links') aria-label=(compact ? 'Season Year' : 'Season Year')
     - unless compact
       h2 Season Year
     ul class=(compact ? 'year-list-small' : 'year-list')
@@ -12,4 +12,7 @@ div class=(compact ? 'year-selector-small' : 'year-selector')
         - link_class = compact ? 'year-link-small' : 'year-link'
         - li_class = active ? "#{item_class} active" : item_class
         li class=li_class
-          = link_to label, url, class: (active ? "#{link_class} active" : link_class)
+          - link_opts = {}
+          - link_opts[:class] = (active ? "#{link_class} active" : link_class)
+          - link_opts['aria-current'] = 'true' if active
+          = link_to label, url, link_opts
