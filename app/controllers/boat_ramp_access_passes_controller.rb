@@ -1,10 +1,12 @@
 class BoatRampAccessPassesController < ApplicationController
+  include RequireYearParam
   before_action :set_boat_ramp_access_pass, only: %i[ show edit update destroy ]
 
   # GET /boat_ramp_access_passes or /boat_ramp_access_passes.json
   def index
     boat_ramp_access_passes = filter_models(BoatRampAccessPass, params[:q])
-    @boat_ramp_access_passes = boat_ramp_access_passes.decorate
+    @year = params[:year]
+    @boat_ramp_access_passes = boat_ramp_access_passes.by_year(@year).decorate
   end
 
   # GET /boat_ramp_access_passes/1 or /boat_ramp_access_passes/1.json

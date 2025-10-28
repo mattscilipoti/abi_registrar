@@ -429,11 +429,13 @@ ul {
   box-shadow: 0 1px 0 rgba(0,0,0,0.03);
 }
 
-.year-list li, .year-list-small li { list-style: none; }
+.year-list li, .year-list-small li { list-style: none; padding: 0; margin: 0; }
 
 .year-list a, .year-list-small a {
   display: inline-block;
-  padding: 6px 10px;
+  /* slightly larger clickable area inside the same overall box by increasing link padding
+     while keeping list item padding minimal so the selector box doesn't grow */
+  padding: 8px 12px;
   color: $color-text-dark-on-light;
   font-size: 0.9em;
   border-radius: 4px;
@@ -446,7 +448,7 @@ ul {
 }
 
 /* small variant tweaks */
-.year-list-small a { padding: 4px 8px; font-size: 0.85em; }
+.year-list-small a { padding: 6px 10px; font-size: 0.85em; }
 
 
 /**

@@ -1,10 +1,11 @@
 - compact = local_assigns.fetch(:compact, false)
+- model = local_assigns.fetch(:model, AmenityPass)
 div class=(compact ? 'year-selector-small' : 'year-selector')
   nav class=(compact ? 'year-links-small' : 'year-links')
     - unless compact
       h2 Season Year
     ul class=(compact ? 'year-list-small' : 'year-list')
-      - year_options(model: AmenityPass).each do |label, value|
+      - year_options(model: model).each do |label, value|
         - url = url_for(params.permit!.to_h.merge(year: value))
         - active = params[:year].to_s == value.to_s
         - item_class = compact ? 'year-item-small' : 'year-item'

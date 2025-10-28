@@ -1,10 +1,12 @@
 class BeachPassesController < ApplicationController
+  include RequireYearParam
   before_action :set_beach_pass, only: %i[ show edit update destroy ]
 
   # GET /beach_passes or /beach_passes.json
   def index
     beach_passes = filter_models(BeachPass, params[:q])
-    @beach_passes = beach_passes.decorate
+    @year = params[:year]
+    @beach_passes = beach_passes.by_year(@year).decorate
   end
 
   # GET /beach_passes/1 or /beach_passes/1.json

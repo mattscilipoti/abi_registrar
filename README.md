@@ -14,6 +14,8 @@ Not only do we need to gather and manage the approprite information, we need to 
 - Possible Report Options:
   - export to Google Sheet & printing from there.
 
+If you have questions about contributing, running tests, or the developer workflow, see `CONTRIBUTING.md` for guidance.
+
 ## Features
 
 ### Done
