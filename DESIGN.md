@@ -72,3 +72,27 @@ References
 - Test guidance: `spec/README.md`
 - Shared examples: `spec/support/year_filter_shared_examples.rb`
 - Year selector partial: `app/views/layouts/_year_selector.html.slim`
+
+Backfill / Task guidance
+------------------------
+- Canonical backfill task: `rake amenity_passes:backfill_season_year`
+  - This repository uses a specialized task that targets the shared `amenity_passes` table (the STI table used by `AmenityPass` and its subclasses).
+  - The task extracts a candidate year from the `sticker_number` (first numeric run -> first two digits -> 20YY) within a recent acceptable range. It writes a CSV of any issues into `tmp/` for manual review.
+  - Usage examples (dry-run, verbose):
+
+    DRY_RUN=true VERBOSE=true bundle exec rake amenity_passes:backfill_season_year BATCH=100
+
+  - Apply in batches once reviewed:
+
+    bundle exec rake amenity_passes:backfill_season_year BATCH=500
+
+- Generic backfill task removed: there used to be a more generic `db:backfill_season_year` task but it was intentionally removed to avoid duplication and confusion. All backfill work for pass records should use the `amenity_passes:backfill_season_year` task.
+
+Safety checklist before applying updates
+--------------------------------------
+1. Run the amenity_passes task in dry-run mode (DRY_RUN=true) and inspect the issues CSV in `tmp/`.
+2. Ensure you have a recent DB backup or snapshot for production.
+3. Run the task with a small `BATCH` (e.g., 100) and verify results.
+4. Scale up batch size for production usage once confidence is established.
+5. After backfill, consider adding an index on `season_year` and, optionally, a non-null constraint once all records have been populated.
+
