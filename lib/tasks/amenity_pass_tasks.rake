@@ -57,6 +57,8 @@ namespace :amenity_passes do
       # Use update_columns to handle past Passes (which may not have today's requirements)
       # Note: this does NOT change updated_at
       pass.void
+      # pass.void_reason_id = ??? # other
+      pass.void_reason = 'Batch update'
       Rails.logger.info "Voided AmenityPass #{pass.id}: #{pass}"
     end
 
