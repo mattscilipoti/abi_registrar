@@ -73,6 +73,13 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    actual_db_schema (0.8.6)
+      activerecord
+      activesupport
+      ast
+      csv
+      parser
+      prism
     address_composer (1.0.1)
       mustache (~> 1.1)
     addressable (2.8.0)
@@ -81,6 +88,7 @@ GEM
       activerecord (>= 4.2)
       activesupport
     amazing_print (1.4.0)
+    ast (2.4.3)
     bcrypt (3.1.17)
     bindex (0.8.1)
     bootsnap (1.11.1)
@@ -101,6 +109,7 @@ GEM
     childprocess (4.1.0)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
+    csv (3.3.5)
     database_cleaner-active_record (2.0.1)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
@@ -184,10 +193,14 @@ GEM
     paper_trail (12.3.0)
       activerecord (>= 5.2)
       request_store (~> 1.1)
+    parser (3.3.10.0)
+      ast (~> 2.4.1)
+      racc
     pg (1.3.5)
     pg_search (2.3.6)
       activerecord (>= 5.2)
       activesupport (>= 5.2)
+    prism (1.6.0)
     public_suffix (4.0.7)
     puma (5.6.4)
       nio4r (~> 2.0)
@@ -350,6 +363,7 @@ PLATFORMS
 DEPENDENCIES
   StreetAddress
   active_record_doctor
+  actual_db_schema
   address_composer (~> 1.0)
   addressable
   amazing_print (~> 1.4)

@@ -72,6 +72,7 @@ group :test do
 end
 
 # App Custom gems
+gem 'actual_db_schema', group: :development
 gem 'active_record_doctor', group: :development
 gem 'addressable'
 gem 'address_composer', "~> 1.0", require: false
