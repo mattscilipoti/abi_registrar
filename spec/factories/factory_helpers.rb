@@ -4,11 +4,32 @@ module FactoryHelpers
   # Build a sticker number with a two-digit year prefix (last two digits of year),
   # a short prefix character(s), a separator, and a zero-padded sequence number.
   # Example: sticker_with_year('B', 12) => "B25-0012" (if current year is 2025)
+  #
+  # This picks a recent year (current year and up to 3 years back) but weights
+  # the selection so the current year is more likely than older years.
   def sticker_with_year(prefix, n, n_width: 4)
-    # pick a random recent year within the past 5 years (inclusive)
     current_year = Time.zone.now.year
     min_year = current_year - 3
-    chosen = rand(min_year..current_year)
+
+    years = (min_year..current_year).to_a
+
+    # weights for years: older -> smaller weight. Sum should be 100 but it's not
+    # required; these are relative weights.
+    # offset 0 => current_year, 1 => current_year-1, etc.
+    relative_weights = {
+      0 => 50,  # current year is most likely
+      1 => 25,
+      2 => 15,
+      3 => 10
+    }
+
+    weighted_pool = years.flat_map do |y|
+      offset = current_year - y
+      weight = relative_weights.fetch(offset, 1)
+      [y] * weight
+    end
+
+    chosen = weighted_pool.sample
     yy = (chosen % 100).to_s.rjust(2, '0')
     "#{prefix}-#{yy}#{n.to_s.rjust(n_width, '0')}"
   end
