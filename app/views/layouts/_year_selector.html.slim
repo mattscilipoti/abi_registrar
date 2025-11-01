@@ -5,6 +5,15 @@ div class=(compact ? 'year-selector-small' : 'year-selector')
     - unless compact
       h2 Season Year
     ul class=(compact ? 'year-list-small' : 'year-list')
+      -# Always show all available years for AmenityPass
+      - # Use the provided `model` and precompute counts to avoid N+1 queries.
+      - counts_by_year = {}
+      - if model && model.respond_to?(:group)
+        - counts_by_year = model.group(:season_year).count
+        - total_count = model.count
+      - else
+        - total_count = 0
+
       - year_options(model: model).each do |label, value|
         - url = url_for(params.permit!.to_h.merge(year: value))
         - active = params[:year].to_s == value.to_s
@@ -15,4 +24,18 @@ div class=(compact ? 'year-selector-small' : 'year-selector')
           - link_opts = {}
           - link_opts[:class] = (active ? "#{link_class} active" : link_class)
           - link_opts['aria-current'] = 'true' if active
-          = link_to label, url, link_opts
+          -# Compute the count for this option and include it inside the link text
+          - if value.to_s == 'all'
+            - count = total_count
+          - elsif value.to_s.match?(/\A\d+\z/)
+            - y = value.to_i
+            - count = counts_by_year[y] || 0
+          - else
+            - count = 0
+          - link_label = "#{label} (#{count})"
+          - if value.to_s == 'all'
+            - aria_label = "All seasons — #{pluralize(count, 'pass')}"
+          - else
+            - aria_label = "Season year #{label} — #{pluralize(count, 'pass')}"
+          - link_opts['aria-label'] = aria_label
+          = link_to link_label, url, link_opts

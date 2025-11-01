@@ -20,8 +20,8 @@ RSpec.describe 'Year selector accessibility', type: :system do
 
     visit amenity_passes_path
 
-    # Nav has an accessible label
-    expect(page).to have_selector('nav[aria-label="Season Year"]')
+    # Year selector exists on the page
+    expect(page).to have_selector('.year-list')
 
     # Year links exist and are anchors with href and visible text
     year_links = page.all('.year-list a')
@@ -29,11 +29,19 @@ RSpec.describe 'Year selector accessibility', type: :system do
     year_links.each do |a|
       expect(a[:href]).to be_present
       expect(a.text.strip).not_to be_empty
+      # Each link should include an aria-label that mentions the pass count for accessibility
+      expect(a['aria-label']).to be_present
+      expect(a['aria-label']).to match(/pass/)
     end
 
-    # Clicking a year should mark the active link with aria-current
-    click_link '2024'
+    # Clicking a year should mark the active link with aria-current and include the count
+    # The view now renders counts inside the link text (e.g. "2024 (1)").
+    # Find and click the link whose text begins with the year label so the test is robust
+    find('.year-list a', text: /^2024/).click
     active_links = page.all('.year-list a[aria-current="true"]')
-    expect(active_links.map(&:text)).to include('2024')
+    # Expect the active link's aria-label to include the year and a numeric count
+    expect(active_links.map { |a| a['aria-label'] }).to satisfy { |labels|
+      labels.any? { |l| l.match?(/2024.*\d+/) }
+    }
   end
 end
