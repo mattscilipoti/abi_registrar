@@ -13,6 +13,6 @@ module RequireYearParam
     return if params.key?(:year)
 
     # Redirect to same path with current year param appended.
-    redirect_to url_for(params.permit!.to_h.merge(year: Time.zone.now.year)), allow_other_host: false
+    redirect_to url_for(params.permit!.to_h.merge(year: AppSetting.current_season_year)), allow_other_host: false
   end
 end

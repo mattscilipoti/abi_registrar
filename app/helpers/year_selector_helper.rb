@@ -2,7 +2,7 @@ module YearSelectorHelper
   # Returns an array of options for years with 'All' first.
   # If a `model:` is provided and responds to `available_years`, use that list.
   # Otherwise fall back to a default recent range (current year and previous 4 years).
-  def year_options(model: nil, range: (Time.zone.now.year - 4)..Time.zone.now.year)
+  def year_options(model: nil, range: (AppSetting.current_season_year - 4)..AppSetting.current_season_year)
     if model && model.respond_to?(:available_years)
       years = model.available_years
     else
