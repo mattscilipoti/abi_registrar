@@ -62,9 +62,12 @@ RSpec.describe Resident, type: :model do
           expect { YearEnd.reset_fees }.to change(Property.user_fee_paid, :count).by(-2)
         end
 
-        it 'increments amenity pass season_year from current -> next year' do
+        it 'advances configured season year without modifying AmenityPass records' do
           current = Time.zone.now.year
           next_year = current + 1
+
+          # Ensure the configured season year matches the current year
+          AppSetting.set('current_season_year', current.to_s)
 
           # create some amenity passes for current and previous years
           FactoryBot.create_list(:beach_pass, 2, season_year: current)
@@ -73,10 +76,12 @@ RSpec.describe Resident, type: :model do
           expect(AmenityPass.where(season_year: current).count).to eql(2)
           expect(AmenityPass.where(season_year: next_year).count).to eql(0)
 
-          expect { YearEnd.reset_fees }.to change { AmenityPass.where(season_year: current).count }.by(-2)
+          # Running year-end should NOT mutate existing pass records
+          expect { YearEnd.reset_fees }.to_not change { AmenityPass.count }
+          expect(AmenityPass.where(season_year: current).count).to eql(2)
 
-          # the two current-year passes should now be next year's
-          expect(AmenityPass.where(season_year: next_year).count).to eql(2)
+          # Only the configured/persisted season year should advance
+          expect(AppSetting.current_season_year).to eql(next_year)
         end
       end
     end

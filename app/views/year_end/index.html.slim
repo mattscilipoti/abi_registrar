@@ -10,9 +10,13 @@ fieldset
         th Last Updated
     tbody
       ruby:
+        # Summary of items that will be reset by the Year-End process. We
+        # include the counts and last-updated timestamps so administrators
+        # can see what will be affected before running the action.
         column_data = [
-          { title: 'Lot Fees Paid', model: Property, relationship: Property.lot_fees_paid },
           { title: 'Amenities Processed', model: Property, relationship: Property.amenities_processed },
+          { title: 'Lot Fees Paid', model: Property, relationship: Property.lot_fees_paid },
+          { title: 'User Fees Paid', model: Property, relationship: Property.user_fee_paid },
         ]
 
       - column_data.each do |column_info|
@@ -25,10 +29,31 @@ fieldset
 
             td.datetime =datetime_tag(relationship.pluck(:updated_at).max)
 
+  - current_season = AppSetting.current_season_year
+  - next_season = current_season + 1
 
-h2 Actions
+  .season-summary
+    p
+      strong Default season year&nbsp;
+      | (#{current_season}) will advance to
+      b= " "+ next_season.to_s
 
-ul
-  li
-    =button_to "Reset Fees (performed annually)", reset_fees_path, form: { data: { turbo_confirm: 'Are you sure you want to reset ALL fees? This cannot be undone.' }}
-    | This will reset the Lot Fees Paid and Amenities Processed information. This allows Registrars to process the next year of information.
+
+fieldset
+  legend
+    h2 Actions
+
+  ul
+    li
+      - current_season = AppSetting.current_season_year
+      - next_season = current_season + 1
+
+      =button_to "Perform Year-End: Reset Fees & Advance Season", reset_fees_path, form: { data: { turbo_confirm: "This will reset Lot fees, property fee flags, and 'Amenities Processed' for the registrar workflow. It will advance the configured season year from #{current_season} to #{next_season}. This action will NOT modify historical pass records (AmenityPass rows). This operation is irreversible. Continue?" }}
+
+      p
+        | What this does:
+      ul style="list-style: disc inside; margin-left: 1.25rem;"
+        li Resets Lot fees and related paid flags so the system is ready for the next season.
+        li Clears the "Amenities Processed" marker for all Prooperties, so amenity processing can start fresh.
+        li Advances the persisted default season year (used by filters and helpers). See the summary above for the configured/current value and the next season.
+        li.font-italic This will NOT change any existing AmenityPass records — pass history stays intact.

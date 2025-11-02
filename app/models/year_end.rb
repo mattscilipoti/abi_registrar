@@ -28,6 +28,10 @@ class YearEnd
   # - Leaves nil or historical season_year values untouched.
   def self.increment_season_year
     current = AppSetting.current_season_year
-    AmenityPass.where(season_year: current).update_all('season_year = season_year + 1')
+
+    # Bump the configured default season year so filters and helpers
+    # that rely on `AppSetting.current_season_year` move to the next year.
+    # Store as a string to match AppSetting's simple key/value storage.
+    AppSetting.set('current_season_year', (current + 1).to_s)
   end
 end
