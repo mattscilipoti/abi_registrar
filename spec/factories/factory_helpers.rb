@@ -31,7 +31,16 @@ module FactoryHelpers
 
     chosen = weighted_pool.sample
     yy = (chosen % 100).to_s.rjust(2, '0')
-    "#{prefix}-#{yy}#{n.to_s.rjust(n_width, '0')}"
+
+    # If prefix is nil or empty, omit the prefix and the hyphen so callers
+    # (e.g. beach passes) can generate numeric-only sticker numbers like
+    # "250012" (yy + zero-padded sequence). Otherwise include the
+    # prefix and a hyphen as before (e.g. "B-250012").
+    if prefix.nil? || prefix.to_s.strip.empty?
+      "#{yy}#{n.to_s.rjust(n_width, '0')}"
+    else
+      "#{prefix}-#{yy}#{n.to_s.rjust(n_width, '0')}"
+    end
   end
 
   # Also expose as a module function so callers can use FactoryHelpers.sticker_with_year(...)

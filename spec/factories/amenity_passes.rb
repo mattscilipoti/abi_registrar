@@ -17,7 +17,9 @@ FactoryBot.define do
 
   factory :beach_pass, class: 'BeachPass' do
     amenity_pass_base
-    sequence(:sticker_number) { |n| FactoryHelpers.sticker_with_year('B', n, n_width: 4) }
+    # Beach passes should not have a letter or hyphen prefix; pass nil so the
+    # helper returns just the two-digit year plus the zero-padded number.
+    sequence(:sticker_number) { |n| FactoryHelpers.sticker_with_year(nil, n, n_width: 4) }
   end
 
   factory :boat_ramp_access_pass, class: 'BoatRampAccessPass' do
