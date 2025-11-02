@@ -18,12 +18,13 @@ module PassYearable
       if y == 'all'
         all
       elsif y.blank?
-        where(season_year: Time.zone.now.year)
+        where(season_year: AppSetting.current_season_year)
       elsif y.to_s.match?(/\A\d+\z/)
         where(season_year: y.to_i)
       else
-        # Non-numeric unexpected values default to current year for safety.
-        where(season_year: Time.zone.now.year)
+        # Non-numeric unexpected values default to configured current season
+        # year for safety.
+        where(season_year: AppSetting.current_season_year)
       end
     end
   end

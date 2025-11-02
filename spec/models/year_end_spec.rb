@@ -61,6 +61,23 @@ RSpec.describe Resident, type: :model do
         it 'clears all Property#user_fee_paid_on' do
           expect { YearEnd.reset_fees }.to change(Property.user_fee_paid, :count).by(-2)
         end
+
+        it 'increments amenity pass season_year from current -> next year' do
+          current = Time.zone.now.year
+          next_year = current + 1
+
+          # create some amenity passes for current and previous years
+          FactoryBot.create_list(:beach_pass, 2, season_year: current)
+          FactoryBot.create(:beach_pass, season_year: current - 1)
+
+          expect(AmenityPass.where(season_year: current).count).to eql(2)
+          expect(AmenityPass.where(season_year: next_year).count).to eql(0)
+
+          expect { YearEnd.reset_fees }.to change { AmenityPass.where(season_year: current).count }.by(-2)
+
+          # the two current-year passes should now be next year's
+          expect(AmenityPass.where(season_year: next_year).count).to eql(2)
+        end
       end
     end
   end

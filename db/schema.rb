@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_10_30_021519) do
+ActiveRecord::Schema[7.0].define(version: 2025_11_02_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -67,11 +67,25 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_30_021519) do
     t.integer  "beach_number"
     t.string   "location"
     t.integer  "season_year"
+    t.datetime "voided_at"
+    t.string   "voided_reason"
+    t.bigint   "void_reason_id"
 
     t.index ["resident_id"], :name=>"index_amenity_passes_on_resident_id"
     t.index ["season_year", "resident_id"], :name=>"index_amenity_passes_on_season_year_and_resident_id"
     t.index ["season_year"], :name=>"index_amenity_passes_on_season_year"
     t.index ["sticker_number"], :name=>"index_amenity_passes_on_sticker_number", :unique=>true
+    t.index ["void_reason_id"], :name=>"index_amenity_passes_on_void_reason_id"
+    t.index ["voided_at"], :name=>"index_amenity_passes_on_voided_at"
+  end
+
+  create_table "app_settings", force: :cascade do |t|
+    t.string   "key",        :null=>false
+    t.string   "value"
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
+
+    t.index ["key"], :name=>"index_app_settings_on_key", :unique=>true
   end
 
   create_table "comments", force: :cascade do |t|
@@ -181,12 +195,28 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_30_021519) do
     t.index ["item_type", "item_id"], :name=>"index_versions_on_item_type_and_item_id"
   end
 
+  create_table "void_reasons", force: :cascade do |t|
+    t.string   "label",         :null=>false
+    t.string   "code"
+    t.boolean  "active",        :default=>true, :null=>false
+    t.integer  "position"
+    t.string   "pass_type"
+    t.boolean  "requires_note", :default=>false, :null=>false
+    t.datetime "created_at",    :null=>false
+    t.datetime "updated_at",    :null=>false
+
+    t.index ["active"], :name=>"index_void_reasons_on_active"
+    t.index ["code"], :name=>"index_void_reasons_on_code", :unique=>true
+    t.index ["position"], :name=>"index_void_reasons_on_position"
+  end
+
   add_foreign_key "account_email_auth_keys", "accounts", column: "id"
   add_foreign_key "account_login_change_keys", "accounts", column: "id"
   add_foreign_key "account_password_reset_keys", "accounts", column: "id"
   add_foreign_key "account_remember_keys", "accounts", column: "id"
   add_foreign_key "account_verification_keys", "accounts", column: "id"
   add_foreign_key "amenity_passes", "residents"
+  add_foreign_key "amenity_passes", "void_reasons"
   add_foreign_key "item_transactions", "residencies"
   add_foreign_key "item_transactions", "residencies", column: "from_residency_id"
   add_foreign_key "lots", "properties"

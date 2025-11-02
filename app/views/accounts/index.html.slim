@@ -5,3 +5,14 @@ fieldset
   #accounts
     - columns = %i[email status]
     =render 'layouts/models_table', models: @accounts, columns: columns, allow_edit: false, allow_show: false, allow_sort: true
+
+  hr
+
+  .season-year-admin
+    h3 Current season year
+    - current = AppSetting.current_season_year
+    = form_with url: update_season_year_accounts_path, method: :post, local: true do |f|
+      .form-group
+        = label_tag :season_year, 'Season year'
+        = number_field_tag :season_year, current, class: 'form-control', min: 2000, max: 9999
+      = submit_tag 'Update season year', class: 'btn btn-primary'

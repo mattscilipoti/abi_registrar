@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     get 'summary', to: 'pages#summary'
 
     resources :accounts, only: [:index]
+  post 'accounts/update_season_year', to: 'accounts#update_season_year', as: :update_season_year_accounts
     resources :beach_passes
     resources :boat_ramp_access_passes
     resources :comments, only: [:create]
