@@ -1,6 +1,7 @@
+
 fieldset
   legend
-    h2 Summary
+    h2 Items Summary
 
   table
     thead
@@ -12,14 +13,42 @@ fieldset
         th Amentities Processed
         th Last Updated
     tbody
-      - [Lot, Property, Resident, AmenityPass, BeachPass, BoatRampAccessPass, DinghyDockStoragePass, UtilityCartPass, VehicleParkingPass, WatercraftStoragePass].each do |model|
+      - @summary_basic_entries.each do |entry|
         tr
-          td =link_to model.name.pluralize, url_for(model.name.tableize)
-          td.number =model.count
-          td.number =number_with_percentage(model.lot_fees_paid.count, model.count) if model.respond_to?(:lot_fees_paid)
-          td.number =number_with_percentage(model.user_fee_paid.count, model.count) if model.respond_to?(:user_fee_paid)
-          td.number =number_with_percentage(model.amenities_processed.count, model.count) if model.respond_to?(:amenities_processed)
-          td.datetime =datetime_tag(model.pluck(:updated_at).max)
+          td = link_to entry[:name], entry[:path]
+          td.number = entry[:quantity]
+          - if entry[:lot_fees_paid_count]
+            td.number = number_with_percentage(entry[:lot_fees_paid_count], entry[:quantity])
+          - if entry[:user_fee_paid_count]
+            td.number = number_with_percentage(entry[:user_fee_paid_count], entry[:quantity])
+          - if entry[:amenities_processed_count]
+            td.number = number_with_percentage(entry[:amenities_processed_count], entry[:quantity])
+          td.datetime = datetime_tag(entry[:last_updated])
+
+fieldset
+  legend
+    h2 Passes Summary
+
+  = render 'layouts/year_selector', compact: false
+
+  table
+    thead
+      tr
+        th Item
+        th Quantity
+        th Residents
+        th Last Updated
+    tbody
+      - @summary_pass_entries.each do |entry|
+        tr
+          td = link_to entry[:name], entry[:path]
+          td.number = entry[:quantity]
+          - if entry[:distinct_residents]
+            td.number = entry[:distinct_residents]
+          - else
+            td.number = '-'
+          td.datetime = datetime_tag(entry[:last_updated])
+
 
 /* As of 2025-05-08, Temporarily hiding Item Transactions until we have cleaned data
 /*= render 'transaction_summary'
