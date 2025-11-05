@@ -91,6 +91,21 @@ Contributing code
 - Add tests for behavior you change. Keep the test suite green locally before opening PRs.
 - Update `CHANGELOG.md` and `README.md` when appropriate.
 
+Class organization (for contributors and Copilot)
+-----------------------------------------------
+
+When creating or updating Ruby classes (models, controllers, services, etc.), order members using the following sections and sort entries alphabetically within each section:
+
+- associations
+- validations
+- initialization/constructor
+- scopes
+- class methods
+- instance methods
+- private methods
+
+Keeping this order and alphabetization improves readability and makes diffs easier to review. When adding new methods, place them in the appropriate section and maintain alphabetical order within that section.
+
 Support
 -------
 
