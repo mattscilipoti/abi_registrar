@@ -38,7 +38,7 @@ class PropertiesController < ApplicationController
   # PATCH/PUT /properties/1 or /properties/1.json
   def update
     respond_to do |format|
-      # Convert toggleable_amentities_processed into today's date
+      # Convert toggleable_amenities_processed into today's date
       if params[:property] && params[:property][:amenities_processed] == '1'
         params[:property][:amenities_processed] = Time.zone.today
       end
