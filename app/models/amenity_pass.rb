@@ -2,21 +2,31 @@ require 'csv' # for states
 
 class AmenityPass < ApplicationRecord
   include PassYearable
-  include AmenityPassValidations
+
+  # Associations
   belongs_to :resident
-  has_many :properties, :through => :resident
+  has_many :properties, through: :resident
 
-  validate :confirm_resident_paid_mandatory_fees
+  # Validations (alphabetical)
+  validate  :confirm_resident_paid_mandatory_fees
+  validate  :season_year_in_configured_range
+  validates :season_year, presence: true, if: :require_season_year_on_save?
+  validates :sticker_number, presence: true, uniqueness: true
 
-  def self.scopes
-    []
-  end
+  # Scopes (alphabetical)
+  scope :not_paid, -> { where('1=2') } # TODO: sticker fee not paid?
+  # scope :problematic, -> { without_state_code }
+  scope :without_description, -> { where(description: nil) }
+  scope :without_state_code, -> { where(state_code: nil) }
+  scope :without_tag_number, -> { where(tag_number: nil) }
 
+  # Initialization / includes
   # List of searchable columns for this Model
   # ! this must be declared before pg_search_scope
   def self.searchable_columns
     [:beach_number, :description, :location, :state_code, :sticker_number, :tag_number]
   end
+
   # Configure search
   include PgSearch::Model
   pg_search_scope :search_by_all,
@@ -29,27 +39,39 @@ class AmenityPass < ApplicationRecord
       tsearch: { prefix: true }
     }
 
-  scope :not_paid, -> { where('1=2') } # TODO: sticker fee not paid?
-  # scope :problematic, -> { without_state_code }
-  scope :without_description, -> { where(description: nil) }
-  scope :without_state_code, -> { where(state_code: nil) }
-  scope :without_tag_number, -> { where(tag_number: nil) }
+  # Class methods (alphabetical)
+  def self.available_years
+    where.not(season_year: nil).distinct.order(season_year: :desc).pluck(:season_year)
+  end
 
   def self.default_sort
     { column: :sticker_number, direction: :desc }
   end
 
-  # validates_presence_of :tag_number, :sticker_number
+  # Attempt to guess a season year from a sticker string.
+  # Accepts values like "R-250123" or "250123" and returns 20YY when
+  # the first two digits are interpreted as the two-digit year (YY -> 20YY).
+  # This method performs only parsing (no application-level bounds checks);
+  # callers should validate the parsed year as needed. Returns an Integer
+  # (e.g. 2025) or nil when no two-digit year can be parsed.
+  def self.guess_season_year_from_sticker(sticker, range_back: 4)
+    return nil if sticker.blank?
+    m = sticker.to_s.match(/\d+/)
+    return nil unless m
+    digits = m[0]
+    return nil if digits.length < 2
 
-  # def self.scopes
-  #   %i[
-  #     without_state_code
-  #   ]
-  # end
+    yy = digits[0,2].to_i
+    2000 + yy
+  end
+
+  # Scopes for filter bar
+  def self.scopes
+    []
+  end
 
   # Useful for form collections
   # Displays summary, returns code
-  # With
   def self.states
     @states ||= begin
       data_file = Rails.root.join('db', 'import', 'US_States.csv')
@@ -71,6 +93,7 @@ class AmenityPass < ApplicationRecord
     end
   end
 
+  # Instance methods (alphabetical)
   def confirm_resident_paid_lot_fees
     unless resident.lot_fees_paid?
       errors.add(:resident, "must have paid lot fees")
@@ -88,16 +111,12 @@ class AmenityPass < ApplicationRecord
     end
   end
 
-  def tag
-    [state_code, tag_number].compact.join('-')
-  end
-
-  def to_param
-    [id, sticker_number].compact.join('-')
-  end
-
-  def to_s
-    [sticker_number, tag].compact.join(', ')
+  # Instance wrapper that uses the model's sticker_digits helper.
+  def guess_season_year_from_sticker(range_back: 4)
+    digits = sticker_digits
+    return nil if digits.blank? || digits.length < 2
+    # Delegate to the class-level parser to avoid duplicating logic.
+    self.class.guess_season_year_from_sticker(digits, range_back: range_back)
   end
 
   # Return the first contiguous run of digits found in `sticker_number`.
@@ -111,34 +130,44 @@ class AmenityPass < ApplicationRecord
     m && m[0]
   end
 
-  # Attempt to guess a season year from a sticker string.
-  # Accepts values like "R-250123" or "250123" and returns 20YY when
-  # the first two digits are interpreted as the two-digit year (YY -> 20YY).
-  # This method performs only parsing (no application-level bounds checks);
-  # callers should validate the parsed year as needed. Returns an Integer
-  # (e.g. 2025) or nil when no two-digit year can be parsed.
-  def self.guess_season_year_from_sticker(sticker, range_back: 4)
-    return nil if sticker.blank?
-    m = sticker.to_s.match(/\d+/)
-    return nil unless m
-    digits = m[0]
-    return nil if digits.length < 2
-
-    yy = digits[0,2].to_i
-    2000 + yy
+  def tag
+    [state_code, tag_number].compact.join('-')
   end
 
-  # Instance wrapper that uses the model's sticker_digits helper.
-  def guess_season_year_from_sticker(range_back: 4)
-    digits = sticker_digits
-    return nil if digits.blank? || digits.length < 2
-    # Delegate to the class-level parser to avoid duplicating logic.
-    self.class.guess_season_year_from_sticker(digits, range_back: range_back)
+  def to_param
+    [id, sticker_number].compact.join('-')
   end
 
-  # Return an array of distinct season years present in the table (excluding nil),
-  # ordered descending. Used to build year filters in the UI.
-  def self.available_years
-    where.not(season_year: nil).distinct.order(season_year: :desc).pluck(:season_year)
+  def to_s
+    [sticker_number, tag].compact.join(', ')
+  end
+
+  private
+
+  # Return true for new records or any record that is being changed/saved.
+  # This enforces presence for created records and for any update operation.
+  def require_season_year_on_save?
+    new_record? || changed?
+  end
+
+  def season_year_in_configured_range
+    return if season_year.nil?
+
+    unless season_year.is_a?(Integer)
+      errors.add(:season_year, 'must be an integer')
+      return
+    end
+
+    # The minimum allowed season year is configurable via AppSetting.min_season_year.
+    # Use AppSetting.max_season_year for the upper bound so the app can accept
+    # next-season values when configured.
+    min = AppSetting.min_season_year
+    max = AppSetting.max_season_year
+
+    if season_year < min
+      errors.add(:season_year, "must be greater than or equal to #{min}")
+    elsif season_year > max
+      errors.add(:season_year, "must be less than or equal to #{max}")
+    end
   end
 end

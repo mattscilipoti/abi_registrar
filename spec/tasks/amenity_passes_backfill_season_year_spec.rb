@@ -21,6 +21,10 @@ RSpec.describe 'amenity_passes:backfill_season_year rake task' do
   # Create a beach pass with a numeric-only sticker like "23xxxx".
   # Persist it without validations to simulate an existing legacy record with nil season_year.
   bp = FactoryBot.build(:beach_pass, sticker_number: "#{yy}0001", season_year: nil)
+  # The factory's after(:build) hook may populate season_year from the
+  # sticker_number. Tests that need an explicit nil must set it after
+  # building the factory (see spec/factories/amenity_passes.rb).
+  bp.season_year = nil
   bp.save(validate: false)
 
     expect(bp.season_year).to be_nil

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe BeachPass, type: :model do
-  describe 'AmenityPassValidations' do
+  describe 'AmenityPass validations' do
     it 'requires season_year on create' do
       # Build a pass and explicitly set season_year to nil to test behavior
       # when the value is absent.
