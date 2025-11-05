@@ -79,6 +79,11 @@ Where to find detailed guidance
 - Test-specific guidance (auth helpers, shared examples, and performance tips) lives in `spec/README.md`.
 - Design and architecture discussion (year-filter behavior, migration/backfill strategy) lives in `DESIGN.md`.
 
+Database schema (ActualDbSchema)
+-------------------------------
+
+This project uses the `actual_db_schema` gem (config: `config/initializers/actual_db_schema.rb`) to manage migrations as you switch from branch to branch. The UI is enabled in development and migrated phantom files live in `tmp/migrated`.
+
 Contributing code
 -----------------
 

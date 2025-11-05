@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## 2025-11-05: [#104] Add filter-by-year support
+
+- Add a year filter to relevant listing and summary pages so records can be scoped by year.
+- Update controllers, views, and tests to support selecting and applying a year filter.
+- Improves usability when reviewing historical records and reduces query scope for year-scoped views.
+- Add `actual_db_schema` dev tooling (config: `config/initializers/actual_db_schema.rb`; migrated files: `tmp/migrated`).
+
 ## 2025-05-08: Removed Shares/Transactions from summary page and top navigation panel
 
 - Commented out code to display the shares/transactions information, until real data are available
