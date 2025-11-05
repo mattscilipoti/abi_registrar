@@ -48,7 +48,7 @@ fieldset
       - current_season = AppSetting.current_season_year
       - next_season = current_season + 1
 
-      =button_to "Perform Year-End: Reset Fees & Advance Season", reset_fees_path, form: { data: { turbo_confirm: "This will reset Lot fees, property fee flags, and 'Amenities Processed' for the registrar workflow. It will advance the configured season year from #{current_season} to #{next_season}. This action will NOT modify historical pass records (AmenityPass rows). This operation is irreversible. Continue?" }}
+      =button_to "Perform Year-End: Reset Fees & Advance Season", process_year_end_path, form: { data: { turbo_confirm: "This will reset Lot fees, user fee flags, and 'Amenities Processed' for the registrar workflow. It will advance the configured season year from #{current_season} to #{next_season}. This action will NOT modify historical pass records (AmenityPass rows). This operation is irreversible. Continue?" }}
 
       p
         | What this does:

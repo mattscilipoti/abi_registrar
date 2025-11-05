@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
   get 'home', to: 'pages#home'
   get 'year_end', to: 'year_end#index'
-  post 'reset_fees', to: 'year_end#reset_fees'
+  post 'process_year_end', to: 'year_end#process_year_end'
   resources :amenity_passes, only: [:index] # must be unauthenticated for "public" access
 
   # Defines the root path route ("/")

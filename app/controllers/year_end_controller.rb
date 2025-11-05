@@ -3,12 +3,12 @@ class YearEndController < ApplicationController
 
   end
 
-  def reset_fees
+  def process_year_end
     # Capture the configured season before running year-end so we can
     # show a helpful flash message about what changed.
     previous_season = AppSetting.current_season_year
 
-    YearEnd.reset_fees
+    YearEnd.process_year_end
 
     new_season = AppSetting.current_season_year
     if new_season != previous_season
@@ -19,8 +19,8 @@ class YearEndController < ApplicationController
 
     redirect_to year_end_url
   rescue StandardError => e
-    logger.error "YearEnd reset_fees failed: #{e.class} - #{e.message}\n#{e.backtrace.take(10).join("\n")}" if defined?(logger)
-    flash[:alert] = 'There was a problem resetting fees. Please check data and try again.'
+    logger.error "YearEnd process_year_end failed: #{e.class} - #{e.message}\n#{e.backtrace.take(10).join("\n")}" if defined?(logger)
+    flash[:alert] = 'There was a problem performing year-end. Please check data and try again.'
     redirect_to year_end_url
   end
 end
