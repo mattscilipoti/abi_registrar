@@ -34,10 +34,11 @@ module AmenityPassValidations
       return
     end
 
-  # The minimum allowed season year is 2023 (floor). Use AppSetting.max_season_year
-  # for the upper bound so the app can accept next-season values when configured.
-  min = 2023
-  max = AppSetting.max_season_year
+    # The minimum allowed season year is configurable via AppSetting.min_season_year.
+    # Use AppSetting.max_season_year for the upper bound so the app can accept
+    # next-season values when configured.
+    min = AppSetting.min_season_year
+    max = AppSetting.max_season_year
 
     if season_year < min
       errors.add(:season_year, "must be greater than or equal to #{min}")

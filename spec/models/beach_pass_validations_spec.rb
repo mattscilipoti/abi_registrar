@@ -12,7 +12,7 @@ RSpec.describe BeachPass, type: :model do
     end
 
     it 'requires season_year to be within allowed range' do
-      min = 2023
+      min = AppSetting.min_season_year
       max = AppSetting.max_season_year
 
       bp = FactoryBot.build(:beach_pass, season_year: min - 1)

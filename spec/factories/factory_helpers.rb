@@ -15,9 +15,9 @@ module FactoryHelpers
   # method (FactoryBot::SyntaxRunner includes this module).
   def self.sticker_with_year(prefix, n, n_width: 4)
     current_season = AppSetting.current_season_year
-    # Ensure we pick years >= 2023 and allow next-year stickers via
-    # AppSetting.max_season_year.
-    min_year = [current_season - 3, 2023].max
+  # Ensure we pick years >= configured minimum and allow next-year stickers
+  # via AppSetting.max_season_year.
+  min_year = [current_season - 3, AppSetting.min_season_year].max
     max_year = AppSetting.max_season_year
 
     years = (min_year..max_year).to_a

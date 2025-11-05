@@ -70,10 +70,23 @@ class AppSetting < ApplicationRecord
     end
   end
 
+  # Returns the configured minimum season year as an Integer. Defaults to 2023
+  # when the setting is not present or when the DB is unavailable during boot.
+  def self.min_season_year
+    begin
+      val = get('minimum_season_year')
+      return val.to_i if val.present? && val.to_s.match?(/\A\d+\z/)
+    rescue ActiveRecord::StatementInvalid, ActiveRecord::NoDatabaseError
+      # Fall through to default when DB/table isn't available yet.
+    end
+
+    2023
+  end
+
   # Returns the maximum acceptable season year. This is one year after the
   # configured current season year and is useful when generators or UI may
   # produce next-season stickers (e.g., preparing next year's passes).
   def self.max_season_year
-    current_season_year + 1
+    Date.today.year + 1
   end
 end

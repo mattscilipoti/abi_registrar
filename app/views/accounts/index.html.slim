@@ -11,8 +11,11 @@ fieldset
   .season-year-admin
     h3 Current season year
     - current = AppSetting.current_season_year
-    = form_with url: update_season_year_accounts_path, method: :post, local: true do |f|
-      .form-group
-        = label_tag :season_year, 'Season year'
-        = number_field_tag :season_year, current, class: 'form-control', min: 2000, max: 9999
-      = submit_tag 'Update season year', class: 'btn btn-primary'
+    - min_year = AppSetting.min_season_year
+    = simple_form_for :season_settings, url: update_season_year_accounts_path, method: :post do |f|
+      .form-row
+        .form-group.col-md-6
+          = f.input :season_year, label: 'Current season year', as: :integer, input_html: { value: current, min: AppSetting.min_season_year, max: AppSetting.max_season_year, class: 'form-control' }, hint: 'The default season year for date filtering'
+        .form-group.col-md-6
+          = f.input :minimum_season_year, label: 'Minimum season year', as: :integer, input_html: { value: min_year, min: 2000, max: Date.today.year, class: 'form-control' }, hint: 'The minimum season year allowed for passes'
+      = f.button :submit, 'Update season settings', class: 'btn btn-primary'
