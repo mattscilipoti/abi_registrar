@@ -1,16 +1,12 @@
 CONTRIBUTING
 ============
 
-Thanks for contributing! This file contains the essentials for getting the app running locally, running tests, and the conventions we follow for the year-filter feature and test auth helpers.
-
-Quick start (local)
---------------------
-
-1. Install dependencies
-CONTRIBUTING
-============
-
 Thanks for contributing! This file is a high-level guide for contributors: how to get the app running locally, a recommended quick feedback workflow, and where to find more detailed developer and testing documentation.
+
+Devcontainer
+------------
+
+This repository includes a VS Code Dev Container configuration in `.devcontainer/`. If you use VS Code, open the folder in the devcontainer (Remote - Containers: "Open Folder in Container") or use GitHub Codespaces to get a reproducible development environment with the correct Ruby and system dependencies. Run the same setup commands below from inside the container (for example, `bundle install` and `bin/rails server`). If you prefer to work locally without the container, follow the "Quick start (local)" steps below.
 
 Quick start (local)
 --------------------
@@ -35,6 +31,8 @@ Run the full test suite:
 ```bash
 bundle exec rspec
 ```
+
+
 
 Contributor workflow (fast feedback)
 ----------------------------------
