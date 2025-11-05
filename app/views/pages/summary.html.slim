@@ -17,12 +17,15 @@ fieldset
         tr
           td = link_to entry[:name], entry[:path]
           td.number = entry[:quantity]
-          - if entry[:lot_fees_paid_count]
-            td.number = number_with_percentage(entry[:lot_fees_paid_count], entry[:quantity])
-          - if entry[:user_fee_paid_count]
-            td.number = number_with_percentage(entry[:user_fee_paid_count], entry[:quantity])
-          - if entry[:amenities_processed_count]
-            td.number = number_with_percentage(entry[:amenities_processed_count], entry[:quantity])
+          td.number
+            - if entry[:lot_fees_paid_count]
+              = number_with_percentage(entry[:lot_fees_paid_count], entry[:quantity])
+          td.number
+            - if entry[:user_fee_paid_count]
+              = number_with_percentage(entry[:user_fee_paid_count], entry[:quantity])
+          td.number = entry[:user_fee_paid_count]
+            - if entry[:amenities_processed_count]
+              = number_with_percentage(entry[:amenities_processed_count], entry[:quantity])
           td.datetime = datetime_tag(entry[:last_updated])
 
 fieldset
