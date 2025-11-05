@@ -49,7 +49,8 @@ RSpec.describe AmenityPass, type: :model do
 
     it "'all' returns everything including nil season_year" do
       with_year = FactoryBot.create(:beach_pass, season_year: 2023)
-      without = FactoryBot.create(:beach_pass, season_year: nil)
+      without = FactoryBot.build(:beach_pass, season_year: nil)
+      without.save(validate: false)
       expect(AmenityPass.by_year('all')).to include(with_year, without)
     end
   end

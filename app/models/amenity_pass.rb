@@ -2,11 +2,11 @@ require 'csv' # for states
 
 class AmenityPass < ApplicationRecord
   include PassYearable
+  include AmenityPassValidations
   belongs_to :resident
   has_many :properties, :through => :resident
 
   validate :confirm_resident_paid_mandatory_fees
-  validates :sticker_number, uniqueness: true
 
   def self.scopes
     []

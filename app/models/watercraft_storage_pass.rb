@@ -3,7 +3,7 @@ class WatercraftStoragePass < AmenityPass
   scope :problematic, -> { without_description }
   # scope :without_state_code, -> { where(state_code: nil) }
 
-  validates_presence_of :beach_number, :description, :rack_slot_number, :sticker_number
+  validates_presence_of :beach_number, :description, :rack_slot_number
 
   def self.scopes
     %i[
