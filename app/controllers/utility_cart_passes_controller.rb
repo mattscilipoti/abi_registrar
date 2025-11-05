@@ -75,6 +75,7 @@ class UtilityCartPassesController < ApplicationController
         :description,
         :state_code,
         :sticker_number,
+        :season_year,
       )
     end
 end

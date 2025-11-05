@@ -4,7 +4,11 @@ module RequireYearParam
   extend ActiveSupport::Concern
 
   included do
-    before_action :ensure_year_param
+    # Only enforce the year param on safe GET requests. Previously this
+    # ran for all verbs which caused non-GET requests (like PATCH/PUT for
+    # updates) to be redirected before the controller action ran, dropping
+    # form submissions and preventing validation errors from being shown.
+    before_action :ensure_year_param, if: -> { request.get? }
   end
 
   private

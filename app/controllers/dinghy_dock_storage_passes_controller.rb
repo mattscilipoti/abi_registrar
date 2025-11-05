@@ -76,6 +76,7 @@ class DinghyDockStoragePassesController < ApplicationController
         :description,
         :location,
         :sticker_number,
+        :season_year,
       )
     end
 end

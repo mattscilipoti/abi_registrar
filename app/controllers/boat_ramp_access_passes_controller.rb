@@ -77,6 +77,7 @@ class BoatRampAccessPassesController < ApplicationController
         :state_code,
         :tag_number,
         :sticker_number,
+        :season_year,
       )
     end
 end

@@ -74,6 +74,7 @@ class BeachPassesController < ApplicationController
         :resident_id,
         :description,
         :sticker_number,
+        :season_year,
       )
     end
 end

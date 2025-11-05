@@ -75,7 +75,8 @@ class VehicleParkingPassesController < ApplicationController
         :description,
         :state_code,
         :sticker_number,
-        :tag_number
+        :tag_number,
+        :season_year
       )
     end
 end

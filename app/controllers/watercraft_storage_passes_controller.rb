@@ -76,6 +76,7 @@ class WatercraftStoragePassesController < ApplicationController
         :description,
         :location,
         :sticker_number,
+        :season_year,
       )
     end
 end
