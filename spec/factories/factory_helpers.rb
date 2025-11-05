@@ -7,24 +7,31 @@ module FactoryHelpers
   #
   # This picks a recent year (current year and up to 3 years back) but weights
   # the selection so the current year is more likely than older years.
-  def sticker_with_year(prefix, n, n_width: 4)
-    current_year = Time.zone.now.year
-    min_year = current_year - 3
+  #
+  # Expose as a module function so callers can use FactoryHelpers.sticker_with_year(...)
+  # Module-level API used by callers who prefer `FactoryHelpers.sticker_with_year(...)`.
+  # Keep the implementation centralized here (module method) and make the
+  # instance method delegate to it so including classes still get an instance
+  # method (FactoryBot::SyntaxRunner includes this module).
+  def self.sticker_with_year(prefix, n, n_width: 4)
+    current_season = AppSetting.current_season_year
+    # Ensure we pick years >= 2023 and allow next-year stickers via
+    # AppSetting.max_season_year.
+    min_year = [current_season - 3, 2023].max
+    max_year = AppSetting.max_season_year
 
-    years = (min_year..current_year).to_a
+    years = (min_year..max_year).to_a
 
-    # weights for years: older -> smaller weight. Sum should be 100 but it's not
-    # required; these are relative weights.
-    # offset 0 => current_year, 1 => current_year-1, etc.
     relative_weights = {
-      0 => 50,  # current year is most likely
-      1 => 25,
-      2 => 15,
-      3 => 10
+      -1 => 5,   # next year
+       0 => 45,  # current year
+       1 => 25,
+       2 => 15,
+       3 => 10
     }
 
     weighted_pool = years.flat_map do |y|
-      offset = current_year - y
+      offset = current_season - y
       weight = relative_weights.fetch(offset, 1)
       [y] * weight
     end
@@ -32,10 +39,6 @@ module FactoryHelpers
     chosen = weighted_pool.sample
     yy = (chosen % 100).to_s.rjust(2, '0')
 
-    # If prefix is nil or empty, omit the prefix and the hyphen so callers
-    # (e.g. beach passes) can generate numeric-only sticker numbers like
-    # "250012" (yy + zero-padded sequence). Otherwise include the
-    # prefix and a hyphen as before (e.g. "B-250012").
     if prefix.nil? || prefix.to_s.strip.empty?
       "#{yy}#{n.to_s.rjust(n_width, '0')}"
     else
@@ -43,11 +46,10 @@ module FactoryHelpers
     end
   end
 
-  # Also expose as a module function so callers can use FactoryHelpers.sticker_with_year(...)
-  def self.sticker_with_year(prefix, n, n_width: 4)
-    new = Object.new
-    # call the instance method implementation
-    FactoryHelpers.instance_method(:sticker_with_year).bind(new).call(prefix, n, n_width: n_width)
+  # Also include an Instance delegator used when module is included into FactoryBot::SyntaxRunner
+  # so sequences can call `sticker_with_year(...)` directly.
+  def sticker_with_year(prefix, n, n_width: 4)
+    FactoryHelpers.sticker_with_year(prefix, n, n_width: n_width)
   end
 
   # Ensure the given resident has at least one property with mandatory fees paid.

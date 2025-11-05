@@ -111,6 +111,31 @@ class AmenityPass < ApplicationRecord
     m && m[0]
   end
 
+  # Attempt to guess a season year from a sticker string.
+  # Accepts values like "R-250123" or "250123" and returns 20YY when
+  # the first two digits are interpreted as the two-digit year (YY -> 20YY).
+  # This method performs only parsing (no application-level bounds checks);
+  # callers should validate the parsed year as needed. Returns an Integer
+  # (e.g. 2025) or nil when no two-digit year can be parsed.
+  def self.guess_season_year_from_sticker(sticker, range_back: 4)
+    return nil if sticker.blank?
+    m = sticker.to_s.match(/\d+/)
+    return nil unless m
+    digits = m[0]
+    return nil if digits.length < 2
+
+    yy = digits[0,2].to_i
+    2000 + yy
+  end
+
+  # Instance wrapper that uses the model's sticker_digits helper.
+  def guess_season_year_from_sticker(range_back: 4)
+    digits = sticker_digits
+    return nil if digits.blank? || digits.length < 2
+    # Delegate to the class-level parser to avoid duplicating logic.
+    self.class.guess_season_year_from_sticker(digits, range_back: range_back)
+  end
+
   # Return an array of distinct season years present in the table (excluding nil),
   # ordered descending. Used to build year filters in the UI.
   def self.available_years

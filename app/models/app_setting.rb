@@ -69,4 +69,11 @@ class AppSetting < ApplicationRecord
       Time.zone.now.year
     end
   end
+
+  # Returns the maximum acceptable season year. This is one year after the
+  # configured current season year and is useful when generators or UI may
+  # produce next-season stickers (e.g., preparing next year's passes).
+  def self.max_season_year
+    current_season_year + 1
+  end
 end

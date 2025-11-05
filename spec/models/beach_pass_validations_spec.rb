@@ -3,19 +3,25 @@ require 'rails_helper'
 RSpec.describe BeachPass, type: :model do
   describe 'AmenityPassValidations' do
     it 'requires season_year on create' do
-      bp = FactoryBot.build(:beach_pass, season_year: nil)
+      # Build a pass and explicitly set season_year to nil to test behavior
+      # when the value is absent.
+      bp = FactoryBot.build(:beach_pass)
+      bp.season_year = nil
       expect(bp).not_to be_valid
       expect(bp.errors[:season_year]).to include("can't be blank")
     end
 
     it 'requires season_year to be within allowed range' do
-      bp = FactoryBot.build(:beach_pass, season_year: 2022)
-      expect(bp).not_to be_valid
-      expect(bp.errors[:season_year]).to include('must be greater than or equal to 2023')
+      min = 2023
+      max = AppSetting.max_season_year
 
-      bp2 = FactoryBot.build(:beach_pass, season_year: 2100)
+      bp = FactoryBot.build(:beach_pass, season_year: min - 1)
+      expect(bp).not_to be_valid
+      expect(bp.errors[:season_year]).to include("must be greater than or equal to #{min}")
+
+      bp2 = FactoryBot.build(:beach_pass, season_year: max + 1)
       expect(bp2).not_to be_valid
-      expect(bp2.errors[:season_year]).to include('must be less than 2100')
+      expect(bp2.errors[:season_year]).to include("must be less than or equal to #{max}")
     end
 
     it 'accepts a valid season_year and unique sticker_number' do

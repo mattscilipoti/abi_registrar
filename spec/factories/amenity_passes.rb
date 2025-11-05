@@ -6,12 +6,26 @@ FactoryBot.define do
   trait :amenity_pass_base do
     description { LOREM_IPSUM }
     resident
+    # season_year: see after(:build)
 
     created_at { Faker::Time.between(from: 1.year.ago, to: 1.week.ago) }
     updated_at { Faker::Time.between(from: created_at, to: Time.zone.now) }
 
-    after(:build) do |pass|
+    after(:build) do |pass, _evaluator|
       FactoryHelpers.ensure_property_with_mandatory_fees(pass.resident)
+      # If season_year wasn't explicitly provided, try to parse it from the
+      # sticker_number. We expect sticker_number to contain a two-digit year
+      # as the first numeric run (e.g. "25" -> 2025). Only set when the
+      # guessed year is inside a sensible range. Tests that require an
+      # explicit nil can set `season_year = nil` after building the factory.
+      if pass.season_year.nil?
+        if pass.sticker_number.blank?
+          pass.season_year = AppSetting.current_season_year
+        else
+          guessed = AmenityPass.guess_season_year_from_sticker(pass.sticker_number)
+          pass.season_year = guessed if guessed
+        end
+      end
     end
   end
 
