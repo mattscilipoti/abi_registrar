@@ -5,9 +5,9 @@ class PagesController < ApplicationController
 
   def home
     if rodauth.logged_in?
-      redirect_to summary_path(q: '🚫')
+      redirect_to summary_path()
     else
-      redirect_to amenity_passes_path(q: '🚫')
+      redirect_to amenity_passes_path()
     end
   end
 
