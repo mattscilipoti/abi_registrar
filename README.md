@@ -48,11 +48,11 @@ If you have questions about contributing, running tests, or the developer workfl
   - Manage Shares
     - Record Purchased Shares
       - Only Deed Holders
-      - Each transation: Date purchased, count
+      - Each transaction: Date purchased, count
       - Total count owned
       - Assign shares to Property
     - Transfer Shares
-    - Can Edit/Delete via Item Tranaactions
+    - Can Edit/Delete via Item Transactions
   - Manage Amenity Passes
     - Vehicle Parking Passes
       - Assign Sticker and Vehicle to Resident

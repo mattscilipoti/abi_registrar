@@ -20,7 +20,7 @@ RSpec.describe AppSetting, type: :model do
 
     it 'invalidates cache when using AppSetting.set for current_season_year' do
       # Prime the cache by reading the current value
-      original = AppSetting.current_season_year
+      _original = AppSetting.current_season_year
 
       AppSetting.set('current_season_year', '2025')
 
@@ -41,7 +41,7 @@ RSpec.describe AppSetting, type: :model do
     it 'invalidates cache when renaming a key to current_season_year' do
       rec = AppSetting.create!(key: 'other_setting', value: 'x')
       # Prime the cache (read the current value)
-      prior = AppSetting.current_season_year
+      _prior = AppSetting.current_season_year
 
       rec.update!(key: 'current_season_year')
 

@@ -5,15 +5,16 @@ RSpec.shared_examples 'year filter request' do
       # sign in for request specs using full rodauth login so route constraints pass
       @account = sign_in_request_via_rodauth
     end
+
     it 'redirects missing year to current year' do
       get send(index_path)
       expect(response).to redirect_to(/year=#{Time.zone.now.year}/)
     end
 
     it "accepts 'all' and returns passes including nil season_year" do
-  with_year = FactoryBot.create(factory_name, season_year: 2023)
-  without = FactoryBot.build(factory_name, season_year: nil)
-  without.save(validate: false)
+      with_year = FactoryBot.create(factory_name, season_year: 2023)
+      without = FactoryBot.build(factory_name, season_year: nil)
+      without.save(validate: false)
       get send(index_path), params: { year: 'all' }
       expect(response).to have_http_status(:ok)
       with_digits = with_year.sticker_number.to_s.match(/\d+/)[0]
@@ -23,8 +24,8 @@ RSpec.shared_examples 'year filter request' do
     end
 
     it 'applies numeric year filter' do
-  p2024 = FactoryBot.create(factory_name, season_year: 2024)
-  p2025 = FactoryBot.create(factory_name, season_year: 2025)
+      p2024 = FactoryBot.create(factory_name, season_year: 2024)
+      p2025 = FactoryBot.create(factory_name, season_year: 2025)
       get send(index_path), params: { year: '2024' }
       expect(response).to have_http_status(:ok)
       d2024 = p2024.sticker_number.to_s.match(/\d+/)[0]
