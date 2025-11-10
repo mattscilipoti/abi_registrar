@@ -18,11 +18,11 @@ namespace :amenity_passes do
     batch_size = (ENV['BATCH'] || 1000).to_i
     verbose = ENV['VERBOSE'].present?
 
-    current_year = Time.zone.now.year
-    min_year = current_year - 4
+    max_year = AppSetting.max_season_year
+    min_year = AppSetting.min_season_year
 
     puts "Starting amenity_passes:backfill_season_year" + (dry_run ? " (DRY RUN)" : "")
-    puts "Batch size: #{batch_size}, accepting years between #{min_year} and #{current_year}" if verbose
+    puts "Batch size: #{batch_size}, accepting years between #{min_year} and #{max_year}" if verbose
 
     scope = AmenityPass.where(season_year: nil).where.not(sticker_number: [nil, ''])
     total_candidates = scope.count
@@ -39,28 +39,20 @@ namespace :amenity_passes do
       batch.each do |pass|
         processed += 1
         sn = pass.sticker_number.to_s
-        digits = pass.sticker_digits
 
-        unless digits && digits.length >= 2
-          msg = "no_numeric_run"
+        # Delegate parsing to the model helper which returns 20YY or nil.
+        year_int = AmenityPass.guess_season_year_from_sticker(sn)
+
+        unless year_int
+          msg = "no_two_digit_year"
           puts "Skipping id=#{pass.id} sticker='#{sn}' -> #{msg}" if verbose
-          issues << { id: pass.id, sticker_number: sn, reason: msg, details: digits.inspect }
+          issues << { id: pass.id, sticker_number: sn, reason: msg, details: sn }
           next
         end
 
-        first_two = digits[0,2]
-        unless first_two =~ /\A\d{2}\z/
-          msg = "first_two_not_digits"
-          puts "Skipping id=#{pass.id} sticker='#{sn}' -> #{msg} ('#{first_two}')" if verbose
-          issues << { id: pass.id, sticker_number: sn, reason: msg, details: first_two }
-          next
-        end
-
-        yy = first_two.to_i
-        year_int = 2000 + yy
-        unless year_int.between?(min_year, current_year)
+        unless year_int.between?(min_year, max_year)
           msg = "out_of_range"
-          puts "Skipping id=#{pass.id} sticker='#{sn}' -> candidate year=#{year_int} out of range (#{min_year}-#{current_year})" if verbose
+          puts "Skipping id=#{pass.id} sticker='#{sn}' -> candidate year=#{year_int} out of range (#{min_year}-#{max_year})" if verbose
           issues << { id: pass.id, sticker_number: sn, reason: msg, details: year_int }
           next
         end
