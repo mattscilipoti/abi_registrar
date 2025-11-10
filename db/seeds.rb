@@ -92,6 +92,11 @@ FactoryBot.create(:share_transaction, :transfer, quantity: 10, from_residency: p
 # Boat Ramp Acccess Passes
 Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:beach_pass, resident: r) }
 
+# Mark several properties as having their amenities processed so the
+# admin summary shows realistic data during development and testing.
+property_975.update!(amenities_processed: 2.days.ago)
+property_977.update!(amenities_processed: 1.day.ago)
+
 # Boat Ramp Acccess Passes
 Resident.mandatory_fees_paid.each {|r| FactoryBot.create(:boat_ramp_access_pass, resident: r) }
 

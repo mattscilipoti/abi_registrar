@@ -33,3 +33,6 @@
 # ensure packaged gems are included
 !/vendor/cache/
 .env
+
+# IDE files
+.idea/

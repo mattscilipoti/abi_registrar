@@ -1,10 +1,14 @@
 class DinghyDockStoragePassesController < ApplicationController
+  include RequireYearParam
   before_action :set_dinghy_dock_storage_pass, only: %i[ show edit update destroy ]
 
   # GET /dinghy_dock_storage_passes or /dinghy_dock_storage_passes.json
   def index
     dinghy_dock_storage_passes = filter_models(DinghyDockStoragePass, params[:q])
-    @dinghy_dock_storage_passes = dinghy_dock_storage_passes.decorate
+    @year = params[:year]
+    @dinghy_dock_storage_passes = dinghy_dock_storage_passes.by_year(@year)
+                                                            .includes(resident: :residencies) # preload relationships used by decorators/views
+                                                            .decorate
   end
 
   # GET /dinghy_dock_storage_passes/1 or /dinghy_dock_storage_passes/1.json
@@ -72,6 +76,7 @@ class DinghyDockStoragePassesController < ApplicationController
         :description,
         :location,
         :sticker_number,
+        :season_year,
       )
     end
 end

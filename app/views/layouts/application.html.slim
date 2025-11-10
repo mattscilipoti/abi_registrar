@@ -31,12 +31,12 @@ html lang=I18n.locale
             = menu_list_item "Lots", lots_path(q: '🚫'), class: 'no-link-icon'
             = menu_list_item "Properties", properties_path(q: '🚫'), class: 'no-link-icon'
             = menu_list_item "Residents", residents_path(q: '🚫'), class: 'no-link-icon'
-            = menu_list_item BeachPassDecorator.icon, beach_passes_path(q: '🚫'), class: 'no-link-icon', data: { tooltip: "Beach Passes"}
-            = menu_list_item BoatRampAccessPassDecorator.icon, boat_ramp_access_passes_path(q: '🚫'), class: 'no-link-icon', data: { tooltip: "Boat Ramp Access Passes"}
-            = menu_list_item DinghyDockStoragePassDecorator.icon, dinghy_dock_storage_passes_path(q: '🚫'), class: 'no-link-icon', data: { tooltip: "Dinghy Dock Storage Passes" }
-            = menu_list_item UtilityCartPassDecorator.icon, utility_cart_passes_path(q: '🚫'), class: 'no-link-icon', data: { tooltip: "Utility Cart Passes" }
-            = menu_list_item VehicleParkingPassDecorator.icon, vehicle_parking_passes_path(q: '🚫'), class: 'no-link-icon', data: { tooltip: "Vehicle Parking Passes" }
-            = menu_list_item WatercraftStoragePassDecorator.icon, watercraft_storage_passes_path(q: '🚫'), class: 'no-link-icon', data: { tooltip: "Watercraft Storage Passes" }
+            = menu_list_item BeachPassDecorator.icon, beach_passes_path(), class: 'no-link-icon', data: { tooltip: "Beach Passes"}
+            = menu_list_item BoatRampAccessPassDecorator.icon, boat_ramp_access_passes_path(), class: 'no-link-icon', data: { tooltip: "Boat Ramp Access Passes"}
+            = menu_list_item DinghyDockStoragePassDecorator.icon, dinghy_dock_storage_passes_path(), class: 'no-link-icon', data: { tooltip: "Dinghy Dock Storage Passes" }
+            = menu_list_item UtilityCartPassDecorator.icon, utility_cart_passes_path(), class: 'no-link-icon', data: { tooltip: "Utility Cart Passes" }
+            = menu_list_item VehicleParkingPassDecorator.icon, vehicle_parking_passes_path(), class: 'no-link-icon', data: { tooltip: "Vehicle Parking Passes" }
+            = menu_list_item WatercraftStoragePassDecorator.icon, watercraft_storage_passes_path(), class: 'no-link-icon', data: { tooltip: "Watercraft Storage Passes" }
             /* As of 2025-05-08, Temporarily hiding Item Transactions until we have cleaned data
             /= menu_list_item "Shares", share_transactions_path(q: '🚫'), class: 'no-link-icon'
             /= menu_list_item "Item Transactions", item_transactions_path(q: '🚫'), class: 'no-link-icon'
@@ -74,7 +74,7 @@ html lang=I18n.locale
           li= external_link_to("Issues (on GitHub)", 'https://github.com/mattscilipoti/abi_registrar/issues')
           li= list_delimiter
         li
-          small &copy; Copyright 2023
+          small &copy; Copyright 2023-2025
         li= list_delimiter
         li
           small Crafted with 💜 in MD

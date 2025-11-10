@@ -14,6 +14,8 @@ Not only do we need to gather and manage the approprite information, we need to 
 - Possible Report Options:
   - export to Google Sheet & printing from there.
 
+If you have questions about contributing, running tests, or the developer workflow, see `CONTRIBUTING.md` for guidance.
+
 ## Features
 
 ### Done
@@ -46,11 +48,11 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Shares
     - Record Purchased Shares
       - Only Deed Holders
-      - Each transation: Date purchased, count
+      - Each transaction: Date purchased, count
       - Total count owned
       - Assign shares to Property
     - Transfer Shares
-    - Can Edit/Delete via Item Tranaactions
+    - Can Edit/Delete via Item Transactions
   - Manage Amenity Passes
     - Vehicle Parking Passes
       - Assign Sticker and Vehicle to Resident

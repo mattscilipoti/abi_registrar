@@ -2,7 +2,7 @@ class VehicleParkingPass < AmenityPass
   scope :problematic, -> { without_state_code }
   # scope :without_state_code, -> { where(state_code: nil) }
 
-  validates_presence_of :tag_number, :sticker_number
+  validates_presence_of :tag_number
 
   scope :utility_cart_passes, -> {
     where('sticker_number ILIKE :sticker_prefix', sticker_prefix: "U%")

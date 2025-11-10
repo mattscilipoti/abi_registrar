@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
+ActiveRecord::Schema[7.0].define(version: 2025_11_02_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
   create_table "account_email_auth_keys", force: :cascade do |t|
     t.string   "key",             :null=>false
     t.datetime "deadline",        :null=>false
-    t.datetime "email_last_sent", :null=>false
+    t.datetime "email_last_sent", :default=>"CURRENT_TIMESTAMP", :null=>false
   end
 
   create_table "account_login_change_keys", force: :cascade do |t|
@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
   create_table "account_password_reset_keys", force: :cascade do |t|
     t.string   "key",             :null=>false
     t.datetime "deadline",        :null=>false
-    t.datetime "email_last_sent", :null=>false
+    t.datetime "email_last_sent", :default=>"CURRENT_TIMESTAMP", :null=>false
   end
 
   create_table "account_remember_keys", force: :cascade do |t|
@@ -43,8 +43,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
 
   create_table "account_verification_keys", force: :cascade do |t|
     t.string   "key",             :null=>false
-    t.datetime "requested_at",    :null=>false
-    t.datetime "email_last_sent", :null=>false
+    t.datetime "requested_at",    :default=>"CURRENT_TIMESTAMP", :null=>false
+    t.datetime "email_last_sent", :default=>"CURRENT_TIMESTAMP", :null=>false
   end
 
   create_table "accounts", force: :cascade do |t|
@@ -66,9 +66,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
     t.string   "description"
     t.integer  "beach_number"
     t.string   "location"
+    t.integer  "season_year"
+    t.datetime "voided_at"
 
     t.index ["resident_id"], :name=>"index_amenity_passes_on_resident_id"
+    t.index ["season_year", "resident_id"], :name=>"index_amenity_passes_on_season_year_and_resident_id"
+    t.index ["season_year"], :name=>"index_amenity_passes_on_season_year"
     t.index ["sticker_number"], :name=>"index_amenity_passes_on_sticker_number", :unique=>true
+    t.index ["voided_at"], :name=>"index_amenity_passes_on_voided_at"
+  end
+
+  create_table "app_settings", force: :cascade do |t|
+    t.string   "key",        :null=>false
+    t.string   "value"
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
+
+    t.index ["key"], :name=>"index_app_settings_on_key", :unique=>true
   end
 
   create_table "comments", force: :cascade do |t|
@@ -130,8 +144,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_222201) do
     t.integer  "section"
     t.boolean  "for_sale"
     t.date     "amenities_processed"
-    t.date     "lot_fees_paid_on"
     t.date     "user_fee_paid_on"
+    t.date     "lot_fees_paid_on"
 
     t.index ["street_name"], :name=>"index_properties_on_street_name"
     t.index ["street_number"], :name=>"index_properties_on_street_number"

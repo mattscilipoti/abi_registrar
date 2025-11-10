@@ -1,10 +1,14 @@
 class WatercraftStoragePassesController < ApplicationController
+  include RequireYearParam
   before_action :set_watercraft_storage_pass, only: %i[ show edit update destroy ]
 
   # GET /watercraft_storage_passes or /watercraft_storage_passes.json
   def index
     watercraft_storage_passes = filter_models(WatercraftStoragePass, params[:q])
-    @watercraft_storage_passes = watercraft_storage_passes.decorate
+    @year = params[:year]
+    @watercraft_storage_passes = watercraft_storage_passes.by_year(@year)
+                                                          .includes(resident: :residencies) # preload relationships used by decorators/views
+                                                          .decorate
   end
 
   # GET /watercraft_storage_passes/1 or /watercraft_storage_passes/1.json
@@ -72,6 +76,7 @@ class WatercraftStoragePassesController < ApplicationController
         :description,
         :location,
         :sticker_number,
+        :season_year,
       )
     end
 end

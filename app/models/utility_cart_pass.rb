@@ -1,8 +1,6 @@
 class UtilityCartPass < AmenityPass
   scope :problematic, -> { without_description }
 
-  validates_presence_of :sticker_number
-
   def self.scopes
     %i[
       without_description

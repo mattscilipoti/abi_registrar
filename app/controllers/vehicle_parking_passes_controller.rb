@@ -1,10 +1,14 @@
 class VehicleParkingPassesController < ApplicationController
+  include RequireYearParam
   before_action :set_vehicle_parking_pass, only: %i[ show edit update destroy ]
 
   # GET /vehicle_parking_passes or /vehicle_parking_passes.json
   def index
     vehicle_parking_passes = filter_models(VehicleParkingPass, params[:q])
-    @vehicle_parking_passes = vehicle_parking_passes.decorate
+    @year = params[:year]
+    @vehicle_parking_passes = vehicle_parking_passes.by_year(@year)
+                                                    .includes(resident: :residencies) # preload relationships used by decorators/views
+                                                    .decorate
   end
 
   # GET /vehicle_parking_passes/1 or /vehicle_parking_passes/1.json
@@ -71,7 +75,8 @@ class VehicleParkingPassesController < ApplicationController
         :description,
         :state_code,
         :sticker_number,
-        :tag_number
+        :tag_number,
+        :season_year
       )
     end
 end

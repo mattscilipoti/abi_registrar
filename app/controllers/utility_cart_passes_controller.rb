@@ -1,10 +1,14 @@
 class UtilityCartPassesController < ApplicationController
+  include RequireYearParam
   before_action :set_utility_cart_pass, only: %i[ show edit update destroy ]
 
   # GET /utility_cart_passes or /utility_cart_passes.json
   def index
     utility_cart_passes = filter_models(UtilityCartPass, params[:q])
-    @utility_cart_passes = utility_cart_passes.decorate
+    @year = params[:year]
+    @utility_cart_passes = utility_cart_passes.by_year(@year)
+                                              .includes(resident: :residencies) # preload relationships used by decorators/views
+                                              .decorate
   end
 
   # GET /utility_cart_passes/1 or /utility_cart_passes/1.json
@@ -71,6 +75,7 @@ class UtilityCartPassesController < ApplicationController
         :description,
         :state_code,
         :sticker_number,
+        :season_year,
       )
     end
 end
