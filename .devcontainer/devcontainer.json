@@ -15,14 +15,13 @@
 	"extensions": [
 		"BriteSnow.vscode-toggle-quotes",
 		"deerawan.vscode-dash",
-		"mechatroner.rainbow-csv",
-		"noku.rails-run-spec-vscode",
-		"rebornix.Ruby",
-		"sianglim.slim",
-		"wingrunr21.vscode-ruby",
 		"EditorConfig.EditorConfig",
 		"GitHub.vscode-pull-request-github",
-		"ms-azuretools.vscode-docker"
+		"mechatroner.rainbow-csv",
+		"ms-azuretools.vscode-docker",
+		"noku.rails-run-spec-vscode",
+		"Shopify.ruby-lsp"
+		"sianglim.slim",
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
