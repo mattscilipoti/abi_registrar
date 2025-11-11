@@ -5,15 +5,6 @@ FROM mcr.microsoft.com/vscode/devcontainers/ruby:0-${VARIANT}
 # Install Rails
 # RUN gem install rails webdrivers
 
-# Add common platforms to the lockfile so platform-specific gems are
-# included for local development (Linux/arm) and MacOS developers where
-# applicable. Guard so this only runs if a Gemfile is present in the
-# mounted workspace at build time.
-RUN if [ -f /workspace/Gemfile ]; then \
-        su vscode -c "cd /workspace && bundle lock --add-platform x86_64-linux aarch64-linux x86_64-darwin"; \
-    else \
-        echo "No /workspace/Gemfile found; skipping bundle lock --add-platform"; \
-    fi
 
 # Default value to allow debug server to serve content over GitHub Codespace's port forwarding service
 # The value is a comma-separated list of allowed domains

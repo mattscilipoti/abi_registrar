@@ -13,6 +13,10 @@ In place of release version numbers, we organize via deploys to Production (by D
 - Update controllers, views, and tests to support selecting and applying a year filter.
 - Improves usability when reviewing historical records and reduces query scope for year-scoped views.
 - Add `actual_db_schema` dev tooling (config: `config/initializers/actual_db_schema.rb`; migrated files: `tmp/migrated`).
+- Deps
+  - Upgrade Ruby 3.1 to 3.2
+  - Remove platform: darwin/OSX
+- VS Code: clean up extensions
 
 ## 2025-05-08: Removed Shares/Transactions from summary page and top navigation panel
 

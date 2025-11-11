@@ -204,7 +204,7 @@ If you have questions about contributing, running tests, or the developer workfl
 
 ## Deploy
 
-- Login to heroku using `$ heroku login`. This will opena browser for login.
+- Login to heroku using `$ heroku login`. This will open a browser for login.
 - Staging: https://nameless-eyrie-92885.herokuapp.com/
   - We used to have staging, but heroku changed how that works and we haven't set that back up again
     - `git push staging main`
