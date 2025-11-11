@@ -33,6 +33,7 @@ class BoatRampAccessPassesController < ApplicationController
         format.html { redirect_to boat_ramp_access_pass_url(@boat_ramp_access_pass), notice: "Boat Ramp Access Pass was successfully created." }
         format.json { render :show, status: :created, location: @boat_ramp_access_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @boat_ramp_access_pass.errors, status: :unprocessable_entity }
       end
@@ -46,6 +47,7 @@ class BoatRampAccessPassesController < ApplicationController
         format.html { redirect_to boat_ramp_access_pass_url(@boat_ramp_access_pass), notice: "Boat Ramp Access Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @boat_ramp_access_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @boat_ramp_access_pass.errors, status: :unprocessable_entity }
       end

@@ -33,6 +33,7 @@ class BeachPassesController < ApplicationController
         format.html { redirect_to beach_pass_url(@beach_pass), notice: "Beach Pass was successfully created." }
         format.json { render :show, status: :created, location: @beach_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @beach_pass.errors, status: :unprocessable_entity }
       end
@@ -46,6 +47,7 @@ class BeachPassesController < ApplicationController
         format.html { redirect_to beach_pass_url(@beach_pass), notice: "Beach Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @beach_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @beach_pass.errors, status: :unprocessable_entity }
       end

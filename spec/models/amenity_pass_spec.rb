@@ -1,6 +1,31 @@
 require 'rails_helper'
 
+
 RSpec.describe AmenityPass, type: :model do
+  describe '(validations)' do
+    it 'requires a resident' do
+      # Provide a sticker_number so sticker validation does not obscure the resident error
+      pass = AmenityPass.new(sticker_number: 'R-999')
+      pass.valid?
+      expect(pass.errors[:resident]).not_to be_empty
+    end
+  end
+
+  describe '(defaults)' do
+    describe 'season_year default' do
+      it 'defaults to AppSetting.current_season_year for new records' do
+        current = AppSetting.current_season_year
+        pass = AmenityPass.new
+        expect(pass.season_year).to eq(current)
+      end
+
+      it 'does not override an explicitly provided season_year' do
+        not_current_year = AppSetting.current_season_year - 1
+        pass = AmenityPass.new(season_year: not_current_year)
+        expect(pass.season_year).to eq(not_current_year)
+      end
+    end
+  end
   describe '#sticker_digits' do
     it 'returns digits for a valid sticker' do
       p = AmenityPass.new(sticker_number: 'R-25134')

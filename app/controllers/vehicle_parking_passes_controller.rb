@@ -33,6 +33,7 @@ class VehicleParkingPassesController < ApplicationController
         format.html { redirect_to vehicle_parking_pass_url(@vehicle_parking_pass), notice: "Vehicle Parking Pass was successfully created." }
         format.json { render :show, status: :created, location: @vehicle_parking_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @vehicle_parking_pass.errors, status: :unprocessable_entity }
       end
@@ -46,6 +47,7 @@ class VehicleParkingPassesController < ApplicationController
         format.html { redirect_to vehicle_parking_pass_url(@vehicle_parking_pass), notice: "Vehicle Parking Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @vehicle_parking_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @vehicle_parking_pass.errors, status: :unprocessable_entity }
       end

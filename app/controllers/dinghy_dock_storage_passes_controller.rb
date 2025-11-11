@@ -33,6 +33,7 @@ class DinghyDockStoragePassesController < ApplicationController
         format.html { redirect_to dinghy_dock_storage_pass_url(@dinghy_dock_storage_pass), notice: "Dinghy Dock Storage Pass was successfully created." }
         format.json { render :show, status: :created, location: @dinghy_dock_storage_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @dinghy_dock_storage_pass.errors, status: :unprocessable_entity }
       end
@@ -46,6 +47,7 @@ class DinghyDockStoragePassesController < ApplicationController
         format.html { redirect_to dinghy_dock_storage_pass_url(@dinghy_dock_storage_pass), notice: "Dinghy Dock Storage Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @dinghy_dock_storage_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @dinghy_dock_storage_pass.errors, status: :unprocessable_entity }
       end

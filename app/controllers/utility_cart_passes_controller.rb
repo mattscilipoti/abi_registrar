@@ -33,6 +33,7 @@ class UtilityCartPassesController < ApplicationController
         format.html { redirect_to utility_cart_pass_url(@utility_cart_pass), notice: "Utility Cart Pass was successfully created." }
         format.json { render :show, status: :created, location: @utility_cart_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @utility_cart_pass.errors, status: :unprocessable_entity }
       end
@@ -46,6 +47,7 @@ class UtilityCartPassesController < ApplicationController
         format.html { redirect_to utility_cart_pass_url(@utility_cart_pass), notice: "Utility Cart Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @utility_cart_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @utility_cart_pass.errors, status: :unprocessable_entity }
       end
