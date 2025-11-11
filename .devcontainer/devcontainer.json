@@ -12,17 +12,21 @@
 	"settings": { },
 
 	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"BriteSnow.vscode-toggle-quotes",
-		"deerawan.vscode-dash",
-		"EditorConfig.EditorConfig",
-		"GitHub.vscode-pull-request-github",
-		"mechatroner.rainbow-csv",
-		"ms-azuretools.vscode-docker",
-		"noku.rails-run-spec-vscode",
-		"Shopify.ruby-lsp"
-		"sianglim.slim",
-	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"BriteSnow.vscode-toggle-quotes",
+				"deerawan.vscode-dash",
+				"EditorConfig.EditorConfig",
+				"GitHub.vscode-pull-request-github",
+				"mechatroner.rainbow-csv",
+				"ms-azuretools.vscode-docker",
+				"noku.rails-run-spec-vscode",
+				"Shopify.ruby-lsp",
+				"sianglim.slim"
+			]
+		}
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// This can be used to network with other containers or the host.
