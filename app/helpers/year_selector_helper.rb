@@ -1,17 +1,16 @@
 module YearSelectorHelper
   # Returns an array of options for years with 'All' first.
-  # If a `model:` is provided and responds to `available_years`, use that list.
-  # Otherwise fall back to a default recent range (current year and previous 4 years).
-  def year_options(model: nil, range: (AppSetting.current_season_year - 4)..AppSetting.current_season_year)
-    if model && model.respond_to?(:available_years)
-      # Instead of updating season_years for each model, always display all years
-      # years = model.available_years
-      years = AmenityPass.available_years
-    else
-      years = range.to_a.reverse
-    end
+  # Default range is AmenityPass.available_years
+  def year_options(range: nil)
+    # Normalize to an Array so callers may pass a Range or Array.
+    range ||= AmenityPass.available_years
+    years = Array(range)
 
-    options = [['All', 'all']] + years.map { |y| [y.to_s, y.to_s] }
+    # Remove nils, uniquify, and sort newest-first for display.
+    years = years.compact.uniq.sort.reverse
+
+    # Build options: 'All', specific years, then 'None' (records with NULL season_year).
+    options = [['All', 'all']] + years.map { |y| [y.to_s, y.to_s] } + [['None', 'none']]
     options
   end
 end
