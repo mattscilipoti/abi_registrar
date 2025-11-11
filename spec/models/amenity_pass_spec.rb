@@ -28,6 +28,16 @@ RSpec.describe AmenityPass, type: :model do
     end
   end
 
+  describe '.guess_season_year_from_sticker' do
+    it 'parses two-digit year 26 as 2026 for numeric and prefixed stickers' do
+      expect(AmenityPass.guess_season_year_from_sticker('260001')).to eq(2026)
+      expect(AmenityPass.guess_season_year_from_sticker('R-260001')).to eq(2026)
+
+      p = AmenityPass.new(sticker_number: 'R-260001')
+      expect(p.guess_season_year_from_sticker).to eq(2026)
+    end
+  end
+
   describe '.by_year' do
     let(:current_year) { Time.zone.now.year }
 

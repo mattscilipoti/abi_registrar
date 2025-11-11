@@ -14,11 +14,26 @@ module FactoryHelpers
   # instance method delegate to it so including classes still get an instance
   # method (FactoryBot::SyntaxRunner includes this module).
   def self.sticker_with_year(prefix, n, n_width: 4)
+    chosen = FactoryHelpers.weighted_pool.sample
+    yy = (chosen % 100).to_s.rjust(2, '0')
+    if prefix.nil? || prefix.to_s.strip.empty?
+      "#{yy}#{n.to_s.rjust(n_width, '0')}"
+    else
+      "#{prefix}-#{yy}#{n.to_s.rjust(n_width, '0')}"
+    end
+  end
+
+  # Return a memoized weighted pool of recent years used by factories to
+  # generate sticker years. This depends on AppSetting values and is safe
+  # to cache for the duration of the spec process.
+  def self.weighted_pool
+    return @weighted_pool if defined?(@weighted_pool) && @weighted_pool
+
     current_season = AppSetting.current_season_year
-  # Ensure we pick years >= configured minimum and allow next-year stickers
-  # via AppSetting.max_season_year.
-  min_year = [current_season - 3, AppSetting.min_season_year].max
-    max_year = AppSetting.max_season_year
+    # Ensure we pick years >= configured minimum and allow next-year stickers
+    # via AppSetting.max_season_year.
+    min_year = AppSetting.min_season_year
+    max_year = AppSetting.max_season_year + 1
 
     years = (min_year..max_year).to_a
 
@@ -30,19 +45,10 @@ module FactoryHelpers
        3 => 10
     }
 
-    weighted_pool = years.flat_map do |y|
+    @weighted_pool = years.flat_map do |y|
       offset = current_season - y
       weight = relative_weights.fetch(offset, 1)
       [y] * weight
-    end
-
-    chosen = weighted_pool.sample
-    yy = (chosen % 100).to_s.rjust(2, '0')
-
-    if prefix.nil? || prefix.to_s.strip.empty?
-      "#{yy}#{n.to_s.rjust(n_width, '0')}"
-    else
-      "#{prefix}-#{yy}#{n.to_s.rjust(n_width, '0')}"
     end
   end
 

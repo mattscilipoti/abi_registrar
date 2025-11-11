@@ -4,6 +4,8 @@ div class=(compact ? 'year-selector-small' : 'year-selector')
   nav class=(compact ? 'year-links-small' : 'year-links') aria-label=(compact ? 'Season Year' : 'Season Year')
     - unless compact
       h2 Season Year
+      / Busy spinner (reuses the global 'search busy' indicator)
+      i.search.busy aria-hidden="true"
     ul class=(compact ? 'year-list-small' : 'year-list')
       -# Always show all available years for AmenityPass
       - # Use the provided `model` and precompute counts to avoid N+1 queries.
