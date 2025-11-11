@@ -1,4 +1,17 @@
 h1
   = title
   span.subheader = " (#{model_count} of #{model_total})"
-  span.subheader = " Filtered by '#{params[:q].humanize}'" if params[:q].present?
+  ruby:
+    filters = []
+    filters << params[:q].humanize.inspect if params[:q].present?
+    if params[:year].present?
+      year_val = params[:year].to_s
+      year_label = case year_val
+                   when 'none' then 'No season year'
+                   when 'all' then 'All years'
+                   else year_val
+                   end
+      filters << "Season=#{year_label.inspect}"
+    end
+  - if filters.any?
+    span.subheader = " Filtered by #{filters.join(' and ')}"
