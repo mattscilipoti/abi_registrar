@@ -11,6 +11,8 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 - Add a year filter to relevant listing and summary pages so records can be scoped by year.
 - Update controllers, views, and tests to support selecting and applying a year filter.
+  - Season Year defaults to current season.
+  - Improved mesaging for issues.
 - Improves usability when reviewing historical records and reduces query scope for year-scoped views.
 - Add `actual_db_schema` dev tooling (config: `config/initializers/actual_db_schema.rb`; migrated files: `tmp/migrated`).
 - Deps
