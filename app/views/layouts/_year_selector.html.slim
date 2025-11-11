@@ -16,7 +16,7 @@ div class=(compact ? 'year-selector-small' : 'year-selector')
       - else
         - total_count = 0
 
-      - year_options(model: model).each do |label, value|
+      - year_options.each do |label, value|
         - url = url_for(params.permit!.to_h.merge(year: value))
         - active = params[:year].to_s == value.to_s
         - item_class = compact ? 'year-item-small' : 'year-item'
@@ -29,6 +29,9 @@ div class=(compact ? 'year-selector-small' : 'year-selector')
           -# Compute the count for this option and include it inside the link text
           - if value.to_s == 'all'
             - count = total_count
+          - elsif value.to_s == 'none'
+            - # Count records with NULL season_year: group returns a nil key for NULL
+            - count = counts_by_year[nil] || 0
           - elsif value.to_s.match?(/\A\d+\z/)
             - y = value.to_i
             - count = counts_by_year[y] || 0

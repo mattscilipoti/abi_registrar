@@ -17,6 +17,8 @@ module PassYearable
 
       if y == 'all'
         all
+      elsif y == 'none'
+        where(season_year: nil)
       elsif y.blank?
         where(season_year: AppSetting.current_season_year)
       elsif y.to_s.match?(/\A\d+\z/)
