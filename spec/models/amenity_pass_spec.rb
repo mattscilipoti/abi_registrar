@@ -1,6 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe AmenityPass, type: :model do
+  describe 'season_year default' do
+    it 'defaults to AppSetting.current_season_year for new records' do
+      current = AppSetting.current_season_year
+      pass = AmenityPass.new
+      expect(pass.season_year).to eq(current)
+    end
+
+    it 'does not override an explicitly provided season_year' do
+      not_current_year = AppSetting.current_season_year - 1
+      pass = AmenityPass.new(season_year: not_current_year)
+      expect(pass.season_year).to eq(not_current_year)
+    end
+  end
+end
+require 'rails_helper'
+
+RSpec.describe AmenityPass, type: :model do
   describe '#sticker_digits' do
     it 'returns digits for a valid sticker' do
       p = AmenityPass.new(sticker_number: 'R-25134')

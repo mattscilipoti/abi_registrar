@@ -29,5 +29,15 @@ module PassYearable
         where(season_year: AppSetting.current_season_year)
       end
     end
+
+    # Set a sensible default for new records: use the configured current season year
+    # unless a season_year was explicitly provided. This ensures forms and new
+    # records default to the expected season without requiring controller changes.
+    after_initialize do
+      # Only set for new records and when the attribute exists and is nil/blank.
+      if new_record? && respond_to?(:season_year) && season_year.blank?
+        self.season_year = AppSetting.current_season_year
+      end
+    end
   end
 end
