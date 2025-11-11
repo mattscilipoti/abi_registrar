@@ -15,6 +15,17 @@ RSpec.describe AmenityPass, type: :model do
     end
   end
 end
+
+RSpec.describe AmenityPass, type: :model do
+  describe 'validations' do
+    it 'requires a resident' do
+      # Provide a sticker_number so sticker validation does not obscure the resident error
+      pass = AmenityPass.new(sticker_number: 'R-999')
+      pass.valid?
+      expect(pass.errors[:resident]).not_to be_empty
+    end
+  end
+end
 require 'rails_helper'
 
 RSpec.describe AmenityPass, type: :model do

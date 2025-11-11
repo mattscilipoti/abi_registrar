@@ -10,6 +10,7 @@ class AmenityPass < ApplicationRecord
   # Validations (alphabetical)
   validate  :confirm_resident_paid_mandatory_fees
   validate  :season_year_in_configured_range
+  validates :resident, presence: true
   validates :season_year, presence: true, if: :require_season_year_on_save?
   validates :sticker_number, presence: true, uniqueness: true
 
@@ -95,7 +96,7 @@ class AmenityPass < ApplicationRecord
 
   # Instance methods (alphabetical)
   def confirm_resident_paid_lot_fees
-    unless resident.lot_fees_paid?
+    unless resident && resident.lot_fees_paid?
       errors.add(:resident, "must have paid lot fees")
     end
   end
@@ -106,7 +107,7 @@ class AmenityPass < ApplicationRecord
   end
 
   def confirm_resident_paid_user_fee
-    unless resident.user_fee_paid?
+    unless resident && resident.user_fee_paid?
       errors.add(:resident, "must have paid user fee")
     end
   end

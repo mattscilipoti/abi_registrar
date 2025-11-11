@@ -33,6 +33,7 @@ class WatercraftStoragePassesController < ApplicationController
         format.html { redirect_to watercraft_storage_pass_url(@watercraft_storage_pass), notice: "Watercraft Storage Pass was successfully created." }
         format.json { render :show, status: :created, location: @watercraft_storage_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @watercraft_storage_pass.errors, status: :unprocessable_entity }
       end
@@ -46,6 +47,7 @@ class WatercraftStoragePassesController < ApplicationController
         format.html { redirect_to watercraft_storage_pass_url(@watercraft_storage_pass), notice: "Watercraft Storage Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @watercraft_storage_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @watercraft_storage_pass.errors, status: :unprocessable_entity }
       end
