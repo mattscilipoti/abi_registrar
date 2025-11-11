@@ -1,7 +1,6 @@
 h1
   = title
   span.subheader = " (#{model_count} of #{model_total})"
-  | |
   ruby:
     filters = []
     filters << params[:q].humanize.inspect if params[:q].present?
@@ -15,7 +14,9 @@ h1
       filters << "Season=#{year_label.inspect}"
     end
   - if filters.any?
+    | |
     span.subheader = " Filtered by #{filters.join(' and ')}"
-  - unless controller.is_a?(AmenityPassesController)
+  -# Show the "New" link only when the controller exposes a `new` action
+  - if controller.class.respond_to?(:action_methods) && controller.class.action_methods.include?('new')
     | |
     span.subheader = link_to "New #{title.singularize}", url_for(controller: controller_name, action: 'new')
