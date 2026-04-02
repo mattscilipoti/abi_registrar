@@ -6,10 +6,27 @@ RSpec.describe 'Year selector accessibility', type: :system do
   end
 
   it 'includes ARIA attributes and exposes focusable links' do
+    # Create a verified account with a password so we can log in via the UI
+    account = Account.create!(email: "spec+#{SecureRandom.hex(6)}@example.org", status: :verified)
+    account.password_hash = BCrypt::Password.create('password').to_s
+    account.save!
+
+    # Visit the login page and sign in
+    visit '/login'
+    within('form#login-form') do
+      fill_in 'login', with: account.email
+      find('input[type=submit], button[type=submit]').click
+    end
+    # Fill in password on the next form
+    within('form#login-form') do
+      fill_in 'password', with: 'password'
+      find('input[type=submit], button[type=submit]').click
+    end
+
     resident = FactoryBot.create(:resident)
-    FactoryBot.create(:beach_pass, resident: resident, season_year: 2025, sticker_number: 'A-1')
-    FactoryBot.create(:beach_pass, resident: resident, season_year: 2024, sticker_number: 'B-2')
-    # No login required for this endpoint; skip creating an Account and signing in.
+    FactoryBot.create(:beach_pass, resident: resident, season_year: 2025)
+    FactoryBot.create(:beach_pass, resident: resident, season_year: 2024)
+
     visit amenity_passes_path
 
     # Year selector exists on the page

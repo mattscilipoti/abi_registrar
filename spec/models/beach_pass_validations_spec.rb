@@ -36,7 +36,7 @@ RSpec.describe BeachPass, type: :model do
     end
 
     it 'enforces uniqueness of sticker_number' do
-      sn = "UNQ-#{Time.zone.now.to_i}"
+      sn = "#{Time.zone.now.to_i}"
       existing = FactoryBot.create(:beach_pass, sticker_number: sn, season_year: Time.zone.now.year)
       new_bp = FactoryBot.build(:beach_pass, sticker_number: sn, season_year: Time.zone.now.year)
       expect(new_bp).not_to be_valid

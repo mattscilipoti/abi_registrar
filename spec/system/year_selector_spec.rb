@@ -6,15 +6,28 @@ RSpec.describe 'Year selector', type: :system do
   end
 
   it 'renders the year selector and allows selecting a year' do
+\
     # Create a verified account with a password so we can log in via the UI
     account = Account.create!(email: "spec+#{SecureRandom.hex(6)}@example.org", status: :verified)
     account.password_hash = BCrypt::Password.create('password').to_s
     account.save!
 
+    # Visit the login page and sign in
+    visit '/login'
+    within('form#login-form') do
+      fill_in 'login', with: account.email
+      find('input[type=submit], button[type=submit]').click
+    end
+    # Fill in password on the next form
+    within('form#login-form') do
+      fill_in 'password', with: 'password'
+      find('input[type=submit], button[type=submit]').click
+    end
+
     # Create sample passes in two different years
     resident = FactoryBot.create(:resident)
-    FactoryBot.create(:beach_pass, resident: resident, season_year: 2025, sticker_number: 'A-1')
-    FactoryBot.create(:beach_pass, resident: resident, season_year: 2024, sticker_number: 'B-2')
+    FactoryBot.create(:beach_pass, resident: resident, season_year: 2025, sticker_number: '123')
+    FactoryBot.create(:beach_pass, resident: resident, season_year: 2024, sticker_number: '234')
 
     # Visit the login page and sign in
     visit '/login'
