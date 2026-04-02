@@ -43,6 +43,14 @@ class VehicleParkingPassesController < ApplicationController
   # PATCH/PUT /vehicle_parking_passes/1 or /vehicle_parking_passes/1.json
   def update
     respond_to do |format|
+      if params[:vehicle_parking_pass] && params[:vehicle_parking_pass][:voided]
+        if params[:vehicle_parking_pass][:voided] == '1'
+          params[:vehicle_parking_pass][:voided_at] = Time.current
+        else
+          params[:vehicle_parking_pass][:voided_at] = nil
+        end
+        params[:vehicle_parking_pass].delete(:voided)
+      end
       if @vehicle_parking_pass.update(vehicle_parking_pass_params)
         format.html { redirect_to vehicle_parking_pass_url(@vehicle_parking_pass), notice: "Vehicle Parking Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @vehicle_parking_pass }
@@ -75,10 +83,11 @@ class VehicleParkingPassesController < ApplicationController
       params.require(:vehicle_parking_pass).permit(
         :resident_id,
         :description,
+        :season_year,
         :state_code,
         :sticker_number,
         :tag_number,
-        :season_year
+        :voided_at,
       )
     end
 end

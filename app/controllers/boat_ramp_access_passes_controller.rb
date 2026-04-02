@@ -43,6 +43,14 @@ class BoatRampAccessPassesController < ApplicationController
   # PATCH/PUT /boat_ramp_access_passes/1 or /boat_ramp_access_passes/1.json
   def update
     respond_to do |format|
+      if params[:boat_ramp_access_pass] && params[:boat_ramp_access_pass][:voided]
+        if params[:boat_ramp_access_pass][:voided] == '1'
+          params[:boat_ramp_access_pass][:voided_at] = Time.current
+        else
+          params[:boat_ramp_access_pass][:voided_at] = nil
+        end
+        params[:boat_ramp_access_pass].delete(:voided)
+      end
       if @boat_ramp_access_pass.update(boat_ramp_access_pass_params)
         format.html { redirect_to boat_ramp_access_pass_url(@boat_ramp_access_pass), notice: "Boat Ramp Access Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @boat_ramp_access_pass }
@@ -76,10 +84,11 @@ class BoatRampAccessPassesController < ApplicationController
         :resident_id,
         :description,
         :location,
-        :state_code,
-        :tag_number,
-        :sticker_number,
         :season_year,
+        :state_code,
+        :sticker_number,
+        :tag_number,
+        :voided_at,
       )
     end
 end

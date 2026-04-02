@@ -25,5 +25,16 @@ FactoryBot.define do
       end
 
     end
+
+    trait :with_paid_properties do
+      transient do
+        properties_count { 2 }
+      end
+
+      properties do
+        Array.new(properties_count) { association(:property, :mandatory_fees_paid) }
+      end
+
+    end
   end
 end

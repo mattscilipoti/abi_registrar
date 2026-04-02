@@ -19,7 +19,15 @@ class AmenityPassDecorator < Draper::Decorator
   end
 
   def property_summary(type: :icons)
-    h.render 'residencies/property_icon_list', residencies: object.resident.residencies.decorate
+    template = case type
+    when :icons
+      'residencies/property_icon_list'
+    when :list
+      'residencies/property_list'
+    else
+      raise ArgumentError, "Invalid type: #{type}"
+    end
+    h.render template, residencies: resident.residencies.by_property.decorate
   end
 
   def sticker
@@ -34,7 +42,23 @@ class AmenityPassDecorator < Draper::Decorator
     (object.resident.residencies.collect &:street_address).join(', ')
   end
 
+  def toggleable_voided?
+    h.toggleable_date_as_boolean(model: self, attribute_name: :voided_at, boolean_attribute_name: 'voided?')
+  end
+
   def type_as_icon
     self.class.icon(html_options: { title: object.class.name })
+  end
+
+  # Displays voded datetime or a link to void the Amenity
+  def voided?
+    if object.voided_at?
+      element = h.date_tag(object.voided_at, format: '%m/%d/%y')
+      # Wrap it in a span with the 'voided' class
+      h.content_tag(:span, element, class: 'voided')
+    else
+      # Use polymorphic_url to generate the correct void URL for an amenity pass.
+      h.link_to("Void Now", h.void_amenity_pass_path(object), class: "btn btn-warning")
+    end
   end
 end

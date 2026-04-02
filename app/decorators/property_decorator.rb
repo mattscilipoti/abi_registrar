@@ -27,7 +27,7 @@ class PropertyDecorator < Draper::Decorator
   end
 
   def toggleable_amenities_processed?
-    toggleable_date_as_boolean(model: property, attribute_name: :amenities_processed)
+    h.toggleable_date_as_boolean(model: property, attribute_name: :amenities_processed)
   end
 
   def toggleable_for_sale?
@@ -46,23 +46,11 @@ class PropertyDecorator < Draper::Decorator
   end
 
   def toggleable_lot_fees_paid?
-    toggleable_date_as_boolean(model: property, attribute_name: :lot_fees_paid_on, boolean_attribute_name: 'lot_fees_paid?')
+    h.toggleable_date_as_boolean(model: property, attribute_name: :lot_fees_paid_on, boolean_attribute_name: 'lot_fees_paid?')
   end
 
   def toggleable_user_fee_paid?
-    toggleable_date_as_boolean(model: property, attribute_name: :user_fee_paid_on)
+    h.toggleable_date_as_boolean(model: property, attribute_name: :user_fee_paid_on)
   end
-
-  private
-
-  def toggleable_date_as_boolean(model:, attribute_name:, boolean_attribute_name: "#{attribute_name}?")
-    h.form_with model: model, data: { controller: 'autosave'} do |f|
-      data_attrs = { action: 'autosave#save' }
-      attribute_value = model.send(attribute_name)
-      data_attrs[:tooltip] = "On: #{attribute_value} (#{h.time_ago_in_words(attribute_value)} ago)" if attribute_value
-      f.check_box boolean_attribute_name, data: data_attrs
-    end
-  end
-
 
 end

@@ -1,0 +1,27 @@
+- title = "Standard void reasons"
+= render 'layouts/h1', title: title, model_count: @void_reasons.size, model_total: VoidReason.count
+
+.actions
+  = link_to 'New standard reason', new_void_reason_path, class: 'btn btn-primary'
+
+table.index
+  thead
+    tr
+      th Position
+      th Label
+      th Code
+      th Active
+      th Pass type
+      th Requires note
+      th
+  tbody
+    - @void_reasons.each do |reason|
+      tr
+        td= reason.position
+        td= reason.label
+        td= reason.code
+        td= boolean_tag(reason.active)
+        td= reason.pass_type.presence || '-'
+        td= boolean_tag(reason.requires_note)
+        td
+          = link_to 'Edit', edit_void_reason_path(reason)

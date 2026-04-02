@@ -29,6 +29,16 @@ FactoryBot.define do
     end
   end
 
+  factory :test_amenity_pass do
+    association :resident
+    sequence(:sticker_number) { |n| FactoryHelpers.sticker_with_year('A', n, n_width: 4) }
+    description { LOREM_IPSUM }
+    state_code { "MD" }
+    tag_number { Faker::Vehicle.license_plate(state_abbreviation: state_code) }
+    voided_at { nil }
+    # ...other attributes as needed...
+  end
+
   factory :beach_pass, class: 'BeachPass' do
     amenity_pass_base
     # Beach passes should not have a letter or hyphen prefix; pass nil so the

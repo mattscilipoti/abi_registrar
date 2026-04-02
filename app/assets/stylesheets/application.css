@@ -14,7 +14,7 @@
  *= require_self
  */
 
- nav menu {
+nav menu {
   display: flex;
   list-style: none;
   padding: 0;

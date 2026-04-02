@@ -39,6 +39,14 @@ class ResidentDecorator < Draper::Decorator
   end
 
   def property_summary(type: :icons)
-    h.render 'residencies/property_icon_list', residencies: resident.residencies.by_property.decorate
+    template = case type
+    when :icons
+      'residencies/property_icon_list'
+    when :list
+      'residencies/property_list'
+    else
+      raise ArgumentError, "Invalid type: #{type}"
+    end
+    h.render template, residencies: resident.residencies.by_property.decorate
   end
 end

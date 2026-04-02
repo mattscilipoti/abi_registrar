@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 In place of release version numbers, we organize via deploys to Production (by Date/Time).
 
+## Upcoming: 93 Void Amenity
+
+- AmenityPass
+  - #voided_at
+  - #voided_reason
+  - Scopes: voided, not_voided
+  - Add voided? to index pages
+- ResidencyDecorator
+  - Supports #property_summary(type: :list)
+- Add VoidReason, providing standard reasons
+  - Admins can manage
+- Helpers:
+  - Added datetime_as_boolean_tag
+  - boolean_tag accepts subdue_if, hide_if
+- Specs
+  - Add shoulda-matchers (expected by Copilot generated specs)
+  - Add application_helper_spec (Thx Copilot)
+
+## 2025-11-18: 111 Manage UtilityCartPasses, includes conversion
 ## 2025-11-05: [#104] Add filter-by-year support
 
 - Add a year filter to relevant listing and summary pages so records can be scoped by year.

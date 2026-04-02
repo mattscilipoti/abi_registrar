@@ -4,7 +4,12 @@ Rails.application.routes.draw do
     get 'summary', to: 'pages#summary'
 
     resources :accounts, only: [:index]
-    post 'accounts/update_season_year', to: 'accounts#update_season_year', as: :update_season_year_accounts
+    resources :amenity_passes, only: [:index] do # must be unauthenticated for "public" access
+      member do
+        get :void
+        patch :confirm_void
+      end
+    end
     resources :beach_passes
     resources :boat_ramp_access_passes
     resources :comments, only: [:create]
@@ -24,11 +29,14 @@ Rails.application.routes.draw do
     end
     resources :utility_cart_passes
     resources :vehicle_parking_passes
+    resources :void_reasons
     resources :watercraft_storage_passes
   end
 
   get 'home', to: 'pages#home'
   get 'year_end', to: 'year_end#index'
+  post 'accounts/update_season_year', to: 'accounts#update_season_year', as: :update_season_year_accounts
+  post 'reset_fees', to: 'year_end#reset_fees'
   post 'process_year_end', to: 'year_end#process_year_end'
   resources :amenity_passes, only: [:index] # must be unauthenticated for "public" access
 

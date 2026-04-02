@@ -14,3 +14,6 @@ div id="#{dom_id vehicle_parking_pass}"
   p
     strong Resident:
     =< vehicle_parking_pass.resident
+  p
+    =< voided_info_tag(vehicle_parking_pass)
+

@@ -6,6 +6,7 @@ class AmenityPass < ApplicationRecord
   # Associations
   belongs_to :resident
   has_many :properties, through: :resident
+  belongs_to :void_reason, optional: true
 
   # Validations (alphabetical)
   validate  :confirm_resident_paid_mandatory_fees
@@ -13,6 +14,17 @@ class AmenityPass < ApplicationRecord
   validates :resident, presence: true
   validates :season_year, presence: true, if: :require_season_year_on_save?
   validates :sticker_number, presence: true, uniqueness: true
+  validates :sticker_number,
+    format: {
+      with: ->(rec) { Regexp.new(rec.class.valid_sticker_regex_ruby) },
+      message: 'must be letter-hyphen-digits like A-123'
+    },
+    if: :sticker_requires_letter_prefix?
+
+  def self.scopes
+    [:not_voided, :voided, :voided_legacy, :with_valid_sticker_number, :without_valid_sticker_number]
+  end
+
 
   # Scopes (alphabetical)
   scope :not_paid, -> { where('1=2') } # TODO: sticker fee not paid?
@@ -20,6 +32,50 @@ class AmenityPass < ApplicationRecord
   scope :without_description, -> { where(description: nil) }
   scope :without_state_code, -> { where(state_code: nil) }
   scope :without_tag_number, -> { where(tag_number: nil) }
+  scope :not_voided, -> { where(voided_at: nil) }
+  scope :voided, -> { where.not(voided_at: nil) }
+  scope :voided_legacy, -> { where('description ILIKE :void OR sticker_number ILIKE :void', void: "%VOID%") }
+  # Build OR conditions using each subclass' published regex.
+  scope :with_valid_sticker_number, -> {
+    klasses = (AmenityPass.descendants + [AmenityPass]).uniq
+    clauses = []
+    binds = []
+
+    subclass_names = []
+    klasses.each do |k|
+      regex = k.valid_sticker_regex_sql
+      if k == AmenityPass
+        # handled as fallback below
+        next
+      else
+        subclass_names << k.name
+        clauses << "(amenity_passes.type = ? AND amenity_passes.sticker_number ~ ?)"
+        binds += [k.name, regex]
+      end
+    end
+
+    # Fallback for any records with unrecognized type (or direct AmenityPass if present)
+    clauses << "(amenity_passes.type IS NULL OR amenity_passes.type NOT IN (?)) AND amenity_passes.sticker_number ~ ?"
+    binds += [subclass_names, AmenityPass.valid_sticker_regex_sql]
+
+    where(clauses.join(' OR '), *binds)
+  }
+  scope :without_valid_sticker_number, -> {
+    where.not(id: with_valid_sticker_number.select(:id))
+  }
+  scope :without_description, -> { where(description: nil) }
+  scope :without_state_code, -> { where(state_code: nil) }
+  scope :without_tag_number, -> { where(tag_number: nil) }
+
+
+  # Class methods (alphabetical)
+  def self.available_years
+    where.not(season_year: nil).distinct.order(season_year: :desc).pluck(:season_year)
+  end
+
+  def self.default_sort
+    { column: :sticker_number, direction: :desc }
+  end
 
   # Initialization / includes
   # List of searchable columns for this Model
@@ -40,13 +96,14 @@ class AmenityPass < ApplicationRecord
       tsearch: { prefix: true }
     }
 
-  # Class methods (alphabetical)
-  def self.available_years
-    where.not(season_year: nil).distinct.order(season_year: :desc).pluck(:season_year)
+  # Default valid regex (PostgreSQL) for sticker_number; subclasses override.
+  def self.valid_sticker_regex_sql
+    '^[A-Z]-\\d+$'
   end
 
-  def self.default_sort
-    { column: :sticker_number, direction: :desc }
+  # Default valid regex (Ruby) for sticker_number; subclasses override.
+  def self.valid_sticker_regex_ruby
+    '\\A[A-Z]-\\d+\\z'
   end
 
   # Attempt to guess a season year from a sticker string.
@@ -143,7 +200,30 @@ class AmenityPass < ApplicationRecord
     [sticker_number, tag].compact.join(', ')
   end
 
+  def void
+    update_columns(voided_at: Time.current)
+  end
+
+  def voided?
+    voided_at?
+  end
+
+  # Returns the selected standard reason label if present; otherwise the free-text voided_reason
+  def void_reason_label
+    void_reason&.label.presence || voided_reason
+  end
+
   private
+
+
+  def confirm_resident_paid_mandatory_fees
+    unless resident && resident.lot_fees_paid?
+      errors.add(:resident, "must have paid lot fees")
+    end
+    unless resident && resident.user_fee_paid?
+      errors.add(:resident, "must have paid user fee")
+    end
+  end
 
   # Return true for new records or any record that is being changed/saved.
   # This enforces presence for created records and for any update operation.
@@ -170,5 +250,11 @@ class AmenityPass < ApplicationRecord
     elsif season_year > max
       errors.add(:season_year, "must be less than or equal to #{max}")
     end
+  end
+
+  # By default, amenity passes expect a letter-hyphen-digits sticker format.
+  # Subclasses can override to disable or change behavior (e.g., BeachPass).
+  def sticker_requires_letter_prefix?
+    true
   end
 end

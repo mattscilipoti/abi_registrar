@@ -14,17 +14,17 @@ RSpec.describe "Pages#summary", type: :request do
     property = Property.create!(street_name: 'Spec St', tax_identifier: '12 345 00000001', lot_fees_paid_on: Date.today, user_fee_paid_on: Date.today)
     Residency.create!(property: property, resident: resident)
 
-    AmenityPass.create!(resident: resident, sticker_number: 'A1', season_year: year)
-    BeachPass.create!(resident: resident, sticker_number: 'B1', season_year: year)
+    AmenityPass.create!(resident: resident, sticker_number: 'A-123', season_year: year)
+    BeachPass.create!(resident: resident, sticker_number: '234', season_year: year)
 
     # Also create a pass in a different year to test filtering
     prev_year = year - 1
-    BeachPass.create!(resident: resident, sticker_number: 'B2', season_year: prev_year)
+    BeachPass.create!(resident: resident, sticker_number: '2345', season_year: prev_year)
 
     # Create a second resident with a BeachPass in the current year to test distinct resident counts
     resident2 = Resident.create!(last_name: "Spec2")
     Residency.create!(property: property, resident: resident2)
-    BeachPass.create!(resident: resident2, sticker_number: 'B3', season_year: year)
+    BeachPass.create!(resident: resident2, sticker_number: '23456', season_year: year)
 
     # When requesting the current year, BeachPasses should show 1
     get summary_path(year: year)

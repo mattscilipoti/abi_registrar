@@ -1,0 +1,8 @@
+= simple_form_for @void_reason do |f|
+  = f.input :label, required: true
+  = f.input :code, hint: 'Optional slug/identifier'
+  = f.input :active, as: :boolean
+  = f.input :position, as: :integer, hint: 'Controls ordering (lower first)'
+  = f.input :pass_type, collection: AmenityPass.descendants.map(&:name), include_blank: 'All amenity pass types'
+  = f.input :requires_note, as: :boolean, hint: 'If checked, user must enter additional free-text notes when selecting this reason'
+  = f.submit class: 'btn btn-primary'

@@ -6,6 +6,8 @@ fieldset
     - columns = %i[email status]
     =render 'layouts/models_table', models: @accounts, columns: columns, allow_edit: false, allow_show: false, allow_sort: true
 
+p
+  = link_to "Manage Void Reasons", void_reasons_path, class: 'no-link-icon'
   hr
 
   .season-year-admin

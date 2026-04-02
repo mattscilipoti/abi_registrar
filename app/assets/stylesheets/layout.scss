@@ -387,6 +387,15 @@ ul {
   }
 }
 
+.subdued {
+  filter: grayscale(100%) brightness(2) saturate(0.5);
+}
+
+.voided {
+  color: $color-warning;
+  font-weight: bold;
+}
+
 /* Year selector styles: compact, clear, and shared for full/small variants */
 .year-selector, .year-selector-small {
   display: inline-block;
