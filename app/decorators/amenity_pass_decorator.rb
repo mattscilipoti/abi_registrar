@@ -30,6 +30,14 @@ class AmenityPassDecorator < Draper::Decorator
     h.render template, residencies: resident.residencies.by_property.decorate
   end
 
+  def sticker
+    object.sticker_digits
+    # TODO: wanted a tooltipbut this messed up sorting.
+    # h.content_tag :span,  class: 'sticker-number-sorted', title: object.sticker_number do
+    #   object.sticker_digits
+    # end
+  end
+
   def street_addresses
     (object.resident.residencies.collect &:street_address).join(', ')
   end

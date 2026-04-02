@@ -26,6 +26,36 @@ In place of release version numbers, we organize via deploys to Production (by D
   - Add application_helper_spec (Thx Copilot)
 
 ## 2025-11-18: 111 Manage UtilityCartPasses, includes conversion
+## 2025-11-05: [#104] Add filter-by-year support
+
+- Add a year filter to relevant listing and summary pages so records can be scoped by year.
+- Update controllers, views, and tests to support selecting and applying a year filter.
+  - Season Year defaults to current season.
+  - Improved mesaging for issues.
+- Improves usability when reviewing historical records and reduces query scope for year-scoped views.
+- Add `actual_db_schema` dev tooling (config: `config/initializers/actual_db_schema.rb`; migrated files: `tmp/migrated`).
+- Deps
+  - Upgrade Ruby 3.1 to 3.2
+  - Remove platform: darwin/OSX
+- VS Code: clean up extensions
+
+## 2025-05-08: Removed Shares/Transactions from summary page and top navigation panel
+
+- Commented out code to display the shares/transactions information, until real data are available
+- Extracted partial for transaction_summary
+
+## 2025-05-08: Rename Dinghy Dock Storage Location to Slip Number
+
+- Add decorator to show dinghy dock storage pass location field to be Slip Number
+
+## 2025-05-06: Added sorting per Amenity Pass type
+
+## 2025-04-23: 105 Delete Test Data
+
+- rails db:delete_item_transactions
+- rails db:delete_test_data
+
+## 2024-11-18: 111 Manage UtilityCartPasses, includes conversion
 
 - Add UtilityCartPass (and UI for managing)
   - Add to Summary
@@ -81,10 +111,10 @@ In place of release version numbers, we organize via deploys to Production (by D
 - 68 Issue creating Dinghy
 - Identified and fixed similar issue with Watercraft Passes
 
-## 2023-03-14 Amentities Processed, Create New from Show page
+## 2023-03-14 Amenities Processed, Create New from Show page
 
-- #35 Can manage AmentiesProcessed. Can toggle from index (checked assignes today's date)
-- #57 Added link to Create New Amenity Pass on each Amnenity Show page.
+- #35 Can manage AmenitiesProcessed. Can toggle from index (checked assigns today's date)
+- #57 Added link to Create New Amenity Pass on each Amenity Show page.
 - #55 Widen email field for Resident
 - #37 Prettify Date inputs via html5
 
@@ -92,7 +122,7 @@ In place of release version numbers, we organize via deploys to Production (by D
 
 - Amenity Passes:
   - Residents are sorted by last_name, first_name
-  - (#53) Amentiy Sticker Numbers accept letters and numbers
+  - (#53) Amenity Sticker Numbers accept letters and numbers
     -  Sticker numbers must be unique
 
 ## 2023-02-03: Improve Lot/Property selection
@@ -205,7 +235,7 @@ In place of release version numbers, we organize via deploys to Production (by D
     - Boolean cols: limited width, centered in header and rows
     - Sticky headers!
 - Lot
-  - Add #abi_member?: Identifies lots asociated with ABI
+  - Add #abi_member?: Identifies lots associated with ABI
     - Where subdivision is Sunrise Beach + exceptions
   - Add #abi_member_exceptions: lists tax_ids that are not in SB subdivision
   - Add #subdivision_is_sunrise_beach?
@@ -217,7 +247,7 @@ In place of release version numbers, we organize via deploys to Production (by D
   - No longer encrypting first_name
   - Can search_by_name with sounds-like (dmetaphone) and stems (tsearch)
 - DB
-  - Add dsupport for full-text searches, sounds-like (dmetaphone), stems (trigram), and fuzzy serch
+  - Add dsupport for full-text searches, sounds-like (dmetaphone), stems (trigram), and fuzzy search
   - Add gem "schema_plus_functions" to support functions in schema.rb
 
 ## 2022/05/31: Resident Mailing Address

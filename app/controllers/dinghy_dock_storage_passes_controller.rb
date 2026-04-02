@@ -1,10 +1,14 @@
 class DinghyDockStoragePassesController < ApplicationController
+  include RequireYearParam
   before_action :set_dinghy_dock_storage_pass, only: %i[ show edit update destroy ]
 
   # GET /dinghy_dock_storage_passes or /dinghy_dock_storage_passes.json
   def index
     dinghy_dock_storage_passes = filter_models(DinghyDockStoragePass, params[:q])
-    @dinghy_dock_storage_passes = dinghy_dock_storage_passes.decorate
+    @year = params[:year]
+    @dinghy_dock_storage_passes = dinghy_dock_storage_passes.by_year(@year)
+                                                            .includes(resident: :residencies) # preload relationships used by decorators/views
+                                                            .decorate
   end
 
   # GET /dinghy_dock_storage_passes/1 or /dinghy_dock_storage_passes/1.json
@@ -29,6 +33,7 @@ class DinghyDockStoragePassesController < ApplicationController
         format.html { redirect_to dinghy_dock_storage_pass_url(@dinghy_dock_storage_pass), notice: "Dinghy Dock Storage Pass was successfully created." }
         format.json { render :show, status: :created, location: @dinghy_dock_storage_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @dinghy_dock_storage_pass.errors, status: :unprocessable_entity }
       end
@@ -50,6 +55,7 @@ class DinghyDockStoragePassesController < ApplicationController
         format.html { redirect_to dinghy_dock_storage_pass_url(@dinghy_dock_storage_pass), notice: "Dinghy Dock Storage Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @dinghy_dock_storage_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @dinghy_dock_storage_pass.errors, status: :unprocessable_entity }
       end
@@ -79,6 +85,7 @@ class DinghyDockStoragePassesController < ApplicationController
         :beach_number,
         :description,
         :location,
+        :season_year,
         :sticker_number,
         :voided_at,
       )

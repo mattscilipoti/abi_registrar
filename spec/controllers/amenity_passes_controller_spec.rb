@@ -47,3 +47,10 @@ RSpec.describe AmenityPassesController, type: :controller do
     end
   end
 end
+
+RSpec.describe AmenityPassesController, type: :controller do
+  let(:factory_name) { :beach_pass }
+  let(:assigned_ivar) { :@amenity_passes }
+
+  include_examples 'year filter controller'
+end

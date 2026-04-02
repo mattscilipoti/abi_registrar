@@ -1,10 +1,14 @@
 class BoatRampAccessPassesController < ApplicationController
+  include RequireYearParam
   before_action :set_boat_ramp_access_pass, only: %i[ show edit update destroy ]
 
   # GET /boat_ramp_access_passes or /boat_ramp_access_passes.json
   def index
     boat_ramp_access_passes = filter_models(BoatRampAccessPass, params[:q])
-    @boat_ramp_access_passes = boat_ramp_access_passes.decorate
+    @year = params[:year]
+    @boat_ramp_access_passes = boat_ramp_access_passes.by_year(@year)
+                                                      .includes(resident: :residencies) # preload relationships used by decorators/views
+                                                      .decorate
   end
 
   # GET /boat_ramp_access_passes/1 or /boat_ramp_access_passes/1.json
@@ -29,6 +33,7 @@ class BoatRampAccessPassesController < ApplicationController
         format.html { redirect_to boat_ramp_access_pass_url(@boat_ramp_access_pass), notice: "Boat Ramp Access Pass was successfully created." }
         format.json { render :show, status: :created, location: @boat_ramp_access_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @boat_ramp_access_pass.errors, status: :unprocessable_entity }
       end
@@ -50,6 +55,7 @@ class BoatRampAccessPassesController < ApplicationController
         format.html { redirect_to boat_ramp_access_pass_url(@boat_ramp_access_pass), notice: "Boat Ramp Access Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @boat_ramp_access_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @boat_ramp_access_pass.errors, status: :unprocessable_entity }
       end
@@ -78,9 +84,10 @@ class BoatRampAccessPassesController < ApplicationController
         :resident_id,
         :description,
         :location,
+        :season_year,
         :state_code,
-        :tag_number,
         :sticker_number,
+        :tag_number,
         :voided_at,
       )
     end

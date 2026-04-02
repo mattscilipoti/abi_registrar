@@ -61,5 +61,16 @@ FactoryBot.define do
     trait :user_fee_unpaid do
       user_fee_paid_on { nil }
     end
+
+    # If tests explicitly set `amenities_processed` on the factory call, many
+    # specs expect the property to be valid. Ensure test factories that set
+    # `amenities_processed` also have the mandatory fees set so validations
+    # in the model (which require fees for amenities processing) pass.
+    after(:build) do |property, evaluator|
+      if property.amenities_processed.present?
+        property.lot_fees_paid_on ||= Time.zone.now
+        property.user_fee_paid_on ||= Time.zone.now
+      end
+    end
   end
 end

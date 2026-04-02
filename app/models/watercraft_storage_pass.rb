@@ -10,7 +10,7 @@ class WatercraftStoragePass < AmenityPass
       message: 'must start with W- and numbers'
     },
     allow_nil: true
-  validates_presence_of :beach_number, :description, :rack_slot_number, :sticker_number
+  validates_presence_of :beach_number, :description, :location, :rack_slot_number, :sticker_number
 
   # class-level
   def self.scopes

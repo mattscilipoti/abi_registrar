@@ -1,10 +1,14 @@
 class UtilityCartPassesController < ApplicationController
+  include RequireYearParam
   before_action :set_utility_cart_pass, only: %i[ show edit update destroy ]
 
   # GET /utility_cart_passes or /utility_cart_passes.json
   def index
     utility_cart_passes = filter_models(UtilityCartPass, params[:q])
-    @utility_cart_passes = utility_cart_passes.decorate
+    @year = params[:year]
+    @utility_cart_passes = utility_cart_passes.by_year(@year)
+                                              .includes(resident: :residencies) # preload relationships used by decorators/views
+                                              .decorate
   end
 
   # GET /utility_cart_passes/1 or /utility_cart_passes/1.json
@@ -29,6 +33,7 @@ class UtilityCartPassesController < ApplicationController
         format.html { redirect_to utility_cart_pass_url(@utility_cart_pass), notice: "Utility Cart Pass was successfully created." }
         format.json { render :show, status: :created, location: @utility_cart_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @utility_cart_pass.errors, status: :unprocessable_entity }
       end
@@ -50,6 +55,7 @@ class UtilityCartPassesController < ApplicationController
         format.html { redirect_to utility_cart_pass_url(@utility_cart_pass), notice: "Utility Cart Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @utility_cart_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @utility_cart_pass.errors, status: :unprocessable_entity }
       end
@@ -77,6 +83,7 @@ class UtilityCartPassesController < ApplicationController
       params.require(:utility_cart_pass).permit(
         :resident_id,
         :description,
+        :season_year,
         :state_code,
         :sticker_number,
         :voided_at,

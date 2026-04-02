@@ -1,10 +1,14 @@
 class BeachPassesController < ApplicationController
-  before_action :set_beach_pass, only: %i[ show edit update destroy void confirm_void ]
+  include RequireYearParam
+  before_action :set_beach_pass, only: %i[ show edit update destroy ]
 
   # GET /beach_passes or /beach_passes.json
   def index
     beach_passes = filter_models(BeachPass, params[:q])
-    @beach_passes = beach_passes.decorate
+    @year = params[:year]
+    @beach_passes = beach_passes.by_year(@year)
+                                .includes(resident: :residencies) # preload relationships used by decorators/views
+                                .decorate
   end
 
   # GET /beach_passes/1 or /beach_passes/1.json
@@ -29,6 +33,7 @@ class BeachPassesController < ApplicationController
         format.html { redirect_to beach_pass_url(@beach_pass), notice: "Beach Pass was successfully created." }
         format.json { render :show, status: :created, location: @beach_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @beach_pass.errors, status: :unprocessable_entity }
       end
@@ -50,6 +55,7 @@ class BeachPassesController < ApplicationController
         format.html { redirect_to beach_pass_url(@beach_pass), notice: "Beach Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @beach_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @beach_pass.errors, status: :unprocessable_entity }
       end
@@ -77,6 +83,7 @@ class BeachPassesController < ApplicationController
       params.require(:beach_pass).permit(
         :resident_id,
         :description,
+        :season_year,
         :sticker_number,
         :voided_at,
         :voided_reason

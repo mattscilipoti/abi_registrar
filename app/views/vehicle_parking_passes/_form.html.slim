@@ -6,6 +6,7 @@
 
   .form-inputs
     = f.input :sticker_number
+    = f.input :season_year
     = f.input :tag_number
     = f.input :state_code, collection: AmenityPass.states
     = f.input :description, as: :text, input_html: { rows: 2, cols: 60 }

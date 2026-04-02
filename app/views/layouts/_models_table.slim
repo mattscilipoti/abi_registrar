@@ -18,7 +18,6 @@
       - for column_name in columns do
         - excluded_name_adjusters = ['_as_icon', '_i18n', '_link_tag', '_tag', 'toggleable_']
         - column_caption = column_name.to_s.gsub(Regexp.union(excluded_name_adjusters), '').titleize
-        - index_path = models.first.class.table_name
         - css_classes = []
         - css_classes << 'boolean' if column_name.ends_with?('?')
 
@@ -32,7 +31,7 @@
           - if column_name.to_s == sort_column.to_s
             -# toggle sort_direction
             - sort_link_params[:sort][:direction] = (sort_direction == 'asc') ? 'desc' : 'asc'
-          - index_uri = Addressable::URI.new(path: index_path, query: sort_link_params.to_param)
+          - index_uri = Addressable::URI.new(path: request.path, query: sort_link_params.to_param)
           th *{class: css_classes} = link_to(column_caption, index_uri.to_s, class: 'no-link-icon')
         - else
           th *{class: css_classes} = column_caption

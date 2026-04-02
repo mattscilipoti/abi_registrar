@@ -1,10 +1,16 @@
 class AmenityPassesController < ApplicationController
+  include RequireYearParam
+
   skip_before_action :authenticate, only: [:index]
   before_action :set_amenity_pass, only: %i[confirm_void void]
 
   def index
     amenity_passes = filter_models(AmenityPass, params[:q])
-    @amenity_passes = amenity_passes.decorate
+    # apply year filter (controller ensures params[:year] exists)
+    @year = params[:year]
+    @amenity_passes = amenity_passes.by_year(@year)
+                                    .includes(resident: :residencies) # preload relationships used by decorators/views
+                                    .decorate
   end
 
   # GET /amenity_passes/1/void

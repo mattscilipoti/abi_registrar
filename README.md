@@ -14,6 +14,8 @@ Not only do we need to gather and manage the approprite information, we need to 
 - Possible Report Options:
   - export to Google Sheet & printing from there.
 
+If you have questions about contributing, running tests, or the developer workflow, see `CONTRIBUTING.md` for guidance.
+
 ## Features
 
 ### Done
@@ -46,11 +48,11 @@ Not only do we need to gather and manage the approprite information, we need to 
   - Manage Shares
     - Record Purchased Shares
       - Only Deed Holders
-      - Each transation: Date purchased, count
+      - Each transaction: Date purchased, count
       - Total count owned
       - Assign shares to Property
     - Transfer Shares
-    - Can Edit/Delete via Item Tranaactions
+    - Can Edit/Delete via Item Transactions
   - Manage Amenity Passes
     - Vehicle Parking Passes
       - Assign Sticker and Vehicle to Resident
@@ -202,10 +204,12 @@ Not only do we need to gather and manage the approprite information, we need to 
 
 ## Deploy
 
+- Login to heroku using `$ heroku login`. This will open a browser for login.
 - Staging: https://nameless-eyrie-92885.herokuapp.com/
-  - `git push staging main`
-  - Staging is the default remote
-  - Command example: `heroku run rails db:migrate`
+  - We used to have staging, but heroku changed how that works and we haven't set that back up again
+    - `git push staging main`
+    - Staging is the default remote
+    - Command example: `heroku run rails db:migrate`
 - Production: https://abi-registrar.herokuapp.com/
   - `git push heroku main`
   - Command example: `heroku run -r heroku rails db:migrate`

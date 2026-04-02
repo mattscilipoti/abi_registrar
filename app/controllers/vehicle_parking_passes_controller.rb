@@ -1,10 +1,14 @@
 class VehicleParkingPassesController < ApplicationController
+  include RequireYearParam
   before_action :set_vehicle_parking_pass, only: %i[ show edit update destroy ]
 
   # GET /vehicle_parking_passes or /vehicle_parking_passes.json
   def index
     vehicle_parking_passes = filter_models(VehicleParkingPass, params[:q])
-    @vehicle_parking_passes = vehicle_parking_passes.decorate
+    @year = params[:year]
+    @vehicle_parking_passes = vehicle_parking_passes.by_year(@year)
+                                                    .includes(resident: :residencies) # preload relationships used by decorators/views
+                                                    .decorate
   end
 
   # GET /vehicle_parking_passes/1 or /vehicle_parking_passes/1.json
@@ -29,6 +33,7 @@ class VehicleParkingPassesController < ApplicationController
         format.html { redirect_to vehicle_parking_pass_url(@vehicle_parking_pass), notice: "Vehicle Parking Pass was successfully created." }
         format.json { render :show, status: :created, location: @vehicle_parking_pass }
       else
+        flash.now[:alert] = "Issues creating this Pass. Please correct the errors below."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @vehicle_parking_pass.errors, status: :unprocessable_entity }
       end
@@ -50,6 +55,7 @@ class VehicleParkingPassesController < ApplicationController
         format.html { redirect_to vehicle_parking_pass_url(@vehicle_parking_pass), notice: "Vehicle Parking Pass was successfully updated." }
         format.json { render :show, status: :ok, location: @vehicle_parking_pass }
       else
+        flash.now[:alert] = "Issues updating this Pass. Please correct the errors below."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @vehicle_parking_pass.errors, status: :unprocessable_entity }
       end
@@ -77,6 +83,7 @@ class VehicleParkingPassesController < ApplicationController
       params.require(:vehicle_parking_pass).permit(
         :resident_id,
         :description,
+        :season_year,
         :state_code,
         :sticker_number,
         :tag_number,
